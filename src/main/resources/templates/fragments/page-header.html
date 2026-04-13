@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- Page Header Fragment -->
+    <div th:fragment="pageHeader">
+        <div id="pageHeaderContainer" style="
+            background: linear-gradient(135deg, #27ae60 0%, #1a472a 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        ">
+            <!-- Main welcome text -->
+            <h2 style="
+                font-size: 1.3rem;
+                font-weight: 300;
+                margin: 0 0 25px 0;
+                opacity: 0.95;
+                letter-spacing: 1px;
+            ">WELCOME TO UNIVERSITAS HKBP NOMMENSEN</h2>
+
+            <!-- Page title -->
+            <h1 id="pageTitle" style="
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin: 0 0 15px 0;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            ">Dashboard</h1>
+
+            <!-- Page description -->
+            <p id="pageSubtitle" style="
+                margin: 0;
+                font-size: 1.1rem;
+                opacity: 0.9;
+                font-weight: 300;
+            ">Kelola pendaftaran dan data pribadi Anda</p>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        function setPageHeader(title, subtitle = 'Kelola data Anda') {
+            document.getElementById('pageTitle').textContent = title;
+            document.getElementById('pageSubtitle').textContent = subtitle;
+        }
+    </script>
+</body>
+</html>

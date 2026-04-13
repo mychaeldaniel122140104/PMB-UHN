@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Admin Accounts API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #f0f0f0; padding: 10px; border-radius: 5px; overflow-x: auto; max-height: 400px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Test Admin Accounts API</h1>
+    
+    <div class="section">
+        <h2>1. Check Storage</h2>
+       <button onclick="checkStorage()">Check Token & Role in Storage</button>
+        <pre id="storageOutput"></pre>
+    </div>
+
+    <div class="section">
+        <h2>2. Login Test</h2>
+        Email: <input type="text" id="email" value="admin@pmb.com">
+        Password: <input type="password" id="password" value="admin123">
+        <button onclick="testLogin()">Login</button>
+        <pre id="loginOutput"></pre>
+    </div>
+
+    <div class="section">
+        <h2>3. Test /admin/api/users Endpoint</h2>
+        <button onclick="testUsersAPI()">Call /admin/api/users</button>
+        <pre id="apiOutput"></pre>
+    </div>
+
+    <div class="section">
+        <h2>4. Simulated loadAccounts()</h2>
+        <button onclick="testLoadAccounts()">Test  loadAccounts()</button>
+        <pre id="loadAccountsOutput"></pre>
+    </div>
+
+    <script>
+        function log(elementId, message, isError = false) {
+            const elem = document.getElementById(elementId);
+            elem.innerHTML += (isError ? '<span class="error">' : '<span class="success">') + new Date().toLocaleTimeString() + ': ' + message + '</span>\n';
+            elem.scrollTop = elem.scrollHeight;
+        }
+
+        function checkStorage() {
+            const output = 'storageOutput';
+            document.getElementById(output).innerHTML = '';
+            
+            const authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+            const userRole = sessionStorage.getItem('userRole') || localStorage.getItem('userRole');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            log(output, 'SessionStorage authToken: ' + (sessionStorage.getItem('authToken') ? 'EXISTS' : 'MISSING'));
+            log(output, 'LocalStorage authToken: ' + (localStorage.getItem('authToken') ? 'EXISTS' : 'MISSING'));
+            log(output, 'SessionStorage userRole: ' + (sessionStorage.getItem('userRole') || 'MISSING'));
+            log(output, 'LocalStorage userRole: ' + (localStorage.getItem('userRole') || 'MISSING'));
+            log(output, 'userEmail: ' + (userEmail || 'NOT SET'));
+            
+            if (authToken) {
+                log(output, 'Token found: ' + authToken.substring(0, 50) + '...', false);
+                log(output, 'Role: ' + userRole, false);
+            } else {
+                log(output, 'NO TOKEN FOUND IN STORAGE!', true);
+            }
+        }
+
+        async function testLogin() {
+            const output = 'loginOutput';
+            document.getElementById(output).innerHTML = '';
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            log(output, 'Attempting login with: ' + email);
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log(output, 'Login successful!', false);
+                    log(output, 'Role: ' + data.role, false);
+                    log(output, 'Token: ' + data.token.substring(0, 50) + '...', false);
+                    
+                    // Store token
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userRole', data.role);
+                    localStorage.setItem('userEmail', data.email);
+                    sessionStorage.setItem('authToken', data.token);
+                    sessionStorage.setItem('userRole', data.role);
+                    
+                    log(output, 'Token stored in localStorage and sessionStorage', false);
+                } else {
+                    log(output, 'Login failed: ' + data.message, true);
+                }
+            } catch (e) {
+                log(output, 'Error: ' + e.message, true);
+            }
+        }
+
+        async function testUsersAPI() {
+            const output = 'apiOutput';
+            document.getElementById(output).innerHTML = '';
+            
+            const authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+            
+            if (!authToken) {
+                log(output, 'NO TOKEN FOUND! Login first.', true);
+                return;
+            }
+            
+            log(output, 'Calling /admin/api/users with token: ' + authToken.substring(0, 30) + '...');
+            
+            try {
+                const response = await fetch('/admin/api/users', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                
+                log(output, 'Response status: ' + response.status);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    log(output, 'Error: ' + errorText, true);
+                    return;
+                }
+                
+                const data = await response.json();
+                log(output, 'Success! Retrieved ' + data.data.length + ' users', false);
+                log(output, 'Data: ' + JSON.stringify(data, null, 2), false);
+            } catch (e) {
+                log(output, 'Exception: ' + e.message, true);
+            }
+        }
+
+        async function testLoadAccounts() {
+            const output = 'loadAccountsOutput';
+            document.getElementById(output).innerHTML = '';
+            
+            const authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+            
+            if (!authToken) {
+                log(output, 'NO TOKEN FOUND! Login first.', true);
+                return;
+            }
+            
+            log(output, '📤 [LOAD-ACCOUNTS] Sending request with token: ' + (authToken ? authToken.substring(0, 30) + '...' : 'NO TOKEN'));
+            
+            try {
+                const response = await fetch('/admin/api/users', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    log(output, '❌ [LOAD-ACCOUNTS] Error response - Status: ' + response.status + ' Text: ' + errorText, true);
+                    return;
+                }
+
+                const data = await response.json();
+                log(output, '✅ [LOAD-ACCOUNTS] Success - Received data: ' + JSON.stringify(data, null, 2), false);
+            } catch (error) {
+                log(output, '❌ Error: ' + error.message, true);
+            }
+        }
+
+        // Auto-check storage on page load
+        window.addEventListener('load', function() {
+            log('storageOutput', 'Page loaded - checking storage...');
+            checkStorage();
+        });
+    </script>
+</body>
+</html>

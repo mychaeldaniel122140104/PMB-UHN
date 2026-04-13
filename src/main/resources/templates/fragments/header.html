@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- Header Fragment -->
+    <div th:fragment="header">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-custom sticky-top" style="background: linear-gradient(90deg, #27ae60 0%, #1a472a 100%); padding: 1rem 2rem;">
+            <div class="container-fluid">
+                <!-- Logo & Brand -->
+                <a class="navbar-brand" href="/dashboard-camaba.html" style="color: white; font-weight: bold; font-size: 20px;">
+                    <i class="fas fa-graduation-cap" style="margin-right: 8px;"></i>PMB UHN Nommensen
+                </a>
+
+                <!-- Mobile Toggle -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navigation Menu -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto" style="gap: 10px;">
+                        <!-- Menu Peserta -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="menuPeserta" role="button" data-bs-toggle="dropdown" style="color: #e0e0e0;">
+                                <i class="fas fa-users"></i> Menu
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="menuPeserta">
+                                <li><a class="dropdown-item" href="/dashboard-camaba.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                                <li><a class="dropdown-item" href="/profile.html"><i class="fas fa-user"></i> Profil</a></li>
+                                <li><a class="dropdown-item" href="/ujian.html"><i class="fas fa-pencil"></i> Ujian</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Message Badge -->
+                        <li class="nav-item">
+                            <button class="btn position-relative" id="messageBtn" onclick="openMessagingModal()" title="Pesan" style="background: #27ae60; color: white; font-size: 14px; border: none; padding: 8px 16px; border-radius: 5px; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.background='#1a8f4a'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#27ae60'; this.style.transform='scale(1)'">
+                                <i class="fas fa-envelope"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="messageBadge" style="font-size: 10px; display: none;">
+                                    <span id="badgeCount">0</span>
+                                </span>
+                            </button>
+                        </li>
+
+                        <!-- Customer Service -->
+                        <li class="nav-item">
+                            <button class="btn" onclick="openMessagingModal()" title="Customer Service" style="background: #27ae60; color: white; font-size: 14px; border: none; padding: 8px 16px; border-radius: 5px; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.background='#1a8f4a'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#27ae60'; this.style.transform='scale(1)'">
+                                <i class="fas fa-headset"></i> CS
+                            </button>
+                        </li>
+
+                        <!-- Profile Menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="profileMenu" role="button" data-bs-toggle="dropdown" style="background: #27ae60; color: white; font-weight: 600; border-radius: 5px; padding: 8px 16px; display: inline-block; transition: all 0.3s;" onmouseover="this.style.background='#1a8f4a'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#27ae60'; this.style.transform='scale(1)'">
+                                <i class="fas fa-user-circle"></i> Profil
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileMenu">
+                                <li><a class="dropdown-item" href="/profile.html"><i class="fas fa-sliders-h"></i> Pengaturan Profil</a></li>
+                                <li><a class="dropdown-item" href="/reset-password.html"><i class="fas fa-key"></i> Ganti Password</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>

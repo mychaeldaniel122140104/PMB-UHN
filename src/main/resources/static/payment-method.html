@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metode Pembayaran - PMB HKBP Nommensen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a472a;
+            --secondary: #e74c3c;
+            --success: #27ae60;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+        
+        .navbar {
+            background: var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 20px;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: white !important;
+        }
+        
+        .container-main {
+            margin-top: 80px;
+            margin-bottom: 40px;
+        }
+        
+        .payment-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header-section h1 {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header-section p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .payment-summary {
+            background: #f0f9ff;
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+            border-top: 2px solid #e9ecef;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        .payment-method-section {
+            margin-bottom: 30px;
+        }
+        
+        .payment-method-section h5 {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .payment-option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .payment-option:hover {
+            border-color: var(--primary);
+            background: #f0f9ff;
+        }
+        
+        .payment-option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(26, 71, 42, 0.05) 0%, rgba(39, 174, 96, 0.05) 100%);
+        }
+        
+        .payment-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .payment-option.selected .payment-radio {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .payment-option.selected .payment-radio::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+        }
+        
+        .payment-details {
+            flex: 1;
+        }
+        
+        .payment-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .payment-desc {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .payment-icon {
+            font-size: 32px;
+            opacity: 0.6;
+        }
+        
+        .virtual-account-info {
+            background: white;
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .virtual-account-info.show {
+            display: block;
+        }
+        
+        .va-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+        }
+        
+        .va-info-text {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn-action {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary);
+            color: white;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .btn-primary-custom:hover:not(:disabled) {
+            background: #0f2d1f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 71, 42, 0.3);
+            color: white;
+        }
+        
+        .btn-primary-custom:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .btn-secondary-custom {
+            background: #e9ecef;
+            color: #333;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .btn-secondary-custom:hover {
+            background: #dee2e6;
+            color: #333;
+        }
+        
+        .btn-copy {
+            background: var(--secondary);
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+        
+        .btn-copy:hover {
+            background: #c0392b;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .payment-steps {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .payment-steps.show {
+            display: block;
+        }
+        
+        .step-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            padding-top: 5px;
+            font-size: 13px;
+            color: #555;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-container {
+                padding: 20px;
+            }
+            
+            .header-section h1 {
+                font-size: 24px;
+            }
+            
+            .payment-option {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-primary-custom,
+            .btn-secondary-custom {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard-camaba.html">🎓 PMB HKBP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard-camaba.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile.html">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link" style="cursor: pointer;" onclick="logout()">Logout</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-main">
+        <div class="payment-container">
+            <div class="header-section">
+                <h1>Metode Pembayaran</h1>
+                <p>Pilih metode pembayaran yang tersedia</p>
+            </div>
+
+            <!-- Payment Summary -->
+            <div class="payment-summary">
+                <div class="summary-row">
+                    <span>Program Studi:</span>
+                    <span id="programName">-</span>
+                </div>
+                <div class="summary-row">
+                    <span>Gelombang:</span>
+                    <span id="gelombangName">-</span>
+                </div>
+                <div class="summary-row">
+                    <span>Biaya Pendaftaran:</span>
+                    <span id="amount">-</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total Pembayaran:</span>
+                    <span id="totalAmount">-</span>
+                </div>
+            </div>
+
+            <div class="alert-info">
+                <i class="fas fa-info-circle"></i>
+                <strong>Perhatian:</strong> Pembayaran harus dilakukan dalam 7 hari. Setelah batas waktu, Virtual Account akan expired dan Anda harus membuat ulang.
+            </div>
+
+            <!-- Payment Method Selection -->
+            <div class="payment-method-section">
+                <h5><i class="fas fa-credit-card"></i> Pilih Metode Pembayaran</h5>
+                
+                <div class="payment-option" onclick="selectPaymentMethod(1, 'BRIVA')">
+                    <div class="payment-radio"></div>
+                    <div class="payment-icon">🏦</div>
+                    <div class="payment-details">
+                        <div class="payment-title">Virtual Account BRIVA</div>
+                        <div class="payment-desc">Transfer melalui Virtual Account BRIVA dari bank pilihan Anda</div>
+                    </div>
+                </div>
+
+                <!-- Virtual Account Info -->
+                <div class="virtual-account-info" id="vaInfo">
+                    <h6>Nomor Virtual Account Anda</h6>
+                    <div class="va-number" id="vaNumber">-</div>
+                    <p class="va-info-text">Nomor VA valid selama 7 hari. Silahkan transfer sebelum batas waktu.</p>
+                    <button class="btn-copy" onclick="copyVA()">
+                        <i class="fas fa-copy"></i> Salin Nomor VA
+                    </button>
+                    
+                    <div class="payment-steps show">
+                        <h6 style="margin-bottom: 15px; color: var(--primary);">Cara Pembayaran:</h6>
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-text">Buka aplikasi mobile banking atau Internet Banking Anda</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-text">Pilih menu Transfer atau Pembayaran</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-text">Masukkan nomor Virtual Account di atas</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-text">Masukkan jumlah uang sesuai tagihan</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">5</div>
+                            <div class="step-text">Selesaikan transaksi dan tunggu konfirmasi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-action btn-secondary-custom" onclick="previousStep()">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <button class="btn-action btn-primary-custom" id="confirmBtn" onclick="confirmPayment()" disabled>
+                    <i class="fas fa-check-circle"></i> Konfirmasi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const selectedFormula = JSON.parse(localStorage.getItem('selectedFormula') || '{}');
+        let selectedPaymentMethod = null;
+        let vaNumber = null;
+
+        if (!authToken) {
+            window.location.href = '/login.html';
+        }
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(value);
+        }
+
+        function displaySummary() {
+            document.getElementById('programName').textContent = selectedFormula.title || '-';
+            document.getElementById('amount').textContent = formatCurrency(selectedFormula.price || 0);
+            document.getElementById('totalAmount').textContent = formatCurrency(selectedFormula.price || 0);
+            document.getElementById('gelombangName').textContent = localStorage.getItem('selectedGelombang') || '-';
+        }
+
+        function selectPaymentMethod(id, method) {
+            // Remove previous selection
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Add selection to clicked option
+            event.currentTarget.classList.add('selected');
+            selectedPaymentMethod = { id, method };
+
+            // Show VA info if BRIVA selected
+            const vaInfo = document.getElementById('vaInfo');
+            if (method === 'BRIVA') {
+                vaInfo.classList.add('show');
+                generateVA();
+                document.getElementById('confirmBtn').disabled = false;
+            } else {
+                vaInfo.classList.remove('show');
+                document.getElementById('confirmBtn').disabled = true;
+            }
+        }
+
+        function generateVA() {
+            // Format: bank code + customer ref
+            const timestamp = Date.now();
+            const random = Math.random().toString().substring(2, 7);
+            vaNumber = '8860' + timestamp.toString().slice(-8) + random;
+            document.getElementById('vaNumber').textContent = vaNumber;
+        }
+
+        function copyVA() {
+            if (!vaNumber) return;
+            
+            navigator.clipboard.writeText(vaNumber).then(() => {
+                alert('Nomor VA berhasil disalin!');
+            }).catch(() => {
+                console.error('Gagal menyalin');
+            });
+        }
+
+        function previousStep() {
+            window.location.href = '/formula-selection.html';
+        }
+
+        function confirmPayment() {
+            if (!selectedPaymentMethod) {
+                alert('Silahkan pilih metode pembayaran');
+                return;
+            }
+
+            // Save payment info
+            localStorage.setItem('selectedPaymentMethod', JSON.stringify(selectedPaymentMethod));
+            localStorage.setItem('vaNumber', vaNumber);
+
+            // Show success message and redirect
+            alert('Virtual Account berhasil dibuat! Silahkan transfer sesuai dengan nomor VA yang tertera sebelum batas waktu.');
+            window.location.href = '/dashboard-camaba.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
+            window.location.href = '/login.html';
+        }
+
+        // Load summary on page load
+        displaySummary();
+    </script>
+</body>
+</html>

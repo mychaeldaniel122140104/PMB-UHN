@@ -1,0 +1,2773 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran - PMB HKBP Nommensen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a472a;
+            --secondary: #e74c3c;
+            --success: #27ae60;
+            --info: #3498db;
+        }
+        
+        body {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(202, 204, 202, 0.9)), url('/gambar/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 20px;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: white !important;
+        }
+        
+        .container-main {
+            margin-top: 1% !important;
+            margin-bottom: 40px;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-right: 5%;
+            margin-left: 5%;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header-section h1 {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header-section p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-section-title {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .form-control, .form-select {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 15px;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(26, 71, 42, 0.15);
+        }
+        
+        .required::after {
+            content: ' *';
+            color: var(--secondary);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-text {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .file-upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+        
+        .file-upload-area:hover {
+            background: #f0f9ff;
+            border-color: var(--info);
+        }
+        
+        .file-upload-area.dragover {
+            background: #e0f2f1;
+            border-color: var(--success);
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .file-name {
+            font-size: 13px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        /* Modal Backdrop - Allow body interactions */
+        .modal.show {
+            background: rgba(0, 0, 0, 0.5);
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+        
+        .modal-dialog {
+            margin: 0;
+            z-index: 10000;
+            pointer-events: auto;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .btn-action {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary);
+            color: white;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .btn-primary-custom:hover:not(:disabled) {
+            background: #0f2d1f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 71, 42, 0.3);
+            color: white;
+        }
+        
+        .btn-primary-custom:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .btn-secondary-custom {
+            background: #e9ecef;
+            color: #333;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .btn-secondary-custom:hover {
+            background: #dee2e6;
+            color: #333;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+            
+            .header-section h1 {
+                font-size: 24px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-primary-custom,
+            .btn-secondary-custom {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="headerContainer"></div>
+    <div id="pageHeaderContainer"></div>
+
+    <div class="container-main" style="margin-top: 0;">
+        <div class="form-container">
+            <div class="header-section" style="display: none;">
+                <h1>Formulir Pendaftaran</h1>
+                <p>Lengkapi semua data di bawah ini untuk melanjutkan proses pendaftaran</p>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Formulir berhasil disimpan!
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
+            </div>
+
+            <!-- WARNING BANNER: NO SELECTION TYPE -->
+            <div class="alert alert-danger" id="warningNoSelectionType" style="display: none; margin-top: 15px;">
+                <h5>⚠️ Belum Ada Jenis Pendaftaran yang Dipilih</h5>
+                <p>Anda harus memilih jenis pendaftaran terlebih dahulu sebelum mengisi formulir ini.</p>
+                <p style="margin-bottom: 0;"><strong>Langkah:</strong></p>
+                <ol style="margin-bottom: 0;">
+                    <li>Klik tombol KEMBALI di bawah</li>
+                    <li>Pilih jenis pendaftaran Anda </li>
+                    <li>Form ini akan tertampil otomatis</li>
+                </ol>
+                <button type="button" class="btn btn-warning" style="margin-top: 10px;" onclick="goBackToFormula()">
+                    <i class="fas fa-arrow-left"></i> KEMBALI KE PILIHAN JENIS PENDAFTARAN
+                </button>
+            </div>
+
+            <div class="alert-info">
+                <i class="fas fa-info-circle"></i>
+                <strong>Penting:</strong> Setelah formulir disetujui, kartu ujian akan dikirim ke alamat email Anda.
+            </div>
+
+            <!-- ✅ NEW: Display selected gelombang and formula info -->
+            <div class="alert alert-light" id="selectionInfoSection" style="background: #f8f9fa; border: 1px solid #dee2e6; border-left: 4px solid var(--primary); display: none; margin-bottom: 25px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <small style="color: #999; font-size: 12px;"><i class="fas fa-calendar"></i> GELOMBANG TERPILIH</small>
+                        <p style="margin: 8px 0 0 0; font-weight: 600; color: var(--primary); font-size: 16px;">
+                            <span id="displayGelombangName">-</span>
+                        </p>
+                    </div>
+                    <div>
+                        <small style="color: #999; font-size: 12px;"><i class="fas fa-book"></i> JENIS SELEKSI TERPILIH</small>
+                        <p style="margin: 8px 0 0 0; font-weight: 600; color: var(--primary); font-size: 16px;">
+                            <span id="displayFormulaName">-</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <form id="registrationForm">
+                <!-- Program Studi Section (ALWAYS VISIBLE) -->
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-graduation-cap"></i> Pilihan Program Studi
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Pilihan Program Studi</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Pilihan 1</label>
+                                <select class="form-select" id="programChoice1" name="programChoice1" required>
+                                    <option value="">-- Pilih Program Studi --</option>
+                                </select>
+                                <small class="text-muted">Pilihan 1 adalah Prioritas utama</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Pilihan 2</label>
+                                <select class="form-select" id="programChoice2" name="programChoice2">
+                                    <option value="">-- Pilih Program Studi --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Pilihan 3</label>
+                                <select class="form-select" id="programChoice3" name="programChoice3">
+                                    <option value="">-- Pilih Program Studi --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Exam Section (shown only if requireTesting is true) -->
+                <div class="form-section" id="examSection" style="display: none;">
+                    <div class="form-section-title">
+                        <i class="fas fa-building"></i> Informasi Lokasi Ujian
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Lokasi Ujian</label>
+                            <input type="text" class="form-control" id="examLocation" value="Kampus Medan" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Fakultas</label>
+                            <input type="text" class="form-control" id="faculty" placeholder="Formulir Online Kampus Medan" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ruang Ujian</label>
+                        <input type="text" class="form-control" id="examRoom" value="Otomatis Sistem yang menentukan" readonly>
+                    </div>
+                </div>
+
+                <!-- Data Pribadi -->
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-user"></i> Data Pribadi
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" id="participantNumberField" style="display: none;">
+                            <label>No. Peserta / Ujian</label>
+                            <input type="text" class="form-control" id="participantNumber" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="fullName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Nomor Identitas (KTP/Paspor)</label>
+                            <input type="text" class="form-control" id="nik" placeholder="NIK/Paspor" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Alamat di Medan</label>
+                            <input type="text" class="form-control" id="addressMedan" placeholder="Dikosongkan jika tidak/belum ada alamat di Medan">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Keterangan Tempat Tinggal</label>
+                            <select class="form-select" id="residenceInfo">
+                                <option value="">-- Pilih --</option>
+                                <option value="tinggal_dengan_orang_tua">Tinggal dengan Orang Tua</option>
+                                <option value="tinggal_sendiri">Tinggal Sendiri</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Kelurahan</label>
+                            <input type="text" class="form-control" id="subdistrict" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Kecamatan</label>
+                            <input type="text" class="form-control" id="district" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Kabupaten/Kotamadya</label>
+                            <input type="text" class="form-control" id="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Provinsi</label>
+                            <input type="text" class="form-control" id="province" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Nomor Telepon / HP</label>
+                            <input type="tel" class="form-control" id="phoneNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Tempat Lahir</label>
+                            <input type="text" class="form-control" id="birthPlace" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Tanggal Lahir</label>
+                            <input type="date" class="form-control" id="birthDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Jenis Kelamin</label>
+                            <select class="form-select" id="gender" required>
+                                <option value="">-- Pilih Jenis Kelamin --</option>
+                                <option value="LAKI_LAKI">Laki-laki</option>
+                                <option value="PEREMPUAN">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Agama</label>
+                            <select class="form-select" id="religion" required>
+                                <option value="">-- Pilih Agama --</option>
+                                <option value="ISLAM">Islam</option>
+                                <option value="KRISTEN_PROTESTAN">Kristen Protestan</option>
+                                <option value="KRISTEN_KATOLIK">Kristen Katolik</option>
+                                <option value="HINDU">Hindu</option>
+                                <option value="BUDHA">Budha</option>
+                                <option value="KONGHUCU">Konghucu</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sumber Informasi</label>
+                        <select class="form-select" id="informationSource">
+                            <option value="">-- Pilih Sumber Informasi --</option>
+                            <option value="media_sosial">Media Sosial</option>
+                            <option value="website">Website</option>
+                            <option value="teman">Teman</option>
+                            <option value="sekolah">Sekolah</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Data Orang Tua -->
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-users"></i> Data Orang Tua
+                    </div>
+
+                    <!-- Ayah -->
+                    <div style="margin-bottom: 30px; padding: 20px; background: #f9f9f9; border-radius: 8px;">
+                        <h5 style="color: var(--primary); margin-bottom: 15px;">Ayah</h5>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>NIK Ayah</label>
+                                <input type="text" class="form-control" id="fatherNik">
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Nama Ayah</label>
+                                <input type="text" class="form-control" id="fatherName" placeholder="Nama lengkap, tidak disingkat" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tanggal Lahir Ayah</label>
+                                <input type="date" class="form-control" id="fatherBirthDate">
+                            </div>
+                            <div class="form-group">
+                                <label>Pendidikan Ayah</label>
+                                <select class="form-select" id="fatherEducation">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="SD">SD</option>
+                                    <option value="SMP">SMP</option>
+                                    <option value="SMA">SMA</option>
+                                    <option value="D3">D3</option>
+                                    <option value="S1">S1</option>
+                                    <option value="S2">S2</option>
+                                    <option value="S3">S3</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Pekerjaan Ayah</label>
+                                <select class="form-select" id="fatherOccupation">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="Dokter" class="occupation-medical">Dokter</option>
+                                    <option value="Dokter Spesialis" class="occupation-medical">Dokter Spesialis</option>
+                                    <option value="Pegawai Negeri Sipil" class="occupation-nonmedical">Pegawai Negeri Sipil</option>
+                                    <option value="Pegawai Swasta" class="occupation-nonmedical">Pegawai Swasta</option>
+                                    <option value="Wiraswasta/Pengusaha" class="occupation-nonmedical">Wiraswasta/Pengusaha</option>
+                                    <option value="Petani" class="occupation-nonmedical">Petani</option>
+                                    <option value="Pedagang" class="occupation-nonmedical">Pedagang</option>
+                                    <option value="Buruh" class="occupation-nonmedical">Buruh</option>
+                                    <option value="Lainnya" class="occupation-nonmedical">Lainnya</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Penghasilan Ayah</label>
+                                <select class="form-select" id="fatherIncome">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="kurang_500k">Kurang dari Rp 500.000</option>
+                                    <option value="500k_1jt">Rp 500.000 - Rp 1.000.000</option>
+                                    <option value="1jt_2jt">Rp 1.000.000 - Rp 2.000.000</option>
+                                    <option value="2jt_5jt">Rp 2.000.000 - Rp 5.000.000</option>
+                                    <option value="lebih_5jt">Lebih dari Rp 5.000.000</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nomor Telepon / HP Ayah</label>
+                                <input type="tel" class="form-control" id="fatherPhone">
+                            </div>
+                            <div class="form-group">
+                                <label>Status Ayah</label>
+                                <select class="form-select" id="fatherStatus">
+                                    <option value="MASIH_HIDUP">Masih Hidup</option>
+                                    <option value="MENINGGAL">Meninggal</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ibu -->
+                    <div style="margin-bottom: 30px; padding: 20px; background: #f9f9f9; border-radius: 8px;">
+                        <h5 style="color: var(--primary); margin-bottom: 15px;">Ibu</h5>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>NIK Ibu</label>
+                                <input type="text" class="form-control" id="motherNik">
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Nama Ibu</label>
+                                <input type="text" class="form-control" id="motherName" placeholder="Nama lengkap, tidak disingkat" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tanggal Lahir Ibu</label>
+                                <input type="date" class="form-control" id="motherBirthDate">
+                            </div>
+                            <div class="form-group">
+                                <label>Pendidikan Ibu</label>
+                                <select class="form-select" id="motherEducation">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="SD">SD</option>
+                                    <option value="SMP">SMP</option>
+                                    <option value="SMA">SMA</option>
+                                    <option value="D3">D3</option>
+                                    <option value="S1">S1</option>
+                                    <option value="S2">S2</option>
+                                    <option value="S3">S3</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Pekerjaan Ibu</label>
+                                <select class="form-select" id="motherOccupation">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="Dokter" class="occupation-medical">Dokter</option>
+                                    <option value="Dokter Spesialis" class="occupation-medical">Dokter Spesialis</option>
+                                    <option value="Pegawai Negeri Sipil" class="occupation-nonmedical">Pegawai Negeri Sipil</option>
+                                    <option value="Pegawai Swasta" class="occupation-nonmedical">Pegawai Swasta</option>
+                                    <option value="Wiraswasta/Pengusaha" class="occupation-nonmedical">Wiraswasta/Pengusaha</option>
+                                    <option value="Petani" class="occupation-nonmedical">Petani</option>
+                                    <option value="Pedagang" class="occupation-nonmedical">Pedagang</option>
+                                    <option value="Buruh" class="occupation-nonmedical">Buruh</option>
+                                    <option value="Lainnya" class="occupation-nonmedical">Lainnya</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Penghasilan Ibu</label>
+                                <select class="form-select" id="motherIncome">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="kurang_500k">Kurang dari Rp 500.000</option>
+                                    <option value="500k_1jt">Rp 500.000 - Rp 1.000.000</option>
+                                    <option value="1jt_2jt">Rp 1.000.000 - Rp 2.000.000</option>
+                                    <option value="2jt_5jt">Rp 2.000.000 - Rp 5.000.000</option>
+                                    <option value="lebih_5jt">Lebih dari Rp 5.000.000</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nomor Telepon / HP Ibu</label>
+                                <input type="tel" class="form-control" id="motherPhone">
+                            </div>
+                            <div class="form-group">
+                                <label>Status Ibu</label>
+                                <select class="form-select" id="motherStatus">
+                                    <option value="MASIH_HIDUP">Masih Hidup</option>
+                                    <option value="MENINGGAL">Meninggal</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alamat Orang Tua -->
+                    <div style="padding: 20px; background: #f9f9f9; border-radius: 8px;">
+                        <h5 style="color: var(--primary); margin-bottom: 15px;">Alamat Orang Tua</h5>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Kelurahan/Kecamatan</label>
+                                <input type="text" class="form-control" id="parentSubdistrict" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Kabupaten/Kotamadya</label>
+                                <input type="text" class="form-control" id="parentCity" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Provinsi</label>
+                                <input type="text" class="form-control" id="parentProvince" value="Sumatera Utara" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Nomor Telepon / HP Orang Tua</label>
+                                <input type="tel" class="form-control" id="parentPhone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Asal Sekolah -->
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-school"></i> Data Asal Sekolah
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Asal SMU/SMK</label>
+                            <input type="text" class="form-control" id="schoolOrigin" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Jurusan</label>
+                            <input type="text" class="form-control" id="schoolMajor" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Tahun Lulus</label>
+                            <input type="number" class="form-control" id="schoolYear" min="2015" required>
+                        </div>
+                        <div class="form-group">
+                            <label>NISN</label>
+                            <input type="text" class="form-control" id="nisn">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Kabupaten/Kotamadya Sekolah</label>
+                            <input type="text" class="form-control" id="schoolCity">
+                        </div>
+                        <div class="form-group">
+                            <label>Provinsi Sekolah</label>
+                            <input type="text" class="form-control" id="schoolProvince">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dokumen Pendukung -->
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-file-upload"></i> Dokumen Pendukung
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Foto Identitas (KTP/Paspor)</label>
+                        <div class="file-upload-area" id="photoId" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                            <div class="file-icon"><i class="fas fa-id-card"></i></div>
+                            <div>Klik atau drag file ke sini</div>
+                            <div class="file-name" id="photoIdName"></div>
+                        </div>
+                        <input type="file" class="file-input" id="photoIdFile" accept="image/*" onchange="handleFileSelect(event, 'photoId')">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Ijazah/Sertifikat Lulus</label>
+                        <div class="file-upload-area" id="certificate" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                            <div class="file-icon"><i class="fas fa-certificate"></i></div>
+                            <div>Klik atau drag file ke sini</div>
+                            <div class="file-name" id="certificateName"></div>
+                        </div>
+                        <input type="file" class="file-input" id="certificateFile" accept="image/*, .pdf" onchange="handleFileSelect(event, 'certificate')">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rapor/Transkrip Nilai</label>
+                        <div class="file-upload-area" id="transcript" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                            <div class="file-icon"><i class="fas fa-file"></i></div>
+                            <div>Klik atau drag file ke sini</div>
+                            <div class="file-name" id="transcriptName"></div>
+                        </div>
+                        <input type="file" class="file-input" id="transcriptFile" accept="image/*, .pdf" onchange="handleFileSelect(event, 'transcript')">
+                    </div>
+
+                    <!-- ✅ NEW: Nilai File - Conditional for RANKING_NO_TEST wave -->
+                    <div class="form-group" id="nilaiFileSection" style="display: none;">
+                        <label class="required">Bukti Nilai <small class="text-muted">(Untuk Jalur Ranking)</small></label>
+                        <div class="file-upload-area" id="nilaiFile" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                            <div class="file-icon"><i class="fas fa-chart-bar"></i></div>
+                            <div>Klik atau drag file ke sini</div>
+                            <div class="file-name" id="nilaiFileName"></div>
+                        </div>
+                        <input type="file" class="file-input" id="nilaiFileInput" accept="image/*, .pdf" onchange="handleFileSelect(event, 'nilaiFile')">
+                        <small class="text-muted d-block mt-2">Upload bukti nilai akademik atau prestasi yang relevan</small>
+                    </div>
+
+                    <!-- ✅ NEW: Ranking File - Conditional for RANKING_NO_TEST wave -->
+                    <div class="form-group" id="rankingFileSection" style="display: none;">
+                        <label class="required">Bukti Ranking <small class="text-muted">(Untuk Jalur Ranking)</small></label>
+                        <div class="file-upload-area" id="rankingFile" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                            <div class="file-icon"><i class="fas fa-trophy"></i></div>
+                            <div>Klik atau drag file ke sini</div>
+                            <div class="file-name" id="rankingFileName"></div>
+                        </div>
+                        <input type="file" class="file-input" id="rankingFileInput" accept="image/*, .pdf" onchange="handleFileSelect(event, 'rankingFile')">
+                        <small class="text-muted d-block mt-2">Upload bukti ranking atau sertifikat prestasi dari sekolah</small>
+                    </div>
+                </div>
+
+                <!-- Pernyataan -->
+                <div class="form-section">
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">
+                                Saya menyatakan bahwa semua data di atas adalah benar dan dapat dipertanggungjawabkan
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button type="button" class="btn-action btn-secondary-custom" onclick="goBackToGelombang()">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </button>
+                    <button type="submit" id="submitFormBtn" class="btn-action btn-primary-custom" disabled title="Pilih jenis pendaftaran terlebih dahulu">
+                        <i class="fas fa-paper-plane"></i> Kirim Formulir
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title" id="errorModalLabel">
+                        <i class="fas fa-exclamation-circle"></i> Validasi Form
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorModalMessage" style="font-size: 15px; margin-bottom: 0;"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Autentikasi -->
+    <div class="modal fade" id="authRequiredModal" tabindex="-1" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center" style="padding: 40px 20px;">
+                    <i class="fas fa-lock" style="font-size: 48px; color: #e74c3c; margin-bottom: 20px;"></i>
+                    <h5 class="modal-title mb-3" style="color: #333;">Autentikasi Diperlukan</h5>
+                    <p class="text-muted mb-4">Anda belum login. Silahkan login terlebih dahulu untuk mengakses halaman ini.</p>
+                    <button type="button" class="btn btn-primary" id="loginRedirectBtn">
+                        <i class="fas fa-sign-in-alt"></i> OK - Ke Halaman Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ==========================================
+        // FORM AUTO-SAVE SYSTEM - V4 (PER-USER SECURE)
+        // ==========================================
+        
+        const AUTH_TOKEN_KEY = 'authToken';
+        const USER_EMAIL_KEY = 'userEmail';
+        
+        // ✅ Check sessionStorage first (per-tab), fallback to localStorage
+        let authToken = sessionStorage.getItem(AUTH_TOKEN_KEY) || localStorage.getItem(AUTH_TOKEN_KEY);
+        let userEmail = localStorage.getItem(USER_EMAIL_KEY);
+        let selectionTypeId = null;
+        let jenisSeleksiId = null;  // ✅ GLOBAL: Will be set during form init
+        let requireTesting = false;
+        let isKedokteranProgram = false; // Track if user selected Kedokteran program
+        let autoSaveActive = false;
+        
+        // GENERATE PER-USER STORAGE KEY (prevents other users from accessing this user's data)
+        function getFormStorageKey() {
+            if (!userEmail) return 'admissionFormData_unknown';
+            return 'admissionFormData_' + btoa(userEmail); // btoa = base64 encode for uniqueness
+        }
+        
+        function getLastSaveKey() {
+            if (!userEmail) return 'formLastSave_unknown';
+            return 'formLastSave_' + btoa(userEmail);
+        }
+        
+        const FORM_STORAGE_KEY = getFormStorageKey();
+        const LAST_SAVE_KEY = getLastSaveKey();
+
+        // ========== UTILITY FUNCTIONS ==========
+        function log(msg) {
+            console.log('%c[AUTO-SAVE] ' + msg, 'color: #0066cc; font-weight: bold;');
+        }
+        function logError(msg) {
+            console.error('%c[AUTO-SAVE ERROR] ' + msg, 'color: #cc0000; font-weight: bold;');
+        }
+
+        // ========== SELECTION TYPE VALIDATION ==========
+        
+        function goBackToFormula() {
+            window.location.href = '/formula-selection.html';
+        }
+
+        function goBackToGelombang() {
+            // Reset gelombang selection
+            localStorage.removeItem('selectedGelombang');
+            localStorage.removeItem('currentWaveType');
+            sessionStorage.removeItem('currentWaveType');
+            
+            console.log('🔄 Gelombang selection reset. Redirecting to gelombang-selection.html');
+            window.location.href = '/gelombang-selection.html';
+        }
+
+        function isValidSelectionTypeId(id) {
+            if (!id) return false;
+            id = String(id).trim();
+            if (id === '' || id === 'null' || id === 'undefined' || id === '0' || id === 'NaN') return false;
+            if (isNaN(parseInt(id))) return false;
+            const parsed = parseInt(id);
+            if (parsed <= 0) return false;  // Must be positive number
+            return true;
+        }
+
+        function updateSelectionTypeStatus() {
+            log('Checking selection type status...');
+            const isValid = isValidSelectionTypeId(selectionTypeId);
+            const warningBanner = document.getElementById('warningNoSelectionType');
+            const submitBtn = document.getElementById('submitFormBtn');
+            
+            if (!isValid) {
+                log('❌ Selection type INVALID or EMPTY');
+                if (warningBanner) warningBanner.style.display = 'block';
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.title = 'Pilih jenis pendaftaran terlebih dahulu';
+                }
+            } else {
+                log('✅ Selection type VALID: ' + selectionTypeId);
+                if (warningBanner) warningBanner.style.display = 'none';
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.title = '';
+                }
+            }
+        }
+
+        // ===== FILTER PROGRAM STUDI BY FORMULA SELECTION (NOT KEDOKTERAN/NON-KEDOKTERAN) =====
+        function filterProgramStudiBySelectionType() {
+            log('🔍 filterProgramStudiBySelectionType() CALLED');
+            
+            // Get linked programs from sessionStorage (set by displaySelectionInfoAndLoadPrograms)
+            let linkedPrograms = linkedProgramStudiList;
+            
+            // Try to restore from sessionStorage if not in memory
+            if (!linkedPrograms || linkedPrograms.length === 0) {
+                try {
+                    const stored = sessionStorage.getItem('linkedProgramStudiList');
+                    if (stored) {
+                        linkedPrograms = JSON.parse(stored);
+                        linkedProgramStudiList = linkedPrograms;
+                        log('✓ Restored linkedProgramStudiList from sessionStorage: ' + linkedPrograms.length + ' programs');
+                    }
+                } catch (e) {
+                    log('⚠️ Could not restore from sessionStorage');
+                }
+            }
+            
+            // ONLY filter if we have linked programs from formula selection
+            if (!linkedPrograms || linkedPrograms.length === 0) {
+                // If NO linked programs, do NOT show anything - keep hidding all
+                // This ensures we only show programs specifically linked to the formula
+                log('🔒 No linked programs - HIDING ALL program options');
+                
+                const selectElements = [
+                    document.getElementById('programChoice1'),
+                    document.getElementById('programChoice2'),
+                    document.getElementById('programChoice3')
+                ];
+                
+                selectElements.forEach((select, idx) => {
+                    if (!select) return;
+                    
+                    const options = select.querySelectorAll('option');
+                    options.forEach(option => {
+                        // Hide ALL options except empty/placeholder
+                        if (!option.value) {
+                            option.style.display = 'block';
+                        } else {
+                            option.style.display = 'none';
+                            option.disabled = true;
+                        }
+                    });
+                    
+                    log('  Select ' + idx + ': ALL program options HIDDEN');
+                });
+                
+                return;
+            }
+            
+            // ✅ HAS linked programs = show ONLY those
+            log('✅ Using FORMULA-BASED filtering with ' + linkedPrograms.length + ' linked programs');
+            
+            // Build set of program names/codes to keep
+            const linkedProgramSet = new Set();
+            linkedPrograms.forEach(prog => {
+                linkedProgramSet.add((prog.nama || '').toLowerCase());
+                linkedProgramSet.add((prog.kode || '').toLowerCase());
+            });
+            
+            const selectElements = [
+                document.getElementById('programChoice1'),
+                document.getElementById('programChoice2'),
+                document.getElementById('programChoice3')
+            ];
+            
+            selectElements.forEach((select, idx) => {
+                if (!select) {
+                    log('  ⚠️ Select ' + idx + ' not found');
+                    return;
+                }
+                
+                const options = select.querySelectorAll('option');
+                let shownCount = 0, hiddenCount = 0;
+                
+                options.forEach(option => {
+                    // Always show empty option
+                    if (!option.value) {
+                        option.style.display = 'block';
+                        shownCount++;
+                        return;
+                    }
+                    
+                    // Check if this option matches any linked program
+                    const optionText = (option.textContent || '').toLowerCase();
+                    const isLinked = Array.from(linkedProgramSet).some(linkedName => 
+                        optionText.includes(linkedName) || linkedName.includes(optionText)
+                    );
+                    
+                    if (isLinked) {
+                        option.style.display = 'block';
+                        option.disabled = false;
+                        shownCount++;
+                    } else {
+                        option.style.display = 'none';
+                        option.disabled = true;
+                        hiddenCount++;
+                    }
+                });
+                
+                log('  Select ' + idx + ': ' + shownCount + ' shown, ' + hiddenCount + ' hidden');
+            });
+            
+            log('✅ Program studi filtering COMPLETE');
+        }
+
+        // ===== FILTER PARENT OCCUPATIONS BY PROGRAM TYPE =====
+        function filterOccupationsByProgram() {
+            const occupationFields = ['fatherOccupation', 'motherOccupation'];
+            
+            occupationFields.forEach(fieldId => {
+                const selectElement = document.getElementById(fieldId);
+                if (!selectElement) return;
+                
+                const options = selectElement.querySelectorAll('option');
+                options.forEach(option => {
+                    if (!option.value) return; // Skip empty option
+                    
+                    const isMedical = option.classList.contains('occupation-medical');
+                    
+                    if (isKedokteranProgram) {
+                        // Show only medical occupations for Kedokteran program
+                        if (isMedical) {
+                            option.style.display = '';
+                        } else {
+                            option.style.display = 'none';
+                        }
+                    } else {
+                        // Show all non-medical occupations for Non-Kedokteran program
+                        if (!isMedical) {
+                            option.style.display = '';
+                        } else {
+                            option.style.display = 'none';
+                        }
+                    }
+                });
+            });
+            
+            log('✓ Parent occupations filtered. isKedokteranProgram: ' + isKedokteranProgram);
+        }
+
+        // ========== CORE SAVE/RESTORE ==========
+        
+        // Get all form field values
+        function getFormFieldsData() {
+            const data = {};
+            const fields = document.querySelectorAll('input, select, textarea');
+            
+            fields.forEach(field => {
+                if (!field.id) return; // Skip elements without ID
+                if (field.type === 'file') return; // Skip file uploads
+                if (field.type === 'hidden') return; // Skip hidden fields
+                
+                if (field.type === 'checkbox' || field.type === 'radio') {
+                    data[field.id] = field.checked;
+                } else {
+                    data[field.id] = field.value || '';
+                }
+            });
+            
+            return data;
+        }
+
+        // Save form data to localStorage
+        function saveFormToLocalStorage() {
+            try {
+                const data = getFormFieldsData();
+                const json = JSON.stringify(data);
+                
+                localStorage.setItem(FORM_STORAGE_KEY, json);
+                localStorage.setItem(LAST_SAVE_KEY, new Date().toLocaleTimeString('id-ID'));
+                
+                log('✓ SAVED ' + Object.keys(data).length + ' fields');
+                return true;
+            } catch (error) {
+                logError('Save failed: ' + error.message);
+                return false;
+            }
+        }
+
+        // Restore form data from localStorage
+        function restoreFormFromLocalStorage() {
+            try {
+                const json = localStorage.getItem(FORM_STORAGE_KEY);
+                if (!json) {
+                    log('No saved data found');
+                    return;
+                }
+
+                const data = JSON.parse(json);
+                let restored = 0;
+                
+                Object.keys(data).forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (!field) return;
+                    
+                    try {
+                        if (field.type === 'checkbox' || field.type === 'radio') {
+                            field.checked = data[fieldId];
+                        } else {
+                            field.value = data[fieldId];
+                        }
+                        restored++;
+                    } catch (e) {
+                        logError('Restore field ' + fieldId + ' failed: ' + e.message);
+                    }
+                });
+                
+                const lastSave = localStorage.getItem(LAST_SAVE_KEY);
+                log('✓ RESTORED ' + restored + ' fields (last save: ' + lastSave + ')');
+            } catch (error) {
+                logError('Restore failed: ' + error.message);
+            }
+        }
+
+        // Clear saved data
+        function clearFormCache() {
+            localStorage.removeItem(FORM_STORAGE_KEY);
+            localStorage.removeItem(LAST_SAVE_KEY);
+            log('✓ Cache cleared');
+        }
+
+        // ========== ATTACH EVENT LISTENERS ==========
+        
+        function attachAutoSaveListeners() {
+            if (autoSaveActive) {
+                log('Auto-save already active');
+                return;
+            }
+
+            log('Attaching auto-save listeners...');
+            
+            const fields = document.querySelectorAll('input, select, textarea');
+            log('Found ' + fields.length + ' form fields');
+            
+            let attached = 0;
+            fields.forEach(field => {
+                if (!field.id) return;
+                if (field.type === 'file') return;
+                
+                // DIRECT save on change (not debounced for reliability)
+                field.addEventListener('change', function() {
+                    saveFormToLocalStorage();
+                });
+                
+                // Also save on blur for text inputs (less frequent, more reliable)
+                if (field.type === 'text' || field.type === 'email' || field.type === 'tel' || field.type === 'date') {
+                    field.addEventListener('blur', function() {
+                        saveFormToLocalStorage();
+                    });
+                }
+                
+                attached++;
+            });
+            
+            autoSaveActive = true;
+            log('✓ Auto-save ACTIVATED for ' + attached + ' fields');
+            
+            // Also save periodically every 5 seconds for safety
+            setInterval(function() {
+                if (autoSaveActive) {
+                    saveFormToLocalStorage();
+                }
+            }, 5000);
+        }
+
+        // ========== PROGRAM CHOICE LISTENERS FOR DYNAMIC FILTERING ==========
+        function attachProgramChoiceListeners() {
+            log('========== ATTACHING PROGRAM CHOICE LISTENERS ==========');
+            
+            // Add event listeners to program choice selects for DYNAMIC filtering
+            const choiceSelects = ['programChoice1', 'programChoice2', 'programChoice3'];
+            let attachedCount = 0;
+            
+            choiceSelects.forEach(selectId => {
+                log('   Checking for: #' + selectId);
+                const select = document.getElementById(selectId);
+                if (select) {
+                    log('   ✅ FOUND: #' + selectId + ' - tagName: ' + select.tagName + ', type: ' + select.type);
+                    
+                    select.addEventListener('change', function() {
+                        const choice1Val = document.getElementById('programChoice1')?.value || '';
+                        const choice2Val = document.getElementById('programChoice2')?.value || '';
+                        const choice3Val = document.getElementById('programChoice3')?.value || '';
+                        
+                        log('🔄 PROGRAM CHANGED: ' + selectId + ' = ' + this.value);
+                        log('   Current selections: [' + choice1Val + ', ' + choice2Val + ', ' + choice3Val + ']');
+                        log('   isKedokteranProgram (API): ' + isKedokteranProgram);
+                        
+                        // Re-filter programs based on new selection
+                        filterProgramStudiBySelectionType();
+                        // Re-filter occupations based on new program selection
+                        filterOccupationsByProgram();
+                        
+                        // DEBUG: Show what's visible now
+                        setTimeout(() => {
+                            const select1 = document.getElementById('programChoice1');
+                            if (select1) {
+                                const visibleCount = Array.from(select1.querySelectorAll('option')).filter(o => o.style.display !== 'none').length;
+                                log('   After filter: ' + visibleCount + ' options visible in programChoice1');
+                            }
+                        }, 50);
+                    });
+                    attachedCount++;
+                    log('   ✅ Listener ATTACHED to: ' + selectId);
+                } else {
+                    logError('   ❌ Element NOT FOUND: #' + selectId + ' - Check if this ID exists in HTML!');
+                }
+            });
+            
+            log('========== SUMMARY: ' + attachedCount + '/3 program choice listeners attached ==========');
+        }
+
+        // ✅ NEW: Display selection info and load program studi based on formula
+        let linkedProgramStudiList = []; // Store program studi linked to selected formula
+        
+        async function displaySelectionInfoAndLoadPrograms() {
+            log('========== LOADING SELECTION INFO & PROGRAMS ==========');
+            
+            try {
+                // Get gelombang info from localStorage
+                const selectedGelombangJson = localStorage.getItem('selectedGelombang') || sessionStorage.getItem('selectedGelombang');
+                const selectedFormulaJson = localStorage.getItem('selectedFormula');
+                
+                log('selectedGelombang from localStorage: ' + selectedGelombangJson);
+                log('selectedFormula from localStorage: ' + selectedFormulaJson);
+                
+                let gelombangName = '-';
+                let formulaName = '-';
+                
+                // Parse gelombang
+                if (selectedGelombangJson) {
+                    try {
+                        const gelombangData = JSON.parse(selectedGelombangJson);
+                        gelombangName = gelombangData.title || '-';
+                        log('✓ Gelombang name: ' + gelombangName);
+                    } catch (e) {
+                        log('Failed to parse gelombang: ' + e.message);
+                    }
+                }
+                
+                // Parse formula
+                if (selectedFormulaJson) {
+                    try {
+                        const formulaData = JSON.parse(selectedFormulaJson);
+                        formulaName = formulaData.title || '-';
+                        log('✓ Formula name: ' + formulaName);
+                    } catch (e) {
+                        log('Failed to parse formula: ' + e.message);
+                    }
+                }
+                
+                // ✅ Get jenisSeleksiId from localStorage (set by formula-selection.html or URL param in edit mode)
+                jenisSeleksiId = localStorage.getItem('jenisSeleksiId');
+                if (jenisSeleksiId) {
+                    jenisSeleksiId = parseInt(jenisSeleksiId);
+                    log('✓ Jenis Seleksi ID from localStorage: ' + jenisSeleksiId);
+                }
+                
+                // Display info in UI
+                document.getElementById('displayGelombangName').textContent = gelombangName;
+                document.getElementById('displayFormulaName').textContent = formulaName;
+                document.getElementById('selectionInfoSection').style.display = 'block';
+                
+                // ✅ MAIN: Load linked program studi from BACKEND based on jenisSeleksiId
+                if (jenisSeleksiId && jenisSeleksiId > 0) {
+                    log('📋 Loading LINKED programs from backend for jenis seleksi: ' + jenisSeleksiId);
+                    
+                    try {
+                        // ✅ Call backend API to get ONLY programs linked to this jenis seleksi
+                        const response = await fetch(`/api/camaba/jenis-seleksi/${jenisSeleksiId}/program-studi`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': 'Bearer ' + authToken,
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch program studi: ' + response.status);
+                        }
+                        
+                        const programs = await response.json();
+                        linkedProgramStudiList = programs;
+                        
+                        // ✅ PERSIST to sessionStorage so it's available after page reload
+                        try {
+                            sessionStorage.setItem('linkedProgramStudiList', JSON.stringify(programs));
+                            log('✓ Saved ' + programs.length + ' LINKED programs to sessionStorage');
+                        } catch (e) {
+                            log('⚠️ Could not save to sessionStorage: ' + e.message);
+                        }
+                        
+                        log('✅ Loaded ' + programs.length + ' LINKED programs from backend');
+                        console.table(programs);
+                        
+                        // ✅ NOW POPULATE the select boxes with ONLY THESE LINKED PROGRAMS
+                        populateProgramStudiSelects(programs);
+                    } catch (error) {
+                        logError('Error loading LINKED program studi: ' + error.message);
+                        // Fallback: try to load from sessionStorage
+                        const sessionLinkedPrograms = sessionStorage.getItem('linkedProgramStudiList');
+                        if (sessionLinkedPrograms) {
+                            try {
+                                const programs = JSON.parse(sessionLinkedPrograms);
+                                log('⚠️ Using cached programs from sessionStorage: ' + programs.length);
+                                populateProgramStudiSelects(programs);
+                            } catch (e) {
+                                logError('Failed to parse cached programs: ' + e.message);
+                            }
+                        }
+                    }
+                } else {
+                    log('⚠️ CANNOT load programs - jenisSeleksiId is null or 0');
+                }
+                
+                log('========== SELECTION INFO DISPLAY COMPLETE ==========');
+            } catch (error) {
+                logError('displaySelectionInfoAndLoadPrograms error: ' + error.message);
+            }
+        }
+        
+        // ✅ NEW FUNCTION: Populate select boxes with program studi options
+        function populateProgramStudiSelects(programs) {
+            log('========== POPULATING PROGRAM STUDI SELECT BOXES ==========');
+            
+            if (!programs || programs.length === 0) {
+                log('⚠️ No programs to populate');
+                return;
+            }
+            
+            const selectIds = ['programChoice1', 'programChoice2', 'programChoice3'];
+            
+            selectIds.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (!select) {
+                    log('  ❌ Select NOT FOUND: ' + selectId);
+                    return;
+                }
+                
+                log('  📝 Populating: ' + selectId);
+                
+                // Remove all options except the placeholder
+                Array.from(select.options).forEach((option, idx) => {
+                    if (idx > 0) {  // Keep first placeholder option
+                        option.remove();
+                    }
+                });
+                
+                // Add program options from database
+                programs.forEach(prog => {
+                    const option = document.createElement('option');
+                    option.value = prog.id;  // Use database ID as value
+                    option.textContent = prog.nama || prog.name || 'Program';  // Display name
+                    option.dataset.kode = prog.kode || '';  // Store code as data attribute
+                    select.appendChild(option);
+                    log('    ✓ Added: ' + (prog.nama || prog.name));
+                });
+                
+                log('  ✅ ' + selectId + ' populated with ' + programs.length + ' options');
+            });
+            
+            log('========== PROGRAM STUDI POPULATION COMPLETE ==========');
+        }
+        
+        // ✅ NEW: Filter program choice dropdowns to only show linked programs
+        function filterProgramChoicesByFormula(linkedPrograms) {
+            log('========== FILTERING PROGRAM CHOICES BY FORMULA ==========');
+            
+            if (!linkedPrograms || linkedPrograms.length === 0) {
+                log('⚠️ No programs linked to this formula - all programs available');
+                return;
+            }
+            
+            // Build map of program names/codes to keep
+            const linkedProgramMap = {};
+            linkedPrograms.forEach(prog => {
+                linkedProgramMap[prog.nama] = true;
+                linkedProgramMap[prog.kode] = true;
+                log('  Linked program: ' + prog.nama + ' (code: ' + prog.kode + ')');
+            });
+            
+            // Filter all program choice selects
+            const choiceSelects = ['programChoice1', 'programChoice2', 'programChoice3'];
+            
+            choiceSelects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (!select) {
+                    log('  ⚠️ Select ' + selectId + ' not found');
+                    return;
+                }
+                
+                log('  Processing select: ' + selectId);
+                const currentValue = select.value; // Save current selection
+                let visibleCount = 0;
+                let removedCount = 0;
+                
+                // Filter options - REMOVE non-linked ones instead of just hiding
+                Array.from(select.options).forEach((option, idx) => {
+                    if (!option.value || option.value === '') {
+                        // Keep placeholder/empty option always visible
+                        if (option.style.display === 'none') {
+                            option.style.display = 'block'; // Ensure placeholder is shown
+                        }
+                        visibleCount++;
+                        return;
+                    }
+                    
+                    // Check if option matches linked programs by text/code/name
+                    const optionText = (option.textContent || '').trim();
+                    const isProgramLinked = linkedPrograms.some(prog => 
+                        optionText.toLowerCase().includes(prog.nama.toLowerCase()) || 
+                        optionText.toLowerCase().includes(prog.kode.toLowerCase())
+                    );
+                    
+                    if (isProgramLinked) {
+                        option.style.display = 'block'; // Ensure visible
+                        option.disabled = false;
+                        visibleCount++;
+                        log('    ✓ KEEP: ' + optionText);
+                    } else {
+                        option.style.display = 'none'; // Hide non-linked
+                        option.disabled = true; // Also disable so can't be selected
+                        removedCount++;
+                        log('    ✗ HIDE: ' + optionText);
+                    }
+                });
+                
+                // If current value is no longer available, clear it
+                if (currentValue) {
+                    const currentOption = select.options[select.selectedIndex];
+                    if (currentOption && currentOption.style.display === 'none') {
+                        select.value = ''; // Reset to placeholder
+                        log('    ⚠️ Cleared previous value: ' + currentValue + ' (no longer available)');
+                    }
+                }
+                
+                log('  Select ' + selectId + ': ' + visibleCount + ' visible, ' + removedCount + ' hidden/disabled');
+            });
+            
+            log('========== PROGRAM FILTERING COMPLETE ==========');
+        }
+
+        // ✅ NEW: Toggle conditional fields based on Wave Type
+        function updateConditionalFieldsByWaveType() {
+            log('📋 updateConditionalFieldsByWaveType() CALLED');
+            console.log('📋 updateConditionalFieldsByWaveType() CALLED');
+            
+            // Get waveType from sessionStorage (stored from registration period)
+            let waveType = sessionStorage.getItem('currentWaveType');
+            if (!waveType) {
+                // Fallback to localStorage if sessionStorage fails
+                try {
+                    waveType = localStorage.getItem('currentWaveType');
+                } catch (e) {
+                    console.warn('⚠️ Cannot access storage:', e.message);
+                }
+            }
+            
+            log('   currentWaveType from storage: ' + waveType);
+            console.log('   🌊 currentWaveType from storage: ' + waveType);
+            
+            // If waveType not in storage, try to determine from selectedGelombang
+            if (!waveType) {
+                log('   waveType not in storage, checking selectedGelombang for waveType field...');
+                console.log('   📍 waveType not found, checking selectedGelombang for direct waveType...');
+                try {
+                    const selectedGelombang = localStorage.getItem('selectedGelombang');
+                    if (selectedGelombang) {
+                        const gelombangData = JSON.parse(selectedGelombang);
+                        if (gelombangData.waveType) {
+                            waveType = gelombangData.waveType;
+                            log('   ✓ waveType found in selectedGelombang: ' + waveType);
+                            console.log('   ✓ Found waveType in selectedGelombang: ' + waveType);
+                        }
+                    }
+                } catch (e) {
+                    log('   Could not parse selectedGelombang: ' + e.message);
+                }
+            }
+            
+            // If still no waveType, try to fetch from API (but don't wait - will be done separately)
+            if (!waveType && selectionTypeId) {
+                log('   waveType not in storage or selectedGelombang, will fetch from API...');
+                console.log('   ⚠️ waveType not found, API fetch initiated separately');
+            }
+            
+            // Default to REGULAR_TEST if not found
+            if (!waveType) {
+                waveType = 'REGULAR_TEST';
+                log('   defaulting to: ' + waveType);
+                console.log('   ❓ No wave type found, defaulting to: ' + waveType);
+            }
+            
+            log('   FINAL waveType: ' + waveType);
+            console.log('   🎫 FINAL waveType: ' + waveType);
+            
+            // Show/hide conditional sections based on waveType
+            const nilaiFileSection = document.getElementById('nilaiFileSection');
+            const rankingFileSection = document.getElementById('rankingFileSection');
+            
+            if (waveType === 'RANKING_NO_TEST') {
+                log('   ✅ Wave type is RANKING_NO_TEST - SHOWING conditional fields');
+                console.log('   ✅ [FORM-RANKING] Wave type is RANKING_NO_TEST - SHOWING Bukti Nilai + Bukti Ranking uploads');
+                if (nilaiFileSection) nilaiFileSection.style.display = 'block';
+                if (rankingFileSection) rankingFileSection.style.display = 'block';
+            } else if (waveType === 'EARLY_NO_TEST') {
+                log('   ℹ️ Wave type is EARLY_NO_TEST - HIDING ranking fields');
+                console.log('   ℹ️ [FORM-EARLY] Wave type is EARLY_NO_TEST - NO exam, NO ranking files needed');
+                if (nilaiFileSection) nilaiFileSection.style.display = 'none';
+                if (rankingFileSection) rankingFileSection.style.display = 'none';
+            } else {
+                log('   ❌ Wave type is NOT RANKING_NO_TEST - HIDING conditional fields');
+                console.log('   📋 [FORM-REGULAR] Wave type is REGULAR_TEST - 5-minute exam required, NO ranking files');
+                if (nilaiFileSection) nilaiFileSection.style.display = 'none';
+                if (rankingFileSection) rankingFileSection.style.display = 'none';
+            }
+            
+            log('   ✅ Conditional field visibility updated');
+            console.log('   ✅ Conditional field visibility updated');
+        }
+
+        // ========== AUTHENTICATION CHECK ==========
+        
+        // Flag to prevent adding login redirect listener multiple times
+        let loginRedirectListenerAdded = false;
+        
+        function showAuthRequiredModal(customMessage = null) {
+            // Show modal wrapper
+            const authModal = document.getElementById('authRequiredModal');
+            if (authModal) {
+                // Update modal message if custom message provided
+                if (customMessage) {
+                    const messageElement = authModal.querySelector('.text-muted');
+                    if (messageElement) {
+                        messageElement.innerHTML = customMessage;
+                        logError('🔴 Auth Error Modal: ' + customMessage);
+                    }
+                }
+                
+                // Add 'show' class to apply modal styling
+                authModal.classList.add('show');
+                authModal.style.display = 'flex';
+                authModal.style.zIndex = '9999';
+                
+                // Add button listener only once
+                if (!loginRedirectListenerAdded) {
+                    const loginBtn = document.getElementById('loginRedirectBtn');
+                    if (loginBtn) {
+                        loginBtn.addEventListener('click', function() {
+                            window.location.href = '/login.html';
+                        });
+                        loginRedirectListenerAdded = true;
+                    }
+                }
+            }
+        }
+        
+        // ✅ NEW FUNCTION - Check if user already submitted form
+        async function checkSubmissionStatus() {
+            try {
+                const response = await fetch('/api/camaba/submission-status', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    logError('❌ Failed to check submission status: ' + response.status);
+                    return null;
+                }
+                
+                const data = await response.json();
+                log('✓ Submission status retrieved: ' + JSON.stringify(data));
+                return data;
+            } catch (error) {
+                logError('❌ Error checking submission status: ' + error.message);
+                return null;
+            }
+        }
+        
+        // ✅ NEW FUNCTION - Show "Waiting for Verification" modal
+        function showWaitingVerificationModal(statusData) {
+            const isEditable = statusData.isEditable === true;
+            const hoursRemaining = statusData.hoursRemaining || 0;
+            
+            let editButtonHtml = '';
+            if (isEditable) {
+                editButtonHtml = `
+                    <button class="btn btn-warning" style="margin-right: 10px; width: 120px;" onclick="window.location.href='/form-pendaftaran.html'">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                `;
+            }
+            
+            const waitingModalHtml = `
+                <div id="waitingVerificationModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 9999;">
+                    <div style="background: white; border-radius: 15px; padding: 40px 30px; max-width: 550px; width: 90%; box-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: slideIn 0.3s ease-out;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 60px; color: #f39c12; margin-bottom: 20px;">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h4 style="color: #1a472a; font-weight: 700; margin-bottom: 15px; font-size: 22px;">Formulir Sedang Diverifikasi ⏳</h4>
+                            <p style="color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
+                                <strong style="color: #e74c3c; display: block; margin-bottom: 10px; font-size: 15px;">Status: ${statusData.status}</strong>
+                                Formulir Anda telah diterima dan sedang dalam proses verifikasi oleh admin. Perkiraan waktu verifikasi: <strong>3-5 hari kerja</strong>.
+                            </p>
+                            
+                            ${isEditable ? `
+                            <div style="background: #e8f4f8; border-left: 4px solid #3498db; padding: 12px; margin: 15px 0; text-align: left; border-radius: 4px;">
+                                <p style="color: #2980b9; font-size: 13px; margin: 0;">
+                                    <i class="fas fa-info-circle"></i> <strong>Anda masih dapat mengedit formulir selama ${hoursRemaining} jam (H+1)</strong>
+                                </p>
+                            </div>
+                            ` : `
+                            <div style="background: #fadbd8; border-left: 4px solid #e74c3c; padding: 12px; margin: 15px 0; text-align: left; border-radius: 4px;">
+                                <p style="color: #c0392b; font-size: 13px; margin: 0;">
+                                    <i class="fas fa-exclamation-triangle"></i> <strong>Edit Tidak Tersedia</strong>
+                                    <br/>
+                                    ${statusData.editMessage}
+                                </p>
+                            </div>
+                            `}
+                            
+                            <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+                            <div style="display: flex; justify-content: center; gap: 10px;">
+                                ${editButtonHtml}
+                                <button class="btn btn-primary" style="width: 120px;" onclick="window.location.href='/dashboard-camaba.html'">
+                                    <i class="fas fa-home"></i> Dashboard
+                                </button>
+                            </div>
+                            <p style="color: #999; font-size: 12px; margin-top: 15px; margin-bottom: 0;">
+                                Submitted at: ${new Date(statusData.submittedAt).toLocaleString()}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    @keyframes slideIn {
+                        from {
+                            transform: translateY(-50px);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateY(0);
+                            opacity: 1;
+                        }
+                    }
+                </style>
+            `;
+            
+            // Replace page content with modal
+            document.body.innerHTML = waitingModalHtml;
+            log('✓ Waiting verification modal displayed');
+        }
+        
+        async function checkAuthentication() {
+            if (!authToken) {
+                log('❌ No auth token stored - User needs to log in');
+                showAuthRequiredModal('Anda belum login. Silahkan login untuk melanjutkan.');
+                return false;
+            }
+
+            try {
+                log('🔍 Checking authentication with token...');
+                const response = await fetch('/api/camaba/profile', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                log('Response status: ' + response.status + ' ' + response.statusText);
+
+                if (response.status === 401) {
+                    log('❌ Token unauthorized (401) - Token invalid atau expired');
+                    showAuthRequiredModal('Sesi Anda telah berakhir. Silahkan login kembali.');
+                    return false;
+                }
+                
+                if (response.status === 403) {
+                    log('❌ Token forbidden (403) - User tidak memiliki akses');
+                    showAuthRequiredModal('Anda tidak memiliki akses untuk halaman ini.');
+                    return false;
+                }
+
+                if (response.status === 500) {
+                    const errorData = await response.json().catch(() => ({}));
+                    const errorMsg = errorData.message || 'Server error - User tidak ditemukan di database';
+                    log('❌ Server error (500): ' + errorMsg);
+                    showAuthRequiredModal('❌ Server Error: ' + errorMsg + '\n\nSilahkan logout dan login kembali.');
+                    return false;
+                }
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    const errorMsg = errorData.message || ('HTTP ' + response.status + ' error');
+                    log('❌ Auth check failed (' + response.status + '): ' + errorMsg);
+                    showAuthRequiredModal('❌ Authentication Error: ' + errorMsg + '\n\nSilahkan login kembali.');
+                    return false;
+                }
+
+                const userData = await response.json();
+                log('✓ Authentication verified - User: ' + (userData.email || userData.fullName || 'User'));
+                return true;
+            } catch (error) {
+                logError('❌ Network error during auth check: ' + error.message);
+                showAuthRequiredModal('❌ Jaringan Error: ' + error.message + '\n\nPeriksa koneksi internet Anda.');
+                logout();
+                return false;
+            }
+        }
+
+        // ========== FORM INITIALIZATION ==========
+        
+        // ========== NEW: DETECT VIEW/EDIT MODE FROM URL ==========
+        function getFormMode() {
+            // 🔥 SIMPLIFIED: Form pendaftaran ALWAYS in EDIT mode
+            // Users always need to be able to fill/edit the form
+            return 'edit';
+        }
+
+        function setFormMode(mode) {
+            // 🔥 SIMPLIFIED: ALWAYS use EDIT mode for form-pendaftaran
+            // This is NOT a view-only form - users must be able to edit fields
+            mode = 'edit';
+            
+            log('Setting form mode to: ' + mode);
+            
+            // 🔥 SIMPLIFIED: ALWAYS EDIT MODE
+            // Form pendaftaran is always editable - users must fill the form
+            log('✏️ ENTERING EDIT MODE - Enabling inputs for editing');
+            
+            // Enable all input fields
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                // Don't enable file inputs or readonly fields
+                if (input.type !== 'file' && !input.readOnly) {
+                    input.disabled = false;
+                    input.style.backgroundColor = '';
+                }
+            });
+            
+            // Show submit button
+            const submitBtn = document.getElementById('submitFormBtn');
+            if (submitBtn) submitBtn.style.display = 'block';
+            
+            // Show checkbox agreement
+            const agreeTerms = document.getElementById('agreeTerms');
+            if (agreeTerms && agreeTerms.parentElement) {
+                agreeTerms.parentElement.parentElement.style.display = 'block';
+            }
+            
+            // Enable file upload areas
+            const uploadAreas = document.querySelectorAll('.file-upload-area');
+            uploadAreas.forEach(area => {
+                area.style.pointerEvents = 'auto';
+                area.style.opacity = '1';
+            });
+            
+            // Show file input elements
+            const fileInputs = document.querySelectorAll('.file-input');
+            fileInputs.forEach(input => {
+                input.style.display = 'block';
+            });
+            
+            log('✓ Edit mode activated - form ready for editing');
+        }
+        
+        // ========== FETCH & DISPLAY SAVED FILES ==========
+        
+        async function loadSavedFormData() {
+            log('Loading saved form data and files...');
+            try {
+                const response = await fetch('/api/camaba/admission-form', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    log('⚠️ Could not fetch saved form data (this is ok for first submission): ' + response.status);
+                    return;
+                }
+                
+                const result = await response.json();
+                const formData = result.data;
+                
+                log('✓ Saved form data loaded, checking for file paths...');
+                
+                // Display saved file paths as download links
+                displaySavedFiles(result.photoIdPath, 'photoId', 'Foto Identitas');
+                displaySavedFiles(result.certificatePath, 'certificate', 'Ijazah/Sertifikat');
+                displaySavedFiles(result.transcriptPath, 'transcript', 'Transkrip');
+                
+                // Restore form field data if available
+                if (formData) {
+                    // Restore all available fields from saved data
+                    Object.keys(formData).forEach(key => {
+                        const element = document.getElementById(key);
+                        if (element && formData[key]) {
+                            if (element.type === 'checkbox' || element.type === 'radio') {
+                                element.checked = formData[key];
+                            } else if (element.tagName === 'SELECT' || element.tagName === 'TEXTAREA') {
+                                element.value = formData[key];
+                            } else {
+                                element.value = formData[key];
+                            }
+                        }
+                    });
+                    log('✓ Form fields restored from saved data');
+                }
+                
+            } catch (error) {
+                logError('Error loading saved form data: ' + error.message);
+            }
+        }
+        
+        function displaySavedFiles(filePath, elementId, fileLabel) {
+            if (!filePath || filePath.trim() === '') return;
+            
+            log('Displaying saved file: ' + fileLabel + ' -> ' + filePath);
+            
+            const fileArea = document.getElementById(elementId);
+            if (!fileArea) {
+                logError('File area not found: ' + elementId);
+                return;
+            }
+            
+            // Create a saved file section above the upload area
+            const savedFileContainer = document.createElement('div');
+            savedFileContainer.style.cssText = `
+                background: #e8f5e9;
+                border: 1px solid #4caf50;
+                border-radius: 6px;
+                padding: 12px;
+                margin-bottom: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            `;
+            
+            const fileName = filePath.split('/').pop();
+            savedFileContainer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                    <i class="fas fa-check-circle" style="color: #4caf50; font-size: 20px;"></i>
+                    <div>
+                        <div style="font-weight: 600; color: #2e7d32; font-size: 14px;">File Sudah Disimpan ✓</div>
+                        <div style="color: #666; font-size: 12px; word-break: break-all;">${fileName}</div>
+                    </div>
+                </div>
+                <a href="${filePath}" target="_blank" class="btn btn-sm btn-outline-primary" style="margin-left: 10px; white-space: nowrap;">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            `;
+            
+            // Insert before the upload area
+            fileArea.parentElement.insertBefore(savedFileContainer, fileArea);
+        }
+        
+        async function initializeForm() {
+            log('========== INITIALIZATION START ==========');
+            log('localStorage keys: ' + Object.keys(localStorage).join(', '));
+            
+            // ===== STEP 0.1: SET FORM MODE =====
+            const formMode = getFormMode();
+            
+            try {
+                // Step 0: Auth check
+                log('Step 0: Checking authentication...');
+                const isAuth = await checkAuthentication();
+                if (!isAuth) return;
+                
+                // ✅ NEW: Step 0.5 - Check submission status (only in edit mode)
+                if (formMode === 'edit') {
+                    log('Step 0.5: Checking submission status...');
+                    const submissionStatus = await checkSubmissionStatus();
+                    log('Submission status: ' + JSON.stringify(submissionStatus));
+                    
+                    if (submissionStatus && submissionStatus.hasSubmitted) {
+                        // ✅ USER ALREADY SUBMITTED - Check if still editable
+                        const isEditable = submissionStatus.isEditable === true;
+                        const hoursRemaining = submissionStatus.hoursRemaining || 0;
+                        
+                        if (!isEditable || hoursRemaining <= 0) {
+                            // ❌ CANNOT EDIT - Show waiting modal with no edit button
+                            log('✓✓✓ USER ALREADY SUBMITTED & CANNOT EDIT - SHOWING WAITING MODAL ✓✓✓');
+                            showWaitingVerificationModal(submissionStatus);
+                            return; // Stop - deadline has passed
+                        } else {
+                            // ✅ CAN STILL EDIT - Continue with form in edit mode
+                            log('✓✓✓ USER ALREADY SUBMITTED BUT CAN STILL EDIT (Hours Remaining: ' + hoursRemaining + ') ✓✓✓');
+                            // Continue with initialization - don't return
+                        }
+                    }
+                }
+                
+                // Step 1: Get selection type and jenis seleksi
+                log('═══════════════════════════════════════════════════════════');
+                log('Step 1: STRICT validation - selectedGelombang & jenisSeleksiId MUST exist');
+                log('═══════════════════════════════════════════════════════════');
+                
+                // 🔥 CHECK 1: selectedGelombang MUST exist in localStorage
+                let selectedGelombang = localStorage.getItem('selectedGelombang');
+                if (!selectedGelombang) {
+                    logError('❌ FATAL ERROR: selectedGelombang TIDAK ada di localStorage!');
+                    logError('   User HARUS memilih gelombang di gelombang-selection.html');
+                    showError('❌ ERROR VALIDASI FATAL\n\nAnda belum memilih gelombang!\n\n1. Klik "KEMBALI KE PILIHAN GELOMBANG"\n2. Pilih gelombang\n3. Confirm pilihan Anda\n4. Form akan muncul otomatis');
+                    return;  // STOP - Don't proceed
+                }
+                
+                let selectedGelombangObj = null;
+                try {
+                    selectedGelombangObj = JSON.parse(selectedGelombang);
+                    if (!selectedGelombangObj.id || selectedGelombangObj.id <= 0) {
+                        logError('❌ selectedGelombang.id INVALID:', selectedGelombangObj.id);
+                        throw new Error('Invalid gelombang ID');
+                    }
+                    log('✅ selectedGelombang parsed & valid: ', selectedGelombangObj);
+                } catch (e) {
+                    logError('❌ selectedGelombang JSON parse error:', e.message);
+                    showError('❌ ERROR: Data gelombang rusak. Silakan pilih ulang gelombang.');
+                    return;  // STOP
+                }
+                
+                // 🔥 CHECK 2: periodId from selectedGelombang.id
+                let periodId = String(selectedGelombangObj.id);
+                selectionTypeId = periodId;  // Set global variable
+                log('✅ selectionTypeId (from gelombang.id): ' + selectionTypeId);
+                
+                // 🔥 CHECK 3: jenisSeleksiId MUST exist in localStorage
+                jenisSeleksiId = localStorage.getItem('jenisSeleksiId');  // Assign to GLOBAL variable
+                if (!jenisSeleksiId || jenisSeleksiId === 'null' || isNaN(parseInt(jenisSeleksiId)) || parseInt(jenisSeleksiId) <= 0) {
+                    logError('❌ FATAL ERROR: jenisSeleksiId INVALID atau TIDAK ada!');
+                    logError('   Value dari localStorage:', jenisSeleksiId);
+                    logError('   User HARUS memilih formula di formula-selection.html');
+                    showError('❌ ERROR VALIDASI FATAL\n\nAnda belum memilih formula/jenis seleksi!\n\n1. Klik "KEMBALI KE PILIHAN FORMULA"\n2. Pilih formula\n3. Confirm pilihan Anda\n4. Form akan muncul otomatis');
+                    return;  // STOP - Don't proceed
+                }
+                
+                jenisSeleksiId = String(parseInt(jenisSeleksiId));  // Clean value
+                log('✅ jenisSeleksiId (JENIS_SELEKSI_ID): ' + jenisSeleksiId);
+                
+                log('═══════════════════════════════════════════════════════════');
+                log('✅ SEMUA VALIDASI PASSED! Form dapat dilanjutkan');
+                log('   selectionTypeId:', selectionTypeId);
+                log('   jenisSeleksiId:', jenisSeleksiId);
+                log('═══════════════════════════════════════════════════════════');
+                
+                log('FINAL selectionTypeId value: ' + selectionTypeId + ' (type: ' + typeof selectionTypeId + ')');
+                log('isValidSelectionTypeId(' + selectionTypeId + ') returns: ' + isValidSelectionTypeId(selectionTypeId));
+                updateSelectionTypeStatus();
+                
+                // 🔑 NEW: Get formType from stored formula (instead of fetching from API)
+                const selectedFormulaStr = localStorage.getItem('selectedFormula');
+                if (selectedFormulaStr) {
+                    try {
+                        const selectedFormula = JSON.parse(selectedFormulaStr);
+                        const formType = selectedFormula.formType || '';
+                        
+                        // Determine requireTesting based on formType
+                        // MEDICAL programs require testing, NON_MEDICAL do not
+                        requireTesting = (formType === 'MEDICAL' || formType.toUpperCase() === 'MEDICAL');
+                        isKedokteranProgram = (formType === 'MEDICAL' || formType.toUpperCase() === 'MEDICAL');
+                        
+                        log('✅ Got formType from localStorage formula: ' + formType);
+                        log('✓ requireTesting SET TO: ' + requireTesting);
+                        log('✓ isKedokteranProgram SET TO: ' + isKedokteranProgram);
+                        
+                        if (requireTesting) {
+                            document.getElementById('examSection').style.display = 'block';
+                            document.getElementById('participantNumberField').style.display = 'block';
+                            const fac = document.getElementById('faculty');
+                            if (fac) fac.value = 'Formulir Online ' + formType;
+                        } else {
+                            document.getElementById('examSection').style.display = 'none';
+                            document.getElementById('participantNumberField').style.display = 'none';
+                        }
+                    } catch (e) {
+                        console.warn('⚠️ Could not parse selectedFormula:', e);
+                        requireTesting = false;
+                        isKedokteranProgram = false;
+                        document.getElementById('examSection').style.display = 'none';
+                        document.getElementById('participantNumberField').style.display = 'none';
+                    }
+                } else {
+                    log('⚠️ No selectedFormula in localStorage');
+                    requireTesting = false;
+                    isKedokteranProgram = false;
+                    document.getElementById('examSection').style.display = 'none';
+                    document.getElementById('participantNumberField').style.display = 'none';
+                }
+                
+                // Apply program studi filtering
+                filterProgramStudiBySelectionType();
+                
+                // Apply occupation filtering
+                filterOccupationsByProgram();
+                
+                // ✅ LOAD PREVIOUSLY SELECTED GELOMBANG
+                try {
+                    log('📍 STEP: Loading previously selected gelombang...');
+                    console.log('%c===== LOADING GELOMBANG =====', 'background: #2196F3; color: white; padding: 5px 10px; font-weight: bold;');
+                    
+                    const selectedGelombang = localStorage.getItem('selectedGelombang');
+                    
+                    if (selectedGelombang) {
+                        try {
+                            const gelombang = JSON.parse(selectedGelombang);
+                            log('✅ Gelombang loaded from storage:');
+                            log('   ID: ' + gelombang.id);
+                            log('   Title: ' + gelombang.title);
+                            log('   Wave Type: ' + gelombang.waveType);
+                            log('   Status: ' + gelombang.status);
+                            
+                            console.log('%c✅ [GELOMBANG LOADED FROM STORAGE]', 'color: #4CAF50; font-weight: bold;', {
+                                ID: gelombang.id,
+                                Title: gelombang.title,
+                                WaveType: gelombang.waveType,
+                                Status: gelombang.status
+                            });
+                            
+                            // Update conditional fields with waveType
+                            updateConditionalFieldsByWaveType();
+                            
+                        } catch (parseError) {
+                            logError('Failed to parse selectedGelombang: ' + parseError.message);
+                            console.error('%c❌ Parse Error:', 'color: #f44336;', parseError.message);
+                        }
+                    } else {
+                        log('⚠️ No previously selected gelombang found in localStorage');
+                        console.warn('%c⚠️ [NO GELOMBANG]', 'color: #ff9800;', 'selectedGelombang not found in localStorage');
+                    }
+                    
+                    console.log('%c===== GELOMBANG LOADED COMPLETE =====', 'background: #2196F3; color: white; padding: 5px 10px; font-weight: bold;');
+                } catch (e) {
+                    log('Gelombang loading failed (non-critical): ' + e.message);
+                }
+                
+                // Step 2: ATTACH AUTO-SAVE LISTENERS
+                log('Step 2: Setting up auto-save...');
+                // 🔥 ALWAYS attach auto-save - form is ALWAYS in edit mode
+                attachAutoSaveListeners();
+                attachProgramChoiceListeners();
+                
+                // ✅ NEW Step 2.5: Display selection info and load linked programs
+                log('Step 2.5: Displaying selection info and loading program studi...');
+                await displaySelectionInfoAndLoadPrograms();
+                
+                // Step 3: RESTORE SAVED FORM DATA
+                log('Step 3: Restoring saved data...');
+                restoreFormFromLocalStorage();
+                
+                // ✅ NEW Step 3.5: RE-APPLY PROGRAM FILTERING after restore
+                // This ensures filtering persists even after form is restored
+                log('Step 3.5: Re-applying program filtering after restore...');
+                if (linkedProgramStudiList && linkedProgramStudiList.length > 0) {
+                    filterProgramChoicesByFormula(linkedProgramStudiList);
+                    log('✓ Program filtering re-applied');
+                }
+                
+                // ===== STEP 4: LOAD SAVED FILES FROM SERVER =====
+                log('Step 4: Loading saved files from server...');
+                await loadSavedFormData();
+                
+                // ===== STEP 4: APPLY FORM MODE (VIEW/EDIT) =====
+                log('Step 4: Applying form mode...');
+                setFormMode(formMode);
+                
+                log('========== INITIALIZATION COMPLETE ==========');
+            } catch (error) {
+                logError('Initialization failed: ' + error.message);
+                // Still try to enable auto-save
+                attachAutoSaveListeners();
+                attachProgramChoiceListeners();
+                // ✅ Also try to display selection info
+                await displaySelectionInfoAndLoadPrograms();
+                restoreFormFromLocalStorage();
+                // Still load saved files even if there's an error
+                await loadSavedFormData();
+                // Still apply form mode even if there's an error
+                setFormMode(formMode);
+            }
+        }
+
+        // ========== RUN INITIALIZATION ==========
+        
+        log('Page loaded, waiting for DOM ready...');
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeForm);
+        } else {
+            initializeForm();
+        }
+
+        // ========== HANDLE LOGOUT ==========
+        
+        function logout() {
+            // Preserve form data but clear auth
+            localStorage.removeItem(AUTH_TOKEN_KEY);
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('selectedSelectionTypeId');
+            // Keep FORM_STORAGE_KEY so user can return and continue
+            
+            log('Auto logout - redirecting to login');
+            window.location.href = '/login.html';
+        }
+
+        // ========== SHOW MESSAGES ==========
+        
+        function showSuccess(message) {
+            const msg = document.getElementById('successMessage');
+            msg.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
+            msg.style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function showError(message) {
+            const msg = document.getElementById('errorMessage');
+            document.getElementById('errorText').textContent = message;
+            msg.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            // Also show in modal
+            showErrorModal(message);
+        }
+
+        function showErrorModal(message) {
+            document.getElementById('errorModalMessage').innerHTML = message;
+            const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
+        }
+
+        // ========== HANDLE FILE UPLOAD ==========
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.currentTarget.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                const inputId = e.currentTarget.id + 'File';
+                const input = document.getElementById(inputId);
+                if (input) {
+                    // Properly set the files to the input element
+                    const dataTransfer = new DataTransfer();
+                    for (let i = 0; i < files.length; i++) {
+                        dataTransfer.items.add(files[i]);
+                    }
+                    input.files = dataTransfer.files;
+                    handleFileSelect({target: input}, e.currentTarget.id);
+                    log('File(s) selected via drag-drop: ' + Array.from(files).map(f => f.name).join(', '));
+                }
+            }
+        }
+
+        function handleFileSelect(e, areaId) {
+            const files = e.target.files;
+            if (!files || files.length === 0) {
+                log('No files selected for area: ' + areaId);
+                return;
+            }
+
+            const file = files[0];
+            log('File selected: ' + file.name + ' (' + file.size + ' bytes) for area: ' + areaId);
+
+            // Validate file size (max 5MB)
+            const maxSize = 5 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showError('Ukuran file terlalu besar. Maksimum 5MB, file Anda ' + (file.size / 1024 / 1024).toFixed(2) + 'MB');
+                // Clear the file
+                e.target.value = '';
+                return;
+            }
+
+            // Validate file type for certain fields
+            const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+            if (['photoId', 'certificate'].includes(areaId) && !validImageTypes.includes(file.type)) {
+                showError('Format file tidak didukung. Gunakan JPG, PNG, atau PDF.');
+                // Clear the file
+                e.target.value = '';
+                return;
+            }
+
+            // Show file name with checkmark
+            const nameEl = document.getElementById(areaId + 'Name');
+            if (nameEl) {
+                nameEl.innerHTML = `<i class="fas fa-check-circle" style="color: #27ae60;"></i> ${file.name}`;
+                nameEl.style.color = '#27ae60';
+            }
+            
+            log('✓ File validated and ready: ' + file.name);
+        }
+
+        // ========== CLICK TO UPLOAD ==========
+        
+        // Flag to ensure click listeners are added only once
+        let fileClickListenersAdded = false;
+        
+        function attachFileClickListeners() {
+            if (fileClickListenersAdded) return;
+            
+            const fileAreas = [
+                { areaId: 'photoId', inputId: 'photoIdFile' },
+                { areaId: 'certificate', inputId: 'certificateFile' },
+                { areaId: 'transcript', inputId: 'transcriptFile' },
+                // ✅ NEW: Conditional file fields (shown only for RANKING_NO_TEST wave)
+                { areaId: 'nilaiFile', inputId: 'nilaiFileInput' },
+                { areaId: 'rankingFile', inputId: 'rankingFileInput' }
+            ];
+            
+            fileAreas.forEach(({ areaId, inputId }) => {
+                const areaEl = document.getElementById(areaId);
+                const inputEl = document.getElementById(inputId);
+                
+                if (areaEl && inputEl) {
+                    // Make the entire area clickable
+                    areaEl.style.cursor = 'pointer';
+                    
+                    // Attach click listener to upload area
+                    areaEl.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        log('Upload area clicked: ' + areaId);
+                        inputEl.click();
+                    });
+                    
+                    // Attach change listener to file input
+                    inputEl.addEventListener('change', function(e) {
+                        log('File input changed for: ' + areaId);
+                        handleFileSelect(e, areaId);
+                    });
+                    
+                    log('✓ File upload listener attached for: ' + areaId);
+                }
+            });
+            
+            fileClickListenersAdded = true;
+            log('All file upload listeners attached successfully');
+        }
+
+        // ========== FORM SUBMISSION ==========
+        
+        // Flag to ensure form submission listener is added only once
+        let formSubmissionListenerAdded = false;
+        
+        function attachFormSubmissionListener() {
+            if (formSubmissionListenerAdded) return;
+            
+            const form = document.getElementById('registrationForm');
+            if (!form) return;
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                log('========== FORM SUBMIT CLICKED ==========');
+
+                // ===== FILE VALIDATION (STEP 1) =====
+                log('Step 1: Validating file uploads...');
+                
+                const photoIdFile = document.getElementById('photoIdFile');
+                const certificateFile = document.getElementById('certificateFile');
+                const transcriptFile = document.getElementById('transcriptFile');
+                
+                // Check if files exist and have content
+                if (!photoIdFile || !photoIdFile.files || photoIdFile.files.length === 0) {
+                    showError('⚠️ Foto Identitas (KTP/Paspor) belum diunggah. Klik area upload untuk memilih file.');
+                    return;
+                }
+
+                if (!certificateFile || !certificateFile.files || certificateFile.files.length === 0) {
+                    showError('⚠️ Ijazah/Sertifikat Lulus belum diunggah. Klik area upload untuk memilih file.');
+                    return;
+                }
+
+                // ✅ NEW: Validate conditional files for RANKING_NO_TEST wave
+                const waveType = localStorage.getItem('currentWaveType');
+                if (waveType === 'RANKING_NO_TEST') {
+                    const nilaiFileInput = document.getElementById('nilaiFileInput');
+                    const rankingFileInput = document.getElementById('rankingFileInput');
+                    
+                    if (!nilaiFileInput || !nilaiFileInput.files || nilaiFileInput.files.length === 0) {
+                        showError('⚠️ Bukti Nilai belum diunggah. Klik area upload untuk memilih file.');
+                        return;
+                    }
+                    
+                    if (!rankingFileInput || !rankingFileInput.files || rankingFileInput.files.length === 0) {
+                        showError('⚠️ Bukti Ranking belum diunggah. Klik area upload untuk memilih file.');
+                        return;
+                    }
+                    
+                    log('✓ RANKING_NO_TEST files validated: nilai + ranking files present');
+                }
+
+                const photoIdFileObj = photoIdFile.files[0];
+                const certificateFileObj = certificateFile.files[0];
+                
+                log('Photo ID file: ' + photoIdFileObj.name + ' (' + photoIdFileObj.size + ' bytes)');
+                log('Certificate file: ' + certificateFileObj.name + ' (' + certificateFileObj.size + ' bytes)');
+                
+                // Validate file sizes
+                const maxSize = 5 * 1024 * 1024;
+                if (photoIdFileObj.size > maxSize) {
+                    showError('Ukuran Foto Identitas terlalu besar (max 5MB)');
+                    return;
+                }
+                if (certificateFileObj.size > maxSize) {
+                    showError('Ukuran Ijazah/Sertifikat terlalu besar (max 5MB)');
+                    return;
+                }
+
+                // ===== OTHER VALIDATIONS =====
+                log('Step 2: Validating other form fields...');
+                
+                if (!document.getElementById('agreeTerms').checked) {
+                    showError('Silahkan setujui pernyataan di bawah');
+                    return;
+                }
+
+                // Validate selection type
+                log('Triple-checking selectionTypeId...');
+                if (!isValidSelectionTypeId(selectionTypeId)) {
+                    logError('VALIDATION FAILED: selectionTypeId is not valid!');
+                    showError('❌ VALIDASI GAGAL\n\nAnda belum memilih jenis pendaftaran!\n\nMohon:\n1. Klik tombol "KEMBALI KE PILIHAN JENIS PENDAFTARAN"\n2. Pilih jenis pendaftaran Anda\n3. Form ini akan tertampil otomatis dengan data tersimpan');
+                    return;
+                }
+                log('✅ selectionTypeId VALID for submission: ' + selectionTypeId);
+
+                // For exam selection, validate program choice 1
+                if (requireTesting) {
+                    if (!document.getElementById('programChoice1').value) {
+                        showError('Silahkan pilih Program Studi Pilihan 1');
+                        return;
+                    }
+                }
+
+                // ===== PREPARE FORMDATA (STEP 3) =====
+                log('Step 3: Preparing FormData for submission...');
+                
+                // ✅ selectionTypeId and jenisSeleksiId already validated during init
+                // Both are guaranteed to be valid at this point
+                log('✅ Using validated selectionTypeId: ' + selectionTypeId);
+                log('✅ Using validated jenisSeleksiId: ' + jenisSeleksiId);
+                
+                const formData = new FormData();
+                
+                // Selection type and testing info - CRITICAL
+                formData.append('selectionTypeId', String(selectionTypeId).trim());
+                formData.append('jenisSeleksiId', String(jenisSeleksiId || '').trim());  // ✅ ALSO SEND jenisSeleksiId
+                formData.append('requireTesting', requireTesting);
+
+                // Program choices
+                formData.append('programChoice1', document.getElementById('programChoice1').value || '');
+                formData.append('programChoice2', document.getElementById('programChoice2').value || '');
+                formData.append('programChoice3', document.getElementById('programChoice3').value || '');
+                
+                // Exam related fields (if applicable)
+                if (requireTesting) {
+                    formData.append('examLocation', document.getElementById('examLocation').value || '');
+                    formData.append('faculty', document.getElementById('faculty').value || '');
+                    formData.append('examRoom', document.getElementById('examRoom').value || '');
+                }
+
+                // ===== PERSONAL DATA - CRITICAL: MUST MAP TO DATABASE COLUMNS =====
+                formData.append('fullName', document.getElementById('fullName').value);
+                formData.append('nik', document.getElementById('nik').value);
+                formData.append('birthDate', document.getElementById('birthDate').value);
+                formData.append('birthPlace', document.getElementById('birthPlace').value);
+                formData.append('gender', document.getElementById('gender').value);
+                formData.append('phoneNumber', document.getElementById('phoneNumber').value);
+                formData.append('email', document.getElementById('email').value);
+                formData.append('addressMedan', document.getElementById('addressMedan').value || '');
+                formData.append('residenceInfo', document.getElementById('residenceInfo').value || '');
+                formData.append('subdistrict', document.getElementById('subdistrict').value);
+                formData.append('district', document.getElementById('district').value);
+                formData.append('city', document.getElementById('city').value);
+                formData.append('province', document.getElementById('province').value);
+                formData.append('religion', document.getElementById('religion').value);
+                formData.append('informationSource', document.getElementById('informationSource').value || '');
+
+                // ===== FATHER DATA =====
+                formData.append('fatherNik', document.getElementById('fatherNik').value || '');
+                formData.append('fatherName', document.getElementById('fatherName').value);
+                formData.append('fatherBirthDate', document.getElementById('fatherBirthDate').value || '');
+                formData.append('fatherEducation', document.getElementById('fatherEducation').value || '');
+                formData.append('fatherOccupation', document.getElementById('fatherOccupation').value || '');
+                formData.append('fatherIncome', document.getElementById('fatherIncome').value || '');
+                formData.append('fatherPhone', document.getElementById('fatherPhone').value || '');
+                formData.append('fatherStatus', document.getElementById('fatherStatus').value);
+
+                // ===== MOTHER DATA =====
+                formData.append('motherNik', document.getElementById('motherNik').value || '');
+                formData.append('motherName', document.getElementById('motherName').value);
+                formData.append('motherBirthDate', document.getElementById('motherBirthDate').value || '');
+                formData.append('motherEducation', document.getElementById('motherEducation').value || '');
+                formData.append('motherOccupation', document.getElementById('motherOccupation').value || '');
+                formData.append('motherIncome', document.getElementById('motherIncome').value || '');
+                formData.append('motherPhone', document.getElementById('motherPhone').value || '');
+                formData.append('motherStatus', document.getElementById('motherStatus').value);
+
+                // ===== PARENT ADDRESS =====
+                formData.append('parentSubdistrict', document.getElementById('parentSubdistrict').value);
+                formData.append('parentCity', document.getElementById('parentCity').value);
+                formData.append('parentProvince', document.getElementById('parentProvince').value);
+                formData.append('parentPhone', document.getElementById('parentPhone').value || '');
+
+                // ===== SCHOOL DATA =====
+                formData.append('schoolOrigin', document.getElementById('schoolOrigin').value);
+                formData.append('schoolMajor', document.getElementById('schoolMajor').value);
+                formData.append('schoolYear', document.getElementById('schoolYear').value);
+                formData.append('nisn', document.getElementById('nisn').value || '');
+                formData.append('schoolCity', document.getElementById('schoolCity').value || '');
+                formData.append('schoolProvince', document.getElementById('schoolProvince').value || '');
+
+                // ===== FILE UPLOADS - CRITICAL! =====
+                log('Appending files to FormData...');
+                formData.append('photoId', photoIdFileObj);
+                formData.append('certificate', certificateFileObj);
+                
+                if (transcriptFile && transcriptFile.files && transcriptFile.files.length > 0) {
+                    formData.append('transcript', transcriptFile.files[0]);
+                    log('Transcript file appended: ' + transcriptFile.files[0].name);
+                }
+                
+                // ✅ NEW: Append conditional files for RANKING_NO_TEST wave
+                const currentWaveType = localStorage.getItem('currentWaveType');
+                if (currentWaveType === 'RANKING_NO_TEST') {
+                    const nilaiFileInput = document.getElementById('nilaiFileInput');
+                    const rankingFileInput = document.getElementById('rankingFileInput');
+                    
+                    if (nilaiFileInput && nilaiFileInput.files && nilaiFileInput.files.length > 0) {
+                        formData.append('nilaiFile', nilaiFileInput.files[0]);
+                        log('Nilai file appended: ' + nilaiFileInput.files[0].name);
+                    }
+                    
+                    if (rankingFileInput && rankingFileInput.files && rankingFileInput.files.length > 0) {
+                        formData.append('rankingFile', rankingFileInput.files[0]);
+                        log('Ranking file appended: ' + rankingFileInput.files[0].name);
+                    }
+                }
+                
+                log('✓ Photo ID appended: ' + photoIdFileObj.name);
+                log('✓ Certificate appended: ' + certificateFileObj.name);
+                log('═════════════════════════════════════════════════════════');
+                log('🔥 CRITICAL VALUES BEING SENT:');
+                log('   selectionTypeId (akan jadi SELECTION_TYPE_ID): "' + String(selectionTypeId || '').trim() + '"');
+                log('   jenisSeleksiId (akan jadi JENIS_SELEKSI_ID): "' + String(jenisSeleksiId || '').trim() + '"');
+                log('   requireTesting: ' + requireTesting);
+                log('═════════════════════════════════════════════════════════');
+                log('✓ requireTesting appended: ' + requireTesting);
+
+                log('===== FORM DATA READY FOR SUBMISSION =====');
+                
+                // ===== CRITICAL: VERIFY TOKEN STILL VALID BEFORE SUBMIT =====
+                log('🔐 CRITICAL: Verifying token is still valid before submission...');
+                const tokenCheckResponse = await fetch('/api/camaba/profile', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (tokenCheckResponse.status === 401) {
+                    logError('❌ FATAL: Token expired or invalid before submission!');
+                    showAuthRequiredModal('❌ Sesi Anda telah berakhir. Silahkan login kembali dan lanjutkan mengisi formulir.');
+                    document.getElementById('submitFormBtn').disabled = false;
+                    document.getElementById('submitFormBtn').innerHTML = originalBtnText;
+                    return;
+                }
+                
+                log('✅ Token VERIFIED as valid - Safe to proceed with submission');
+                
+                // Show loading state on button
+                const submitBtn = document.getElementById('submitFormBtn');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengunggah file dan data...';
+                
+                // ===== SEND TO BACKEND (STEP 4) =====
+                log('Step 4: Sending form data to backend...');
+                
+                fetch('/api/camaba/submit-admission-form', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    log('🔔 Response received - Status: ' + response.status + ' ' + response.statusText);
+                    
+                    if (response.status === 401 || response.status === 403) {
+                        logError('❌ Auth error (401/403) - logging out');
+                        showError('Sesi Anda sudah kadaluarsa. Silahkan login kembali.');
+                        setTimeout(() => logout(), 2000);
+                        return null;
+                    }
+                    
+                    if (!response.ok) {
+                        logError('❌ HTTP Error: ' + response.status);
+                        return response.text().then(text => {
+                            logError('Response body: ' + text);
+                            throw new Error('HTTP ' + response.status + ': ' + text);
+                        });
+                    }
+                    
+                    return response.json();
+                })
+                .then(data => {
+                    log('Response data received: ', data);
+                    if (!data) return;
+                    if (data && data.success === true) {
+                        log('✓✓✓ FORM SUBMITTED SUCCESSFULLY - SHOWING MODAL NOW ✓✓✓');
+                        clearFormCache();
+                        log('Clearing auto-save data for user: ' + userEmail);
+                        
+                        // Show success modal
+                        const successModalHtml = `
+                            <div id="successSubmitModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 9999;">
+                                <div style="background: white; border-radius: 15px; padding: 40px 30px; max-width: 500px; width: 90%; box-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: slideIn 0.3s ease-out;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 60px; color: #27ae60; margin-bottom: 20px;">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <h4 style="color: #1a472a; font-weight: 700; margin-bottom: 15px; font-size: 22px;">Formulir Berhasil Dikirim! ✓</h4>
+                                        <p style="color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
+                                            <strong style="color: #27ae60; display: block; margin-bottom: 10px; font-size: 15px;">Estimasi Verifikasi: 3-5 Hari Kerja</strong>
+                                            Data Anda sedang kami verifikasi.
+                                        </p>
+                                        <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+                                        <p style="color: #999; font-size: 13px; margin-bottom: 0;">Anda akan diarahkan ke halaman pembayaran dalam <strong id="countdown">5</strong> detik...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <style>
+                                @keyframes slideIn {
+                                    from {
+                                        transform: translateY(-50px);
+                                        opacity: 0;
+                                    }
+                                    to {
+                                        transform: translateY(0);
+                                        opacity: 1;
+                                    }
+                                }
+                            </style>
+                        `;
+                        
+                        // Inject modal into page
+                        document.body.insertAdjacentHTML('beforeend', successModalHtml);
+                        log('✓ Modal injected into page');
+                        
+                        // Countdown and redirect
+                        let countdownValue = 5;
+                        const countdownElement = document.getElementById('countdown');
+                        
+                        const countdownInterval = setInterval(() => {
+                            countdownValue--;
+                            if (countdownElement) countdownElement.textContent = countdownValue;
+                            
+                            if (countdownValue <= 0) {
+                                clearInterval(countdownInterval);
+                                log('Redirecting to payment...');
+                                // Redirect to payment BRIVA with selectionTypeId and periodId
+                                const periodId = localStorage.getItem('selectedPeriodId');
+                                log('📍 [PAYMENT-REDIRECT] periodId:', periodId, ', selectionTypeId:', selectionTypeId);
+                                if (!periodId) {
+                                    logError('❌ ERROR: periodId tidak ada saat redirect ke payment!');
+                                    window.location.href = `/payment-briva.html?selectionTypeId=${selectionTypeId}&periodId=0`;
+                                } else {
+                                    window.location.href = `/payment-briva.html?selectionTypeId=${selectionTypeId}&periodId=${periodId}`;
+                                }
+                            }
+                        }, 1000);
+                        
+                        // Optional: Click anywhere to redirect immediately
+                        const modal = document.getElementById('successSubmitModal');
+                        if (modal) {
+                            modal.addEventListener('click', () => {
+                                clearInterval(countdownInterval);
+                                window.location.href = '/dashboard-camaba.html';
+                            });
+                        }
+                    } else if (data) {
+                        logError('Submission failed: ' + (data.message || 'Unknown error'));
+                        showError(data.message || 'Gagal mengirim formulir');
+                        // Restore button on error
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnText;
+                    }
+                })
+                .catch(error => {
+                    logError('❌ NETWORK ERROR: ' + error.message);
+                    logError('Full error: ', error);
+                    showError('❌ Kesalahan jaringan: ' + error.message + '\n\nPeriksa koneksi internet dan coba lagi.');
+                    console.error('Form submission network error:', error);
+                    // Restore button on error
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                });
+            }, false); // Don't use { once: true } so form can be resubmitted on error
+            
+            formSubmissionListenerAdded = true;
+            log('Form submission listener attached');
+        }
+
+        // Ensure listeners are attached when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                attachFileClickListeners();
+                attachFormSubmissionListener();
+            });
+        } else {
+            attachFileClickListeners();
+            attachFormSubmissionListener();
+        }
+
+        // ========== DEBUG FUNCTION ==========
+        // Call this from browser console: testSelectionTypeTransmission()
+        function testSelectionTypeTransmission() {
+            log('========== DEBUG TEST START ==========');
+            log('Current selectionTypeId in memory: ' + selectionTypeId + ' (type: ' + typeof selectionTypeId + ')');
+            
+            if (!isValidSelectionTypeId(selectionTypeId)) {
+                logError('Selection type ID is not valid!');
+                return;
+            }
+            
+            const formData = new FormData();
+            const stIdStr = String(selectionTypeId).trim();
+            formData.append('selectionTypeId', stIdStr);
+            formData.append('fullName', 'TEST_USER');
+            
+            log('Creating test FormData...');
+            log('  selectionTypeId: ' + stIdStr);
+            
+            fetch('/api/camaba/test-selection-type', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken
+                },
+                body: formData
+            })
+            .then(response => {
+                log('Response status: ' + response.status);
+                return response.json();
+            })
+            .then(data => {
+                log('========== DEBUG TEST RESPONSE ==========');
+                log(JSON.stringify(data, null, 2));
+                
+                if (data.success) {
+                    log('✅ TEST PASSED! selectionTypeId was received correctly');
+                } else {
+                    logError('❌ TEST FAILED: ' + data.error);
+                }
+            })
+            .catch(error => {
+                logError('Test error: ' + error.message);
+            });
+        }
+    </script>
+
+    <script src="/components/header-loader.js"></script>
+    <script src="/components/page-header-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setPageHeader('Formulir Pendaftaran', 'Lengkapi semua data di bawah ini untuk melanjutkan proses pendaftaran');
+        });
+    </script>
+
+    <!-- Load Footer Component -->
+    <script src="/components/footer-loader.js"></script>
+    
+    <!-- Initialize All Components -->
+    <script src="/components-init.js"></script>
+
+    <!-- Initialize Page Header after components load -->
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (typeof setPageHeader === 'function') {
+                    setPageHeader(
+                        'Formulir Pendaftaran',
+                        'Isi formulir pendaftaran dengan data yang akurat dan lengkap'
+                    );
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>

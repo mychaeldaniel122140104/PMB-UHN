@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Validasi - Admin PMB</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a472a;
+            --secondary: #e74c3c;
+            --success: #27ae60;
+        }
+        
+        body {
+            background: #f5f5f5;
+        }
+        
+        .navbar {
+            background: var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 20px;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: white !important;
+        }
+        
+        .sidebar {
+            background: white;
+            min-height: 100vh;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            padding: 20px 0;
+        }
+        
+        .sidebar .nav-link {
+            color: #333;
+            padding: 12px 20px;
+            margin: 5px 0;
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: #f0f9ff;
+            border-left-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .main-content {
+            padding: 30px 20px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .table {
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .status-badge {
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-verified {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn-action {
+            padding: 6px 12px;
+            font-size: 12px;
+            margin: 0 2px;
+        }
+        
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .detail-modal-body {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .document-item {
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+    <script src="/common-auth.js"></script>`n</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin-validasi.html">
+                <i class="fas fa-shield-alt"></i> Admin Validasi PMB
+            </a>
+            <div>
+                <span class="text-white me-3">Admin</span>
+                <span class="text-white" style="cursor: pointer;" onclick="logout()">Logout</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2">
+                <div class="sidebar">
+                    <a href="/admin-validasi.html" class="nav-link active">
+                        <i class="fas fa-check-circle"></i> Validasi Dokumen
+                    </a>
+                    <a href="/admin-reenroll.html" class="nav-link">
+                        <i class="fas fa-clipboard-list"></i> Daftar Ulang
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10">
+                <div class="main-content">
+                    <div class="section-title">
+                        <h3><i class="fas fa-check-circle"></i> Dashboard Validasi Dokumen</h3>
+                        <p class="text-muted">Verifikasi dokumen mahasiswa dan berikan feedback</p>
+                    </div>
+
+                    <!-- Filter Section -->
+                    <div class="filter-section">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Filter Status</label>
+                                <select class="form-select" id="filterStatus" onchange="filterTable()">
+                                    <option value="">Semua Status</option>
+                                    <option value="pending">Menunggu Verifikasi</option>
+                                    <option value="verified">Terverifikasi</option>
+                                    <option value="rejected">Ditolak</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Filter Gelombang</label>
+                                <select class="form-select" id="filterGelombang" onchange="filterTable()">
+                                    <option value="">Semua Gelombang</option>
+                                    <option value="1">Gelombang I</option>
+                                    <option value="2">Gelombang II</option>
+                                    <option value="3">Gelombang III</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Cari Nama/Email</label>
+                                <input type="text" class="form-control" id="searchInput" placeholder="Nama atau Email" onkeyup="filterTable()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="dataTable">
+                                <thead style="background: #f0f9ff;">
+                                    <tr>
+                                        <th width="20%">Nama Mahasiswa</th>
+                                        <th width="20%">Email</th>
+                                        <th width="15%">Gelombang</th>
+                                        <th width="15%">Status Dokumen</th>
+                                        <th width="30%">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                    <!-- Data akan di-load dari mock -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background: var(--primary); color: white;">
+                    <h5 class="modal-title">Detail Verifikasi Dokumen</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body detail-modal-body">
+                    <div class="mb-3">
+                        <label class="fw-bold">Nama Mahasiswa</label>
+                        <p id="detailName"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Email</label>
+                        <p id="detailEmail"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Gelombang</label>
+                        <p id="detailGelombang"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Dokumen yang Diunggah</label>
+                        <div id="detailDocuments"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Verifikasi Status</label>
+                        <select class="form-select" id="verifyStatus">
+                            <option value="">-- Pilih Status --</option>
+                            <option value="verified">✓ Terverifikasi</option>
+                            <option value="rejected">✗ Ditolak</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Catatan/Feedback</label>
+                        <textarea class="form-control" id="verifyNote" rows="3" placeholder="Masukkan catatan atau alasan penolakan"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" onclick="submitVerification()">
+                        <i class="fas fa-check"></i> Simpan Verifikasi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const userEmail = localStorage.getItem('userEmail');
+        let allForms = [];
+        let currentForm = null;
+
+        // ✅ ADD ROLE/AUTHORITY LOGGING
+        console.log('🔐 [ADMIN-VALIDASI] User joining dashboard:');
+        console.log('   📧 User Email:', userEmail);
+        console.log('   🔑 Auth Token exists:', !!authToken);
+        
+        // Try to get role from various sources
+        const userDataStr = sessionStorage.getItem('userData');
+        if (userDataStr) {
+            try {
+                const userData = JSON.parse(userDataStr);
+                console.log('   👤 User Data:', userData);
+                console.log('   🎭 Roles:', userData.roles);
+                console.log('   🎭 Authorities:', userData.authorities);
+            } catch (e) {
+                console.error('   ❌ Could not parse userData:', e);
+            }
+        } else {
+            console.warn('   ⚠️ No userData in sessionStorage');
+        }
+        
+        const userRole = sessionStorage.getItem('userRole') || localStorage.getItem('userRole');
+        console.log('   🎭 Stored userRole:', userRole);
+        
+        // Try to decode JWT token to see roles
+        if (authToken) {
+            try {
+                const parts = authToken.split('.');
+                if (parts.length === 3) {
+                    const payload = JSON.parse(atob(parts[1]));
+                    console.log('   🔓 JWT Payload:', payload);
+                    console.log('   👑 Token Authorities:', payload.authorities || payload.roles || 'NONE');
+                    console.log('   👤 Token Subject:', payload.sub);
+                    console.log('   ⏰ Token Exp:', new Date(payload.exp * 1000));
+                }
+            } catch (e) {
+                console.error('   ❌ Could not decode JWT:', e);
+            }
+        }
+
+        if (!authToken) {
+            console.error('❌ [ADMIN-VALIDASI] No auth token found - redirecting to login');
+            window.location.href = '/login.html';
+        } else {
+            console.log('✅ [ADMIN-VALIDASI] Auth token validated - loading dashboard');
+        }
+
+        // Fetch admission forms from API
+        async function loadFormsFromAPI() {
+            try {
+                console.log('🔄 [ADMIN-VALIDASI] Fetching forms from API...');
+                const response = await fetch('/admin/forms-to-validate', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('🔄 [ADMIN-VALIDASI] API Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ [ADMIN-VALIDASI] API Error:', response.status, errorText);
+                    throw new Error('Failed to fetch forms (Status: ' + response.status + ')');
+                }
+
+                allForms = await response.json();
+                console.log('✅ [ADMIN-VALIDASI] Forms loaded:', allForms.length, 'formulir');
+                renderTable();
+                
+                if (allForms.length === 0) {
+                    console.warn('⚠️ [ADMIN-VALIDASI] No forms to validate');
+                    document.getElementById('tableBody').innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 30px; color: #999;">
+                                <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 10px;"></i><br>
+                                Tidak ada formulir yang perlu divalidasi
+                            </td>
+                        </tr>
+                    `;
+                }
+            } catch (error) {
+                console.error('❌ [ADMIN-VALIDASI] Error loading forms:', error);
+                document.getElementById('tableBody').innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px; color: #e74c3c;">
+                            <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 10px;"></i><br>
+                            Gagal memuat data formulir. Silahkan refresh halaman.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            
+            if (allForms.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px; color: #999;">
+                            Tidak ada formulir untuk ditampilkan
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = allForms.map(form => {
+                const statusDisplay = form.status === 'SUBMITTED' ? 'pending' : form.status.toLowerCase();
+                const statusText = statusDisplay === 'pending' ? '⏳ Menunggu' : 
+                                  statusDisplay === 'verified' ? '✓ Terverifikasi' : '✗ Ditolak';
+                
+                return `
+                    <tr data-status="${statusDisplay}" data-name="${form.student.fullName || 'N/A'}" data-email="${form.student.user.email || 'N/A'}">
+                        <td>${form.student.fullName || 'N/A'}</td>
+                        <td>${form.student.user.email || 'N/A'}</td>
+                        <td>${form.period?.name || 'N/A'}</td>
+                        <td>
+                            <span class="status-badge status-${statusDisplay}">
+                                ${statusText}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary btn-action" onclick="viewDetail(${form.id})">
+                                <i class="fas fa-eye"></i> Lihat
+                            </button>
+                            <button class="btn btn-sm btn-success btn-action" onclick="verifyForm(${form.id})">
+                                <i class="fas fa-check"></i> Verifikasi
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterTable() {
+            const statusFilter = document.getElementById('filterStatus').value.toLowerCase();
+            const searchFilter = document.getElementById('searchInput').value.toLowerCase();
+
+            document.querySelectorAll('#dataTable tbody tr').forEach(row => {
+                const status = row.getAttribute('data-status');
+                const name = row.getAttribute('data-name')?.toLowerCase() || '';
+                const email = row.getAttribute('data-email')?.toLowerCase() || '';
+
+                const matchStatus = !statusFilter || status === statusFilter;
+                const matchSearch = !searchFilter || name.includes(searchFilter) || email.includes(searchFilter);
+
+                row.style.display = (matchStatus && matchSearch) ? '' : 'none';
+            });
+        }
+
+        function viewDetail(formId) {
+            const form = allForms.find(f => f.id === formId);
+            currentForm = form;
+
+            if (!form) {
+                alert('Form tidak ditemukan');
+                return;
+            }
+
+            document.getElementById('detailName').textContent = form.student.fullName || 'N/A';
+            document.getElementById('detailEmail').textContent = form.student.user.email || 'N/A';
+            document.getElementById('detailGelombang').textContent = form.period?.name || 'N/A';
+            
+            // Parse additional form data if available
+            let formDataInfo = '<p style="color: #666; font-size: 13px;"><i class="fas fa-check-circle"></i> Formulir sudah lengkap dan siap diverifikasi</p>';
+            
+            if (form.additionalInfo) {
+                try {
+                    const data = JSON.parse(form.additionalInfo);
+                    formDataInfo = `
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                            <p><strong>Nama:</strong> ${data.fullName || 'N/A'}</p>
+                            <p><strong>NIK:</strong> ${data.nik || 'N/A'}</p>
+                            <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
+                            <p><strong>Telepon:</strong> ${data.phoneNumber || 'N/A'}</p>
+                            <p><strong>Tempat Lahir:</strong> ${data.birthPlace || 'N/A'}</p>
+                            <p><strong>Tanggal Lahir:</strong> ${data.birthDate || 'N/A'}</p>
+                        </div>
+                    `;
+                } catch (e) {
+                    console.log('Could not parse form data');
+                }
+            }
+            
+            document.getElementById('detailDocuments').innerHTML = formDataInfo + `
+                <hr style="margin: 20px 0;">
+                <div style="background: #f0f9ff; padding: 15px; border-radius: 5px; border-left: 4px solid #3498db;">
+                    <p><i class="fas fa-info-circle"></i> <strong>Informasi Formulir</strong></p>
+                    <p>Status: <strong>${form.status}</strong></p>
+                    <p>Tipe Pendaftaran: <strong>${form.selectionType?.name || 'N/A'}</strong></p>
+                    <p>Program Studi: <strong>${form.programStudi || 'N/A'}</strong></p>
+                    <p>Disubmit: <strong>${new Date(form.submittedAt).toLocaleDateString('id-ID')}</strong></p>
+                </div>
+            `;
+
+            const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+            modal.show();
+        }
+
+        function verifyForm(formId) {
+            const form = allForms.find(f => f.id === formId);
+            if (form) {
+                viewDetail(formId);
+                document.getElementById('verifyStatus').focus();
+            }
+        }
+
+        async function submitVerification() {
+            const status = document.getElementById('verifyStatus').value;
+            const reason = document.getElementById('verifyNote').value;
+
+            if (!status) {
+                alert('Silahkan pilih status verifikasi');
+                return;
+            }
+
+            if (!status && !reason) {
+                alert('Silahkan berikan alasan penolakan');
+                return;
+            }
+
+            try {
+                const payload = {
+                    approved: status === 'verified',
+                    reason: reason || ''
+                };
+
+                console.log('📝 [ADMIN-VALIDASI] Submitting verification:');
+                console.log('   📧 Form ID:', currentForm.id);
+                console.log('   🎭 Admin Role:', userRole);
+                console.log('   ✅ Status:', status);
+                console.log('   📝 Reason:', reason || '(none)');
+                console.log('   💾 Payload:', payload);
+
+                const response = await fetch(`/admin/forms/${currentForm.id}/validate`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                console.log('📝 [ADMIN-VALIDASI] API Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ [ADMIN-VALIDASI] Validation API Error:', response.status, errorText);
+                    
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(errorText);
+                    } catch (e) {
+                        errorData = { message: errorText };
+                    }
+                    
+                    throw new Error(errorData.message || 'Gagal menyimpan verifikasi (Kode: ' + response.status + ')');
+                }
+
+                console.log('✅ [ADMIN-VALIDASI] Verification saved successfully');
+                alert('Verifikasi berhasil disimpan dan notifikasi dikirim ke email mahasiswa');
+                
+                // Reload forms
+                await loadFormsFromAPI();
+                bootstrap.Modal.getInstance(document.getElementById('detailModal')).hide();
+                
+                // Reset form
+                document.getElementById('verifyStatus').value = '';
+                document.getElementById('verifyNote').value = '';
+            } catch (error) {
+                console.error('❌ [ADMIN-VALIDASI] Error saving verification:', error);
+                alert('Gagal menyimpan verifikasi: ' + error.message);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
+            console.log('🚪 [ADMIN-VALIDASI] Logout clicked - clearing auth data');
+            window.location.href = '/login.html';
+        }
+
+        // Load data on page load
+        console.log('🚀 [ADMIN-VALIDASI] Dashboard initialization - loading forms...');
+        loadFormsFromAPI();
+    </script>
+</body>
+</html>

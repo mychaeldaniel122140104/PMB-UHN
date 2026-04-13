@@ -1,0 +1,623 @@
+<!-- Header Navigation Component -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top shadow-sm">
+  <div class="container-fluid px-4">
+    <!-- Logo dan Nama Brand -->
+    <a class="navbar-brand d-flex align-items-center" href="/dashboard-camaba.html" style="text-decoration: none; color: inherit;">
+      <div class="me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+        <!-- Logo UHN (Gunakan logo yang ada) -->
+        <img src="/logo/logokampus.png" alt="Logo UHN" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.style.display='none'">
+      </div>
+      <div class="d-none d-md-block">
+        <div class="fw-bold" style="font-size: 14px; color: #27ae60;">PMB UHN</div>
+        <div style="font-size: 11px; color: #666;">Universitas HKBP Nommensen</div>
+      </div>
+    </a>
+
+    <!-- Desktop Menu (visible on lg and up) -->
+    <div class="d-none d-lg-flex gap-2 ms-auto">
+      <!-- Dashboard Link -->
+      <a class="nav-link btn-green-nav" href="/dashboard-camaba.html">
+        <i class="bi bi-speedometer2"></i><span class="ms-2">Dashboard</span>
+      </a>
+
+      <!-- Fakultas Dropdown -->
+      <div class="dropdown">
+        <a class="nav-link btn-green-nav dropdown-toggle" href="#" id="navbarFakultasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-building"></i><span class="ms-2">Fakultas</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarFakultasDropdown">
+          <li><a class="dropdown-item" href="https://kedokteran.uhn.ac.id/" target="_blank">» Kedokteran</a></li>
+          <li><a class="dropdown-item" href="https://uhn.ac.id/ekonomidanbisnis/" target="_blank">» Ekonomi dan Bisnis</a></li>
+          <li><a class="dropdown-item" href="https://uhn.ac.id/kip/" target="_blank">» Keguruan dan Ilmu Pendidikan</a></li>
+          <li><a class="dropdown-item" href="https://law.uhn.ac.id/" target="_blank">» Hukum</a></li>
+          <li><a class="dropdown-item" href="https://uhn.ac.id/pertanian/" target="_blank">» Pertanian</a></li>
+          <li><a class="dropdown-item" href="https://teknik.uhn.ac.id/" target="_blank">» Teknik</a></li>
+          <li><a class="dropdown-item" href="https://uhn.ac.id/bahasaseni/" target="_blank">» Bahasa dan Seni</a></li>
+          <li><a class="dropdown-item" href="https://uhn.ac.id/isipol/" target="_blank">» Ilmu Sosial dan Politik</a></li>
+          <li><a class="dropdown-item" href="https://uhn.ac.id/psikologi/" target="_blank">» Psikologi</a></li>
+          <li><a class="dropdown-item" href="https://uhn.ac.id/peternakan/" target="_blank">» Peternakan</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="https://uhn.ac.id/pascasarjana/" target="_blank">» Pasca Sarjana</a></li>
+        </ul>
+      </div>
+      <!-- Biaya/UKT Link -->
+      <a class="nav-link btn-green-nav" href="#" id="downloadBiaya" data-bs-toggle="modal" data-bs-target="#biayaUktModal" onclick="event.preventDefault(); event.stopPropagation();">
+        <i class="bi bi-file-pdf"></i><span class="ms-2">Biaya / UKT</span>
+      </a>
+      <!-- Modal Biaya/UKT -->
+      <div class="modal fade" id="biayaUktModal" tabindex="-1" aria-labelledby="biayaUktModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="biayaUktModalLabel">Daftar Biaya / UKT</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+              <iframe src="https://drive.google.com/file/d/1BsgxBsQxOHmQxNKYttBmrfTC4yUlje0Y/preview" width="100%" height="400" style="border:none;"></iframe>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+              <a href="https://drive.google.com/file/d/1BsgxBsQxOHmQxNKYttBmrfTC4yUlje0Y/view" target="_blank" class="btn btn-success">
+                <i class="bi bi-box-arrow-up-right"></i> Lihat di Google Drive
+              </a>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <i class="bi bi-x-circle"></i> Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Service Button -->
+      <button class="nav-link btn-green-nav" onclick="if(typeof markStudentMessagesAsRead === 'function') markStudentMessagesAsRead(); if(typeof openMessagingModal === 'function') openMessagingModal(); else showCustomerServiceAlert();" title="Hubungi Customer Service">
+        <i class="bi bi-chat-left-dots"></i><span class="ms-2">Customer Service</span>
+        <span id="msgBadgeHeader" class="badge bg-danger" style="margin-left: 5px; font-size: 10px; display: none;">!</span>
+      </button>
+
+      <!-- Profile Link -->
+      <a class="nav-link btn-green-nav" href="/profile.html" title="Lihat Profil">
+        <i class="bi bi-person"></i><span class="ms-2">Profil</span>
+      </a>
+
+      <!-- User Dropdown -->
+      <div class="dropdown">
+        <a class="nav-link btn-green-nav dropdown-toggle" href="#" id="navbarUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-person-circle"></i> <span id="userNameNav">User</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserDropdown">
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); if(typeof logout === 'function') { logout(); } else { if(confirm('Apakah Anda yakin ingin keluar?')) { sessionStorage.clear(); window.location.href='/index.html'; } }">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Hamburger Menu for Mobile (visible on smaller screens) -->
+    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Offcanvas Menu (slides from right) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+  <div class="offcanvas-header bg-success">
+    <h5 class="offcanvas-title" id="mobileMenuLabel" style="color: white;">Menu</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <div class="list-group list-group-flush">
+      <!-- Dashboard -->
+      <a href="/dashboard-camaba.html" class="list-group-item list-group-item-action mobile-menu-item">
+        <i class="bi bi-speedometer2 me-3"></i> Dashboard
+      </a>
+
+      <!-- Fakultas -->
+      <button class="list-group-item list-group-item-action mobile-menu-item" type="button" data-bs-toggle="collapse" data-bs-target="#fakultasMenu" aria-expanded="false">
+        <i class="bi bi-building me-3"></i> Fakultas
+        <i class="bi bi-chevron-down float-end"></i>
+      </button>
+      <div class="collapse" id="fakultasMenu">
+        <a href="https://kedokteran.uhn.ac.id/" target="_blank" class="list-group-item list-group-item-action ps-5">» Kedokteran</a>
+        <a href="https://uhn.ac.id/ekonomidanbisnis/" target="_blank" class="list-group-item list-group-item-action ps-5">» Ekonomi dan Bisnis</a>
+        <a href="https://uhn.ac.id/kip/" target="_blank" class="list-group-item list-group-item-action ps-5">» Keguruan dan Ilmu Pendidikan</a>
+        <a href="https://law.uhn.ac.id/" target="_blank" class="list-group-item list-group-item-action ps-5">» Hukum</a>
+        <a href="https://uhn.ac.id/pertanian/" target="_blank" class="list-group-item list-group-item-action ps-5">» Pertanian</a>
+        <a href="https://teknik.uhn.ac.id/" target="_blank" class="list-group-item list-group-item-action ps-5">» Teknik</a>
+        <a href="https://uhn.ac.id/bahasaseni/" target="_blank" class="list-group-item list-group-item-action ps-5">» Bahasa dan Seni</a>
+        <a href="https://uhn.ac.id/isipol/" target="_blank" class="list-group-item list-group-item-action ps-5">» Ilmu Sosial dan Politik</a>
+        <a href="https://uhn.ac.id/psikologi/" target="_blank" class="list-group-item list-group-item-action ps-5">» Psikologi</a>
+        <a href="https://uhn.ac.id/peternakan/" target="_blank" class="list-group-item list-group-item-action ps-5">» Peternakan</a>
+        <a href="https://uhn.ac.id/pascasarjana/" target="_blank" class="list-group-item list-group-item-action ps-5">» Pasca Sarjana</a>
+      </div>
+
+      <!-- Alur Pendaftaran -->
+      <a href="#footerSection" class="list-group-item list-group-item-action mobile-menu-item" data-bs-dismiss="offcanvas">
+        <i class="bi bi-diagram-3 me-3"></i> Alur Pendaftaran
+      </a>
+
+      <!-- Biaya/UKT -->
+      <a href="#" id="downloadBiayaMobile" class="list-group-item list-group-item-action mobile-menu-item" data-bs-toggle="modal" data-bs-target="#biayaUktModal" onclick="event.preventDefault(); event.stopPropagation();" data-bs-dismiss="offcanvas">
+        <i class="bi bi-file-pdf me-3"></i> Biaya / UKT
+      </a>
+
+      <!-- Customer Service -->
+      <button class="list-group-item list-group-item-action mobile-menu-item" type="button" onclick="handleMobileCustomerService()" data-bs-dismiss="offcanvas">
+        <i class="bi bi-chat-left-dots me-3"></i> Customer Service
+        <span id="msgBadgeMobile" class="badge bg-danger float-end" style="display: none;">!</span>
+      </button>
+
+      <!-- Profile -->
+      <a href="/profile.html" class="list-group-item list-group-item-action mobile-menu-item" data-bs-dismiss="offcanvas">
+        <i class="bi bi-person me-3"></i> Profile
+      </a>
+
+      <hr class="my-2">
+
+      <!-- Logout -->
+      <a href="#" class="list-group-item list-group-item-action text-danger mobile-menu-item" onclick="event.preventDefault(); if(typeof logout === 'function') { logout(); } else { if(confirm('Apakah Anda yakin ingin keluar?')) { sessionStorage.clear(); window.location.href='/index.html'; } }">
+        <i class="bi bi-box-arrow-right me-3"></i> Logout
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Custom Header Styles */
+.navbar {
+  padding: 0.5rem 0 !important;
+}
+
+.navbar-brand {
+  padding: 0 !important;
+  margin-right: 2rem !important;
+}
+
+/* Green Button Styling for Desktop */
+.btn-green-nav {
+  background: linear-gradient(90deg, #25d366 0%, #1aa745 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 0.5rem 1rem !important;
+  margin: 0 0.25rem !important;
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  transition: all 0.3s ease !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+}
+
+.btn-green-nav:hover,
+.btn-green-nav.active {
+  background: linear-gradient(90deg, #22b85c 0%, #157a35 100%) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4) !important;
+  color: white !important;
+}
+
+.dropdown-menu {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  padding: 0.6rem 1.5rem;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(39, 174, 96, 0.08);
+  color: #27ae60;
+  padding-left: 2rem;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: rgba(39, 174, 96, 0.15);
+  color: #27ae60;
+}
+
+/* Mobile Menu Styles */
+.offcanvas {
+  width: 70% !important;
+  max-width: 300px !important;
+}
+
+.offcanvas-header {
+  background: linear-gradient(90deg, #25d366 0%, #1aa745 100%) !important;
+  padding: 1.5rem !important;
+}
+
+.offcanvas-header .btn-close {
+  opacity: 0.8;
+}
+
+.mobile-menu-item {
+  border: none !important;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem 1.5rem !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mobile-menu-item:hover {
+  background-color: rgba(39, 174, 96, 0.1) !important;
+  color: #27ae60 !important;
+  padding-left: 2rem !important;
+}
+
+.mobile-menu-item i {
+  font-size: 18px;
+  min-width: 24px;
+}
+
+.list-group-item {
+  border: none !important;
+}
+
+/* Submenu styling */
+.collapse .list-group-item {
+  background-color: #f8f9fa;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.collapse .list-group-item:hover {
+  background-color: rgba(39, 174, 96, 0.08) !important;
+  color: #27ae60 !important;
+}
+
+/* Hide desktop menu on mobile */
+@media (max-width: 991px) {
+  .navbar-brand div:last-child {
+    display: none !important;
+  }
+}
+
+/* Icon spacing */
+.nav-link i,
+.dropdown-item i {
+  margin-right: 0.5rem;
+}
+
+/* Custom Alert Modal Styles */
+.cs-alert-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+}
+
+.cs-alert-overlay.show {
+  display: flex;
+}
+
+.cs-alert-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 40px 35px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  animation: slideUpAlert 0.3s ease-out;
+}
+
+@keyframes slideUpAlert {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cs-alert-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: #f39c12;
+}
+
+.cs-alert-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1a472a;
+  margin-bottom: 12px;
+}
+
+.cs-alert-message {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.cs-alert-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.cs-alert-buttons button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cs-alert-btn-primary {
+  background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+  color: white;
+  box-shadow: 0 8px 24px rgba(39, 174, 96, 0.3);
+}
+
+.cs-alert-btn-primary:hover {
+  background: linear-gradient(135deg, #229954 0%, #1a6e3a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(39, 174, 96, 0.4);
+}
+
+.cs-alert-btn-secondary {
+  background: linear-gradient(135deg, #f0f2f5 0%, #e9ecef 100%);
+  color: #333;
+  border: 2px solid rgba(26, 71, 42, 0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.cs-alert-btn-secondary:hover {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  border-color: rgba(26, 71, 42, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+</style>
+
+<script>
+// Header Logic
+document.addEventListener('DOMContentLoaded', function() {
+  // Load user info dari sessionStorage
+  try {
+    const userData = sessionStorage.getItem('userData');
+    if (userData) {
+      const user = JSON.parse(userData);
+      const userNameElement = document.getElementById('userNameNav');
+      if (userNameElement && user.fullName) {
+        userNameElement.textContent = user.fullName.split(' ')[0]; // Ambil nama depan
+      }
+    }
+  } catch (error) {
+    console.log('User data not available');
+  }
+
+  // Handle Download Biaya/UKT (Desktop)
+  function setupBiayaUktModal() {
+    const downloadBiayaDesktop = document.getElementById('downloadBiaya');
+    if (downloadBiayaDesktop) {
+      // Remove old listener if exists
+      downloadBiayaDesktop.replaceWith(downloadBiayaDesktop.cloneNode(true));
+      
+      // Get fresh reference after clone
+      const newLink = document.getElementById('downloadBiaya');
+      if (newLink) {
+        newLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const modalElement = document.getElementById('biayaUktModal');
+          if (modalElement) {
+            try {
+              // Try Bootstrap 5 modal
+              const modal = new bootstrap.Modal(modalElement);
+              modal.show();
+            } catch (error) {
+              // Fallback: manually show modal using jQuery or direct manipulation
+              console.warn('Bootstrap Modal not available, using fallback:', error);
+              modalElement.classList.add('show');
+              modalElement.style.display = 'block';
+              document.body.classList.add('modal-open');
+              
+              // Add backdrop
+              const backdrop = document.createElement('div');
+              backdrop.className = 'modal-backdrop fade show';
+              backdrop.id = 'modalBackdrop';
+              document.body.appendChild(backdrop);
+            }
+          } else {
+            console.error('Modal element not found with id: biayaUktModal');
+          }
+        });
+      }
+    }
+  }
+  
+  // Setup on DOMContentLoaded
+  setupBiayaUktModal();
+  
+  // Also setup for dynamically loaded components
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.addedNodes.length) {
+        const hasModal = Array.from(mutation.addedNodes).some(node => 
+          node.id === 'biayaUktModal' || (node.querySelector && node.querySelector('#biayaUktModal'))
+        );
+        if (hasModal) {
+          setupBiayaUktModal();
+        }
+      }
+    });
+  });
+  
+  // Start observing the document for changes
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  
+
+  // Mobile/Desktop unified setup - both now use Bootstrap modal with data attributes
+  // This code is kept for compatibility but modal is primarily triggered via data-bs-toggle
+  console.log('Header component loaded successfully');
+  
+
+  // Handle scroll to sections
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+});
+
+// ✅ REAL-TIME MESSAGE BADGE POLLING (Sync dengan dashboard)
+// Poll untuk unread messages setiap 5 detik
+setInterval(function() {
+  try {
+    // Get auth token dari localStorage atau sessionStorage
+    const authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+    if (!authToken) return; // Skip jika no auth
+    
+    // Fetch unread message count dari API
+    fetch('/api/camaba/messages/unread-count', {
+      headers: { 'Authorization': 'Bearer ' + authToken }
+    })
+    .then(res => res.json())
+    .then(data => {
+      const count = data.unreadCount || 0;
+      const badgeDesktop = document.getElementById('msgBadgeHeader');
+      const badgeMobile = document.getElementById('msgBadgeMobile');
+      
+      if (badgeDesktop) {
+        badgeDesktop.textContent = count > 0 ? '!' : '';
+        badgeDesktop.style.display = count > 0 ? 'inline-block' : 'none';
+      }
+      
+      if (badgeMobile) {
+        badgeMobile.textContent = count > 0 ? '!' : '';
+        badgeMobile.style.display = count > 0 ? 'inline-block' : 'none';
+      }
+    })
+    .catch(e => console.log('Message polling error (silent):', e));
+  } catch (e) {
+    // Silently ignore polling errors
+  }
+}, 5000); // Check every 5 seconds
+
+// Set active menu item berdasarkan current page
+function setActiveMenu() {
+  const currentPage = window.location.pathname.split('/').pop() || 'dashboard-camaba.html';
+  document.querySelectorAll('.btn-green-nav[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === '/' + currentPage || href === currentPage) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
+// Panggil saat halaman load
+document.addEventListener('DOMContentLoaded', setActiveMenu);
+
+// Custom Customer Service Alert Modal
+function showCustomerServiceAlert() {
+  // Create modal HTML if not exists
+  if (!document.getElementById('csAlertOverlay')) {
+    const overlayHtml = `
+      <div id="csAlertOverlay" class="cs-alert-overlay">
+        <div class="cs-alert-modal">
+          <div class="cs-alert-icon">⚠️</div>
+          <div class="cs-alert-title">Customer Service</div>
+          <div class="cs-alert-message">
+            Customer Service hanya tersedia di halaman Dashboard. Silakan kembali ke Dashboard untuk menghubungi kami.
+          </div>
+          <div class="cs-alert-buttons">
+            <button class="cs-alert-btn-primary" onclick="window.location.href='/dashboard-camaba.html'">
+              <i class="bi bi-house-door"></i> Kembali ke Dashboard
+            </button>
+            <button class="cs-alert-btn-secondary" onclick="closeCustomerServiceAlert()">
+              <i class="bi bi-x-circle"></i> Batal
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', overlayHtml);
+  }
+  
+  // Show modal
+  const overlay = document.getElementById('csAlertOverlay');
+  if (overlay) {
+    overlay.classList.add('show');
+  }
+}
+
+function closeCustomerServiceAlert() {
+  const overlay = document.getElementById('csAlertOverlay');
+  if (overlay) {
+    overlay.classList.remove('show');
+  }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+  const overlay = document.getElementById('csAlertOverlay');
+  if (overlay && event.target === overlay) {
+    closeCustomerServiceAlert();
+  }
+});
+
+// Handle mobile customer service button
+function handleMobileCustomerService() {
+  if (typeof markStudentMessagesAsRead === 'function') {
+    markStudentMessagesAsRead();
+  }
+  
+  if (typeof openMessagingModal === 'function') {
+    openMessagingModal();
+    // Close offcanvas after opening modal
+    setTimeout(() => {
+      const offcanvasElement = document.querySelector('.offcanvas.show');
+      if (offcanvasElement) {
+        const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
+        if (offcanvasInstance) offcanvasInstance.hide();
+      }
+    }, 100);
+  } else {
+    showCustomerServiceAlert();
+  }
+}
+</script>

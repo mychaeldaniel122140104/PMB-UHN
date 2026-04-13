@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Student Profile - Form Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .test-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .test-steps {
+            list-style: none;
+        }
+        
+        .test-steps li {
+            padding: 8px 0;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .test-steps li:before {
+            content: "→ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 8px 8px 8px 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button.secondary {
+            background: #6c757d;
+        }
+        
+        button.success {
+            background: #28a745;
+        }
+        
+        button.danger {
+            background: #dc3545;
+        }
+        
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            background: white;
+            border: 2px solid #ddd;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .result-box.success {
+            border-color: #28a745;
+            background: #f0f9f4;
+        }
+        
+        .result-box.error {
+            border-color: #dc3545;
+            background: #fdf8f9;
+        }
+        
+        .result-box.info {
+            border-color: #17a2b8;
+            background: #f0f7fa;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 5px 0;
+        }
+        
+        .status-badge.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-badge.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-badge.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-badge.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #0c5460;
+        }
+        
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 20px 0;
+        }
+        
+        .col-2 {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .col-2 > div {
+            flex: 1;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Test Student Profile & Form Access</h1>
+        <p class="subtitle">Verifies that Student profile creation fix works properly</p>
+        
+        <div class="info-box">
+            <strong>ℹ️ This fix resolves:</strong>
+            When user clicks "View/Edit Formulir", they got 401 error.
+            Now DataInitializer creates Student profile for test account on first run.
+        </div>
+        
+        <!-- PART 1: Login Test -->
+        <div class="test-section">
+            <h3>1️⃣ Step 1: Submit Credentials</h3>
+            <ol class="test-steps">
+                <li>Click "🔓 Login" to get JWT token</li>
+                <li>Uses credentials: student@test.com / student123</li>
+                <li>JWT token will be stored for next requests</li>
+            </ol>
+            <button onclick="testLogin()">🔓 Login</button>
+            <div id="loginResult"></div>
+        </div>
+        
+        <hr>
+        
+        <!-- PART 2: Student Profile Existence -->
+        <div class="test-section">
+            <h3>2️⃣ Step 2: Verify Student Profile Exists</h3>
+            <ol class="test-steps">
+                <li>Queries: GET /api/camaba/admission-form</li>
+                <li>This endpoint looks up Student by user ID from JWT</li>
+                <li>Should return 200 with form data (NOT 401)</li>
+            </ol>
+            <button onclick="testFormAccess()">📋 Access Form Endpoint</button>
+            <div id="formResult"></div>
+        </div>
+        
+        <hr>
+        
+        <!-- PART 3: Dashboard Simulation -->
+        <div class="test-section">
+            <h3>3️⃣ Expected Next Steps</h3>
+            <ol class="test-steps">
+                <li>Go to /dashboard-camaba.html</li>
+                <li>Click "View Formulir" button</li>
+                <li>Should load form WITHOUT 401 error</li>
+                <li>Click "Edit Formulir" to modify form</li>
+                <li>Submit changes successfully</li>
+            </ol>
+            <a href="/dashboard-camaba.html" target="_blank">
+                <button>📊 Open Student Dashboard</button>
+            </a>
+        </div>
+        
+        <hr>
+        
+        <!-- Debug Info -->
+        <div class="test-section">
+            <h3>🔧 Debug Information</h3>
+            <label>Stored JWT Token:</label>
+            <textarea id="tokenDisplay" readonly rows="3">Not logged in yet</textarea>
+            <label>Last API Response:</label>
+            <textarea id="lastResponse" readonly rows="4">Waiting for request...</textarea>
+            <button class="secondary" onclick="clearStorage()">🗑️ Clear Storage</button>
+            <button class="secondary" onclick="copyToken()">📋 Copy Token</button>
+        </div>
+        
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        
+        function updateTokenDisplay() {
+            const token = localStorage.getItem('jwt_token');
+            document.getElementById('tokenDisplay').textContent = token ? token : 'Not logged in yet';
+        }
+        
+        function clearStorage() {
+            localStorage.removeItem('jwt_token');
+            updateTokenDisplay();
+            alert('Storage cleared');
+        }
+        
+        function copyToken() {
+            const token = localStorage.getItem('jwt_token');
+            if (!token) {
+                alert('No token to copy. Please login first.');
+                return;
+            }
+            navigator.clipboard.writeText(token).then(() => {
+                alert('Token copied to clipboard');
+            });
+        }
+        
+        function setResult(elementId, status, messages) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = '';
+            
+            // Status badge
+            const badge = document.createElement('div');
+            badge.className = `status-badge ${status}`;
+            badge.textContent = status.toUpperCase();
+            element.appendChild(badge);
+            
+            // Result box
+            const resultBox = document.createElement('div');
+            resultBox.className = `result-box ${status}`;
+            resultBox.textContent = messages;
+            element.appendChild(resultBox);
+        }
+        
+        async function testLogin() {
+            try {
+                const resultDiv = document.getElementById('loginResult');
+                resultDiv.innerHTML = '⏳ Sending login request...';
+                
+                const response = await fetch(`${API_BASE}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'student@test.com',
+                        password: 'student123'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    setResult('loginResult', 'error', 
+                        `Status: ${response.status}\n\nError: ${JSON.stringify(data, null, 2)}`);
+                    return;
+                }
+                
+                // Store token
+                const token = data.token;
+                localStorage.setItem('jwt_token', token);
+                updateTokenDisplay();
+                
+                let message = `✅ Login Successful\n\n`;
+                message += `Token received (${token.length} chars)\n`;
+                message += `User: ${data.email}\n`;
+                message += `Role: ${data.role}\n\n`;
+                message += `Token stored in localStorage for next requests.`;
+                
+                setResult('loginResult', 'success', message);
+                
+            } catch (error) {
+                setResult('loginResult', 'error', `Error: ${error.message}`);
+            }
+        }
+        
+        async function testFormAccess() {
+            try {
+                const resultDiv = document.getElementById('formResult');
+                const token = localStorage.getItem('jwt_token');
+                
+                if (!token) {
+                    setResult('formResult', 'warning', 
+                        'No JWT token found.\n\nPlease complete Step 1 (Login) first.');
+                    return;
+                }
+                
+                resultDiv.innerHTML = '⏳ Accessing form endpoint...';
+                
+                const response = await fetch(`${API_BASE}/api/camaba/admission-form`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                // Store response for debug
+                document.getElementById('lastResponse').textContent = JSON.stringify(data, null, 2);
+                
+                if (!response.ok) {
+                    let message = `❌ Status: ${response.status}\n\n`;
+                    message += `Error: ${JSON.stringify(data, null, 2)}\n\n`;
+                    
+                    if (response.status === 401) {
+                        message += `⚠️ 401 Unauthorized - Student profile might not exist\n`;
+                        message += `This means the fix didn't work properly.`;
+                    }
+                    
+                    setResult('formResult', 'error', message);
+                    return;
+                }
+                
+                let message = `✅ Form Access Successful!\n\n`;
+                message += `Status: ${response.status}\n`;
+                message += `Student Profile Found: YES\n\n`;
+                message += `Response:\n`;
+                message += JSON.stringify(data, null, 2);
+                message += `\n\n✨ Fix is working! Student can now view/edit form.`;
+                
+                setResult('formResult', 'success', message);
+                
+            } catch (error) {
+                setResult('formResult', 'error',`Network Error: ${error.message}\n\nEnsure app is running on this port.`);
+            }
+        }
+        
+        // Update display on page load
+        updateTokenDisplay();
+    </script>
+</body>
+</html>

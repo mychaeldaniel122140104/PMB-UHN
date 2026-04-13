@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran Formulir - PMB HKBP Nommensen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a472a;
+            --success: #27ae60;
+            --info: #3498db;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light-gray: #f5f6fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(202, 204, 202, 0.9)), url('/gambar/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 20px;
+            color: white;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9);
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .page-wrapper {
+            margin-top: 80px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .payment-container {
+            background: linear-gradient(135deg, #fafbfc 0%, #ffffff 50%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(39, 174, 96, 0.1);
+            width: 100%;
+            max-width: 950px;
+            border: 2px solid rgba(39, 174, 96, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .payment-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--success) 0%, var(--primary) 100%);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .payment-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(39, 174, 96, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(39, 174, 96, 0.1);
+        }
+
+        .header-section h1 {
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 15px;
+            font-size: 36px;
+            letter-spacing: -0.5px;
+        }
+
+        .header-section p {
+            color: #888;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .payment-info-box {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.05) 0%, rgba(39, 174, 96, 0.02) 100%);
+            border-left: 6px solid var(--success);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 40px;
+            border: 2px solid rgba(39, 174, 96, 0.15);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(39, 174, 96, 0.08);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(39, 174, 96, 0.1);
+            font-size: 16px;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #666;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-value {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        .price-highlight {
+            background: linear-gradient(135deg, white 0%, #f9fafb 100%);
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 3px solid var(--success);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
+        }
+
+        .price-value {
+            font-size: 28px;
+            color: var(--success);
+            font-weight: 900;
+        }
+
+        .va-section {
+            background: linear-gradient(135deg, #fafbfc 0%, white 100%);
+            border: 2px solid rgba(39, 174, 96, 0.15);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 40px rgba(39, 174, 96, 0.15);
+        }
+
+        .va-section h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .va-display {
+            background: linear-gradient(135deg, #fafbfc 0%, white 100%);
+            padding: 35px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 3px solid var(--success);
+            box-shadow: 0 12px 40px rgba(39, 174, 96, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .va-display::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(39, 174, 96, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .va-label {
+            color: #888;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .va-number {
+            font-family: 'Courier New', monospace;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--success);
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 8px rgba(39, 174, 96, 0.1);
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, var(--success) 0%, #1e8449 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #229954 0%, #1a6e3a 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .expired-warning {
+            background: linear-gradient(135deg, #fffbf0 0%, #fffde0 100%);
+            border-left: 6px solid var(--warning);
+            color: #b8860b;
+            padding: 18px 24px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            border: 2px solid rgba(243, 156, 18, 0.2);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-section {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid rgba(39, 174, 96, 0.1);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .status-waiting {
+            background: linear-gradient(135deg, #fff8f0 0%, #fffde0 100%);
+            color: #b8860b;
+            border: 2px solid #ffd700;
+        }
+
+        .status-paid {
+            background: linear-gradient(135deg, #f0fdf4 0%, #e8f8f1 100%);
+            color: #166534;
+            border: 2px solid var(--success);
+        }
+
+        .status-info {
+            font-size: 15px;
+            color: #666;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid var(--success);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .instructions {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(52, 152, 219, 0.02) 100%);
+            border-left: 6px solid var(--info);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(52, 152, 219, 0.15);
+            box-shadow: 0 8px 24px rgba(52, 152, 219, 0.1);
+        }
+
+        .instructions h4 {
+            color: var(--info);
+            font-weight: 800;
+            margin-bottom: 18px;
+            font-size: 16px;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instructions ol {
+            margin: 0;
+            padding-left: 25px;
+        }
+
+        .instructions li {
+            color: #444;
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .payment-method-selection {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .method-card {
+            flex: 1;
+            min-width: 280px;
+            padding: 35px;
+            border: 3px solid rgba(39, 174, 96, 0.15);
+            border-radius: 16px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            background: linear-gradient(135deg, #fafbfc 0%, white 100%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .method-card:hover {
+            border-color: var(--success);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(39, 174, 96, 0.25);
+        }
+        
+        .method-card:hover::before {
+            opacity: 1;
+        }
+
+        .method-card.selected {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #f0fdf4 0%, #e8f8f1 100%);
+            box-shadow: 0 20px 50px rgba(39, 174, 96, 0.3);
+        }
+
+        .method-card-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+        
+        .method-card:hover .method-card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .method-card h4 {
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 12px;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+        }
+
+        .method-card p {
+            color: #888;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .manual-upload-section {
+            background: linear-gradient(135deg, #fafbfc 0%, #f8f9fa 100%);
+            border: 2px solid rgba(39, 174, 96, 0.15);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            display: none;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        }
+
+        .manual-upload-section h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .bank-info-box {
+            background: linear-gradient(135deg, white 0%, #f9fafb 100%);
+            border: 2px solid rgba(39, 174, 96, 0.15);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 24px rgba(39, 174, 96, 0.1);
+        }
+
+        .bank-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(39, 174, 96, 0.08);
+        }
+
+        .bank-info-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .bank-info-label {
+            color: #888;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bank-info-value {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .file-upload-area {
+            border: 3px dashed var(--success);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(39, 174, 96, 0.08);
+        }
+
+        .file-upload-area:hover {
+            background: linear-gradient(135deg, #f0fdf4 0%, #e8f8f1 100%);
+            border-color: #229954;
+            box-shadow: 0 12px 36px rgba(39, 174, 96, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .file-upload-area.drag-over {
+            background: linear-gradient(135deg, #f0fdf4 0%, #e8f8f1 100%);
+            border-color: #229954;
+            box-shadow: 0 16px 48px rgba(39, 174, 96, 0.3);
+            border-width: 3px;
+        }
+
+        .file-upload-icon {
+            font-size: 48px;
+            color: var(--success);
+            margin-bottom: 15px;
+        }
+
+        .file-upload-area p {
+            color: #333;
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .file-upload-area .small {
+            color: #888;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .image-preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-height: 180px;
+            max-width: 100%;
+            border-radius: 12px;
+            border: 3px solid var(--success);
+            box-shadow: 0 8px 24px rgba(39, 174, 96, 0.2);
+        }
+
+        .image-preview-remove {
+            margin-top: 15px;
+        }
+
+        .image-preview-remove button {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .image-preview-remove button:hover {
+            background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(231, 76, 60, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 0;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+            animation: slideUp 0.3s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 35px;
+            border-bottom: 3px solid rgba(39, 174, 96, 0.15);
+            background: linear-gradient(135deg, rgba(26, 71, 42, 0.02) 0%, rgba(39, 174, 96, 0.05) 100%);
+            border-top: 3px solid var(--success);
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-header h2 {
+            color: var(--primary);
+            font-weight: 800;
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 35px;
+        }
+        
+        .modal-body h3 {
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 25px;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            padding: 14px 35px;
+            border-radius: 10px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary) 0%, #0f2d1f 100%);
+            color: white;
+            box-shadow: 0 8px 24px rgba(26, 71, 42, 0.3);
+        }
+
+        .btn-primary-custom:hover:not(:disabled) {
+            background: linear-gradient(135deg, #0f2d1f 0%, #081a14 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(26, 71, 42, 0.45);
+        }
+
+        .btn-secondary-custom {
+            background: linear-gradient(135deg, #f0f2f5 0%, #e9ecef 100%);
+            color: var(--primary);
+            border: 2px solid rgba(26, 71, 42, 0.15);
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .btn-secondary-custom:hover {
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+            border-color: rgba(26, 71, 42, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .btn-action:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #f0fdf4 0%, #e8f8f1 100%);
+            border: 3px solid var(--success);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 25px;
+            display: none;
+            box-shadow: 0 12px 36px rgba(39, 174, 96, 0.2);
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .payment-container {
+                padding: 30px;
+                margin: 20px;
+            }
+
+            .header-section h1 {
+                font-size: 28px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .va-number {
+                font-size: 24px;
+            }
+            
+            .payment-method-selection {
+                flex-direction: column;
+            }
+            
+            .method-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="headerContainer"></div>
+    <div id="pageHeaderContainer"></div>
+
+    <div class="page-wrapper" style="margin-top: 0;">
+        <div class="payment-container">
+            <div class="header-section" style="display: none;">
+                <h1><i class="fas fa-credit-card"></i> Pembayaran Formulir Pendaftaran</h1>
+                <p>Silahkan lakukan pembayaran untuk melanjutkan pendaftaran</p>
+            </div>
+
+            <div id="successMessage" class="success-message">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <i class="fas fa-check-circle" style="font-size: 24px; color: #28a745;"></i>
+                    <div>
+                        <strong>Pembayaran Berhasil!</strong>
+                        <p style="margin-bottom: 0; font-size: 14px;">Terima kasih atas pembayaran Anda. Sistem kami sedang memproses data...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Information -->
+            <div class="payment-info-box">
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-graduation-cap"></i> Program Pilihan</span>
+                    <span class="info-value" id="programType">Loading...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-wave-square"></i> Gelombang Terpilih</span>
+                    <span class="info-value" id="selectedGelombangName">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-clipboard-list"></i> Formula Pilihan</span>
+                    <span class="info-value" id="selectedFormulaName">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-hashtag"></i> Gelombang Pembayaran</span>
+                    <span class="info-value" id="periodName">Loading...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-money-bill"></i> Biaya Formulir</span>
+                    <span class="info-value price-highlight">
+                        Rp <span class="price-value" id="paymentAmount">0</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Payment Method Selection -->
+            <div class="payment-method-selection" id="methodSelection" style="display: none;">
+                <div class="method-card" id="methodBriva" onclick="openBrivaModal()" style="cursor: pointer;">
+                    <div class="method-card-icon">🏦</div>
+                    <h4>Virtual Account (BRIVA)</h4>
+                    <p>Transfer via rekening virtual<br>Konfirmasi otomatis instan</p>
+                </div>
+                <div class="method-card" id="methodManual" onclick="openManualModal()" style="cursor: pointer;">
+                    <div class="method-card-icon">📸</div>
+                    <h4>Manual Upload</h4>
+                    <p>Transfer ke rekening kami<br>Upload bukti pembayaran</p>
+                </div>
+            </div>
+
+            <!-- MODAL: Virtual Account (BRIVA) -->
+            <div class="modal-overlay" id="brivaModal" onclick="closeBrivaModal(event)">
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <div class="modal-header">
+                        <h2><i class="fas fa-bank"></i> Pembayaran via Virtual Account</h2>
+                        <button class="modal-close" onclick="closeBrivaModal()">✕</button>
+                    </div>
+                    <div class="modal-body">
+                        <h3 style="color: var(--primary); margin-bottom: 20px; font-weight: 700;">Nomor Rekening Virtual (BRIVA)</h3>
+                        
+                        <div class="expired-warning" id="expiredWarning" style="display: none;">
+                            <i class="fas fa-clock"></i> Nomor rekening ini berlaku hingga <span id="expiryTime"></span>
+                        </div>
+
+                        <div class="va-display">
+                            <div class="va-label">Nomor Rekening Virtual Anda</div>
+                            <div class="va-number" id="vaNumber">-</div>
+                            <button class="copy-btn" onclick="copyToClipboard()">
+                                <i class="fas fa-copy"></i> Salin Nomor Rekening
+                            </button>
+                        </div>
+
+                        <div class="instructions">
+                            <h4><i class="fas fa-info-circle"></i> Cara Pembayaran</h4>
+                            <ol>
+                                <li><strong>Salin nomor rekening</strong> di atas atau gunakan tombol "Salin"</li>
+                                <li><strong>Buka aplikasi</strong> perbankan Anda (BRI Mobile, m-BRI, atau ATM BRI)</li>
+                                <li><strong>Pilih Pembayaran BRIVA</strong> dan tempel nomor rekening</li>
+                                <li><strong>Masukkan jumlah:</strong> Rp <span id="amountForPayment">0</span></li>
+                                <li><strong>Selesaikan transaksi</strong> dengan konfirmasi nomor PIN/password Anda</li>
+                                <li><strong>Status pembayaran</strong> akan otomatis ter-update dalam beberapa detik</li>
+                            </ol>
+                        </div>
+
+                        <div class="status-section">
+                            <div class="status-badge status-waiting" id="paymentStatus">
+                                <i class="fas fa-hourglass-half"></i> Menunggu Pembayaran
+                            </div>
+                            <div class="status-info">
+                                <p id="autoCheckInfo">Sistem akan otomatis mengecek status pembayaran setiap 5 detik</p>
+                                <p style="margin-bottom: 0; color: #999; font-size: 13px;" id="lastCheckTime"></p>
+                            </div>
+                            <p style="margin-top: 15px;">
+                                <button class="btn-action btn-secondary-custom" onclick="simulatePaymentSuccess()" style="background: #d4edda; color: #155724; font-size: 12px;">
+                                    <i class="fas fa-check"></i> SIMULASI: Bayar Sukses (DEMO)
+                                </button>
+                            </p>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; margin-top: 25px;">
+                            <button class="btn-action btn-primary-custom" onclick="checkPaymentStatus()" id="checkBtn">
+                                <i class="fas fa-sync-alt"></i> Cek Status Pembayaran
+                            </button>
+                            <button class="btn-action btn-secondary-custom" onclick="closeBrivaModal()" style="flex: 1;">
+                                <i class="fas fa-arrow-left"></i> Kembali Pilih Metode
+                            </button>
+                        </div>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <a href="/dashboard-camaba.html" class="btn-action btn-secondary-custom" style="text-decoration: none; background: #f3f4f6;">
+                                <i class="fas fa-home"></i> Kembali ke Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL: Manual Upload -->
+            <div class="modal-overlay" id="manualModal" onclick="closeManualModal(event)">
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <div class="modal-header">
+                        <h2><i class="fas fa-file-upload"></i> Unggah Bukti Pembayaran</h2>
+                        <button class="modal-close" onclick="closeManualModal()">✕</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bank-info-box">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; font-weight: 700;">Rekening Penerima</h4>
+                            <div class="bank-info-row">
+                                <span class="bank-info-label">Bank</span>
+                                <span class="bank-info-value" id="bankName">BRI (Bank Rakyat Indonesia)</span>
+                            </div>
+                            <div class="bank-info-row">
+                                <span class="bank-info-label">Nomor Rekening</span>
+                                <span class="bank-info-value" id="bankAccount">8860303528126699</span>
+                            </div>
+                            <div class="bank-info-row">
+                                <span class="bank-info-label">Atas Nama</span>
+                                <span class="bank-info-value" id="bankHolder">HKBP NOMMENSEN</span>
+                            </div>
+                            <div class="bank-info-row">
+                                <span class="bank-info-label">Jumlah Transfer</span>
+                                <span class="bank-info-value">Rp <span id="manualPaymentAmount">0</span></span>
+                            </div>
+                        </div>
+
+                        <div class="instructions">
+                            <h4><i class="fas fa-info-circle"></i> Langkah-Langkah</h4>
+                            <ol>
+                                <li><strong>Buka aplikasi perbankan</strong> Anda (BRI Mobile, m-BRI, atau ATM)</li>
+                                <li><strong>Transfer uang</strong> ke rekening penerima di atas</li>
+                                <li><strong>Catat nomor referensi</strong> atau simpan bukti transfer</li>
+                                <li><strong>Unggah bukti pembayaran</strong> (screenshot atau foto struk) di bawah ini</li>
+                                <li><strong>Tunggu verifikasi</strong> dari admin (biasanya dalam 1-2 jam)</li>
+                            </ol>
+                        </div>
+
+                        <div class="file-upload-area" id="fileUploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" onclick="document.getElementById('fileInput').click()">
+                            <div class="file-upload-icon">📤</div>
+                            <p><strong>Klik untuk pilih file</strong> atau drag & drop di sini</p>
+                            <p class="small">Format: JPG, PNG, PDF • Maksimal 10 MB</p>
+                        </div>
+                        <input type="file" id="fileInput" style="display: none;" accept="image/jpeg,image/png,application/pdf" onchange="handleFileSelect(event)">
+
+                        <div class="image-preview" id="imagePreview" style="display: none;">
+                            <img id="previewImg" src="" alt="Preview">
+                            <div class="image-preview-remove">
+                                <button onclick="removeFilePreview()"><i class="fas fa-trash"></i> Hapus Gambar</button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; margin-top: 25px;">
+                            <button class="btn-action btn-primary-custom" id="submitManualBtn" onclick="submitManualPayment()" disabled style="opacity: 0.6; flex: 1;">
+                                <i class="fas fa-check"></i> Kirim Bukti Pembayaran
+                            </button>
+                            <button class="btn-action btn-secondary-custom" onclick="closeManualModal()">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </button>
+                        </div>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <a href="/dashboard-camaba.html" class="btn-action btn-secondary-custom" style="text-decoration: none; background: #f3f4f6;">
+                                <i class="fas fa-home"></i> Kembali ke Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Virtual Account Section (HIDDEN - for legacy) -->
+            <div class="va-section" id="vaSection" style="display: none;">
+                <h3><i class="fas fa-bank"></i> Nomor Rekening Virtual (BRIVA)</h3>
+                
+                <div class="expired-warning" id="expiredWarning" style="display: none;">
+                    <i class="fas fa-clock"></i> Nomor rekening ini berlaku hingga <span id="expiryTime"></span>
+                </div>
+
+                <div class="va-display">
+                    <div class="va-label">Nomor Rekening Virtual Anda</div>
+                    <div class="va-number" id="vaNumber">-</div>
+                    <button class="copy-btn" onclick="copyToClipboard()">
+                        <i class="fas fa-copy"></i> Salin Nomor Rekening
+                    </button>
+                </div>
+
+                <div class="instructions">
+                    <h4><i class="fas fa-info-circle"></i> Cara Pembayaran</h4>
+                    <ol>
+                        <li><strong>Salin nomor rekening</strong> di atas atau gunakan tombol "Salin"</li>
+                        <li><strong>Buka aplikasi</strong> perbankan Anda (BRI Mobile, m-BRI, atau ATM BRI)</li>
+                        <li><strong>Pilih Pembayaran BRIVA</strong> dan tempel nomor rekening</li>
+                        <li><strong>Masukkan jumlah:</strong> Rp <span id="amountForPayment">0</span></li>
+                        <li><strong>Selesaikan transaksi</strong> dengan konfirmasi nomor PIN/password Anda</li>
+                        <li><strong>Status pembayaran</strong> akan otomatis ter-update dalam beberapa detik</li>
+                    </ol>
+                </div>
+
+                <div class="status-section">
+                    <div class="status-badge status-waiting" id="paymentStatus">
+                        <i class="fas fa-hourglass-half"></i> Menunggu Pembayaran
+                    </div>
+                    <div class="status-info">
+                        <p id="autoCheckInfo">Sistem akan otomatis mengecek status pembayaran setiap 5 detik</p>
+                        <p style="margin-bottom: 0; color: #999; font-size: 13px;" id="lastCheckTime"></p>
+                    </div>
+                    <p style="margin-top: 15px;">
+                        <button class="btn-action btn-secondary-custom" onclick="simulatePaymentSuccess()" style="background: #d4edda; color: #155724; font-size: 12px;">
+                            <i class="fas fa-check"></i> SIMULASI: Bayar Sukses (DEMO)
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <!-- Loading State -->
+            <div id="loadingState" class="text-center" style="padding: 40px;">
+                <div class="loading-spinner"></div>
+                <p style="margin-top: 20px; color: #666;">Mempersiapkan halaman pembayaran...</p>
+            </div>
+
+            <!-- Back to Dashboard Button -->
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="/dashboard-camaba.html" class="btn-action btn-secondary-custom" style="text-decoration: none; background: linear-gradient(135deg, #f0f2f5 0%, #e9ecef 100%); display: inline-flex;">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const getAuthToken = () => {
+            // ✅ Check sessionStorage first (per-tab), fallback to localStorage (backward compat)
+            const sessionToken = sessionStorage.getItem('authToken');
+            if (sessionToken) return sessionToken;
+            return localStorage.getItem('authToken');
+        };
+
+        const authToken = getAuthToken();
+        if (!authToken) {
+            alert('Silahkan login terlebih dahulu');
+            window.location.href = '/login.html';
+        }
+
+        // ✅ NEW: Strict authentication - check if student has registered and selected gelombang
+        async function checkRegistrationStatus() {
+            try {
+                console.log('🔍 Checking registration status via API...');
+                
+                // Check from registration status API (more reliable)
+                const statusResponse = await fetch('/api/camaba/registration-status/all', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+
+                if (!statusResponse.ok) {
+                    throw new Error('Failed to fetch registration status');
+                }
+
+                const statusData = await statusResponse.json();
+                const statuses = statusData.data || [];
+
+                // ❌ Not submitted form yet
+                const formStatus = statuses.find(s => s.stage === 'FORM_SUBMISSION');
+                if (!formStatus || formStatus.status !== 'SELESAI') {
+                    console.warn('⚠️ Student has not submitted a form yet - Form status:', formStatus?.status || 'not found');
+                    showRegistrationGuard('📝 Belum Terdaftar', 
+                        'Anda harus melengkapi formulir pendaftaran terlebih dahulu sebelum bisa melakukan pembayaran.<br><br>' +
+                        'Silahkan klik tombol "Mulai Pendaftaran" untuk mengisi formulir.',
+                        '/form-pendaftaran.html', 'Mulai Pendaftaran');
+                    return false;
+                }
+
+                // ❌ Not selected gelombang/wave yet
+                const gelombangStatus = statuses.find(s => s.stage === 'GELOMBANG_SELECTION');
+                if (!gelombangStatus || gelombangStatus.status !== 'SELESAI') {
+                    console.warn('⚠️ Student has not selected a gelombang yet - Gelombang status:', gelombangStatus?.status || 'not found');
+                    showRegistrationGuard('🌊 Belum Memilih Gelombang',
+                        'Anda harus memilih gelombang (formula/program) terlebih dahulu sebelum bisa melakukan pembayaran.<br><br>' +
+                        'Silahkan pilih gelombang yang sesuai dengan jadwal Anda.',
+                        '/gelombang-selection.html', 'Pilih Gelombang');
+                    return false;
+                }
+
+                console.log('✅ Student registration and gelombang selection verified via registration-status API');
+                return true;
+
+            } catch (error) {
+                console.error('❌ Error checking registration status:', error);
+                showErrorGuard('Gagal Verifikasi Data', error.message);
+                return false;
+            }
+        }
+
+        // ✅ NEW: Show guard message
+        function showRegistrationGuard(title, message, redirectUrl, buttonText) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('vaSection').style.display = 'none';
+            document.querySelector('.action-buttons').style.display = 'none';
+            document.querySelector('.payment-info-box').innerHTML = `
+                <div style="text-align: center; padding: 40px; background: #fff3cd; border-radius: 10px; border: 2px dashed #ffc107;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+                    <h2 style="color: #856404; margin-bottom: 15px;">${title}</h2>
+                    <p style="color: #666; font-size: 16px; margin-bottom: 30px;">
+                        ${message}
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <a href="${redirectUrl}" class="btn-action btn-primary-custom" style="text-decoration: none;">
+                            <i class="fas fa-arrow-right"></i> ${buttonText}
+                        </a>
+                        <button class="btn-action btn-secondary-custom" onclick="window.location.href='/dashboard-camaba.html'">
+                            <i class="fas fa-home"></i> Kembali ke Dashboard
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showErrorGuard(title, message) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('vaSection').style.display = 'none';
+            document.querySelector('.action-buttons').style.display = 'none';
+            document.querySelector('.payment-info-box').innerHTML = `
+                <div style="text-align: center; padding: 40px; background: #f8d7da; border-radius: 10px; border: 2px dashed #f5c6cb;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
+                    <h2 style="color: #721c24; margin-bottom: 15px;">${title}</h2>
+                    <p style="color: #721c24; font-size: 16px; margin-bottom: 30px;">
+                        ${message}
+                    </p>
+                    <button class="btn-action btn-secondary-custom" onclick="window.location.href='/dashboard-camaba.html'">
+                        <i class="fas fa-home"></i> Kembali ke Dashboard
+                    </button>
+                </div>
+            `;
+        }
+
+        let vaData = null;
+        let checkPaymentInterval = null;
+        let checkCount = 0;
+        const MAX_CHECKS = 120; // 10 menit dengan interval 5 detik
+        let selectedPaymentMethod = 'BRIVA'; // Default method
+        let selectedFile = null;
+
+        // ✅ MODAL FUNCTIONS
+        function openBrivaModal() {
+            selectedPaymentMethod = 'BRIVA';
+            document.getElementById('brivaModal').classList.add('show');
+            checkCount = 0; // Reset counter
+            console.log('🏦 BRIVA modal opened');
+            
+            // Start auto-checking payment status when modal opens
+            startPaymentCheck();
+        }
+
+        function closeBrivaModal(event) {
+            // Jika klik di luar modal, tutup
+            if (event && event.target !== document.getElementById('brivaModal')) return;
+            document.getElementById('brivaModal').classList.remove('show');
+            checkCount = 0; // Reset check counter
+            if (checkPaymentInterval) clearInterval(checkPaymentInterval);
+            console.log('🏦 BRIVA modal closed');
+        }
+
+        function openManualModal() {
+            selectedPaymentMethod = 'MANUAL';
+            document.getElementById('manualModal').classList.add('show');
+            console.log('📸 Manual modal opened');
+        }
+
+        function closeManualModal(event) {
+            // Jika klik di luar modal, tutup
+            if (event && event.target !== document.getElementById('manualModal')) return;
+            document.getElementById('manualModal').classList.remove('show');
+            selectedFile = null;
+            document.getElementById('fileInput').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            console.log('📸 Manual modal closed');
+        }
+
+        // ✅ FILE UPLOAD HANDLING
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('fileUploadArea').classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            document.getElementById('fileUploadArea').classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            document.getElementById('fileUploadArea').classList.remove('drag-over');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect({ target: { files: files } });
+            }
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Validate file size (10 MB max - match backend)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('❌ File terlalu besar! Maksimal 10 MB');
+                return;
+            }
+
+            // Validate file type (match backend)
+            const contentType = file.type;
+            if (!contentType || (!contentType.startsWith('image/') && contentType !== 'application/pdf')) {
+                alert('❌ Tipe file tidak didukung! Gunakan JPG, PNG, atau PDF');
+                return;
+            }
+
+            selectedFile = file;
+            console.log('✅ File selected:', file.name, '(' + (file.size / 1024).toFixed(2) + ' KB)');
+
+            // Show preview for images
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('imagePreview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // For PDF, show file name
+                document.getElementById('imagePreview').innerHTML = `
+                    <div style="text-align: center; padding: 20px; background: #f0fdf4; border-radius: 8px; border: 2px solid var(--success);">
+                        <i class="fas fa-file-pdf" style="font-size: 40px; color: var(--success); margin-bottom: 10px;"></i>
+                        <p style="color: var(--primary); font-weight: 700; margin: 0;">${file.name}</p>
+                        <p style="color: #666; font-size: 12px; margin-top: 5px;">PDF • ${(file.size / 1024).toFixed(2)} KB</p>
+                    </div>
+                    <div class="image-preview-remove">
+                        <button onclick="removeFilePreview()"><i class="fas fa-trash"></i> Hapus File</button>
+                    </div>
+                `;
+                document.getElementById('imagePreview').style.display = 'block';
+            }
+
+            // Enable submit button
+            const submitBtn = document.getElementById('submitManualBtn');
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+        }
+
+        function removeFilePreview() {
+            selectedFile = null;
+            document.getElementById('fileInput').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+
+            // Disable submit button
+            const submitBtn = document.getElementById('submitManualBtn');
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.6';
+            
+            console.log('🗑️ File preview removed');
+        }
+
+        // ✅ SUBMIT MANUAL PAYMENT
+        async function submitManualPayment() {
+            if (!selectedFile) {
+                alert('❌ Silahkan pilih file bukti pembayaran terlebih dahulu');
+                return;
+            }
+
+            try {
+                console.log('📤 Submitting manual payment...');
+                const submitBtn = document.getElementById('submitManualBtn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengunggah...';
+
+                // Get fresh token
+                const freshToken = getAuthToken();
+                if (!freshToken) {
+                    throw new Error('Token tidak ditemukan. Silahkan login kembali.');
+                }
+                
+                console.log('🔐 Token validation: YES (length: ' + freshToken.length + ')');
+
+                // Create FormData dengan parameter yang sesuai
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+                formData.append('admissionFormId', vaData.admissionFormId);
+                formData.append('amount', vaData.amount);
+
+                console.log('📋 Payload:');
+                console.log('   - file:', selectedFile.name);
+                console.log('   - admissionFormId:', vaData.admissionFormId);
+                console.log('   - amount:', vaData.amount);
+
+                // Send request ke backend
+                const res = await fetch('/api/camaba/manual-payment/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${freshToken}`
+                    },
+                    body: formData
+                });
+
+                console.log('📊 Response status:', res.status);
+
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    console.error('❌ Error response:', errorText);
+                    throw new Error(`Server error (${res.status}): ${errorText}`);
+                }
+
+                const result = await res.json();
+                console.log('✅ Response:', result);
+
+                if (result.success) {
+                    // Show success message
+                    const successMsg = document.getElementById('successMessage');
+                    if (successMsg) {
+                        successMsg.classList.add('show');
+                        successMsg.innerHTML = `
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <i class="fas fa-check-circle" style="font-size: 24px; color: #28a745;"></i>
+                                <div>
+                                    <strong>✅ Pembayaran Selesai!</strong>
+                                    <p style="margin-bottom: 0; font-size: 14px;">Bukti pembayaran Anda telah diterima. Silakan lanjutkan ke tahap berikutnya.</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Hide modal
+                    const manualModal = document.getElementById('manualModal');
+                    if (manualModal) {
+                        manualModal.classList.remove('show');
+                    }
+
+                    // Redirect after delay
+                    setTimeout(() => {
+                        console.log('🚀 Redirecting to /dashboard-camaba.html');
+                        window.location.href = '/dashboard-camaba.html';
+                    }, 2000);
+                } else {
+                    throw new Error(result.message || 'Gagal mengirim bukti pembayaran');
+                }
+
+            } catch (error) {
+                console.error('❌ Error:', error.message);
+                alert('❌ ' + error.message);
+
+                const submitBtn = document.getElementById('submitManualBtn');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Kirim Bukti Pembayaran';
+            }
+        }
+
+
+        async function initializePayment() {
+            try {
+                console.log('📋 Initialize payment page...');
+                document.getElementById('loadingState').style.display = 'block';
+                document.getElementById('vaSection').style.display = 'none';
+
+                // ✅ NEW: FETCH ADMISSION FORM FOR CURRENT STUDENT (NOT FROM URL PARAMS)
+                console.log('🔍 Step 1: Fetching admission form for current student...');
+                const admissionRes = await fetch('/api/camaba/admission-forms/current', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+
+                let admissionForm = null;
+                
+                if (!admissionRes.ok) {
+                    // Try alternate endpoint
+                    console.log('ℹ️ /current endpoint not available, trying /me...');
+                    const meRes = await fetch('/api/camaba/admission-forms/me', {
+                        headers: { 'Authorization': `Bearer ${authToken}` }
+                    });
+                    
+                    if (meRes.ok) {
+                        const meData = await meRes.json();
+                        admissionForm = meData.data || meData;
+                    }
+                } else {
+                    const admissionData = await admissionRes.json();
+                    admissionForm = admissionData.data || admissionData;
+                }
+
+                if (!admissionForm) {
+                    throw new Error('Could not fetch admission form. Please check backend endpoints /api/camaba/admission-forms/current or /me');
+                }
+
+                // ✅ LOG FULL ADMISSION FORM TO CONSOLE
+                console.log('================================');
+                console.log('📋 ADMISSION FORM DATA (FROM DATABASE)');
+                console.log('================================');
+                console.log('Full Admission Form Object:');
+                console.log(admissionForm);
+                console.log('---');
+                console.log('Key Fields:');
+                console.log('  - ID:', admissionForm.id);
+                console.log('  - Student ID:', admissionForm.studentId);
+                console.log('  - Full Name:', admissionForm.fullName);
+                console.log('  - JENIS_SELEKSI_ID:', admissionForm.jenisSeleksiId);
+                console.log('  - PERIOD_ID:', admissionForm.periodId);
+                console.log('  - SELECTION_TYPE_ID:', admissionForm.selectionTypeId);
+                console.log('  - Status:', admissionForm.status);
+                console.log('  - Created At:', admissionForm.createdAt);
+                console.log('================================\n');
+
+                // ✅ EXTRACT IDs FROM ADMISSION FORM (RELIABLE SOURCE)
+                const jenisSeleksiId = admissionForm.jenisSeleksiId;
+                const periodId = admissionForm.periodId;
+
+                if (!jenisSeleksiId || !periodId) {
+                    throw new Error(`Invalid admission form: jenisSeleksiId=${jenisSeleksiId}, periodId=${periodId}`);
+                }
+
+                console.log('✅ IDs extracted from admission form:');
+                console.log('   - JENIS_SELEKSI_ID: ' + jenisSeleksiId);
+                console.log('   - PERIOD_ID: ' + periodId);
+
+                // ✅ FETCH JENIS_SELEKSI DETAILS WITH CORRECT ID (FROM DATABASE)
+                console.log('\n🔍 Step 2: Fetching Jenis Seleksi details with ID: ' + jenisSeleksiId);
+                const selTypeRes = await fetch(`/api/camaba/jenis-seleksi-detail/${jenisSeleksiId}`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+
+                if (!selTypeRes.ok) {
+                    const errorText = await selTypeRes.text();
+                    throw new Error(`Failed to fetch jenis seleksi (ID: ${jenisSeleksiId}, Status: ${selTypeRes.status}): ${errorText}`);
+                }
+                const selectionType = await selTypeRes.json();
+
+                console.log('✅ Jenis Seleksi data from database:');
+                console.log(selectionType);
+                console.log('  → Full object structure:');
+                console.log('    - data:', selectionType.data);
+                console.log('    - name:', selectionType.name);
+                console.log('    - title:', selectionType.title);
+                console.log('    - price:', selectionType.price);
+                console.log('    - amount:', selectionType.amount);
+
+                // ✅ FETCH PERIOD DETAILS WITH CORRECT ID (FROM DATABASE)
+                console.log('\n🔍 Step 3: Fetching Period (Gelombang) details with ID: ' + periodId);
+                const periodRes = await fetch(`/api/camaba/registration-periods/${periodId}`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+
+                let period = null;
+                if (periodRes.ok) {
+                    const periodData = await periodRes.json();
+                    period = periodData.data || periodData;
+                    console.log('✅ Period data from database:');
+                    console.log(period);
+                } else {
+                    console.warn('⚠️ Could not fetch period details, will use ID as fallback');
+                    period = { id: periodId, name: 'Period #' + periodId };
+                }
+
+                // ✅ EXTRACT PRICE FROM DATABASE (NOT DUMMY)
+                // Harga dari JENIS_SELEKSI table, bukan hardcoded di frontend
+                const price = selectionType.price || selectionType.amount || 500000;
+                
+                // ✅ VALIDATE PRICE
+                if (!price || isNaN(price) || price <= 0) {
+                    console.error('❌ INVALID PRICE!');
+                    console.error('   - Received price:', selectionType.price);
+                    console.error('   - Fallback amount:', selectionType.amount);
+                    console.error('   - Final price:', price);
+                    throw new Error(`Invalid price from jenis-seleksi (price=${selectionType.price}, amount=${selectionType.amount})`);
+                }
+                
+                console.log('\n💰 PRICING FROM DATABASE:');
+                console.log('   - Amount: Rp ' + new Intl.NumberFormat('id-ID').format(price));
+                console.log('   - Source: JENIS_SELEKSI table');
+                console.log('   - Type:', typeof price, 'Value:', price);
+
+                // Load previously selected gelombang and formula from localStorage
+                const selectedGelombangStr = localStorage.getItem('selectedGelombang');
+                const selectedFormulaStr = localStorage.getItem('selectedFormula');
+                
+                let gelombangTitle = period?.name || '-';
+                let formulaTitle = selectionType?.name || '-';
+                
+                if (selectedGelombangStr) {
+                    try {
+                        const selectedGelombang = JSON.parse(selectedGelombangStr);
+                        gelombangTitle = selectedGelombang.title || gelombangTitle;
+                        console.log('✅ Gelombang from localStorage:', gelombangTitle);
+                    } catch (e) {
+                        console.warn('⚠️ Could not parse selectedGelombang:', e);
+                    }
+                }
+                
+                if (selectedFormulaStr) {
+                    try {
+                        const selectedFormula = JSON.parse(selectedFormulaStr);
+                        formulaTitle = selectedFormula.title || formulaTitle;
+                        console.log('✅ Formula from localStorage:', formulaTitle);
+                    } catch (e) {
+                        console.warn('⚠️ Could not parse selectedFormula:', e);
+                    }
+                }
+
+                console.log('\n📊 PAYMENT PAGE DISPLAY DATA:');
+                console.log('   - Program Type (Jenis Seleksi): ' + formulaTitle);
+                console.log('   - Gelombang: ' + gelombangTitle);
+                console.log('   - Amount: Rp ' + new Intl.NumberFormat('id-ID').format(price));
+
+                // Display payment info
+                document.getElementById('programType').textContent = formulaTitle || selectionType.name || 'Jenis Seleksi';
+                document.getElementById('selectedGelombangName').textContent = gelombangTitle;
+                document.getElementById('selectedFormulaName').textContent = formulaTitle;
+                document.getElementById('periodName').textContent = gelombangTitle;
+                
+                document.getElementById('paymentAmount').textContent = new Intl.NumberFormat('id-ID').format(price);
+                document.getElementById('amountForPayment').textContent = new Intl.NumberFormat('id-ID').format(price);
+                document.getElementById('manualPaymentAmount').textContent = new Intl.NumberFormat('id-ID').format(price);
+
+                // ===== CHECK: Fetch existing CICILAN for this student =====
+                console.log('\n🔍 Step 4a: Checking existing CICILAN for this student...');
+                let existingCicilan = null;
+                try {
+                    const cicilanRes = await fetch(`/admin/api/cicilan/student/${admissionForm.studentId}`, {
+                        headers: { 'Authorization': `Bearer ${authToken}` }
+                    });
+                    
+                    if (cicilanRes.ok) {
+                        const cicilanData = await cicilanRes.json();
+                        console.log('📋 CICILAN Response:', cicilanData);
+                        
+                        // Handle different response formats
+                        if (Array.isArray(cicilanData)) {
+                            existingCicilan = cicilanData.find(c => c.status === 'APPROVED') || cicilanData[0];
+                        } else if (cicilanData.data && Array.isArray(cicilanData.data)) {
+                            existingCicilan = cicilanData.data.find(c => c.status === 'APPROVED') || cicilanData.data[0];
+                        } else if (cicilanData && typeof cicilanData === 'object') {
+                            existingCicilan = cicilanData;
+                        }
+                        
+                        if (existingCicilan) {
+                            console.log('✅ Found existing CICILAN:', existingCicilan);
+                            console.log('   - BRIVA:', existingCicilan.briva || existingCicilan.BRIVA || 'N/A');
+                            console.log('   - Status:', existingCicilan.status);
+                        } else {
+                            console.warn('⚠️ No approved cicilan found for student');
+                        }
+                    } else {
+                        console.warn('⚠️ Could not fetch cicilan, status:', cicilanRes.status);
+                    }
+                } catch (e) {
+                    console.warn('⚠️ Error fetching cicilan:', e.message);
+                }
+
+                // ===== USE EXISTING BRIVA IF AVAILABLE, OTHERWISE CREATE NEW =====
+                let createNewVA = true;
+                if (existingCicilan && existingCicilan.briva) {
+                    console.log('✅ Using existing BRIVA from CICILAN_REQUEST table');
+                    vaData = {
+                        vaNumber: existingCicilan.briva,
+                        amount: price,
+                        admissionFormId: admissionForm.id,
+                        selectionTypeId: jenisSeleksiId,
+                        periodId: periodId
+                    };
+                    createNewVA = false;
+                    console.log('✅ VA Data loaded from existing cicilan:', vaData);
+                } else {
+                    console.log('⚠️ No existing BRIVA found, will create new Virtual Account');
+                }
+
+                if (createNewVA) {
+                    // Create Virtual Account via API
+                    console.log('\n🔍 Step 4b: Creating new Virtual Account...');
+                    const requestBody = {
+                        selectionTypeId: parseInt(jenisSeleksiId),  // ✅ FIXED: Must send as 'selectionTypeId' (backend expects this field name)
+                        periodId: parseInt(periodId),
+                        amount: Math.round(price)  // ✅ Ensure it's a proper integer
+                    };
+                    
+                    console.log('📤 Request body to create-virtual-account:');
+                    console.log(requestBody);
+                    console.log('  - selectionTypeId type:', typeof requestBody.selectionTypeId, 'value:', requestBody.selectionTypeId);
+                    console.log('  - periodId type:', typeof requestBody.periodId, 'value:', requestBody.periodId);
+                    console.log('  - amount type:', typeof requestBody.amount, 'value:', requestBody.amount);
+
+                    const createVARes = await fetch('/api/camaba/create-virtual-account', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+
+                    if (!createVARes.ok) {
+                        const errorText = await createVARes.text();
+                        console.error('❌ VA Creation Failed - Response Status:', createVARes.status);
+                        console.error('❌ VA Creation Failed - Response Body:', errorText);
+                        throw new Error(`Failed to create VA: ${errorText}`);
+                    }
+
+                    const vaResponse = await createVARes.json();
+                    console.log('✅ VA Creation Success - Response:', vaResponse);
+
+                    if (!vaResponse.success) {
+                        throw new Error(vaResponse.message || 'Failed to create virtual account');
+                    }
+
+                    vaData = vaResponse.data;
+                    console.log('✅ VA Created:', vaData);
+
+                    // Store admission form ID for manual payment
+                    vaData.admissionFormId = admissionForm.id;
+                    vaData.amount = price;
+                } else {
+                    console.log('✅ Using existing VA data from cicilan');
+                }
+
+                // Display payment method selection (show modal buttons)
+                document.getElementById('methodSelection').style.display = 'flex';
+                document.getElementById('loadingState').style.display = 'none';
+                
+                // Display VA info in hidden element (for modal use)
+                displayVA();
+
+            } catch (err) {
+                console.error('❌ Error initializing payment:', err);
+                
+                // Better error messaging
+                let errorTitle = 'Terjadi Kesalahan';
+                let errorMessage = err.message;
+                let actionButtons = '';
+                
+                // Check for specific error types
+                if (err.message.includes('Selection type') && err.message.includes('not found')) {
+                    errorTitle = '⚠️ Program Studi Tidak Valid';
+                    errorMessage = 'Program studi yang Anda pilih tidak tersedia lagi. Silakan kembali dan pilih program studi lain.';
+                    actionButtons = `
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+                            <a href="/formula-selection.html" class="btn-action btn-primary-custom" style="text-decoration: none;">
+                                <i class="fas fa-arrow-left"></i> Pilih Program Lain
+                            </a>
+                            <button class="btn-action btn-secondary-custom" onclick="window.location.href='/dashboard-camaba.html'">
+                                <i class="fas fa-home"></i> Kembali ke Dashboard
+                            </button>
+                        </div>
+                    `;
+                } else if (err.message.includes('Period') && err.message.includes('not found')) {
+                    errorTitle = '⚠️ Gelombang Tidak Valid';
+                    errorMessage = 'Gelombang yang Anda pilih tidak lagi tersedia. Silakan kembali dan pilih gelombang lain.';
+                    actionButtons = `
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+                            <a href="/gelombang-selection.html" class="btn-action btn-primary-custom" style="text-decoration: none;">
+                                <i class="fas fa-arrow-left"></i> Pilih Gelombang Lain
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    actionButtons = `
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+                            <button class="btn-action btn-secondary-custom" onclick="window.location.href='/dashboard-camaba.html'">
+                                <i class="fas fa-home"></i> Kembali ke Dashboard
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('loadingState').innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <div style="font-size: 60px; color: #e74c3c; margin-bottom: 20px;">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <h2 style="color: #1a472a; font-weight: 700; margin-bottom: 15px;">${errorTitle}</h2>
+                        <p style="color: #666; font-size: 16px; margin-bottom: 20px; line-height: 1.6;">
+                            ${errorMessage}
+                        </p>
+                        <p style="color: #999; font-size: 13px; margin-bottom: 20px;">
+                            <small>Error: ${err.message}</small>
+                        </p>
+                        ${actionButtons}
+                    </div>
+                `;
+            }
+        }
+
+        function displayVA() {
+            if (!vaData) return;
+
+            document.getElementById('vaNumber').textContent = vaData.vaNumber;
+            
+            // Parse and display expiry time
+            const expiryDate = new Date(vaData.expiredAt);
+            const now = new Date();
+            const minutes = Math.floor((expiryDate - now) / 60000);
+            
+            const formatter = new Intl.DateTimeFormat('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            document.getElementById('expiryTime').textContent = formatter.format(expiryDate);
+            document.getElementById('expiredWarning').style.display = 'block';
+
+            console.log('✅ VA displayed - Expires in', minutes, 'minutes');
+        }
+
+        function copyToClipboard() {
+            if (!vaData) return;
+            
+            navigator.clipboard.writeText(vaData.vaNumber).then(() => {
+                const btn = event.target.closest('.copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+
+        function startPaymentCheck() {
+            console.log('🔄 Starting payment status check...');
+            
+            // Check immediately
+            checkPaymentStatus();
+            
+            // Then check every 5 seconds
+            checkPaymentInterval = setInterval(() => {
+                checkPaymentStatus();
+            }, 5000);
+        }
+
+        async function checkPaymentStatus() {
+            try {
+                if (!vaData || checkCount > MAX_CHECKS) {
+                    if (checkPaymentInterval) clearInterval(checkPaymentInterval);
+                    return;
+                }
+
+                checkCount++;
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('id-ID');
+
+                console.log(`🔍 [Cek #${checkCount}] Checking payment status for VA: ${vaData.vaNumber}`);
+                
+                const res = await fetch(`/api/camaba/check-payment-status?vaNumber=${vaData.vaNumber}`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+
+                if (!res.ok) throw new Error('Failed to check payment status');
+                const result = await res.json();
+
+                console.log(`[${timeStr}] 📊 Payment status result:`, result);
+                document.getElementById('lastCheckTime').textContent = `Cek terakhir: ${timeStr}`;
+
+                // Update status badge
+                const statusBadge = document.getElementById('paymentStatus');
+                
+                if (result.status === 'PAID' || result.status === 'LUNAS') {
+                    console.log('✅ PEMBAYARAN BERHASIL DIKONFIRMASI!');
+                    
+                    statusBadge.textContent = '✓ Pembayaran Berhasil';
+                    statusBadge.className = 'status-badge status-paid';
+                    document.getElementById('autoCheckInfo').textContent = 'Pembayaran Anda telah dikonfirmasi!';
+
+                    // Show success message
+                    document.getElementById('successMessage').classList.add('show');
+
+                    // Stop checking
+                    if (checkPaymentInterval) clearInterval(checkPaymentInterval);
+
+                    console.log('⏳ Redirecting to dashboard in 3 seconds...');
+                    // ✅ Redirect to dashboard (NOT form-pendaftaran)
+                    setTimeout(() => {
+                        console.log('🚀 Redirecting to /dashboard-camaba.html');
+                        window.location.href = '/dashboard-camaba.html';
+                    }, 3000);
+                } else {
+                    // Still waiting
+                    statusBadge.textContent = '⏳ Menunggu Pembayaran (' + checkCount + ')';
+                    statusBadge.className = 'status-badge status-waiting';
+                    console.log(`⏳ Status: ${result.status} - Akan dicek lagi dalam 5 detik...`);
+                }
+
+            } catch (err) {
+                console.error('❌ Error checking payment:', err);
+            }
+        }
+
+        function goBack() {
+            window.location.href = '/gelombang-selection.html';
+        }
+
+        // ✅ UPDATED: Match manual cicilan payment success flow
+        async function simulatePaymentSuccess() {
+            try {
+                if (!confirm('Simulasi pembayaran sukses untuk testing?\n\nPembayaran akan ditandai sebagai LUNAS.')) return;
+                
+                console.log('⭐ SIMULATING PAYMENT SUCCESS (BRIVA)...');
+                
+                // Stop payment checking
+                if (checkPaymentInterval) clearInterval(checkPaymentInterval);
+                
+                // ✅ STEP 1: Show nice success message (like manual cicilan)
+                showBrivaPaymentSuccess();
+                
+                // ✅ STEP 2: Update backend payment status
+                console.log('🔄 [BRIVA-SIMULASI] Updating backend payment status...');
+                await updatePaymentStatusInBackend();
+                
+                // ✅ STEP 3: Redirect to dashboard after 3 seconds (like manual cicilan)
+                console.log('⏳ [BRIVA-SIMULASI] Redirecting to dashboard in 3 seconds...');
+                setTimeout(() => {
+                    console.log('🚀 [BRIVA-SIMULASI] Redirecting to /dashboard-camaba.html');
+                    window.location.href = '/dashboard-camaba.html';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('❌ Error in simulatePaymentSuccess:', error);
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        // ✅ NEW: Show success message like showCicilanPaymentSuccess
+        function showBrivaPaymentSuccess() {
+            // Create success message div
+            const successDiv = document.createElement('div');
+            successDiv.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 20px;
+                right: 20px;
+                background: #d4edda;
+                border: 2px solid #28a745;
+                border-radius: 8px;
+                padding: 20px;
+                z-index: 3000;
+                animation: slideIn 0.3s ease-out;
+                max-width: 500px;
+                margin: 0 auto;
+            `;
+            successDiv.innerHTML = `
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <i class="fas fa-check-circle" style="font-size: 28px; color: #28a745; flex-shrink: 0;"></i>
+                    <div>
+                        <strong style="color: #155724; font-size: 16px;">✅ Pembayaran BRIVA Berhasil!</strong>
+                        <p style="margin-bottom: 5px; font-size: 14px; color: #155724;">Pembayaran Anda telah dikonfirmasi dan status sudah diubah menjadi LUNAS.</p>
+                        <p style="margin: 0; font-size: 12px; color: #0c5460;">Anda akan diarahkan ke dashboard dalam beberapa detik...</p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(successDiv);
+            console.log('✅ [BRIVA-SIMULASI] Success message displayed');
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (successDiv.parentNode) {
+                    successDiv.remove();
+                }
+            }, 5000);
+        }
+
+        async function updatePaymentStatusInBackend() {
+            try {
+                if (!vaData) {
+                    console.warn('⚠️ [BRIVA-SIMULASI] No VA data found');
+                    return;
+                }
+                
+                console.log('📤 [BRIVA-SIMULASI] Calling verify-payment API for VA:', vaData.vaNumber);
+                
+                // Call verify-payment endpoint to mark as PAID (same as real BRIVA confirmation)
+                const res = await fetch('/api/camaba/verify-payment', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        vaNumber: vaData.vaNumber
+                    })
+                });
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    console.log('✅ [BRIVA-SIMULASI] Payment status updated in backend:', data);
+                    
+                    // Update UI to reflect payment success
+                    const statusBadge = document.getElementById('paymentStatus');
+                    if (statusBadge) {
+                        statusBadge.textContent = '✓ Pembayaran Berhasil (SIMULASI)';
+                        statusBadge.className = 'status-badge status-paid';
+                    }
+                    
+                    const autoCheckInfo = document.getElementById('autoCheckInfo');
+                    if (autoCheckInfo) {
+                        autoCheckInfo.textContent = 'Pembayaran Anda telah dikonfirmasi! ✅';
+                    }
+                } else {
+                    console.warn('⚠️ [BRIVA-SIMULASI] Backend update failed, but continuing:', res.status);
+                    // Continue redirect even if backend update fails
+                }
+            } catch (e) {
+                console.warn('⚠️ [BRIVA-SIMULASI] Could not update backend:', e);
+                // Continue redirect even if update fails
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('authToken');
+            localStorage.removeItem('authToken');
+            window.location.href = '/login.html';
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', async () => {
+            // ✅ NEW: Check registration status first
+            const isEligible = await checkRegistrationStatus();
+            if (isEligible) {
+                initializePayment();
+            }
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (checkPaymentInterval) clearInterval(checkPaymentInterval);
+        });
+    </script>
+
+    <script src="/components/header-loader.js"></script>
+    <script src="/components/page-header-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setPageHeader('Pembayaran Formulir Pendaftaran', 'Silahkan lakukan pembayaran untuk melanjutkan pendaftaran');
+        });
+    </script>
+
+    <!-- Load Footer Component -->
+    <script src="/components/footer-loader.js"></script>
+    
+    <!-- Initialize All Components -->
+    <script src="/components-init.js"></script>
+
+    <!-- Initialize Page Header after components load -->
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (typeof setPageHeader === 'function') {
+                    setPageHeader(
+                        'Pembayaran Formulir',
+                        'Lakukan pembayaran formulir pendaftaran melalui BRIVA'
+                    );
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>

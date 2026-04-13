@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Saya - PMB HKBP Nommensen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a472a;
+            --secondary: #e74c3c;
+        }
+        
+        body {
+            background-image: linear-gradient(rgba(178, 245, 162, 0.9), rgba(68, 124, 36, 0.9)), url('/gambar/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .nav-link {
+            color: white !important;
+            margin: 0 10px;
+        }
+        
+        .nav-link:hover {
+            opacity: 0.8;
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-item {
+            padding: 12px 15px;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        
+        .sidebar-item:hover {
+            background: #f0f0f0;
+            border-left-color: var(--primary);
+        }
+        
+        .sidebar-item.active {
+            background: #e8f4f0;
+            border-left-color: var(--primary);
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .content-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin: 0 auto 15px;
+        }
+        
+        .form-label {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 10px 15px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: none;
+        }
+        
+        .form-control:disabled {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .btn-primary-custom:hover {
+            background: #0f2d1f;
+            color: white;
+        }
+        
+        .alert-info {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            color: #1565c0;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script src="/common-auth.js"></script>
+    <script src="/common-auth.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard-camaba.html">🎓 PMB HKBP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard-camaba.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/profile.html">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link" style="cursor: pointer;" onclick="logout()">Logout</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="sidebar">
+                    <div class="sidebar-item active" onclick="showTab('biodata')">
+                        <i class="fas fa-user"></i> Biodata Pribadi
+                    </div>
+                    <div class="sidebar-item" onclick="showTab('change-password')">
+                        <i class="fas fa-lock"></i> Ubah Password
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <!-- Tab: Biodata Pribadi -->
+                <div id="biodata-tab" class="content-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="avatar">👤</div>
+                        <h3 id="fullName">Nama Lengkap</h3>
+                        <p class="text-muted" id="email">email@gmail.com</p>
+                    </div>
+
+                    <div class="alert-info">
+                        <i class="fas fa-info-circle"></i> Data pribadi Anda bersumber dari akun yang didaftarkan
+                    </div>
+
+                    <form id="biodataForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="profileEmail" disabled>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">NIK <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="nik" placeholder="Masukkan nomor identitas (NIK)" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="fullNameInput" placeholder="Masukkan nama lengkap" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jenis Kelamin</label>
+                                <select class="form-control" id="gender">
+                                    <option value="">-- Pilih Jenis Kelamin --</option>
+                                    <option value="MALE">Laki-laki</option>
+                                    <option value="FEMALE">Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tanggal Lahir</label>
+                                <input type="date" class="form-control" id="birthDate">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tempat Lahir</label>
+                                <input type="text" class="form-control" id="birthPlace" placeholder="Masukkan tempat lahir">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Alamat</label>
+                            <textarea class="form-control" id="address" rows="3" placeholder="Masukkan alamat lengkap"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nomor Telepon</label>
+                                <input type="tel" class="form-control" id="phoneNumber" placeholder="Masukkan nomor telepon">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Asal Sekolah</label>
+                                <input type="text" class="form-control" id="schoolOrigin" placeholder="Masukkan asal sekolah">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tahun Lulus Sekolah</label>
+                                <input type="text" class="form-control" id="schoolYear" placeholder="Contoh: 2022">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nama Orang Tua</label>
+                                <input type="text" class="form-control" id="parentName" placeholder="Masukkan nama orang tua">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nomor Telepon Orang Tua</label>
+                                <input type="tel" class="form-control" id="parentPhone" placeholder="Masukkan nomor telepon orang tua">
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn-primary-custom">
+                                <i class="fas fa-save"></i> Simpan Perubahan
+                            </button>
+                            <button type="button" class="btn btn-secondary ms-2" onclick="resetForm()">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tab: Ubah Password -->
+                <div id="change-password-tab" class="content-card" style="display: none;">
+                    <h4 class="mb-4">Ubah Password</h4>
+
+                    <form id="changePasswordForm">
+                        <div class="mb-3">
+                            <label class="form-label">Password Lama</label>
+                            <input type="password" class="form-control" id="oldPassword" required placeholder="Masukkan password lama Anda">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password Baru</label>
+                            <input type="password" class="form-control" id="newPassword" required placeholder="Buat password baru yang kuat">
+                            <small class="text-muted">Minimal 8 karakter, kombinasi huruf besar, huruf kecil, dan angka</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Konfirmasi Password Baru</label>
+                            <input type="password" class="form-control" id="confirmNewPassword" required placeholder="Ulangi password baru Anda">
+                        </div>
+
+                        <div class="alert alert-danger" id="passwordError" style="display: none;">
+                            <span id="passwordErrorMessage"></span>
+                        </div>
+
+                        <div class="alert alert-success" id="passwordSuccess" style="display: none;">
+                            Password berhasil diubah!
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn-primary-custom">
+                                <i class="fas fa-key"></i> Ubah Password
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Autentikasi -->
+    <div class="modal fade" id="authRequiredModal" tabindex="-1" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center" style="padding: 40px 20px;">
+                    <i class="fas fa-lock" style="font-size: 48px; color: #e74c3c; margin-bottom: 20px;"></i>
+                    <h5 class="modal-title mb-3" style="color: #333;">Autentikasi Diperlukan</h5>
+                    <p class="text-muted mb-4">Anda belum login. Silahkan login terlebih dahulu untuk mengakses halaman ini.</p>
+                    <button type="button" class="btn btn-primary" id="loginRedirectBtn">
+                        <i class="fas fa-sign-in-alt"></i> OK - Ke Halaman Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Run enhanced auth check on page load
+        // ✅ INITIALIZE AUTH TOKEN EARLY (before DOMContentLoaded)
+        if (!authToken) {
+            authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+            console.log('🔑 [INIT-AUTH] authToken initialized:', authToken ? authToken.substring(0, 20) + '...' : 'NULL');
+        }('DOMContentLoaded', async function() {
+            const isAuth = await checkAuthenticationWithErrorHandling('/api/camaba/profile');
+            if (!isAuth) {
+                document.body.style.opacity = '0.5';
+                document.body.style.pointerEvents = 'none';
+                return;
+            }
+        });
+
+        const userEmail = localStorage.getItem('userEmail');
+
+        // Tab switching
+        function showTab(tab) {
+            document.querySelectorAll('[id$="-tab"]').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tab + '-tab').style.display = 'block';
+            event.target.closest('.sidebar-item').classList.add('active');
+        }
+
+        // Load profile data from API (not localStorage dummy)
+        async function loadProfileData() {
+            try {
+                const response = await fetch('/api/camaba/profile', {
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load profile from database');
+                }
+                
+                const responseData = await response.json();
+                console.log('📋 API Response:', responseData);
+                
+                // ✅ Handle both direct object and wrapped response
+                const student = responseData.data || responseData;
+                console.log('👤 Student object:', student);
+                
+                const actualEmail = student.user?.email || student.email || userEmail;
+                const actualName = student.fullName || student.name || userEmail.split('@')[0];
+                console.log('👤 Extracted name:', actualName, 'Email:', actualEmail);
+                const actualPhone = student.phoneNumber || '';
+                
+                // Set all fields from actual database data
+                document.getElementById('profileEmail').value = actualEmail;
+                document.getElementById('fullName').textContent = actualName;
+                document.getElementById('email').textContent = actualEmail;
+                document.getElementById('nik').value = student.nik || '';
+                document.getElementById('fullNameInput').value = actualName;
+                document.getElementById('gender').value = student.gender || '';
+                document.getElementById('birthDate').value = student.birthDate || '';
+                document.getElementById('birthPlace').value = student.birthPlace || '';
+                document.getElementById('address').value = student.address || '';
+                document.getElementById('phoneNumber').value = actualPhone;
+                document.getElementById('schoolOrigin').value = student.schoolOrigin || '';
+                document.getElementById('schoolYear').value = student.schoolYear || '';
+                document.getElementById('parentName').value = student.parentName || '';
+                document.getElementById('parentPhone').value = student.parentPhone || '';
+                document.getElementById('avatar').textContent = actualName.charAt(0).toUpperCase();
+                
+                console.log('✓ Profile loaded from database: ' + actualName);
+            } catch (error) {
+                console.error('Error loading profile from database:', error);
+                // Fallback ke localStorage (but show yang ini dummy)
+                document.getElementById('profileEmail').value = userEmail;
+                document.getElementById('fullName').textContent = userEmail.split('@')[0];
+                document.getElementById('email').textContent = userEmail;
+                document.getElementById('fullNameInput').value = userEmail.split('@')[0];
+            }
+        }
+
+        // Biodata form submission
+        document.getElementById('biodataForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validate required fields
+            const nik = document.getElementById('nik').value;
+            const fullName = document.getElementById('fullNameInput').value;
+            
+            if (!nik || !fullName) {
+                alert('Mohon isi NIK dan Nama Lengkap');
+                return;
+            }
+
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+            const gender = document.getElementById('gender').value;
+            const address = document.getElementById('address').value;
+            const schoolOrigin = document.getElementById('schoolOrigin').value;
+            const schoolYear = document.getElementById('schoolYear').value;
+            const parentName = document.getElementById('parentName').value;
+            const parentPhone = document.getElementById('parentPhone').value;
+
+            try {
+                const response = await fetch('/api/camaba/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + authToken
+                    },
+                    body: JSON.stringify({
+                        nik,
+                        fullName,
+                        phoneNumber,
+                        birthDate: birthDate || null,
+                        birthPlace,
+                        gender: gender || null,
+                        address,
+                        schoolOrigin,
+                        schoolYear,
+                        parentName,
+                        parentPhone
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Profil berhasil diperbarui!');
+                    await loadProfileData();
+                } else {
+                    const error = await response.json();
+                    alert('Gagal memperbarui profil: ' + (error.message || 'Unknown error'));
+                    console.error('Update error:', error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+                console.error('Update error:', error);
+            }
+        });
+
+        // Change password form submission
+        document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const oldPassword = document.getElementById('oldPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+            const errorDiv = document.getElementById('passwordError');
+            const successDiv = document.getElementById('passwordSuccess');
+
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+
+            if (newPassword !== confirmNewPassword) {
+                document.getElementById('passwordErrorMessage').textContent = 'Password baru tidak cocok!';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/camaba/change-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + authToken
+                    },
+                    body: JSON.stringify({
+                        oldPassword, newPassword, confirmPassword: confirmNewPassword
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    successDiv.style.display = 'block';
+                    document.getElementById('changePasswordForm').reset();
+                    setTimeout(() => {
+                        successDiv.style.display = 'none';
+                    }, 3000);
+                } else {
+                    document.getElementById('passwordErrorMessage').textContent = data.message || 'Gagal mengubah password';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                document.getElementById('passwordErrorMessage').textContent = 'Error: ' + error.message;
+                errorDiv.style.display = 'block';
+            }
+        });
+
+        function resetForm() {
+            loadProfileData();
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
+            window.location.href = '/login.html';
+        }
+
+        // Load data on page load
+        loadProfileData();
+    </script>
+</body>
+</html>

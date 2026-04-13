@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMB HKBP Nommensen - Penerimaan Mahasiswa Baru</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a472a;
+            --secondary-color: #e74c3c;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), #2d5a3d);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: white !important;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            transition: color 0.3s;
+            margin-left: 10px;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2d5a3d 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .btn-primary-custom {
+            background: var(--secondary-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .btn-primary-custom:hover {
+            background: #c0392b;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 8px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px 8px 0 0 !important;
+            border: none;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 30px;
+            top: 50px;
+            bottom: -30px;
+            width: 2px;
+            background: var(--primary-color);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-marker {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            margin-left: 30px;
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 5px;
+            flex-grow: 1;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-section h5 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Features */
+        .feature-box {
+            text-align: center;
+            padding: 30px;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .timeline-item {
+                margin-left: 10px;
+            }
+
+            .timeline-marker {
+                width: 50px;
+                height: 50px;
+                font-size: 0.9rem;
+            }
+
+            .timeline-content {
+                margin-left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-graduation-cap"></i> PMB HKBP Nommensen
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="color: white;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#beranda">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#alur">Alur Pendaftaran</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faq">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login" style="color: var(--secondary-color) !important; font-weight: bold;">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero" id="beranda">
+        <div class="container">
+            <h1>Selamat Datang di PMB</h1>
+            <p>Sistem Penerimaan Mahasiswa Baru HKBP Nommensen</p>
+            <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 25px;">Pendaftaran mudah, cepat, dan transparan</p>
+            <a href="/register" class="btn-primary-custom">Daftar Sekarang</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Features -->
+        <section style="margin-bottom: 60px;">
+            <h2 style="text-align: center; margin-bottom: 40px; color: var(--primary-color);">Keunggulan Sistem PMB Kami</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h4>Aman</h4>
+                        <p>Data Anda dilindungi dengan enkripsi tingkat enterprise dan sistem keamanan berlapis.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h4>Cepat</h4>
+                        <p>Proses pendaftaran yang efisien dengan respons real-time dan notifikasi otomatis.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h4>Mudah Digunakan</h4>
+                        <p>Interface yang user-friendly dapat diakses dari desktop maupun smartphone.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alur Pendaftaran -->
+        <section id="alur" style="margin-bottom: 60px;">
+            <h2 style="text-align: center; margin-bottom: 40px; color: var(--primary-color);">Alur Pendaftaran</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h5>Registrasi Akun</h5>
+                        <p>Buat akun dengan email dan password Anda. Verifikasi email untuk mengaktifkan akun.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h5>Lengkapi Data Diri</h5>
+                        <p>Isi formulir data pribadi Anda dengan informasi yang akurat dan lengkap.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h5>Pilih Program Studi</h5>
+                        <p>Pilih program studi dan jalur masuk yang sesuai dengan minat Anda.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h5>Pembayaran Formulir</h5>
+                        <p>Selesaikan pembayaran formulir melalui Virtual Account yang telah disediakan.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">5</div>
+                    <div class="timeline-content">
+                        <h5>Ikuti Ujian</h5>
+                        <p>Hadiri ujian sesuai jadwal yang telah ditentukan. Link ujian akan dikirim via email.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">6</div>
+                    <div class="timeline-content">
+                        <h5>Cek Hasil</h5>
+                        <p>Periksa hasil ujian Anda melalui portal. Jika lulus, lanjut ke tahap daftar ulang.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">7</div>
+                    <div class="timeline-content">
+                        <h5>Daftar Ulang</h5>
+                        <p>Lengkapi formulir daftar ulang dan proses pembayaran cicilan (jika tersedia).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" style="margin-bottom: 60px;">
+            <h2 style="text-align: center; margin-bottom: 40px; color: var(--primary-color);">Pertanyaan Umum (FAQ)</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Bagaimana cara mendaftar?</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Klik tombol "Daftar Sekarang", isi email dan password, verifikasi email, kemudian Anda dapat mulai mengisi data diri.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5  class="mb-0">Berapa biaya pendaftaran?</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Biaya formulir berbeda untuk setiap program studi. Lihat rincian biaya setelah memilih program studi.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card" style="margin-top: 20px;">
+                        <div class="card-header">
+                            <h5 class="mb-0">Bagaimana cara membayar?</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Anda akan menerima Virtual Account (VA) untuk ditransfer melalui ATM BRI atau e-Banking. Pembayaran otomatis terverifikasi dalam sistem.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card" style="margin-top: 20px;">
+                        <div class="card-header">
+                            <h5 class="mb-0">Kapan ujian dilaksanakan?</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Jadwal ujian akan dikirimkan via email setelah pembayaran dikonfirmasi. Pastikan Anda login tepat waktu untuk mengikuti ujian.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section style="text-align: center; background: var(--light-bg); padding: 40px; border-radius: 8px; margin-bottom: 40px;">
+            <h3 style="color: var(--primary-color); margin-bottom: 20px;">Siap mendaftar?</h3>
+            <p style="margin-bottom: 20px; font-size: 1.1rem;">Jangan lewatkan kesempatan untuk bergabung dengan HKBP Nommensen</p>
+            <a href="/register" class="btn-primary-custom">Mulai Daftar Sekarang</a>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row" style="margin-bottom: 40px;">
+                <div class="col-md-3 footer-section">
+                    <h5>Tentang</h5>
+                    <ul>
+                        <li><a href="#">Tentang Universitas</a></li>
+                        <li><a href="#">Visi & Misi</a></li>
+                        <li><a href="#">Program Studi</a></li>
+                        <li><a href="#">Fasilitas</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-section">
+                    <h5>Pendaftaran</h5>
+                    <ul>
+                        <li><a href="#">Persyaratan</a></li>
+                        <li><a href="#">Jalur Masuk</a></li>
+                        <li><a href="#">Timeline</a></li>
+                        <li><a href="#">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-section">
+                    <h5>Dukungan</h5>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Panduan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-section">
+                    <h5>Ikuti Kami</h5>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.2);">
+            <div style="text-align: center; padding-top: 20px;">
+                <p style="margin: 0; opacity: 0.8;">&copy; 2025 PMB HKBP Nommensen. Semua hak dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

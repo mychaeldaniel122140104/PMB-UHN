@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PMB HKBP Nommensen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a472a;
+            --secondary: #e74c3c;
+        }
+        
+
+        body {
+            background-image: linear-gradient(rgba(178, 245, 162, 0.9), rgba(68, 124, 36, 0.9)), url('/gambar/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 
+                        0 0 1px rgba(255,255,255,0.5) inset;
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            margin: 28px auto;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(10px);
+        }
+        
+        .login-row {
+            display: flex;
+        }
+        
+        .login-left {
+            background: linear-gradient(135deg, var(--primary) 0%, #2d5a3d 50%, #1f3d2c 100%);
+            color: white;
+            padding: 36px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 560px;
+            position: relative;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        
+        .login-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Campus carousel styles */
+        .campus-carousel {
+            width: 100%;
+            max-width: none;
+        }
+
+        .image-wrap {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), 
+                        inset 0 1px 0 rgba(255,255,255,0.1);
+            backdrop-filter: blur(2px);
+            width: 100%;
+            height: 320px;
+            margin-bottom: 8px;
+        }
+
+        .campus-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            opacity: 1;
+            transform: scale(1);
+            filter: brightness(0.7) saturate(1.1) contrast(1.05);
+        }
+        
+        .image-wrap:hover .campus-image {
+            transform: scale(1.02);
+        }
+
+        .image-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(26,71,42,0.3) 0%, rgba(0,0,0,0.2) 50%, rgba(26,71,42,0.25) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 16px 15px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.8) 100%);
+            color: #fff;
+            font-size: 13px;
+            line-height: 1.35;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 14px;
+            padding: 4px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .dot.active {
+            background: #fff;
+            transform: scale(1.4);
+            box-shadow: 0 3px 12px rgba(255,255,255,0.4);
+            border-color: #fff;
+        }
+        
+        .dot:hover { 
+            transform: scale(1.35); 
+            background: rgba(255,255,255,0.98);
+            box-shadow: 0 4px 14px rgba(255,255,255,0.35);
+        }
+
+        /* vertical separator between left and right (subtle) */
+        .login-left::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: -12px;
+            width: 1px;
+            height: calc(100% - 24px);
+            background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            filter: blur(0.2px);
+        }
+        
+        .login-left h2 {
+            font-size: 26px;
+            margin-bottom: 16px;
+            font-weight: 800;
+            line-height: 1.1;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .login-left h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 56px;
+            height: 4px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.6));
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+        
+        .login-left p {
+            font-size: 14px;
+            line-height: 1.55;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+            opacity: 0.95;
+        }
+        
+        .login-left .btn {
+            background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.92) 100%);
+            color: var(--primary);
+            border: 1.5px solid rgba(255,255,255,0.3);
+            padding: 11px 28px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15), 0 1px 3px rgba(255,255,255,0.5) inset;
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+        }
+
+        .login-left .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.25), 0 2px 6px rgba(255,255,255,0.8) inset;
+            background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.95) 100%);
+        }
+        
+        .login-right {
+            padding: 40px 34px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(135deg, #fafbfc 0%, #f4f7f6 100%);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-right::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(26,138,62,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .login-right h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .login-right h3::after {
+            content: '';
+            display: block;
+            width: 46px;
+            height: 3px;
+            margin-top: 8px;
+            background: linear-gradient(90deg, var(--primary), rgba(26,71,42,0.6));
+            border-radius: 3px;
+        }
+        
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-label {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .form-control {
+            border: 2px solid #e0e4e8;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 15px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.2s ease;
+            background: white;
+            font-weight: 500;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26,71,42,0.1), 0 6px 20px rgba(26,71,42,0.15);
+            background: #fafbfc;
+            outline: none;
+        }
+        
+        .form-control::placeholder {
+            color: #999;
+            font-weight: 400;
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, var(--secondary) 0%, #d64532 100%);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-top: 16px;
+            box-shadow: 0 8px 24px rgba(199,57,45,0.25), 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(135deg, #d64532 0%, #c43429 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(199,57,45,0.35), 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .btn-login:active {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(199,57,45,0.2);
+        }
+        
+        .login-links {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .login-links a:hover {
+            color: #1a8a3e;
+            text-shadow: 0 2px 8px rgba(26,138,62,0.2);
+        }
+
+        /* Home button (circular) */
+        .home-button {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a8a3e 0%, #157832 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 10px 28px rgba(26, 138, 62, 0.25), 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 20;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .home-button:hover { 
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 16px 40px rgba(26,138,62,0.35), 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .home-button svg { width: 18px; height: 18px; fill: #fff; display: block; }
+        
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-alert {
+            display: none;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(199,57,45,0.15);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-group {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-label {
+            position: relative;
+            z-index: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .login-row {
+                flex-direction: column;
+            }
+            
+            .login-left {
+                min-height: auto;
+                padding: 40px;
+            }
+            
+            .login-right {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <a href="/index.html" class="home-button" title="Beranda" aria-label="Beranda">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </a>
+        <div class="login-row">
+            <div class="login-left">
+                <h2>  <img src="/logo/logokampus.png" alt="UHN Logo" style="height: 60px; margin-right: 10px; vertical-align: middle;"> PMB HKBP Nommensen</h2>
+                    <div class="campus-carousel" aria-hidden="false">
+                        <div class="image-wrap">
+                            <img id="campusImage" class="campus-image" src="/gambar/campus1.jpg" alt="Campus Image">
+                            <div class="carousel-caption" id="campusCaption">Keunggulan: Lingkungan kampus yang asri dan mendukung pembelajaran</div>
+                        </div>
+
+                        <div class="carousel-dots" id="carouselDots">
+                            <span class="dot active" data-index="0"></span>
+                            <span class="dot" data-index="1"></span>
+                            <span class="dot" data-index="2"></span>
+                            <span class="dot" data-index="3"></span>
+                            <span class="dot" data-index="4"></span>
+                        </div>
+                    </div>
+
+                    <p style="margin-top:18px;">Selamat datang kembali! Masuk ke sistem untuk melanjutkan proses penerimaan mahasiswa baru Anda.</p>
+                    <p style="font-size: 14px; opacity: 0.8;">Belum punya akun?</p>
+                    <a href="/register.html" class="btn">Daftar Sekarang</a>
+
+                    <script>
+                        (function(){
+                            const images = [
+                                '/gambar/login1.jpg',
+                                '/gambar/login2.png',
+                                '/gambar/login3.png',
+                                '/gambar/login4.png',
+                                '/gambar/background.jpg'
+                            ];
+
+                            const captions = [
+                                'Keunggulan: Lingkungan kampus yang asri dan mendukung pembelajaran',
+                                'Keunggulan: Fasilitas laboratorium dan perpustakaan lengkap',
+                                'Keunggulan: Dosen berpengalaman dan program berkualitas',
+                                'Keunggulan: Kegiatan kemahasiswaan yang aktif dan mendukung',
+                                'Keunggulan: Peluang karier dan kerja sama industri'
+                            ];
+
+                            const img = document.getElementById('campusImage');
+                            const captionEl = document.getElementById('campusCaption');
+                            const dots = Array.from(document.querySelectorAll('#carouselDots .dot'));
+                            let currentIndex = 0;
+                            const interval = 5000;
+
+                            function setActive(index){
+                                dots.forEach(d => d.classList.remove('active'));
+                                const dot = dots[index]; if(dot) dot.classList.add('active');
+                            }
+
+                            function showIndex(next, isInitial = false){
+                                if (isInitial) {
+                                    // ✅ Initial load: show immediately WITHOUT fade
+                                    img.src = images[next];
+                                    captionEl.textContent = captions[next];
+                                    setActive(next);
+                                    img.style.opacity = 1;
+                                    captionEl.style.opacity = 1;
+                                } else {
+                                    // ✅ Transition: fade out then in
+                                    img.style.opacity = 0;
+                                    captionEl.style.opacity = 0;
+                                    setTimeout(() => {
+                                        img.src = images[next];
+                                        captionEl.textContent = captions[next];
+                                        setActive(next);
+                                        img.style.opacity = 1;
+                                        captionEl.style.opacity = 1;
+                                    }, 300);
+                                }
+                            }
+
+                            // ✅ Initialize: show first image immediately
+                            showIndex(0, true);
+
+                            // dot click
+                            dots.forEach(d => d.addEventListener('click', (e) => {
+                                const idx = parseInt(e.target.getAttribute('data-index'));
+                                if (!isNaN(idx)) {
+                                    currentIndex = idx;
+                                    showIndex(currentIndex);
+                                }
+                            }));
+
+                            // auto rotate
+                            setInterval(() => {
+                                currentIndex = (currentIndex + 1) % images.length;
+                                showIndex(currentIndex);
+                            }, interval);
+                        })();
+                    </script>
+            </div>
+            
+            <div class="login-right">
+                <h3>Masuk ke Akun Anda</h3>
+                
+                <div class="alert alert-danger error-alert" role="alert" id="errorAlert">
+                    <span id="errorMessage"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required placeholder="Masukkan email Anda">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required placeholder="Masukkan password Anda">
+                    </div>
+                    
+                    <button type="submit" class="btn-login w-100">Login</button>
+                </form>
+                
+                <div class="login-links">
+                    <a href="/forgot-password.html">Lupa Password?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    console.log('✅ [LOGIN] Login successful, response:', data);
+                    
+                    // ✅ Store in sessionStorage (per-tab) AND localStorage (backward compat)
+                    try {
+                        sessionStorage.setItem('authToken', data.token);
+                        sessionStorage.setItem('userRole', data.role);
+                        localStorage.setItem('authToken', data.token);
+                        localStorage.setItem('userRole', data.role);
+                        console.log('✅ [LOGIN] Storage SET:', {
+                            token: data.token.substring(0, 20) + '...',
+                            role: data.role,
+                            retrieved: {
+                                token: sessionStorage.getItem('authToken')?.substring(0, 20) + '...',
+                                role: sessionStorage.getItem('userRole')
+                            }
+                        });
+                    } catch (e) {
+                        console.error('❌ [LOGIN] sessionStorage.setItem FAILED:', e.message);
+                        alert('⚠️ STORAGE ERROR: ' + e.message);
+                        return;
+                    }
+                    
+                    // ✅ Redirect based on role
+                    console.log('🔄 [LOGIN] Redirecting to:', data.role);
+                    if (data.role === 'CAMABA') {
+                        window.location.href = '/dashboard-camaba.html';
+                    } else if (data.role === 'ADMIN_VALIDASI') {
+                        window.location.href = '/dashboard-admin-validasi.html';
+                    } else if (data.role === 'ADMIN_PUSAT') {
+                        window.location.href = '/dashboard-admin-pusat.html';
+                    }
+                } else {
+                    errorMessage.textContent = data.message || 'Login gagal. Periksa email dan password Anda.';
+                    errorAlert.style.display = 'block';
+                }
+            } catch (error) {
+                errorMessage.textContent = 'Terjadi kesalahan: ' + error.message;
+                errorAlert.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

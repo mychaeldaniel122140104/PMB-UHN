@@ -868,7 +868,7 @@
             </h3>
 
             <!-- Pengisian Data Diri -->
-            <div class="progress-item completed">
+            <div class="progress-item completed" id="data-diri-item">
                 <div class="progress-item-left">
                     <div class="progress-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></div>
                     <div class="progress-info">
@@ -876,6 +876,9 @@
                         <p>Data pribadi dan biodata telah tercatat di sistem</p>
                     </div>
                 </div>
+                <button class="eye-toggle-btn" onclick="openStatusModal(this, 'data-diri-item')">
+                    <i class="fas fa-eye"></i>
+                </button>
                 <div class="progress-status">
                     <span class="status-badge badge-completed">
                         <i class="fas fa-check-circle"></i> Selesai

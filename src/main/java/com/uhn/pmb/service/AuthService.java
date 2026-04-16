@@ -13,6 +13,7 @@ import com.uhn.pmb.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,9 +23,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +47,9 @@ public class AuthService {
 
     @Value("${app.frontend.url:http://localhost:9500}")
     private String frontendUrl;
+
+    @Value("${resend.api-key:}")
+    private String resendApiKey;
 
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -209,32 +214,57 @@ public class AuthService {
     }
 
     private void sendResetPasswordEmail(String email, String token) {
+        String resetLink = frontendUrl + "/reset-password.html?token=" + token;
+        String subject = "Reset Password - PMB HKBP Nommensen";
+        String text = "Halo,\n\n" +
+                "Kami menerima permintaan untuk reset password akun Anda. Silahkan klik link di bawah ini untuk membuat password baru:\n\n" +
+                resetLink + "\n\n" +
+                "Link ini berlaku selama 1 jam. Jika Anda tidak melakukan permintaan ini, abaikan email ini.\n\n" +
+                "Terima kasih,\nTim PMB HKBP Nommensen";
+
+        // Use Resend HTTP API if configured (for Railway/cloud where SMTP is blocked)
+        if (resendApiKey != null && !resendApiKey.isEmpty()) {
+            sendViaResend(email, subject, text);
+        } else {
+            sendViaSmtp(email, subject, text);
+        }
+        log.info("Reset password email sent to: {}", email);
+        log.info("Reset Link: {}", resetLink);
+    }
+
+    private void sendViaResend(String to, String subject, String text) {
         try {
-            String resetLink = frontendUrl + "/reset-password.html?token=" + token;
-            
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setBearerAuth(resendApiKey);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            Map<String, Object> body = new HashMap<>();
+            body.put("from", "PMB HKBP Nommensen <onboarding@resend.dev>");
+            body.put("to", List.of(to));
+            body.put("subject", subject);
+            body.put("text", text);
+
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+            ResponseEntity<String> response = restTemplate.postForEntity(
+                    "https://api.resend.com/emails", request, String.class);
+            log.info("Resend API response: {}", response.getStatusCode());
+        } catch (Exception e) {
+            log.error("Failed to send email via Resend API: {}", e.getMessage(), e);
+            throw new RuntimeException("Gagal mengirim email. Silahkan coba lagi.");
+        }
+    }
+
+    private void sendViaSmtp(String to, String subject, String text) {
+        try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(fromEmail);
-            message.setTo(email);
-            message.setSubject("Reset Password - PMB HKBP Nommensen");
-            message.setText("Halo,\n\n" +
-                    "Kami menerima permintaan untuk reset password akun Anda. Silahkan klik link di bawah ini untuk membuat password baru:\n\n" +
-                    resetLink + "\n\n" +
-                    "Link ini berlaku selama 1 jam. Jika Anda tidak melakukan permintaan ini, abaikan email ini.\n\n" +
-                    "Terima kasih,\nTim PMB HKBP Nommensen");
-
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(text);
             mailSender.send(message);
-            log.info("Reset password email sent to: {}", email);
-            log.info("Reset Link: {}", resetLink);
         } catch (Exception e) {
-            log.error("Failed to send reset password email to {}: {}", email, e.getMessage(), e);
-            log.error("Mail config - host: {}, port: {}, username: {}, from: {}", 
-                    mailSender instanceof org.springframework.mail.javamail.JavaMailSenderImpl ? 
-                    ((org.springframework.mail.javamail.JavaMailSenderImpl) mailSender).getHost() : "unknown",
-                    mailSender instanceof org.springframework.mail.javamail.JavaMailSenderImpl ? 
-                    ((org.springframework.mail.javamail.JavaMailSenderImpl) mailSender).getPort() : "unknown",
-                    mailSender instanceof org.springframework.mail.javamail.JavaMailSenderImpl ? 
-                    ((org.springframework.mail.javamail.JavaMailSenderImpl) mailSender).getUsername() : "unknown",
-                    fromEmail);
+            log.error("Failed to send email via SMTP to {}: {}", to, e.getMessage(), e);
             throw new RuntimeException("Gagal mengirim email. Silahkan coba lagi.");
         }
     }

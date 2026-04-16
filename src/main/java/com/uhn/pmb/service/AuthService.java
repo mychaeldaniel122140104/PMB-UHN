@@ -245,10 +245,16 @@ public class AuthService {
             body.put("subject", subject);
             body.put("text", text);
 
+            log.info("Resend API request - to: {}, from: onboarding@resend.dev, apiKey starts with: {}", 
+                    to, resendApiKey != null && resendApiKey.length() > 10 ? resendApiKey.substring(0, 10) + "..." : "null/short");
+
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(
                     "https://api.resend.com/emails", request, String.class);
-            log.info("Resend API response: {}", response.getStatusCode());
+            log.info("Resend API response: {} - {}", response.getStatusCode(), response.getBody());
+        } catch (org.springframework.web.client.HttpClientErrorException e) {
+            log.error("Resend API error - status: {}, body: {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw new RuntimeException("Gagal mengirim email: " + e.getResponseBodyAsString());
         } catch (Exception e) {
             log.error("Failed to send email via Resend API: {}", e.getMessage(), e);
             throw new RuntimeException("Gagal mengirim email. Silahkan coba lagi.");

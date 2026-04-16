@@ -226,7 +226,15 @@ public class AuthService {
             log.info("Reset password email sent to: {}", email);
             log.info("Reset Link: {}", resetLink);
         } catch (Exception e) {
-            log.error("Failed to send reset password email: {}", e.getMessage());
+            log.error("Failed to send reset password email to {}: {}", email, e.getMessage(), e);
+            log.error("Mail config - host: {}, port: {}, username: {}, from: {}", 
+                    mailSender instanceof org.springframework.mail.javamail.JavaMailSenderImpl ? 
+                    ((org.springframework.mail.javamail.JavaMailSenderImpl) mailSender).getHost() : "unknown",
+                    mailSender instanceof org.springframework.mail.javamail.JavaMailSenderImpl ? 
+                    ((org.springframework.mail.javamail.JavaMailSenderImpl) mailSender).getPort() : "unknown",
+                    mailSender instanceof org.springframework.mail.javamail.JavaMailSenderImpl ? 
+                    ((org.springframework.mail.javamail.JavaMailSenderImpl) mailSender).getUsername() : "unknown",
+                    fromEmail);
             throw new RuntimeException("Gagal mengirim email. Silahkan coba lagi.");
         }
     }

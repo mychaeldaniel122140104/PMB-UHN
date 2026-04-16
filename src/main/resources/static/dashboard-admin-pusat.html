@@ -800,47 +800,6 @@
             }
         }
 
-        /* ===== EXPORT MODE: Show all sections at once ===== */
-        body.export-mode .content-section.d-none {
-            display: block !important;
-        }
-        body.export-mode .content-section {
-            display: block !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-        body.export-mode .sidebar {
-            display: none !important;
-        }
-        body.export-mode .main-content,
-        body.export-mode .col-lg-10 {
-            flex: 0 0 100% !important;
-            max-width: 100% !important;
-            margin-left: 0 !important;
-        }
-        body.export-mode .modal {
-            display: none !important;
-        }
-        body.export-mode .content-section {
-            border-top: 2px solid #dee2e6;
-            padding-top: 20px;
-            margin-top: 20px;
-        }
-        body.export-mode .content-section:first-child {
-            border-top: none;
-            margin-top: 0;
-        }
-        #exportModeToggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
-            padding: 10px 18px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
     </style>
     <script src="/common-auth.js"></script>
 </head>
@@ -6019,48 +5978,6 @@ const currentEmail = safeGetStorage('userEmail');
                 }, 5000);
             }
         }
-    </script>
-
-    <!-- Export Mode Toggle Button -->
-    <button id="exportModeToggle" class="btn btn-outline-dark" onclick="toggleExportMode()" title="Tampilkan semua section sekaligus">
-        <i class="bi bi-grid-fill"></i> Export Mode
-    </button>
-
-    <script>
-        // ===== EXPORT MODE =====
-        let exportModeActive = false;
-
-        function toggleExportMode() {
-            exportModeActive = !exportModeActive;
-            const btn = document.getElementById('exportModeToggle');
-            if (exportModeActive) {
-                document.body.classList.add('export-mode');
-                btn.classList.remove('btn-outline-dark');
-                btn.classList.add('btn-danger');
-                btn.innerHTML = '<i class="bi bi-x-circle"></i> Exit Export Mode';
-                console.log('✅ Export Mode ON - all sections visible');
-            } else {
-                document.body.classList.remove('export-mode');
-                btn.classList.remove('btn-danger');
-                btn.classList.add('btn-outline-dark');
-                btn.innerHTML = '<i class="bi bi-grid-fill"></i> Export Mode';
-                console.log('✅ Export Mode OFF - normal tab navigation');
-            }
-        }
-
-        // Auto-activate via URL query: ?export=true
-        (function() {
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('export') === 'true') {
-                // Wait for all data to load, then activate
-                window.addEventListener('load', function() {
-                    setTimeout(function() {
-                        toggleExportMode();
-                        console.log('✅ Export Mode auto-activated via ?export=true');
-                    }, 3000); // 3s delay to let fetch APIs complete
-                });
-            }
-        })();
     </script>
 </body>
 </html>

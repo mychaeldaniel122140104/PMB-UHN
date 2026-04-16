@@ -40,6 +40,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
 
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
     @Value("${app.frontend.url:http://localhost:9500}")
     private String frontendUrl;
 
@@ -210,7 +213,7 @@ public class AuthService {
             String resetLink = frontendUrl + "/reset-password.html?token=" + token;
             
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("noreply@pmb-hkbp.com");
+            message.setFrom(fromEmail);
             message.setTo(email);
             message.setSubject("Reset Password - PMB HKBP Nommensen");
             message.setText("Halo,\n\n" +

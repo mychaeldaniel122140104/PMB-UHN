@@ -790,27 +790,12 @@
                 justify-content: space-between;
             }
 
-            /* ✅ HIDE status, actions, and description on mobile - show eye button instead */
-            .progress-status,
-            .progress-item .progress-status,
-            .progress-item > .progress-status,
-            .progress-item > div > .progress-status,
-            div[id$="StatusContainer"] {
+            /* ✅ HIDE EVERYTHING except icon-left and eye button on mobile */
+            .progress-item > *:not(.progress-item-left):not(.eye-toggle-btn) {
                 display: none !important;
             }
 
-            .progress-item-actions,
-            .progress-item .progress-item-actions,
-            .progress-item > .progress-item-actions,
-            div[id$="-actions"] {
-                display: none !important;
-            }
-
-            /* Hide the flex wrapper divs that contain status + actions */
-            .progress-item > div[style*="display: flex"] {
-                display: none !important;
-            }
-
+            /* Also hide description inside progress-info */
             .progress-info p {
                 display: none !important;
             }

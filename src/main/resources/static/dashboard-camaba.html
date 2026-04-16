@@ -790,12 +790,16 @@
                 justify-content: space-between;
             }
 
-            /* ✅ HIDE status and actions on mobile - show eye button instead */
+            /* ✅ HIDE status, actions, and description on mobile - show eye button instead */
             .progress-status {
                 display: none !important;
             }
 
             .progress-item-actions {
+                display: none !important;
+            }
+
+            .progress-info p {
                 display: none !important;
             }
 
@@ -5859,9 +5863,11 @@
             const statusBadgeEl = progressItem.querySelector('.progress-status .status-badge');
             const statusBadgeHTML = statusBadgeEl ? statusBadgeEl.innerHTML : '⏳ Menunggu';
             
-            // Get progress info (title)
+            // Get progress info (title and description)
             const progressInfoH4 = progressItem.querySelector('.progress-info h4');
             const title = progressInfoH4 ? progressInfoH4.textContent : 'Status Registrasi';
+            const progressInfoP = progressItem.querySelector('.progress-info p');
+            const description = progressInfoP ? progressInfoP.textContent : '';
             
             // Get action buttons HTML
             const actionsEl = progressItem.querySelector('.progress-item-actions');
@@ -5882,6 +5888,7 @@
                     <button class="close-modal-btn" onclick="closeStatusModal()">&times;</button>
                 </div>
                 <div class="status-modal-body">
+                    ${description ? `<p style="color: #666; font-size: 14px; margin-bottom: 12px;">${description}</p>` : ''}
                     <div class="status-display-item">
                         <div>
                             <div class="status-display-item-label">Status Terkini:</div>

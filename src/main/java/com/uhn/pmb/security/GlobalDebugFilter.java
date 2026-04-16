@@ -16,20 +16,17 @@ public class GlobalDebugFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         
-        System.out.println("═══════════════════════════════════════════════════════════");
-        System.out.println("🌍 [GLOBAL FILTER - START]");
-        System.out.println("   ➡️ " + request.getMethod() + " " + request.getRequestURI());
-        
         long startTime = System.currentTimeMillis();
         
         try {
             filterChain.doFilter(request, response);
         } finally {
             long duration = System.currentTimeMillis() - startTime;
-            System.out.println("🌍 [GLOBAL FILTER - END]");
-            System.out.println("   ⬅️ RESPONSE STATUS: " + response.getStatus());
-            System.out.println("   ⏱️  DURATION: " + duration + "ms");
-            System.out.println("═══════════════════════════════════════════════════════════");
+            org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GlobalDebugFilter.class);
+            if (log.isDebugEnabled()) {
+                log.debug("{} {} - Status: {} - Duration: {}ms", 
+                        request.getMethod(), request.getRequestURI(), response.getStatus(), duration);
+            }
         }
     }
 }

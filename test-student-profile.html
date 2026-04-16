@@ -212,11 +212,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔐 Test Student Profile & Form Access</h1>
+        <h1><i class="fas fa-lock"></i> Test Student Profile & Form Access</h1>
         <p class="subtitle">Verifies that Student profile creation fix works properly</p>
         
         <div class="info-box">
-            <strong>ℹ️ This fix resolves:</strong>
+            <strong><i class="fas fa-info-circle"></i> This fix resolves:</strong>
             When user clicks "View/Edit Formulir", they got 401 error.
             Now DataInitializer creates Student profile for test account on first run.
         </div>
@@ -225,11 +225,11 @@
         <div class="test-section">
             <h3>1️⃣ Step 1: Submit Credentials</h3>
             <ol class="test-steps">
-                <li>Click "🔓 Login" to get JWT token</li>
+                <li>Click "<i class="fas fa-unlock"></i> Login" to get JWT token</li>
                 <li>Uses credentials: student@test.com / student123</li>
                 <li>JWT token will be stored for next requests</li>
             </ol>
-            <button onclick="testLogin()">🔓 Login</button>
+            <button onclick="testLogin()"><i class="fas fa-unlock"></i> Login</button>
             <div id="loginResult"></div>
         </div>
         
@@ -243,7 +243,7 @@
                 <li>This endpoint looks up Student by user ID from JWT</li>
                 <li>Should return 200 with form data (NOT 401)</li>
             </ol>
-            <button onclick="testFormAccess()">📋 Access Form Endpoint</button>
+            <button onclick="testFormAccess()"><i class="fas fa-clipboard-list"></i> Access Form Endpoint</button>
             <div id="formResult"></div>
         </div>
         
@@ -260,7 +260,7 @@
                 <li>Submit changes successfully</li>
             </ol>
             <a href="/dashboard-camaba.html" target="_blank">
-                <button>📊 Open Student Dashboard</button>
+                <button><i class="fas fa-chart-bar"></i> Open Student Dashboard</button>
             </a>
         </div>
         
@@ -268,13 +268,13 @@
         
         <!-- Debug Info -->
         <div class="test-section">
-            <h3>🔧 Debug Information</h3>
+            <h3><i class="fas fa-wrench"></i> Debug Information</h3>
             <label>Stored JWT Token:</label>
             <textarea id="tokenDisplay" readonly rows="3">Not logged in yet</textarea>
             <label>Last API Response:</label>
             <textarea id="lastResponse" readonly rows="4">Waiting for request...</textarea>
-            <button class="secondary" onclick="clearStorage()">🗑️ Clear Storage</button>
-            <button class="secondary" onclick="copyToken()">📋 Copy Token</button>
+            <button class="secondary" onclick="clearStorage()"><i class="fas fa-trash"></i> Clear Storage</button>
+            <button class="secondary" onclick="copyToken()"><i class="fas fa-clipboard-list"></i> Copy Token</button>
         </div>
         
     </div>
@@ -324,7 +324,7 @@
         async function testLogin() {
             try {
                 const resultDiv = document.getElementById('loginResult');
-                resultDiv.innerHTML = '⏳ Sending login request...';
+                resultDiv.innerHTML = '<i class="fas fa-hourglass-half"></i> Sending login request...';
                 
                 const response = await fetch(`${API_BASE}/api/auth/login`, {
                     method: 'POST',
@@ -350,7 +350,7 @@
                 localStorage.setItem('jwt_token', token);
                 updateTokenDisplay();
                 
-                let message = `✅ Login Successful\n\n`;
+                let message = `<i class="fas fa-check-circle text-success"></i> Login Successful\n\n`;
                 message += `Token received (${token.length} chars)\n`;
                 message += `User: ${data.email}\n`;
                 message += `Role: ${data.role}\n\n`;
@@ -374,7 +374,7 @@
                     return;
                 }
                 
-                resultDiv.innerHTML = '⏳ Accessing form endpoint...';
+                resultDiv.innerHTML = '<i class="fas fa-hourglass-half"></i> Accessing form endpoint...';
                 
                 const response = await fetch(`${API_BASE}/api/camaba/admission-form`, {
                     method: 'GET',
@@ -390,11 +390,11 @@
                 document.getElementById('lastResponse').textContent = JSON.stringify(data, null, 2);
                 
                 if (!response.ok) {
-                    let message = `❌ Status: ${response.status}\n\n`;
+                    let message = `<i class="fas fa-times-circle text-danger"></i> Status: ${response.status}\n\n`;
                     message += `Error: ${JSON.stringify(data, null, 2)}\n\n`;
                     
                     if (response.status === 401) {
-                        message += `⚠️ 401 Unauthorized - Student profile might not exist\n`;
+                        message += `<i class="fas fa-exclamation-triangle text-warning"></i> 401 Unauthorized - Student profile might not exist\n`;
                         message += `This means the fix didn't work properly.`;
                     }
                     
@@ -402,12 +402,12 @@
                     return;
                 }
                 
-                let message = `✅ Form Access Successful!\n\n`;
+                let message = `<i class="fas fa-check-circle text-success"></i> Form Access Successful!\n\n`;
                 message += `Status: ${response.status}\n`;
                 message += `Student Profile Found: YES\n\n`;
                 message += `Response:\n`;
                 message += JSON.stringify(data, null, 2);
-                message += `\n\n✨ Fix is working! Student can now view/edit form.`;
+                message += `\n\n<i class="fas fa-star"></i> Fix is working! Student can now view/edit form.`;
                 
                 setResult('formResult', 'success', message);
                 

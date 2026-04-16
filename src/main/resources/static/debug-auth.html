@@ -17,7 +17,7 @@
 <body>
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">🔧 Debug Authentication System</h4>
+            <h4 class="mb-0"><i class="fas fa-wrench"></i> Debug Authentication System</h4>
         </div>
         <div class="card-body">
             <h5>1. Check LocalStorage Token</h5>
@@ -65,12 +65,12 @@
             const output = document.getElementById('storage-output');
             
             if (!token) {
-                output.innerHTML = '<span class="error">❌ No token in localStorage!</span>';
+                output.innerHTML = '<span class="error"><i class="fas fa-times-circle text-danger"></i> No token in localStorage!</span>';
                 log('No token found in localStorage');
                 return;
             }
             
-            output.innerHTML = `<span class="success">✅ Token found</span>
+            output.innerHTML = `<span class="success"><i class="fas fa-check-circle text-success"></i> Token found</span>
 Length: ${token.length}
 First 50 chars: ${token.substring(0, 50)}...
 Last 50 chars: ...${token.substring(token.length - 50)}`;
@@ -110,7 +110,7 @@ Last 50 chars: ...${token.substring(token.length - 50)}`;
             const token = localStorage.getItem('authToken');
             
             if (!token) {
-                output.innerHTML = '<span class="error">❌ No token!</span>';
+                output.innerHTML = '<span class="error"><i class="fas fa-times-circle text-danger"></i> No token!</span>';
                 log('No token to test admission form');
                 return;
             }
@@ -138,14 +138,14 @@ Last 50 chars: ...${token.substring(token.length - 50)}`;
             const token = localStorage.getItem('authToken');
             
             if (!token) {
-                output.innerHTML = '<span class="error">❌ No token to analyze!</span>';
+                output.innerHTML = '<span class="error"><i class="fas fa-times-circle text-danger"></i> No token to analyze!</span>';
                 return;
             }
 
             try {
                 const parts = token.split('.');
                 if (parts.length !== 3) {
-                    output.innerHTML = `<span class="error">❌ Invalid JWT format (expected 3 parts, got ${parts.length})</span>`;
+                    output.innerHTML = `<span class="error"><i class="fas fa-times-circle text-danger"></i> Invalid JWT format (expected 3 parts, got ${parts.length})</span>`;
                     return;
                 }
 
@@ -190,7 +190,7 @@ Last 50 chars: ...${token.substring(token.length - 50)}`;
                 
                 if (response.ok && data.token) {
                     localStorage.setItem('authToken', data.token);
-                    output.innerHTML = `<span class="success">✅ Login successful!</span>
+                    output.innerHTML = `<span class="success"><i class="fas fa-check-circle text-success"></i> Login successful!</span>
 Token saved to localStorage
 Token length: ${data.token.length}
 
@@ -198,7 +198,7 @@ Response:
 ${JSON.stringify(data, null, 2)}`;
                     log(`Login successful, token: ${data.token.substring(0, 30)}...`);
                 } else {
-                    output.innerHTML = `<span class="error">❌ Login failed (Status: ${response.status})</span>
+                    output.innerHTML = `<span class="error"><i class="fas fa-times-circle text-danger"></i> Login failed (Status: ${response.status})</span>
 ${JSON.stringify(data, null, 2)}`;
                     log(`Login failed: ${response.status}`);
                 }
@@ -210,7 +210,7 @@ ${JSON.stringify(data, null, 2)}`;
 
         // Auto-run on load
         window.addEventListener('load', () => {
-            log('🟢 Debug page loaded');
+            log('<i class="fas fa-circle text-success" style="font-size:0.6em"></i> Debug page loaded');
             checkLocalStorage();
         });
     </script>

@@ -188,7 +188,7 @@
             opacity: 1;
         }
 
-        /* ✅ NEW: View button styles */
+        /* <i class="fas fa-check-circle text-success"></i> NEW: View button styles */
         .view-button {
             position: absolute;
             top: 10px;
@@ -327,13 +327,13 @@
                 <h1>Pilih Program Studi</h1>
                 <p>Tentukan program studi yang ingin Anda daftarkan</p>
                 
-                <!-- ✅ GELOMBANG INFO -->
+                <!-- <i class="fas fa-check-circle text-success"></i> GELOMBANG INFO -->
                 <div id="gelombangInfo" style="background: #f0f9ff; border-left: 4px solid var(--primary); padding: 15px; border-radius: 8px; margin: 20px 0; text-align: left; display: none;">
                     <p style="margin: 0; color: #666; font-size: 14px;">
                         <strong>Gelombang Terpilih:</strong> <span id="selectedGelombangName" style="color: var(--primary); font-weight: 600;"></span>
                     </p>
                     <p style="margin: 8px 0 0 0; color: #999; font-size: 13px;">
-                        📊 Tersedia: <span id="formulaCount" style="color: var(--primary); font-weight: 600;">0</span> pilihan program studi
+                        <i class="fas fa-chart-bar"></i> Tersedia: <span id="formulaCount" style="color: var(--primary); font-weight: 600;">0</span> pilihan program studi
                     </p>
                 </div>
             </div>
@@ -366,7 +366,7 @@
         </div>
     </div>
 
-    <!-- ✅ NEW: View Program Studi Modal -->
+    <!-- <i class="fas fa-check-circle text-success"></i> NEW: View Program Studi Modal -->
     <div class="modal fade" id="viewProgramsModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -406,7 +406,7 @@
             }).format(value);
         }
 
-        // ✅ Safe storage access with Tracking Prevention handling
+        // <i class="fas fa-check-circle text-success"></i> Safe storage access with Tracking Prevention handling
         function safeGetItem(key, storageType = 'localStorage') {
             try {
                 if (storageType === 'localStorage') {
@@ -432,7 +432,7 @@
             }
         }
 
-        // ✅ Display selected gelombang info
+        // <i class="fas fa-check-circle text-success"></i> Display selected gelombang info
         function displayGelombangInfo() {
             // Try localStorage first (from gelombang-selection), then sessionStorage
             const gelombangJson = safeGetItem('selectedGelombang', 'localStorage') || 
@@ -465,13 +465,13 @@
             console.log('═══════════════════════════════════════════════════════════');
             console.log('📡 [FORMULA-SELECTION] Starting formula data fetch...');
             
-            // 🔍 DEBUG: Show gelombang selection
+            // <i class="fas fa-search"></i> DEBUG: Show gelombang selection
             console.log('📦 [GELOMBANG-DATA] selectedGelombang:', selectedGelombang);
             
             console.log('🔑 Auth Token:', authToken ? authToken.substring(0, 20) + '...' : 'NULL');
             console.log('═══════════════════════════════════════════════════════════');
             
-            // ✅ Build API URL with gelombang ID parameter
+            // <i class="fas fa-check-circle text-success"></i> Build API URL with gelombang ID parameter
             let apiUrl = '/api/camaba/all-formulas';
             if (selectedGelombang && selectedGelombang.id) {
                 apiUrl += '?periodId=' + selectedGelombang.id;
@@ -507,7 +507,7 @@
                 formulaData = data.map((formula, index) => ({
                     id: formula.id,
                     title: formula.title || `Formula ${index + 1}`,
-                    icon: formula.iconEmoji || (index % 2 === 0 ? '🏥' : '📚'),
+                    icon: formula.iconEmoji || (index % 2 === 0 ? '<i class="fas fa-hospital"></i>' : '<i class="fas fa-book"></i>'),
                     price: formula.price ? parseInt(formula.price) : 0,
                     currency: 'IDR',
                     description: formula.description || 'Formula pendaftaran',
@@ -519,7 +519,7 @@
                 console.log('✅ [TRANSFORMED-DATA] Formula data after transformation:');
                 console.table(formulaData);
                 
-                // ✅ Update formula count in gelombang info
+                // <i class="fas fa-check-circle text-success"></i> Update formula count in gelombang info
                 document.getElementById('formulaCount').textContent = formulaData.length;
                 
                 displayFormula();
@@ -624,7 +624,7 @@
 
             console.log('✓ selectedFormula exists, proceeding...');
 
-            // 🔑 SIMPLE: gunakan formula ID langsung sebagai jenisSeleksiId
+            // <i class="fas fa-key"></i> SIMPLE: gunakan formula ID langsung sebagai jenisSeleksiId
             // formula ID = jenis seleksi ID (mereka linked di database)
             let jenisSeleksiId = selectedFormula.id;
             
@@ -663,7 +663,7 @@
             .then(data => {
                 console.log('✅ [SUCCESS] Formula selection status updated:', data);
                 
-                // ✅ SAVE - ALWAYS, regardless of API response
+                // <i class="fas fa-check-circle text-success"></i> SAVE - ALWAYS, regardless of API response
                 // Save selected formula + JENIS_SELEKSI ID
                 safeSetItem('selectedFormula', JSON.stringify(selectedFormula), 'localStorage');
                 
@@ -676,7 +676,7 @@
                 console.log('💾 Saved all data to localStorage');
                 console.log('═══════════════════════════════════════════════════════════');
                 
-                // ✅ Proceed to form-pendaftaran (no update-selection call needed)
+                // <i class="fas fa-check-circle text-success"></i> Proceed to form-pendaftaran (no update-selection call needed)
                 console.log('✅ Formula dipilih - redirecting to form registration');
                 setTimeout(() => {
                     window.location.href = '/form-pendaftaran.html';
@@ -712,7 +712,7 @@
         }
 
         /**
-         * ✅ NEW: View program studi connected to jenis seleksi
+         * <i class="fas fa-check-circle text-success"></i> NEW: View program studi connected to jenis seleksi
          * Called when user clicks the eye button
          */
         async function viewProgramStudi(jenisSeleksiId, jenisSeleksiName) {
@@ -798,12 +798,12 @@
             } catch (error) {
                 console.error('❌ [ERROR] Error fetching program studi:', error);
                 console.error('📍 Error stack:', error.stack);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
         // Load formula on page load
-        // ✅ INITIALIZE AUTH TOKEN EARLY (before DOMContentLoaded)
+        // <i class="fas fa-check-circle text-success"></i> INITIALIZE AUTH TOKEN EARLY (before DOMContentLoaded)
         if (!authToken) {
             authToken = safeGetItem('authToken', 'sessionStorage') || safeGetItem('authToken', 'localStorage');
             console.log('🔑 [INIT-AUTH] authToken initialized:', authToken ? authToken.substring(0, 20) + '...' : 'NULL');

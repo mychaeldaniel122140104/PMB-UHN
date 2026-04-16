@@ -144,7 +144,7 @@
             background: #f0fdf4;
         }
 
-        /* ✅ NEW: Active state for daftar-ulang when validation approved */
+        /* <i class="fas fa-check-circle text-success"></i> NEW: Active state for daftar-ulang when validation approved */
         .progress-item.active {
             border-left-color: #3498db;
             background: #ecf0f9;
@@ -185,7 +185,7 @@
             background: #52c77e;
         }
 
-        /* ✅ NEW: Active state icon color */
+        /* <i class="fas fa-check-circle text-success"></i> NEW: Active state icon color */
         .progress-item.active .progress-icon {
             background: #3498db;
         }
@@ -230,7 +230,7 @@
             color: #1a472a;
         }
 
-        /* ✅ NEW: Active badge for unlocked daftar-ulang */
+        /* <i class="fas fa-check-circle text-success"></i> NEW: Active badge for unlocked daftar-ulang */
         .badge-active {
             background: #cce5ff;
             color: #003d82;
@@ -241,7 +241,7 @@
             color: #7f5a1f;
         }
 
-        /* ✅ Validation Status Styles */
+        /* <i class="fas fa-check-circle text-success"></i> Validation Status Styles */
         .validation-badge {
             padding: 0.4rem 0.8rem;
             border-radius: 20px;
@@ -357,7 +357,7 @@
             box-shadow: 0 4px 12px rgba(232, 180, 79, 0.3);
         }
 
-        /* ✅ NEW: Success button style for EARLY_NO_TEST */
+        /* <i class="fas fa-check-circle text-success"></i> NEW: Success button style for EARLY_NO_TEST */
         .btn-success-custom {
             background: #27ae60;
             color: white;
@@ -430,7 +430,7 @@
             box-shadow: 0 4px 12px rgba(82, 199, 126, 0.4);
         }
 
-        /* ✅ EYE BUTTON FOR MOBILE VIEW */
+        /* <i class="fas fa-check-circle text-success"></i> EYE BUTTON FOR MOBILE VIEW */
         .eye-toggle-btn {
             display: none;
             background: #27ae60;
@@ -454,7 +454,7 @@
             box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
         }
 
-        /* ✅ STATUS MODAL - appears on eye button click */
+        /* <i class="fas fa-check-circle text-success"></i> STATUS MODAL - appears on eye button click */
         .status-modal-overlay {
             display: none;
             position: fixed;
@@ -574,7 +574,7 @@
             flex-wrap: wrap;
         }
 
-        /* ✅ FIX: Ensure wrapper divs in progress-item align to right */
+        /* <i class="fas fa-check-circle text-success"></i> FIX: Ensure wrapper divs in progress-item align to right */
         .progress-item > div:not(.progress-item-left) {
             margin-left: auto !important;
             display: flex !important;
@@ -703,7 +703,7 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        /* ✅ FIXED: Modal Autentikasi - Proper Layering */
+        /* <i class="fas fa-check-circle text-success"></i> FIXED: Modal Autentikasi - Proper Layering */
         .modal-backdrop {
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
@@ -790,14 +790,14 @@
                 justify-content: space-between;
             }
 
-            /* ✅ HIDE EVERYTHING except icon-left and eye button on mobile */
+            /* <i class="fas fa-check-circle text-success"></i> HIDE EVERYTHING except icon-left and eye button on mobile */
             .progress-item > *:not(.progress-item-left):not(.eye-toggle-btn) {
                 display: none !important;
             }
 
             /* Keep description visible on mobile */
 
-            /* ✅ SHOW eye toggle button on mobile */
+            /* <i class="fas fa-check-circle text-success"></i> SHOW eye toggle button on mobile */
             .eye-toggle-btn {
                 display: flex !important;
             }
@@ -828,14 +828,14 @@
                 <p><i class="fas fa-envelope"></i> <span id="userEmail">-</span></p>
                 <p><i class="fas fa-id-card"></i> Status: <strong id="userStatus">Terdaftar</strong></p>
                 
-                <!-- ✅ NEW: Selected Wave Type and Program Display (Real-time) -->
+                <!-- <i class="fas fa-check-circle text-success"></i> NEW: Selected Wave Type and Program Display (Real-time) -->
                 <div id="selectionInfoSection">
-                    <p><i class="fas fa-stream"></i> Gelombang: <strong id="selectedGelombang">⏳ Sedang dimuat...</strong></p>
-                    <p><i class="fas fa-book"></i> Program Studi: <strong id="selectedProgram">⏳ Sedang dimuat...</strong></p>
-                    <p><i class="fas fa-graduation-cap"></i> Mode Gelombang: <strong id="selectedWaveMode">⏳ Sedang dimuat...</strong></p>
+                    <p><i class="fas fa-stream"></i> Gelombang: <strong id="selectedGelombang"><i class="fas fa-hourglass-half"></i> Sedang dimuat...</strong></p>
+                    <p><i class="fas fa-book"></i> Program Studi: <strong id="selectedProgram"><i class="fas fa-hourglass-half"></i> Sedang dimuat...</strong></p>
+                    <p><i class="fas fa-graduation-cap"></i> Mode Gelombang: <strong id="selectedWaveMode"><i class="fas fa-hourglass-half"></i> Sedang dimuat...</strong></p>
                 </div>
 
-                <!-- ✅ NEW: Validation Status Display (dynamically updated) -->
+                <!-- <i class="fas fa-check-circle text-success"></i> NEW: Validation Status Display (dynamically updated) -->
                 <div id="validationStatusSection" style="display: none; margin-top: 15px; padding: 15px; border-radius: 8px; background: #f0f8ff; border-left: 4px solid #2196F3;">
                     <p style="margin: 0; font-weight: 600; color: #1565c0;">
                         <i id="validationStatusIcon" class="fas fa-info-circle"></i> 
@@ -843,13 +843,13 @@
                     </p>
                 </div>
                 
-                <!-- ✅ OLD: Wave type display (kept for backward compatibility) -->
+                <!-- <i class="fas fa-check-circle text-success"></i> OLD: Wave type display (kept for backward compatibility) -->
                 <p id="waveTypeInfo" style="display: none;"><i class="fas fa-stream"></i> Jenis Gelombang: <strong id="waveTypeDisplay">-</strong></p>
             </div>
             <!-- Header actions removed - now in header component -->
         </div>
 
-        <!-- ✅ NEW: Hasil Validasi Section -->
+        <!-- <i class="fas fa-check-circle text-success"></i> NEW: Hasil Validasi Section -->
         <div id="validationResultsSection" style="display: none; margin-bottom: 30px;">
             <div style="background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                 <h3 style="color: #1a472a; margin-bottom: 15px; font-weight: 700;">
@@ -1038,7 +1038,7 @@
                 </div>
             </div>
 
-            <!-- ✅ HASIL AKHIR: Virtual Account BRIVA & Nomor Registrasi (Disabled sampai DIVALIDASI) -->
+            <!-- <i class="fas fa-check-circle text-success"></i> HASIL AKHIR: Virtual Account BRIVA & Nomor Registrasi (Disabled sampai DIVALIDASI) -->
             <div class="progress-item completed" id="hasil-akhir-item" style="opacity: 0.7; pointer-events: none;">
                 <div class="progress-item-left">
                     <div class="progress-icon"><i class="fas fa-trophy"></i></div>
@@ -1103,7 +1103,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content" style="height: 600px; display: flex; flex-direction: column;">
                 <div class="modal-header" style="background: linear-gradient(90deg, #27ae60 0%, #1a8f4a 100%); color: white; border: none;">
-                    <h5 class="modal-title">💬 Customer Service</h5>
+                    <h5 class="modal-title"><i class="fas fa-comments"></i> Customer Service</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; padding: 0;">
@@ -1171,10 +1171,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ✅ authToken already declared in common-auth.js (line 52)
+        // <i class="fas fa-check-circle text-success"></i> authToken already declared in common-auth.js (line 52)
         // DO NOT redeclare - just use the global variable
         
-        // ✅ REFRESH AUTH TOKEN EARLY (before DOMContentLoaded - use existing from common-auth.js)
+        // <i class="fas fa-check-circle text-success"></i> REFRESH AUTH TOKEN EARLY (before DOMContentLoaded - use existing from common-auth.js)
         function getAuthToken() {
             // Always fetch fresh token from storage (accounts for token refresh)
             if (typeof authToken !== 'undefined' && authToken) {
@@ -1212,7 +1212,7 @@
         let currentValidationStatus = 'NOT_STARTED';
         
         // ===== WAVE MODE FROM ADMISSION FORM =====
-        // ✅ NEW: Global variable to store waveMode from admission form
+        // <i class="fas fa-check-circle text-success"></i> NEW: Global variable to store waveMode from admission form
         // Used in cicilan/ujian logic in updateUIFromRegistrationStatus()
         let globalWaveMode = null;
         
@@ -1257,11 +1257,11 @@
         
         // Run enhanced auth check on page load
         window.addEventListener('DOMContentLoaded', async function() {
-            // ✅ REFRESH AUTH TOKEN AT PAGE LOAD
+            // <i class="fas fa-check-circle text-success"></i> REFRESH AUTH TOKEN AT PAGE LOAD
             authToken = getAuthToken();
             console.log('🔑 [DOMContentLoaded] Auth token refreshed:', authToken ? 'OK' : 'NULL');
             
-            // ✅ CLEAR old waveType data on page load - only show REAL data after form selection
+            // <i class="fas fa-check-circle text-success"></i> CLEAR old waveType data on page load - only show REAL data after form selection
             localStorage.removeItem('currentWaveType');
             document.getElementById('waveTypeInfo').style.display = 'none';
             
@@ -1272,14 +1272,14 @@
                 return;
             }
             // Continue loading page if authenticated
-            // ✅ IMPORTANT: Load profile FIRST to set globalWaveMode via loadSelectionInfo()
+            // <i class="fas fa-check-circle text-success"></i> IMPORTANT: Load profile FIRST to set globalWaveMode via loadSelectionInfo()
             await loadUserProfile();
-            // ✅ THEN load admission status (which uses globalWaveMode in updateUIFromRegistrationStatus)
+            // <i class="fas fa-check-circle text-success"></i> THEN load admission status (which uses globalWaveMode in updateUIFromRegistrationStatus)
             loadAdmissionStatus();
-            startValidationStatusPolling();  // ✅ NEW: Auto-refresh validation status every 10 seconds
+            startValidationStatusPolling();  // <i class="fas fa-check-circle text-success"></i> NEW: Auto-refresh validation status every 10 seconds
             loadAnnouncements();
             
-            // ✅ Set page header title and description
+            // <i class="fas fa-check-circle text-success"></i> Set page header title and description
             if (typeof setPageHeader === 'function') {
                 setPageHeader('Dashboard Peserta', 'Pantau progress pendaftaran dan kelola semua dokumen penting Anda');
             }
@@ -1332,14 +1332,14 @@
                 document.getElementById('userName').textContent = 'Halo, ' + actualName;
                 document.getElementById('userEmail').textContent = actualEmail;
                 
-                // ✅ REMOVED: Don't show old waveType on dashboard load
+                // <i class="fas fa-check-circle text-success"></i> REMOVED: Don't show old waveType on dashboard load
                 // Wave type will only be shown AFTER user selects gelombang in form page
                 // This prevents showing stale/dummy data from old sessions
                 
                 console.log('✓ Profile loaded from database: ' + actualName + ' (' + actualEmail + ')');
                 
-                // ✅ NEW: Load and display selected gelombang and program
-                // ✅ AWAIT this to ensure globalWaveMode is set before loadAdmissionStatus() runs
+                // <i class="fas fa-check-circle text-success"></i> NEW: Load and display selected gelombang and program
+                // <i class="fas fa-check-circle text-success"></i> AWAIT this to ensure globalWaveMode is set before loadAdmissionStatus() runs
                 await loadSelectionInfo();
                 console.log('✅ loadSelectionInfo() complete - globalWaveMode is now:', globalWaveMode);
             } catch (error) {
@@ -1350,18 +1350,18 @@
             }
         }
 
-        // ✅ NEW: Load and display selected gelombang and program from AdmissionForm
+        // <i class="fas fa-check-circle text-success"></i> NEW: Load and display selected gelombang and program from AdmissionForm
         async function loadSelectionInfo() {
             try {
                 document.getElementById('selectionInfoSection').style.display = 'block';
 
-                let gelombangName = '⏳ Belum dipilih';
-                let programName = '⏳ Belum dipilih';
-                let waveMode = '⏳ Belum dipilih';
+                let gelombangName = '<i class="fas fa-hourglass-half"></i> Belum dipilih';
+                let programName = '<i class="fas fa-hourglass-half"></i> Belum dipilih';
+                let waveMode = '<i class="fas fa-hourglass-half"></i> Belum dipilih';
 
                 console.log('🔍 ===== loadSelectionInfo() START =====');
                 
-                // ✅ GET FRESH AUTH TOKEN AT START
+                // <i class="fas fa-check-circle text-success"></i> GET FRESH AUTH TOKEN AT START
                 const currentAuthToken = getAuthToken();
                 if (!currentAuthToken) {
                     console.error('❌ No auth token available in loadSelectionInfo()');
@@ -1369,7 +1369,7 @@
                 }
                 console.log('✅ Auth token retrieved, length:', currentAuthToken.length);
 
-                // ✅ TRY NEW APPROACH: Fetch admission form from /current endpoint (safety endpoint for student)
+                // <i class="fas fa-check-circle text-success"></i> TRY NEW APPROACH: Fetch admission form from /current endpoint (safety endpoint for student)
                 console.log('📍 Step 1: Fetching ADMISSION_FORMS data for current student...');
                 
                 let admissionForm = null;
@@ -1416,7 +1416,7 @@
                     console.log('   - selectionTypeId:', admissionForm.selectionTypeId);
                     console.log('   - waveMode:', admissionForm.waveMode);
 
-                    // ✅ STEP 1: Get gelombang name directly from response (PREFERRED)
+                    // <i class="fas fa-check-circle text-success"></i> STEP 1: Get gelombang name directly from response (PREFERRED)
                     if (admissionForm.periodName) {
                         gelombangName = admissionForm.periodName;
                         console.log('\n✅ Gelombang name from response:', gelombangName);
@@ -1450,7 +1450,7 @@
                         }
                     }
 
-                    // ✅ STEP 2: Get program name directly from response (PREFERRED)
+                    // <i class="fas fa-check-circle text-success"></i> STEP 2: Get program name directly from response (PREFERRED)
                     if (admissionForm.jenisSeleksiName) {
                         programName = admissionForm.jenisSeleksiName;
                         console.log('\n✅ Program name from response:', programName);
@@ -1485,16 +1485,16 @@
                         }
                     }
 
-                    // ✅ STEP 3: Get wave mode directly from response (from REGISTRATION_PERIODS.wave_type)
+                    // <i class="fas fa-check-circle text-success"></i> STEP 3: Get wave mode directly from response (from REGISTRATION_PERIODS.wave_type)
                     if (admissionForm.waveMode) {
                         waveMode = getWaveModeLabel(admissionForm.waveMode);
-                        // ✅ NEW: SET GLOBAL WAVE MODE for use in updateUIFromRegistrationStatus()
+                        // <i class="fas fa-check-circle text-success"></i> NEW: SET GLOBAL WAVE MODE for use in updateUIFromRegistrationStatus()
                         globalWaveMode = admissionForm.waveMode;
                         console.log('\n✅ Wave mode from response:', admissionForm.waveMode, '→', waveMode);
                         console.log('✅ Global wave mode SET:', globalWaveMode);
                     } else {
                         console.warn('   ⚠️ Wave mode is not in response');
-                        waveMode = '❓ Tidak Diketahui';
+                        waveMode = '<i class="fas fa-question-circle"></i> Tidak Diketahui';
                         globalWaveMode = null;
                     }
                 } else {
@@ -1511,7 +1511,7 @@
                 document.getElementById('selectedProgram').textContent = programName;
                 document.getElementById('selectedWaveMode').textContent = waveMode;
                 
-                // ✅ NEW: Store IDs in localStorage for later use (especially for payment page)
+                // <i class="fas fa-check-circle text-success"></i> NEW: Store IDs in localStorage for later use (especially for payment page)
                 if (admissionForm) {
                     if (admissionForm.jenisSeleksiId) {
                         localStorage.setItem('jenisSeleksiId', admissionForm.jenisSeleksiId);
@@ -1534,12 +1534,12 @@
             }
         }
 
-        // ✅ NEW: Helper function to convert wave mode enum to readable label
+        // <i class="fas fa-check-circle text-success"></i> NEW: Helper function to convert wave mode enum to readable label
         function getWaveModeLabel(waveMode) {
             const labels = {
-                'EARLY_NO_TEST': '🎓 Bebas Tes Awal',
-                'RANKING_NO_TEST': '📊 Bebas Tes Ranking',
-                'REGULAR_TEST': '📝 Dengan Ujian'
+                'EARLY_NO_TEST': '<i class="fas fa-graduation-cap"></i> Bebas Tes Awal',
+                'RANKING_NO_TEST': '<i class="fas fa-chart-bar"></i> Bebas Tes Ranking',
+                'REGULAR_TEST': '<i class="fas fa-edit"></i> Dengan Ujian'
             };
             return labels[waveMode] || waveMode;
         }
@@ -1551,25 +1551,25 @@
             window.location.href = '/login.html';
         }
 
-        // ✅ NEW: Proper function untuk lanjut form dengan jenisSeleksiId dari data yang tersimpan
+        // <i class="fas fa-check-circle text-success"></i> NEW: Proper function untuk lanjut form dengan jenisSeleksiId dari data yang tersimpan
         function lanjutForm() {
             console.log('🔥 lanjutForm() called');
             
-            // 🔑 PRIMARY SOURCE: Try to get jenisSeleksiId dari localStorage (dari FORMULA_SELECTION)
+            // <i class="fas fa-key"></i> PRIMARY SOURCE: Try to get jenisSeleksiId dari localStorage (dari FORMULA_SELECTION)
             let jenisSeleksiId = localStorage.getItem('jenisSeleksiId');
             
             if (!jenisSeleksiId) {
                 console.warn('⚠️ jenisSeleksiId NOT in localStorage!');
                 console.warn('   User must go through formula-selection.html first');
                 console.warn('   Showing warning instead of using arbitrary default...');
-                // ❌ DON'T fallback to '1' - that masks the real problem
+                // <i class="fas fa-times-circle text-danger"></i> DON'T fallback to '1' - that masks the real problem
                 // Instead, force user back to proper flow
                 alert('Silakan pilih program studi terlebih dahulu di halaman seleksi program');
                 window.location.href = '/formula-selection.html';
                 return;
             }
             
-            // ✅ VALIDATE: Ensure jenisSeleksiId is valid positive integer
+            // <i class="fas fa-check-circle text-success"></i> VALIDATE: Ensure jenisSeleksiId is valid positive integer
             const parsed = parseInt(jenisSeleksiId);
             if (isNaN(parsed) || parsed <= 0) {
                 console.error('❌ jenisSeleksiId is invalid:', jenisSeleksiId);
@@ -1578,7 +1578,7 @@
                 return;
             }
             
-            // ✅ CLEAN: Ensure format is valid
+            // <i class="fas fa-check-circle text-success"></i> CLEAN: Ensure format is valid
             jenisSeleksiId = String(parsed);
             console.log('✓ Valid jenisSeleksiId from localStorage:', jenisSeleksiId);
             
@@ -1594,7 +1594,7 @@
         // Load registration status realtime from new RegistrationStatus API
         async function loadAdmissionStatus() {
             try {
-                // ✅ REFRESH AUTH TOKEN AT START OF FUNCTION
+                // <i class="fas fa-check-circle text-success"></i> REFRESH AUTH TOKEN AT START OF FUNCTION
                 const currentAuthToken = getAuthToken();
                 if (!currentAuthToken) {
                     console.error('❌ No auth token available - user may not be logged in');
@@ -1635,7 +1635,7 @@
                     console.log('  - ' + rs.stage + ': ' + rs.status);
                 });
                 
-                // ✅ NEW: Check explicitly for DAFTAR_ULANG stage
+                // <i class="fas fa-check-circle text-success"></i> NEW: Check explicitly for DAFTAR_ULANG stage
                 console.log('🔍 DAFTAR_ULANG Status Check:', statusMap['DAFTAR_ULANG'] ? statusMap['DAFTAR_ULANG'].status : '❌ NOT FOUND IN API RESPONSE');
                 if (!statusMap['DAFTAR_ULANG']) {
                     console.warn('⚠️ ⚠️ ⚠️ CRITICAL: DAFTAR_ULANG stage not found in registration-status/all!');
@@ -1647,15 +1647,15 @@
                 }
 
                 // Try to fetch admission form for wave type (for PSYCHO_EXAM logic)
-                let waveTypeFromForm = null;  // ✅ DEFAULT TO NULL, NOT EMPTY STRING
+                let waveTypeFromForm = null;  // <i class="fas fa-check-circle text-success"></i> DEFAULT TO NULL, NOT EMPTY STRING
                 try {
-                    // ✅ VALIDATE TOKEN BEFORE PROFILE FETCH
+                    // <i class="fas fa-check-circle text-success"></i> VALIDATE TOKEN BEFORE PROFILE FETCH
                     if (!currentAuthToken || currentAuthToken.trim() === '') {
                         console.warn('⚠️ Auth token is empty or invalid for profile fetch');
                         throw new Error('Auth token not available');
                     }
                     
-                    // ✅ FIRST: Fetch profile to get studentId from API (not localStorage)
+                    // <i class="fas fa-check-circle text-success"></i> FIRST: Fetch profile to get studentId from API (not localStorage)
                     const profileRes = await fetch('/api/camaba/profile', {
                         headers: { 'Authorization': 'Bearer ' + currentAuthToken }
                     });
@@ -1668,13 +1668,13 @@
                         if (studentId) {
                             console.log('📌 StudentId retrieved from profile:', studentId);
                             
-                            // ✅ VALIDATE TOKEN BEFORE ADMISSION FORM FETCH
+                            // <i class="fas fa-check-circle text-success"></i> VALIDATE TOKEN BEFORE ADMISSION FORM FETCH
                             if (!currentAuthToken || currentAuthToken.trim() === '') {
                                 console.warn('⚠️ Auth token became invalid for admission form fetch');
                                 throw new Error('Auth token not available');
                             }
                             
-                            // ✅ SECOND: Fetch admission form with correct studentId
+                            // <i class="fas fa-check-circle text-success"></i> SECOND: Fetch admission form with correct studentId
                             const formRes = await fetch('/api/camaba/admission-forms/id/' + studentId, {
                                 headers: { 'Authorization': 'Bearer ' + currentAuthToken }
                             });
@@ -1819,7 +1819,7 @@
             }
 
             // Update UI untuk masing-masing stage
-            // ✅ FIXED: Use form submission status (FORM_SUBMISSION stage), not gelombang selection
+            // <i class="fas fa-check-circle text-success"></i> FIXED: Use form submission status (FORM_SUBMISSION stage), not gelombang selection
             // Pass statusMap so we can check payment status for showing edit buttons
             console.log('📋 [FORMULIR-STATUS] formSubmissionStatus:', formSubmissionStatus);
             if (!formSubmissionStatus) {
@@ -1867,13 +1867,13 @@
             console.log('🎓 Display Wave Type for cicilan logic:', displayWaveType, '(from GLOBAL globalWaveMode set by loadSelectionInfo())');
 
             // ===== UPDATE CICILAN STATUS (NEW) =====
-            // ✅ FIXED: For REGULAR_TEST, cicilan ONLY unlock setelah UJIAN selesai
-            // ✅ For non-test modes, cicilan unlock langsung setelah BRIVA payment
+            // <i class="fas fa-check-circle text-success"></i> FIXED: For REGULAR_TEST, cicilan ONLY unlock setelah UJIAN selesai
+            // <i class="fas fa-check-circle text-success"></i> For non-test modes, cicilan unlock langsung setelah BRIVA payment
             const cicilanActionsBtn = document.getElementById('cicilan-actions');
             const cicilanBadge = document.getElementById('cicilan-status-badge');
             const cicilanItem = document.getElementById('cicilan-item');
             
-            // ✅ DETERMINE IF CICILAN CAN BE ACCESSED
+            // <i class="fas fa-check-circle text-success"></i> DETERMINE IF CICILAN CAN BE ACCESSED
             let cicilanCanAccess = false;
             let cicilanLockReason = '';
             
@@ -1918,10 +1918,10 @@
                     cicilanBadge.className = 'status-badge badge-completed';
                     cicilanBadge.innerHTML = '<i class="fas fa-check-circle"></i> Cicilan Dibayar';
                     
-                    // ✅ NEW: Check if daftar ulang already submitted
+                    // <i class="fas fa-check-circle text-success"></i> NEW: Check if daftar ulang already submitted
                     const isSubmitted = daftarUlangStatus && (daftarUlangStatus.status === 'SELESAI' || daftarUlangStatus.status === 'MENUNGGU_VERIFIKASI');
                     
-                    // ✅ UPDATED: Show "Akses Daftar Ulang" button - disabled if already submitted
+                    // <i class="fas fa-check-circle text-success"></i> UPDATED: Show "Akses Daftar Ulang" button - disabled if already submitted
                     if (cicilanActionsBtn) {
                         cicilanActionsBtn.style.display = 'flex';
                         const cicilanBtn = document.getElementById('btn-bayar-cicilan');
@@ -1944,10 +1944,10 @@
                         }
                     }
                     
-                    // ✅ UNLOCK DAFTAR ULANG when cicilan payment completed
+                    // <i class="fas fa-check-circle text-success"></i> UNLOCK DAFTAR ULANG when cicilan payment completed
                     const daftarUlangItem = document.getElementById('daftar-ulang-item');
                     if (daftarUlangItem) {
-                        // ✅ NEW: Check if daftar ulang already submitted
+                        // <i class="fas fa-check-circle text-success"></i> NEW: Check if daftar ulang already submitted
                         console.log('📋 DAFTAR ULANG STATUS CHECK:');
                         console.log('   - daftarUlangStatus:', daftarUlangStatus);
                         if (daftarUlangStatus) {
@@ -2017,7 +2017,7 @@
                     cicilanBadge.innerHTML = '<i class="fas fa-hourglass-half"></i> Siap untuk Bayar';
                     if (cicilanActionsBtn) cicilanActionsBtn.style.display = 'flex';
                     
-                    // ✅ NEW: Reset button to original "Bayar Cicilan" state
+                    // <i class="fas fa-check-circle text-success"></i> NEW: Reset button to original "Bayar Cicilan" state
                     const cicilanBtn = document.getElementById('btn-bayar-cicilan');
                     if (cicilanBtn) {
                         cicilanBtn.style.background = '#e67e22';
@@ -2041,7 +2041,7 @@
                             daftarUlangBadge.innerHTML = '<i class="fas fa-lock"></i> Belum Bisa Diakses';
                         }
                         
-                        // ✅ NEW: Hide VIEW and EDIT action buttons
+                        // <i class="fas fa-check-circle text-success"></i> NEW: Hide VIEW and EDIT action buttons
                         const daftarUlangActionsBtn = document.getElementById('daftar-ulang-actions');
                         if (daftarUlangActionsBtn) {
                             daftarUlangActionsBtn.style.display = 'none';
@@ -2075,7 +2075,7 @@
                         daftarUlangBadge.innerHTML = '<i class="fas fa-lock"></i> Belum Bisa Diakses';
                     }
                     
-                    // ✅ NEW: Hide VIEW and EDIT action buttons
+                    // <i class="fas fa-check-circle text-success"></i> NEW: Hide VIEW and EDIT action buttons
                     const daftarUlangActionsBtn = document.getElementById('daftar-ulang-actions');
                     if (daftarUlangActionsBtn) {
                         daftarUlangActionsBtn.style.display = 'none';
@@ -2088,12 +2088,12 @@
             }
 
             // Determine what to show as next action
-            // ✅ FIXED: Get waveType from GLOBAL variable (globalWaveMode), NOT from parameter
+            // <i class="fas fa-check-circle text-success"></i> FIXED: Get waveType from GLOBAL variable (globalWaveMode), NOT from parameter
             // This is the RELIABLE source of truth from admission form
             // (displayWaveType already set above in cicilan logic)
             console.log('🎓 Display Wave Type for ujian/verification logic:', displayWaveType, '(from GLOBAL globalWaveMode)');
             
-            // ✅ FIXED: Hide/Show exam and verification items based on ACTUAL waveType from database
+            // <i class="fas fa-check-circle text-success"></i> FIXED: Hide/Show exam and verification items based on ACTUAL waveType from database
             // Hide ujian for non-REGULAR_TEST students (EARLY_NO_TEST, RANKING_NO_TEST)
             // Show ujian ONLY if we confirm waveType is REGULAR_TEST
             const ujianItem = document.getElementById('ujian-item');
@@ -2106,7 +2106,7 @@
                 if (ujianItem) ujianItem.style.display = 'block';
                 if (verifikasiItem) verifikasiItem.style.display = 'block';
                 
-                // ✅ NEW: Update ujian-item status based on psychoStatus
+                // <i class="fas fa-check-circle text-success"></i> NEW: Update ujian-item status based on psychoStatus
                 if (ujianBadge) {
                     if (psychoStatus && psychoStatus.status === 'SELESAI') {
                         console.log('✅ Exam COMPLETED - updating ujian-item to completed state');
@@ -2133,10 +2133,10 @@
             if (gelombangStatus?.status === 'SELESAI' && formulaStatus?.status === 'SELESAI') {
                 // Both selections done, check payments before allowing exam/daftar ulang
                 if (pembayaranStatus && pembayaranStatus.status === 'SELESAI') {
-                    // ✅ PEMBAYARAN BRIVA DONE
+                    // <i class="fas fa-check-circle text-success"></i> PEMBAYARAN BRIVA DONE
                     document.getElementById('current-status-title').textContent = 'Langkah Berikutnya';
                     
-                    // ✅ Check cicilan status (which was set based on waveType + ujian status)
+                    // <i class="fas fa-check-circle text-success"></i> Check cicilan status (which was set based on waveType + ujian status)
                     if (cicilanStatus && cicilanStatus.status === 'SELESAI') {
                         // Cicilan sudah dibayar - daftar ulang already unlocked in cicilan logic
                         console.log('✅ Langkah Berikutnya: Daftar Ulang (cicilan sudah dibayar)');
@@ -2146,7 +2146,7 @@
                         let actionHTML = '';
                         
                         if (displayWaveType === 'REGULAR_TEST') {
-                            // ✅ REGULAR_TEST MODE: Check if ujian is selesai
+                            // <i class="fas fa-check-circle text-success"></i> REGULAR_TEST MODE: Check if ujian is selesai
                             if (psychoStatus && psychoStatus.status === 'SELESAI') {
                                 // Ujian sudah selesai - show cicilan button
                                 statusMessage = 'Bayar Cicilan 1 untuk Daftar Ulang';
@@ -2159,7 +2159,7 @@
                                 console.log('⏳ REGULAR_TEST: Ujian belum selesai → Show ujian button');
                             }
                         } else {
-                            // ✅ NON-TEST MODE (EARLY_NO_TEST, RANKING_NO_TEST): Show cicilan button directly
+                            // <i class="fas fa-check-circle text-success"></i> NON-TEST MODE (EARLY_NO_TEST, RANKING_NO_TEST): Show cicilan button directly
                             statusMessage = 'Bayar Cicilan 1 untuk Daftar Ulang';
                             actionHTML = '<button class="action-btn btn-primary-action" onclick="proceedToCicilanPayment()" style="background: #e67e22;"><i class="fas fa-credit-card"></i> Bayar Cicilan 1</button>';
                             console.log('✅ Non-test mode: Show cicilan button directly');
@@ -2217,7 +2217,7 @@
         }
 
         function proceedToPayment() {
-            // ✅ FIXED: Use jenisSeleksiId from localStorage (not selectionTypeId)
+            // <i class="fas fa-check-circle text-success"></i> FIXED: Use jenisSeleksiId from localStorage (not selectionTypeId)
             // jenisSeleksiId = ID of the selection method (from JENIS_SELEKSI table)
             // selectionTypeId = ID of medical/non-medical type (different table)
             const jenisSeleksiId = localStorage.getItem('jenisSeleksiId') || '1';
@@ -2231,16 +2231,16 @@
             window.location.href = `/payment-briva.html?jenisSeleksiId=${jenisSeleksiId}&periodId=${periodId}`;
         }
 
-        // ✅ NEW: Proceed to Cicilan Payment
+        // <i class="fas fa-check-circle text-success"></i> NEW: Proceed to Cicilan Payment
         function proceedToCicilanPayment() {
             // Redirect to payment cicilan page
             window.location.href = '/payment-cicilan.html';
         }
 
-        // ✅ NEW: Load and display exam token after payment
+        // <i class="fas fa-check-circle text-success"></i> NEW: Load and display exam token after payment
         async function loadAndDisplayExamToken() {
             try {
-                // ✅ Get auth token (fresh from storage)
+                // <i class="fas fa-check-circle text-success"></i> Get auth token (fresh from storage)
                 const authToken = getAuthToken();
                 if (!authToken) {
                     console.error('❌ No auth token for exam token load');
@@ -2272,19 +2272,19 @@
             }
         }
 
-        // ✅ Copy exam token to clipboard
+        // <i class="fas fa-check-circle text-success"></i> Copy exam token to clipboard
         function copyExamToken() {
             const tokenEl = document.getElementById('exam-token-display');
             const token = tokenEl.textContent;
             
             navigator.clipboard.writeText(token).then(() => {
-                alert('✅ Token berhasil disalin ke clipboard!');
+ alert(' Token berhasil disalin ke clipboard!');
             }).catch(err => {
-                alert('❌ Gagal menyalin token');
+ alert(' Gagal menyalin token');
             });
         }
 
-        // ✅ NEW: Load and display validation status from ValidationStatusTracker API (SINGLE SOURCE OF TRUTH)
+        // <i class="fas fa-check-circle text-success"></i> NEW: Load and display validation status from ValidationStatusTracker API (SINGLE SOURCE OF TRUTH)
         async function loadValidationStatus() {
             try {
                 const authToken = getAuthToken();
@@ -2293,7 +2293,7 @@
                     return;
                 }
                 
-                // 📌 STEP 1: Get student ID from profile
+                // <i class="fas fa-thumbtack"></i> STEP 1: Get student ID from profile
                 const profileRes = await fetch('/api/camaba/profile', {
                     headers: { 'Authorization': 'Bearer ' + authToken }
                 });
@@ -2316,7 +2316,7 @@
                 
                 console.log('📊 Student ID retrieved:', studentId);
                 
-                // 📌 STEP 2: Fetch ValidationStatusTracker from new API endpoint (SINGLE SOURCE OF TRUTH)
+                // <i class="fas fa-thumbtack"></i> STEP 2: Fetch ValidationStatusTracker from new API endpoint (SINGLE SOURCE OF TRUTH)
                 const trackerRes = await fetch(`/admin/api/validation-status-tracker/student/${studentId}`, {
                     headers: { 'Authorization': 'Bearer ' + authToken }
                 });
@@ -2343,7 +2343,7 @@
             }
         }
 
-        // ✅ Auto-refresh validation status every 10 seconds (real-time feel)
+        // <i class="fas fa-check-circle text-success"></i> Auto-refresh validation status every 10 seconds (real-time feel)
         function startValidationStatusPolling() {
             // Load immediately
             loadValidationStatus();
@@ -2355,14 +2355,14 @@
             }, 10000); // 10 seconds
         }
 
-        // ✅ Helper: Update validation status badge and text (from ValidationStatusTracker)
+        // <i class="fas fa-check-circle text-success"></i> Helper: Update validation status badge and text (from ValidationStatusTracker)
         function updateValidationStatusDisplay(validationStatus, trackerData) {
-            // ✅ NEW: Store validation status in global variable for button logic
+            // <i class="fas fa-check-circle text-success"></i> NEW: Store validation status in global variable for button logic
             currentValidationStatus = validationStatus || 'NOT_STARTED';
             console.log('📍 Global currentValidationStatus updated:', currentValidationStatus);
             
-            // ✅ NEW: Hide EDIT button ONLY when status = DIVALIDASI (approved - form locked)
-            // ✅ EDIT button tetap VISIBLE ketika REVISI (student dapat edit ulang)
+            // <i class="fas fa-check-circle text-success"></i> NEW: Hide EDIT button ONLY when status = DIVALIDASI (approved - form locked)
+            // <i class="fas fa-check-circle text-success"></i> EDIT button tetap VISIBLE ketika REVISI (student dapat edit ulang)
             const editButtonEl = document.getElementById('btn-edit-formulir');
             if (editButtonEl) {
                 if (validationStatus === 'DIVALIDASI') {
@@ -2374,7 +2374,7 @@
                 }
             }
             
-            // ✅ NEW: Hide ALL action buttons when status = DIVALIDASI (form is locked)
+            // <i class="fas fa-check-circle text-success"></i> NEW: Hide ALL action buttons when status = DIVALIDASI (form is locked)
             if (validationStatus === 'DIVALIDASI') {
                 // Hide formulir action buttons
                 const formulirActions = document.getElementById('formulir-actions');
@@ -2422,42 +2422,42 @@
             
             // Database enum values: NOT_STARTED, MENUNGGU, DIVALIDASI, DITOLAK, REVISI
             if (validationStatus === 'DIVALIDASI') {
-                displayText = '✅ Disetujui';
+                displayText = '<i class="fas fa-check-circle text-success"></i> Disetujui';
                 reasonText = trackerData?.lastReason || 'Formulir disetujui oleh admin Silahkan Lihat Nomor Registrasi dan Virtual Account Anda di bagian Hasil Akhir';
                 badgeClass = 'validation-approved';
                 icon = '<i class="fas fa-check-circle"></i>';
                 
-                // ✅ Show success message in validation results section
+                // <i class="fas fa-check-circle text-success"></i> Show success message in validation results section
                 showValidationSuccess(reasonText);
                 
-                // ✅ NEW: Update "Langkah Berikutnya" to show Re-enrollment as next step
+                // <i class="fas fa-check-circle text-success"></i> NEW: Update "Langkah Berikutnya" to show Re-enrollment as next step
                 updateNextStepForReEnrollment();
                 
-                // ✅ NEW: Show Hasil Akhir (Virtual Account & Nomor Registrasi)
+                // <i class="fas fa-check-circle text-success"></i> NEW: Show Hasil Akhir (Virtual Account & Nomor Registrasi)
                 unlockHasilAkhir();
             } else if (validationStatus === 'DITOLAK') {
-                displayText = '❌ Ditolak';
+                displayText = '<i class="fas fa-times-circle text-danger"></i> Ditolak';
                 reasonText = trackerData?.lastReason || 'Formulir tidak memenuhi syarat';
                 badgeClass = 'validation-rejected';
                 icon = '<i class="fas fa-times-circle"></i>';
                 
-                // ✅ NEW: Mark as rejected with additional contact info
+                // <i class="fas fa-check-circle text-success"></i> NEW: Mark as rejected with additional contact info
                 markAsRejected(reasonText);
             } else if (validationStatus === 'REVISI') {
-                displayText = '📝 Revisi Diperlukan';
+                displayText = '<i class="fas fa-edit"></i> Revisi Diperlukan';
                 reasonText = trackerData?.lastReason || 'Mohon perbaiki dan kirim ulang data Anda';
                 badgeClass = 'validation-revision';
                 icon = '<i class="fas fa-edit"></i>';
                 
-                // ✅ NEW: Mark as revision needed with button to edit form
+                // <i class="fas fa-check-circle text-success"></i> NEW: Mark as revision needed with button to edit form
                 markAsRevisionNeeded(reasonText, trackerData?.revisionNumber || 1);
             } else if (validationStatus === 'MENUNGGU') {
-                displayText = '⏳ Menunggu Validasi';
+                displayText = '<i class="fas fa-hourglass-half"></i> Menunggu Validasi';
                 reasonText = trackerData?.lastReason || 'Pembayaran terverifikasi. Menunggu validasi admin';
                 badgeClass = 'validation-pending';
                 icon = '<i class="fas fa-hourglass-half"></i>';
                 
-                // ✅ NEW: Lock daftar-ulang while waiting
+                // <i class="fas fa-check-circle text-success"></i> NEW: Lock daftar-ulang while waiting
                 lockDaftarUlang();
                 
                 // Hide validation results section for pending status
@@ -2465,12 +2465,12 @@
                 if (resultSection) resultSection.style.display = 'none';
             } else if (validationStatus === 'NOT_STARTED') {
                 // Initial state - form not yet submitted
-                displayText = '⏸️ Belum Meminta Validasi';
+                displayText = '<i class="fas fa-pause-circle"></i> Belum Meminta Validasi';
                 reasonText = '';
                 badgeClass = 'validation-not-requested';
                 icon = '<i class="fas fa-pause-circle"></i>';
                 
-                // ✅ NEW: Lock daftar-ulang initially
+                // <i class="fas fa-check-circle text-success"></i> NEW: Lock daftar-ulang initially
                 lockDaftarUlang();
                 
                 // Hide validation results section for not started status
@@ -2488,7 +2488,7 @@
             badge.className = `validation-badge ${badgeClass}`;
             badge.innerHTML = displayText;
             
-            // ✅ NEW: Update validation status section (below gelombang display)
+            // <i class="fas fa-check-circle text-success"></i> NEW: Update validation status section (below gelombang display)
             const validationStatusSection = document.getElementById('validationStatusSection');
             const validationStatusIcon = document.getElementById('validationStatusIcon');
             const validationStatusMessage = document.getElementById('validationStatusMessage');
@@ -2503,25 +2503,25 @@
                 if (validationStatus === 'DIVALIDASI') {
                     sectionBg = '#e8f5e9';
                     sectionBorder = '#4caf50';
-                    statusMsg = '✅ Status Divalidasi: Formulir Anda telah disetujui oleh admin!';
+                    statusMsg = '<i class="fas fa-check-circle text-success"></i> Status Divalidasi: Formulir Anda telah disetujui oleh admin!';
                     statusIcon = '<i class="fas fa-check-circle"></i>';
                     validationStatusSection.style.display = 'block';
                 } else if (validationStatus === 'DITOLAK') {
                     sectionBg = '#ffebee';
                     sectionBorder = '#f44336';
-                    statusMsg = '❌ Status Ditolak : Ditolak Total oleh Admin tanpa Revisi , Silahkan Hubungi Admin untuk informasi lebih lanjut';
+                    statusMsg = '<i class="fas fa-times-circle text-danger"></i> Status Ditolak : Ditolak Total oleh Admin tanpa Revisi , Silahkan Hubungi Admin untuk informasi lebih lanjut';
                     statusIcon = '<i class="fas fa-times-circle"></i>';
                     validationStatusSection.style.display = 'block';
                 } else if (validationStatus === 'REVISI') {
                     sectionBg = '#fff3e0';
                     sectionBorder = '#ff9800';
-                    statusMsg = '📝 Revisi Diperlukan: Silakan perbaiki file sesuai catatan admin';
+                    statusMsg = '<i class="fas fa-edit"></i> Revisi Diperlukan: Silakan perbaiki file sesuai catatan admin';
                     statusIcon = '<i class="fas fa-edit"></i>';
                     validationStatusSection.style.display = 'block';
                 } else if (validationStatus === 'MENUNGGU') {
                     sectionBg = '#f3e5f5';
                     sectionBorder = '#9c27b0';
-                    statusMsg = '⏳ Menunggu Validasi: Admin sedang memeriksa formulir Anda';
+                    statusMsg = '<i class="fas fa-hourglass-half"></i> Menunggu Validasi: Admin sedang memeriksa formulir Anda';
                     statusIcon = '<i class="fas fa-hourglass-half"></i>';
                     validationStatusSection.style.display = 'block';
                 } else if (validationStatus === 'NOT_STARTED') {
@@ -2545,7 +2545,7 @@
             console.log('✅ Validation status displayed:', validationStatus, 'Reason:', reasonText);
         }
 
-        // ✅ NEW: Unlock daftar-ulang when validation DIVALIDASI
+        // <i class="fas fa-check-circle text-success"></i> NEW: Unlock daftar-ulang when validation DIVALIDASI
         function unlockDaftarUlang() {
             const daftarUlangItem = document.getElementById('daftar-ulang-item');
             const verikasiItem = document.getElementById('verifikasi-item');
@@ -2564,7 +2564,7 @@
                     daftarUlangBadge.innerHTML = '<i class="fas fa-unlock"></i> Siap Diakses';
                 }
                 
-                // ✅ NEW: Show VIEW and EDIT action buttons
+                // <i class="fas fa-check-circle text-success"></i> NEW: Show VIEW and EDIT action buttons
                 const daftarUlangActionsBtn = document.getElementById('daftar-ulang-actions');
                 if (daftarUlangActionsBtn) {
                     daftarUlangActionsBtn.style.display = 'flex';
@@ -2583,7 +2583,7 @@
             }
         }
 
-        // ✅ NEW: Lock daftar-ulang when validation is not DIVALIDASI
+        // <i class="fas fa-check-circle text-success"></i> NEW: Lock daftar-ulang when validation is not DIVALIDASI
         function lockDaftarUlang() {
             const daftarUlangItem = document.getElementById('daftar-ulang-item');
             const verikasiItem = document.getElementById('verifikasi-item');
@@ -2602,7 +2602,7 @@
                     daftarUlangBadge.innerHTML = '<i class="fas fa-lock"></i> Belum Bisa Diakses';
                 }
                 
-                // ✅ NEW: Hide VIEW and EDIT action buttons
+                // <i class="fas fa-check-circle text-success"></i> NEW: Hide VIEW and EDIT action buttons
                 const daftarUlangActionsBtn = document.getElementById('daftar-ulang-actions');
                 if (daftarUlangActionsBtn) {
                     daftarUlangActionsBtn.style.display = 'none';
@@ -2612,7 +2612,7 @@
             }
         }
 
-        // ✅ NEW: Update "Langkah Berikutnya" to show re-enrollment button when validation approved
+        // <i class="fas fa-check-circle text-success"></i> NEW: Update "Langkah Berikutnya" to show re-enrollment button when validation approved
         function updateNextStepForReEnrollment() {
             const statusTitle = document.getElementById('current-status-title');
             const statusValue = document.getElementById('current-status-value');
@@ -2620,11 +2620,11 @@
             
             if (statusTitle) statusTitle.textContent = 'Langkah Berikutnya';
             
-            // ✅ NEW: Show congratulations message when approved (selesai)
+            // <i class="fas fa-check-circle text-success"></i> NEW: Show congratulations message when approved (selesai)
             if (statusValue) {
                 statusValue.innerHTML = `
                     <div style="text-align: center; padding: 10px 0;">
-                        <div style="font-size: 28px; margin-bottom: 10px;">🎉</div>
+                        <div style="font-size: 28px; margin-bottom: 10px;"><i class="fas fa-gift"></i></div>
                         <div style="font-weight: 600; font-size: 16px; color: #28a745; margin-bottom: 8px;">
                             Selamat! Pendaftaran Anda Diterima
                         </div>
@@ -2638,7 +2638,7 @@
                 `;
             }
             
-            // ✅ NEW: Hide action buttons when approved (selesai = done)
+            // <i class="fas fa-check-circle text-success"></i> NEW: Hide action buttons when approved (selesai = done)
             if (actionButtons) {
                 actionButtons.innerHTML = '';
             }
@@ -2646,7 +2646,7 @@
             console.log('✅ Status updated: Pendaftaran selesai & diterima');
         }
 
-        // ✅ NEW: Show validation success message in results section
+        // <i class="fas fa-check-circle text-success"></i> NEW: Show validation success message in results section
         function showValidationSuccess(approvalReason) {
             const resultSection = document.getElementById('validationResultsSection');
             const resultContent = document.getElementById('validationResultsContent');
@@ -2677,7 +2677,7 @@
                         <i class="fas fa-check-circle"></i> Berhasil di Validasi
                     </div>
                     <div style="margin-bottom: 10px; padding: 10px; background: #e8f5e9; border-radius: 3px;">
-                        ✅ Formulir Anda telah disetujui oleh admin
+                        <i class="fas fa-check-circle text-success"></i> Formulir Anda telah disetujui oleh admin
                     </div>
                     <div style="border-top: 1px solid #c3e6cb; padding-top: 10px;">
                         <div style="font-weight: 600; margin-bottom: 8px;">
@@ -2694,7 +2694,7 @@
             }
         }
 
-        // ✅ NEW: Mark as rejected with rejection reason and contact info
+        // <i class="fas fa-check-circle text-success"></i> NEW: Mark as rejected with rejection reason and contact info
         function markAsRejected(rejectionReason) {
             const verikasiItem = document.getElementById('verifikasi-item');
             const validationStatusBadge = document.getElementById('validationStatusBadge');
@@ -2753,7 +2753,7 @@
                         <i class="fas fa-times-circle"></i> Alasan Penolakan
                     </div>
                     <div style="margin-bottom: 12px; padding: 10px; background: #fff0f0; border-radius: 3px;">
-                        📋 ${rejectionReason || 'Formulir tidak memenuhi syarat'}
+                        <i class="fas fa-clipboard-list"></i> ${rejectionReason || 'Formulir tidak memenuhi syarat'}
                     </div>
                     <div style="border-top: 1px solid #f5c6c6; padding-top: 10px;">
                         <div style="font-weight: 600; margin-bottom: 8px;">
@@ -2772,7 +2772,7 @@
             }
         }
 
-        // ✅ NEW: Mark as revision needed with button to edit form
+        // <i class="fas fa-check-circle text-success"></i> NEW: Mark as revision needed with button to edit form
         function markAsRevisionNeeded(revisionReason, revisionNumber) {
             const verikasiItem = document.getElementById('verifikasi-item');
             const validationStatusBadge = document.getElementById('validationStatusBadge');
@@ -2826,18 +2826,18 @@
                     line-height: 1.6;
                 `;
                 
-                // ✅ Check if revision reason contains file-related keywords
+                // <i class="fas fa-check-circle text-success"></i> Check if revision reason contains file-related keywords
                 const requiresDirectMeeting = /cicilan|formulir|ujian|bukti|pembayaran|payment|evidence/gi.test(revisionReason);
                 const directMeetingWarning = requiresDirectMeeting ? `
                     <div style="margin-top: 15px; padding: 12px; background: #ffebee; border-left: 4px solid #d32f2f; border-radius: 3px;">
                         <div style="font-weight: 700; color: #c62828; margin-bottom: 8px; font-size: 14px;">
-                            <i class="fas fa-exclamation-circle"></i> ⚠️ PERHATIAN PENTING!
+                            <i class="fas fa-exclamation-circle"></i> <i class="fas fa-exclamation-triangle text-warning"></i> PERHATIAN PENTING!
                         </div>
                         <p style="margin: 5px 0; color: #d32f2f; font-size: 13px;">
                             Perbaikan revisi pada <strong>bukti cicilan, bukti pembelian formulir, atau bukti ujian</strong> harus dilakukan dengan <strong>bertemu langsung</strong> ke:
                         </p>
                         <p style="margin: 8px 0; color: #d32f2f; font-size: 13px; font-weight: 600;">
-                            📍 VALIDASI DOKUMEN - Gedung PSI
+                            <i class="fas fa-map-marker-alt"></i> VALIDASI DOKUMEN - Gedung PSI
                         </p>
                         <p style="margin: 5px 0; color: #d32f2f; font-size: 12px;">
                             Silakan perhatikan jadwal operasional yang tersedia dan bawa dokumen asli beserta bukti pembayaran/ujian yang diperlukan.
@@ -2851,15 +2851,15 @@
                             <i class="fas fa-exclamation-triangle"></i> Alasan Revisi
                         </div>
                         <div style="margin-bottom: 15px; padding: 10px; background: #fffde7; border-radius: 3px;">
-                            📝 ${revisionReason || 'Mohon perbaiki dan kirim ulang data Anda'}
+                            <i class="fas fa-edit"></i> ${revisionReason || 'Mohon perbaiki dan kirim ulang data Anda'}
                         </div>
                     </div>
                     
                        <div style="font-size: 16px; font-weight: 700; color: #c2185b; margin-bottom: 8px;">
-                            🔴 REVISI KE: <span style="font-size: 24px; color: #e91e63;">${revisionNumber || 1}</span>
+                            <i class="fas fa-circle text-danger" style="font-size:0.6em"></i> REVISI KE: <span style="font-size: 24px; color: #e91e63;">${revisionNumber || 1}</span>
                         </div>
                         <p style="margin: 0; color: #c2185b; font-size: 12px; font-weight: 600;">
-                            ⚠️ <strong>! PENTING:</strong> Mahasiswa diharapkan mencatat penomoran revisi ini agar mengetahui bahwa terjadi permintaan revisi kembali.
+                            <i class="fas fa-exclamation-triangle text-warning"></i> <strong>! PENTING:</strong> Mahasiswa diharapkan mencatat penomoran revisi ini agar mengetahui bahwa terjadi permintaan revisi kembali.
                         </p>
                   
                     
@@ -2868,7 +2868,7 @@
                             <i class="fas fa-info-circle"></i> Catatan Penting
                         </div>
                         <p style="margin: 5px 0; color: #7f5a1f; font-size: 13px;">
-                            ✅ <strong>Pembayaran Anda sudah terverifikasi</strong> - Anda tidak perlu membayar lagi
+                            <i class="fas fa-check-circle text-success"></i> <strong>Pembayaran Anda sudah terverifikasi</strong> - Anda tidak perlu membayar lagi
                         </p>
                         <p style="margin: 8px 0; font-size: 13px;">Silakan klik tombol di bawah untuk merevisi formulir pendaftaran Anda:</p>
                         ${directMeetingWarning}
@@ -2897,7 +2897,7 @@
             }
         }
 
-        // ✅ NEW: Show separate REVISION FORM MODAL
+        // <i class="fas fa-check-circle text-success"></i> NEW: Show separate REVISION FORM MODAL
         async function showRevisionFormModal(formData) {
             if (!formData) formData = {};
             
@@ -3213,7 +3213,7 @@
                     console.warn('⚠️ No formId found in response, cannot update status');
                 }
                 
-                // ✅ NEW: Hide modal first
+                // <i class="fas fa-check-circle text-success"></i> NEW: Hide modal first
                 const modalElement = document.getElementById('revisionFormModal');
                 if (modalElement) {
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
@@ -3222,17 +3222,17 @@
                     }
                 }
                 
-                // ✅ NEW: Show alert with appropriate message
+                // <i class="fas fa-check-circle text-success"></i> NEW: Show alert with appropriate message
                 if (statusUpdateSuccess) {
                     alert('✓ Revisi formulir berhasil disimpan!\n\nStatus perbaikan telah berubah menjadi "Sudah Perbaikan". Admin akan melakukan validasi ulang pada formulir Anda.');
                 } else {
                     alert('✓ Revisi formulir berhasil disimpan!\n\nNamun notifikasi perubahan status belum terkirim. Silakan tunggu atau refresh halaman untuk melihat status terbaru.');
                 }
                 
-                // ✅ NEW: Show completion message below revision button
+                // <i class="fas fa-check-circle text-success"></i> NEW: Show completion message below revision button
                 showRevisionCompletionMessage();
                 
-                // ✅ NEW: Refresh validation status after a short delay
+                // <i class="fas fa-check-circle text-success"></i> NEW: Refresh validation status after a short delay
                 setTimeout(() => {
                     console.log('🔄 Refreshing validation status after revision submission...');
                     loadValidationStatus();
@@ -3244,7 +3244,7 @@
             }
         }
 
-        // ✅ NEW: Show revision completion message below the revision button
+        // <i class="fas fa-check-circle text-success"></i> NEW: Show revision completion message below the revision button
         function showRevisionCompletionMessage() {
             console.log('🔔 showRevisionCompletionMessage() CALLED - Creating notification...');
             
@@ -3290,7 +3290,7 @@
                 box-shadow: 0 4px 20px rgba(0,0,0,0.25);
             `;
             
-            // ✅ Display the completion message with strong styling
+            // <i class="fas fa-check-circle text-success"></i> Display the completion message with strong styling
             messageContainer.innerHTML = `
                 <div style="text-align: center; margin-bottom: 15px;">
                     <i class="fas fa-check-circle" style="color: #4caf50; font-size: 40px; display: block; margin-bottom: 10px;"></i>
@@ -3299,7 +3299,7 @@
                 <div style="font-size: 14px; line-height: 1.8; text-align: center; margin-bottom: 15px;">
                     <div style="margin-bottom: 8px;">✓ Anda sudah menyelesaikan revisi</div>
                     <div style="margin-bottom: 8px;">✓ Status revisi = <strong>Sudah Di Perbaiki</strong></div>
-                    <div style="color: #f57c00; font-weight: bold;">⏳ Tunggu admin menyelesaikan validasi ulang</div>
+                    <div style="color: #f57c00; font-weight: bold;"><i class="fas fa-hourglass-half"></i> Tunggu admin menyelesaikan validasi ulang</div>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
                     <button onclick="closeRevisionCompletionMessage();" style="
@@ -3339,7 +3339,7 @@
             }, 15000);
         }
 
-        // ✅ NEW: Close revision completion message
+        // <i class="fas fa-check-circle text-success"></i> NEW: Close revision completion message
         function closeRevisionCompletionMessage() {
             const messageContainer = document.getElementById('revisionCompletionMessage');
             const overlay = document.getElementById('revisionCompletionOverlay');
@@ -3447,7 +3447,7 @@
             goToRevisiForm();
         }
 
-        // ✅ NEW: Open "Selesai Revisi" confirmation modal
+        // <i class="fas fa-check-circle text-success"></i> NEW: Open "Selesai Revisi" confirmation modal
         function openSelesaiRevisiModal() {
             const confirmDialog = document.createElement('div');
             confirmDialog.style.cssText = `
@@ -3534,7 +3534,7 @@
             if (dialog) dialog.remove();
         }
 
-        // ✅ NEW: Proceed with marking revision as complete
+        // <i class="fas fa-check-circle text-success"></i> NEW: Proceed with marking revision as complete
         async function proceedSelesaiRevisi() {
             try {
                 closeSelesaiRevisiDialog();
@@ -3543,7 +3543,7 @@
                 
                 const authToken = getAuthToken();
                 if (!authToken) {
-                    alert('❌ Sesi Anda telah berakhir. Silakan login kembali.');
+ alert(' Sesi Anda telah berakhir. Silakan login kembali.');
                     return;
                 }
                 
@@ -3553,7 +3553,7 @@
                 });
                 
                 if (!profileRes.ok) {
-                    alert('❌ Gagal mengambil data profil');
+ alert(' Gagal mengambil data profil');
                     return;
                 }
                 
@@ -3562,18 +3562,18 @@
                 const studentId = student?.id || student?.studentId;
                 
                 if (!studentId) {
-                    alert('❌ Student ID tidak ditemukan');
+ alert(' Student ID tidak ditemukan');
                     return;
                 }
                 
                 console.log('📝 Calling API to set repairStatus to SUDAH_PERBAIKAN for studentId:', studentId);
                 
-                // ✅ Log repairStatus value
+                // <i class="fas fa-check-circle text-success"></i> Log repairStatus value
                 const repairStatus = 'SUDAH_PERBAIKAN';
                 console.log('🔧 repairStatus VALUE:', repairStatus);
                 console.log('🔧 repairStatus Type:', typeof repairStatus);
                 
-                // ✅ Call API to update repair status
+                // <i class="fas fa-check-circle text-success"></i> Call API to update repair status
                 const updateRes = await fetch(`/admin/api/form-validations/student/${studentId}/repair-status`, {
                     method: 'PUT',
                     headers: { 
@@ -3588,7 +3588,7 @@
                 console.log('✅ repairStatus telah dikirim ke endpoint:', updateRes.url || `/admin/api/form-validations/student/${studentId}/repair-status`);
                 
                 if (!updateRes.ok) {
-                    // ✅ FIX: Check if response has valid JSON before parsing
+                    // <i class="fas fa-check-circle text-success"></i> FIX: Check if response has valid JSON before parsing
                     let errorData = null;
                     try {
                         const contentType = updateRes.headers.get('content-type');
@@ -3602,9 +3602,9 @@
                     } catch (parseError) {
                         console.warn('⚠️ Could not parse error response:', parseError.message);
                     }
-                    alert('⚠️ Berhasil menandai selesai, tapi update status gagal. Silakan refresh halaman.');
+ alert(' Berhasil menandai selesai, tapi update status gagal. Silakan refresh halaman.');
                 } else {
-                    // ✅ NEW: Log successful response body
+                    // <i class="fas fa-check-circle text-success"></i> NEW: Log successful response body
                     try {
                         const contentType = updateRes.headers.get('content-type');
                         if (contentType && contentType.includes('application/json')) {
@@ -3620,14 +3620,14 @@
                     }
                 }
                 
-                alert('✅ Revisi berhasil ditandai selesai!\\n\\nStatus perbaikan telah berubah menjadi "Sudah Perbaikan". Admin akan melakukan validasi ulang pada formulir Anda.');
+ alert(' Revisi berhasil ditandai selesai!\\n\\nStatus perbaikan telah berubah menjadi "Sudah Perbaikan". Admin akan melakukan validasi ulang pada formulir Anda.');
                 
                 // Refresh validation status
                 await loadValidationStatus();
                 
             } catch (error) {
                 console.error('❌ Error marking revision complete:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -3644,7 +3644,7 @@
                 });
                 if (!res.ok) throw new Error('Gagal memuat data');
                 const result = await res.json();
-                // ✅ CHANGED: Open REVISION modal (separate from edit modal)
+                // <i class="fas fa-check-circle text-success"></i> CHANGED: Open REVISION modal (separate from edit modal)
                 await showRevisionFormModal(result.data);
                 console.log('✅ Form revision modal opened');
             } catch (e) {
@@ -3783,7 +3783,7 @@
         async function showViewFormModal(formData) {
             if (!formData) formData = {};
             
-            // ✅ Resolve program studi IDs to names before displaying
+            // <i class="fas fa-check-circle text-success"></i> Resolve program studi IDs to names before displaying
             if (formData.jenisSeleksiId && formData.jenisSeleksiId !== '-') {
                 formData.programStudi1 = await getProgramStudiName(formData.programStudi1, formData.jenisSeleksiId);
                 formData.programStudi2 = await getProgramStudiName(formData.programStudi2, formData.jenisSeleksiId);
@@ -3984,7 +3984,7 @@
                 return;
             }
             
-            // ✅ Try MULTIPLE SOURCES for selectionTypeId (SAME PATTERN AS form-pendaftaran.html)
+            // <i class="fas fa-check-circle text-success"></i> Try MULTIPLE SOURCES for selectionTypeId (SAME PATTERN AS form-pendaftaran.html)
             let selectionTypeId = formData.selectionTypeId;
             
             // Fallback 1: Try localStorage (set by formula selection or edit mode)
@@ -4013,7 +4013,7 @@
             console.log(`🔍 Loading program studi for selectionTypeId: ${selectionTypeId}`);
             
             try {
-                // ✅ Fetch from backend API - SAME PATTERN AS form-pendaftaran.html
+                // <i class="fas fa-check-circle text-success"></i> Fetch from backend API - SAME PATTERN AS form-pendaftaran.html
                 const authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
                 console.log('📡 Calling API: /api/camaba/jenis-seleksi/' + selectionTypeId + '/program-studi');
                 
@@ -4033,7 +4033,7 @@
                 const linkedPrograms = await response.json();
                 console.log(`✅ Fetched ${linkedPrograms.length} linked programs:`, linkedPrograms);
                 
-                // ✅ PERSIST to sessionStorage like form-pendaftaran.html does
+                // <i class="fas fa-check-circle text-success"></i> PERSIST to sessionStorage like form-pendaftaran.html does
                 try {
                     sessionStorage.setItem('linkedProgramStudiList', JSON.stringify(linkedPrograms));
                     console.log('✓ Saved ' + linkedPrograms.length + ' LINKED programs to sessionStorage');
@@ -4041,7 +4041,7 @@
                     console.log('⚠️ Could not save to sessionStorage: ' + e.message);
                 }
                 
-                // ✅ Populate the dropdowns using same function pattern
+                // <i class="fas fa-check-circle text-success"></i> Populate the dropdowns using same function pattern
                 await new Promise(resolve => {
                     setTimeout(() => {
                         populateEditProgramStudiSelects(linkedPrograms, formData);
@@ -4054,7 +4054,7 @@
             }
         }
         
-        // ✅ NEW: Populate edit form program selects - SAME PATTERN AS form-pendaftaran.html
+        // <i class="fas fa-check-circle text-success"></i> NEW: Populate edit form program selects - SAME PATTERN AS form-pendaftaran.html
         function populateEditProgramStudiSelects(programs, formData) {
             console.log('========== POPULATING EDIT PROGRAM STUDI SELECT BOXES ==========');
             
@@ -4112,7 +4112,7 @@
             const student = formData.student || {};
             const user = student.user || {};
             
-            // ✅ FIXED: Build HTML properly with construct helper function
+            // <i class="fas fa-check-circle text-success"></i> FIXED: Build HTML properly with construct helper function
             const buildOption = (value, displayText, selectedValue, isSelected) => {
                 const selected = selectedValue === value ? 'selected' : '';
                 return `<option value="${value}" ${selected}>${displayText}</option>`;
@@ -4510,7 +4510,7 @@
         // ===== SUBMIT EDIT FORM - COMPREHENSIVE =====
         async function submitEditForm() {
             try {
-                // ✅ Get from sessionStorage first (per-tab), fallback to localStorage
+                // <i class="fas fa-check-circle text-success"></i> Get from sessionStorage first (per-tab), fallback to localStorage
                 const authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
                 const formData = new FormData();
 
@@ -4616,7 +4616,7 @@
 
                 console.log(`📤 Collected ${collectCount} text fields + file uploads, sending to /api/camaba/admission-form...`);
                 
-                // ✅ GET FRESH AUTH TOKEN
+                // <i class="fas fa-check-circle text-success"></i> GET FRESH AUTH TOKEN
                 const currentAuthToken = getAuthToken();
                 if (!currentAuthToken) {
                     throw new Error('Sesi Anda telah berakhir. Silakan login kembali.');
@@ -4648,7 +4648,7 @@
 
             } catch (error) {
                 console.error('❌ Error submitting form:', error);
-                alert('❌ Gagal menyimpan: ' + error.message);
+ alert(' Gagal menyimpan: ' + error.message);
             }
         }
 
@@ -4751,7 +4751,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                             <div>
                                 <h5 style="color: var(--primary); margin: 0 0 10px 0; font-weight: 700;">
-                                    ${ann.priority >= 1 ? '🔴 ' : '📢 '} ${ann.title}
+                                    ${ann.priority >= 1 ? '<i class="fas fa-circle text-danger" style="font-size:0.6em"></i> ' : '<i class="fas fa-bullhorn"></i> '} ${ann.title}
                                 </h5>
                                 <p style="color: #666; margin: 0 0 10px 0; font-size: 14px;">
                                     ${ann.description || ann.content.substring(0, 100) + '...'}
@@ -4780,7 +4780,7 @@
         }
 
         function viewAnnouncementDetail(id, title, content, creator) {
-            alert(`📌 ${title}\n\n${content}\n\n---\nOleh: ${creator}`);
+ alert(` ${title}\n\n${content}\n\n---\nOleh: ${creator}`);
         }
 
         // ==================== MESSAGING SYSTEM ====================
@@ -4803,11 +4803,11 @@
                 warningDiv.style.cssText = 'background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 15px; color: #856404;';
                 warningDiv.innerHTML = `
                     <div style="display: flex; gap: 10px;">
-                        <div style="font-size: 20px;">⚠️</div>
+                        <div style="font-size: 20px;"><i class="fas fa-exclamation-triangle text-warning"></i></div>
                         <div>
                             <strong>Perhatian!</strong><br>
                             Pesan kemungkinan lama akan dibalas. Jika Anda terburu-buru, silahkan hubungi:<br>
-                            <strong style="color: #1a472a; font-size: 14px;">📱 +62 798 3872 4679</strong>
+                            <strong style="color: #1a472a; font-size: 14px;"><i class="fas fa-mobile-alt"></i> +62 798 3872 4679</strong>
                         </div>
                     </div>
                 `;
@@ -4927,7 +4927,7 @@
             const messageInputValue = messageInput.value;
             const content = messageInputValue.trim();
 
-            // 🔍 DEBUG: Log nilai input
+            // <i class="fas fa-search"></i> DEBUG: Log nilai input
             console.log('🔍 DEBUG sendMessage:');
             console.log('  messageInput element:', messageInput);
             console.log('  Raw value:', messageInputValue);
@@ -4939,7 +4939,7 @@
             if (!content || content.length < 5) {
                 const statusDiv = document.getElementById('messageStatus');
                 const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = '⚠️ Pesan minimal 5 karakter (Anda ketik: ' + content.length + ' karakter)';
+                statusMessage.textContent = '<i class="fas fa-exclamation-triangle text-warning"></i> Pesan minimal 5 karakter (Anda ketik: ' + content.length + ' karakter)';
                 statusMessage.className = 'alert alert-warning';
                 statusDiv.style.display = 'block';
                 console.log('❌ Validasi gagal: pesan kurang dari 5 karakter');
@@ -4984,7 +4984,7 @@
                     // Show success message
                     const statusDiv = document.getElementById('messageStatus');
                     const statusMessage = document.getElementById('statusMessage');
-                    statusMessage.textContent = '✅ Pesan berhasil dikirim! Admin akan merespons dalam waktu singkat.';
+                    statusMessage.textContent = '<i class="fas fa-check-circle text-success"></i> Pesan berhasil dikirim! Admin akan merespons dalam waktu singkat.';
                     statusMessage.className = 'alert alert-success';
                     statusDiv.style.display = 'block';
                     
@@ -5006,7 +5006,7 @@
                 } else {
                     const statusDiv = document.getElementById('messageStatus');
                     const statusMessage = document.getElementById('statusMessage');
-                    statusMessage.textContent = '❌ Gagal mengirim pesan: ' + (responseData.message || 'Silahkan coba lagi');
+                    statusMessage.textContent = '<i class="fas fa-times-circle text-danger"></i> Gagal mengirim pesan: ' + (responseData.message || 'Silahkan coba lagi');
                     statusMessage.className = 'alert alert-danger';
                     statusDiv.style.display = 'block';
                     console.log('❌ Error response:', responseData);
@@ -5015,7 +5015,7 @@
                 console.error('❌ Error sending message:', error);
                 const statusDiv = document.getElementById('messageStatus');
                 const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = '❌ Error: ' + error.message;
+                statusMessage.textContent = '<i class="fas fa-times-circle text-danger"></i> Error: ' + error.message;
                 statusMessage.className = 'alert alert-danger';
                 statusDiv.style.display = 'block';
             } finally {
@@ -5053,9 +5053,9 @@
                 // Kontak info (editable)
                 if (settings.email_support || settings.whatsapp_admin) {
                     footerHTML += `<div style="margin-bottom: 15px;">
-                        ${settings.email_support ? `📧 <a href="mailto:${settings.email_support}" style="color: white; text-decoration: underline;">${settings.email_support}</a><br>` : ''}
-                        📞 (061) 8201920<br>
-                        ${settings.whatsapp_admin ? `💬 <a href="https://wa.me/${settings.whatsapp_admin}" target="_blank" style="color: white; text-decoration: underline;">WhatsApp</a>` : ''}
+                        ${settings.email_support ? `<i class="fas fa-envelope"></i> <a href="mailto:${settings.email_support}" style="color: white; text-decoration: underline;">${settings.email_support}</a><br>` : ''}
+                        <i class="fas fa-phone"></i> (061) 8201920<br>
+                        ${settings.whatsapp_admin ? `<i class="fas fa-comments"></i> <a href="https://wa.me/${settings.whatsapp_admin}" target="_blank" style="color: white; text-decoration: underline;">WhatsApp</a>` : ''}
                     </div>`;
                 }
 
@@ -5072,9 +5072,9 @@
                 // Social media (editable)
                 if (settings.facebook_url || settings.instagram_handle || settings.website_url) {
                     footerHTML += `<div style="margin-bottom: 15px;">
-                        ${settings.website_url ? `🌐 <a href="${settings.website_url}" target="_blank" style="color: white; text-decoration: underline;">Website</a> | ` : ''}
+                        ${settings.website_url ? `<i class="fas fa-globe"></i> <a href="${settings.website_url}" target="_blank" style="color: white; text-decoration: underline;">Website</a> | ` : ''}
                         ${settings.facebook_url ? `f <a href="${settings.facebook_url}" target="_blank" style="color: white; text-decoration: underline;">Facebook</a> | ` : ''}
-                        ${settings.instagram_handle ? `📷 <a href="https://instagram.com/${settings.instagram_handle}" target="_blank" style="color: white; text-decoration: underline;">Instagram</a>` : ''}
+                        ${settings.instagram_handle ? `<i class="fas fa-camera"></i> <a href="https://instagram.com/${settings.instagram_handle}" target="_blank" style="color: white; text-decoration: underline;">Instagram</a>` : ''}
                     </div>`;
                 }
 
@@ -5087,7 +5087,7 @@
             }
         }
 
-        // ✅ CUSTOMER SERVICE BUTTON EVENT LISTENER - REMOVED (use onClick instead)
+        // <i class="fas fa-check-circle text-success"></i> CUSTOMER SERVICE BUTTON EVENT LISTENER - REMOVED (use onClick instead)
         // Now uses direct openMessagingModal() onclick in button
 
         // Load footer settings on page load
@@ -5095,7 +5095,7 @@
             loadFooterSettings();
         });
 
-        // ✅ NEW: Unlock dan tampilkan Hasil Akhir (Virtual Account & Nomor Registrasi) - Enable saat DIVALIDASI
+        // <i class="fas fa-check-circle text-success"></i> NEW: Unlock dan tampilkan Hasil Akhir (Virtual Account & Nomor Registrasi) - Enable saat DIVALIDASI
         function unlockHasilAkhir() {
             const hasilAkhirItem = document.getElementById('hasil-akhir-item');
             const viewButton = document.getElementById('btn-view-hasil');
@@ -5142,7 +5142,7 @@
             console.log('✅ Hasil Akhir UNLOCKED - Virtual Account & Nomor Registrasi dapat diakses');
         }
 
-        // ✅ NEW: View Hasil Akhir (Virtual Account BRIVA & Nomor Registrasi) - Fetch from database tables
+        // <i class="fas fa-check-circle text-success"></i> NEW: View Hasil Akhir (Virtual Account BRIVA & Nomor Registrasi) - Fetch from database tables
         async function viewHasilAkhir() {
             try {
                 console.log('👁️ viewHasilAkhir() called - Loading Hasil Akhir from database tables...');
@@ -5150,16 +5150,16 @@
                 const authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
                 
                 if (!authToken) {
-                    alert('❌ Auth token not found. Silakan login ulang.');
+ alert(' Auth token not found. Silakan login ulang.');
                     return;
                 }
                 
                 let virtualAccount = 'Tidak ditemukan';
                 let nomorRegistrasi = 'Tidak ditemukan';
-                let cicilanStatus = '⚠️ Tidak ada data cicilan';
-                let reenrollmentStatus = '⚠️ Tidak ada data daftar ulang';
+                let cicilanStatus = '<i class="fas fa-exclamation-triangle text-warning"></i> Tidak ada data cicilan';
+                let reenrollmentStatus = '<i class="fas fa-exclamation-triangle text-warning"></i> Tidak ada data daftar ulang';
                 
-                // 📌 STEP 1: Fetch dari HASIL_AKHIR table via /api/camaba/hasil-akhir
+                // <i class="fas fa-thumbtack"></i> STEP 1: Fetch dari HASIL_AKHIR table via /api/camaba/hasil-akhir
                 try {
                     console.log('📌 Fetching data dari HASIL_AKHIR table (/api/camaba/hasil-akhir)');
                     const hasilAkhirRes = await fetch('/api/camaba/hasil-akhir', {
@@ -5182,7 +5182,7 @@
                             nomorRegistrasi = hasilAkhirData.nomorRegistrasi;
                         }
                         if (hasilAkhirData.status) {
-                            reenrollmentStatus = '✅ ' + hasilAkhirData.status;
+                            reenrollmentStatus = '<i class="fas fa-check-circle text-success"></i> ' + hasilAkhirData.status;
                         }
                     } else {
                         console.warn('⚠️ HasilAkhir API response status:', hasilAkhirRes.status);
@@ -5191,7 +5191,7 @@
                     console.warn('⚠️ Could not fetch hasil akhir data:', e.message);
                 }
                 
-                // 📌 STEP 2: Fetch dari CICILAN_REQUEST table via /api/cicilan/my-status
+                // <i class="fas fa-thumbtack"></i> STEP 2: Fetch dari CICILAN_REQUEST table via /api/cicilan/my-status
                 try {
                     console.log('📌 Fetching data dari CICILAN_REQUEST table (/api/cicilan/my-status)');
                     const cicilanRes = await fetch('/api/cicilan/my-status', {
@@ -5209,9 +5209,9 @@
                         // Extract BRIVA dari CICILAN_REQUEST table
                         if (cicilanData.briva) {
                             virtualAccount = cicilanData.briva;
-                            cicilanStatus = '✅ Cicilan ' + (cicilanData.status || 'PENDING');
+                            cicilanStatus = '<i class="fas fa-check-circle text-success"></i> Cicilan ' + (cicilanData.status || 'PENDING');
                         } else if (cicilanData.status) {
-                            cicilanStatus = '✅ Cicilan ' + cicilanData.status;
+                            cicilanStatus = '<i class="fas fa-check-circle text-success"></i> Cicilan ' + cicilanData.status;
                         }
                     } else {
                         console.warn('⚠️ Cicilan API response status:', cicilanRes.status);
@@ -5224,7 +5224,7 @@
                 console.log('  - Virtual Account (BRIVA):', virtualAccount);
                 console.log('  - Nomor Registrasi:', nomorRegistrasi);
                 
-                // 📌 STEP 3: Display modal dengan hasil akhir
+                // <i class="fas fa-thumbtack"></i> STEP 3: Display modal dengan hasil akhir
                 showHasilAkhirModal(virtualAccount, nomorRegistrasi, cicilanStatus, reenrollmentStatus);
                 
             } catch (error) {
@@ -5233,7 +5233,7 @@
             }
         }
 
-        // ✅ NEW: Show modal dengan hasil akhir (Virtual Account & Nomor Registrasi)
+        // <i class="fas fa-check-circle text-success"></i> NEW: Show modal dengan hasil akhir (Virtual Account & Nomor Registrasi)
         function showHasilAkhirModal(virtualAccount, nomorRegistrasi, cicilanStatus, reenrollmentStatus) {
             try {
                 console.log('🎬 Creating modal for hasil akhir...');
@@ -5327,13 +5327,13 @@
             }
         }
 
-        // ✅ NEW: Copy to clipboard helper
+        // <i class="fas fa-check-circle text-success"></i> NEW: Copy to clipboard helper
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                alert('✅ Berhasil disalin ke clipboard!');
+ alert(' Berhasil disalin ke clipboard!');
             }).catch(err => {
                 console.error('Gagal menyalin:', err);
-                alert('❌ Gagal menyalin. Silakan coba lagi.');
+ alert(' Gagal menyalin. Silakan coba lagi.');
             });
         }
 
@@ -5366,15 +5366,15 @@
             const formatDate = (date) => date ? new Date(date).toLocaleDateString('id-ID') : '-';
             const fieldRow = (label, value) => `
                 <div style="margin-bottom: 15px;">
-                    <small style="color: #999; display: block; margin-bottom: 5px; font-weight: 600;">📋 ${label}</small>
+                    <small style="color: #999; display: block; margin-bottom: 5px; font-weight: 600;"><i class="fas fa-clipboard-list"></i> ${label}</small>
                     <p style="margin: 0; font-weight: 500; color: #333; padding: 8px; background: #f9f9f9; border-radius: 4px;">${value || '—'}</p>
                 </div>
             `;
             
-            // ✅ NEW: Image gallery for documents (using data.documents directly from API)
+            // <i class="fas fa-check-circle text-success"></i> NEW: Image gallery for documents (using data.documents directly from API)
             const imageGallery = (documents) => {
                 if (!documents || Object.keys(documents).length === 0) {
-                    return `<p style="padding: 10px; background: #fff3cd; border-radius: 4px; color: #856404;">📁 Belum ada dokumen</p>`;
+                    return `<p style="padding: 10px; background: #fff3cd; border-radius: 4px; color: #856404;"><i class="fas fa-folder"></i> Belum ada dokumen</p>`;
                 }
                 
                 let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">';
@@ -5394,14 +5394,14 @@
                         'SKCK': 'SKCK'
                     }[docType] || docType;
                     
-                    // ✅ NORMALIZE FILE URL - Ensure proper path format
+                    // <i class="fas fa-check-circle text-success"></i> NORMALIZE FILE URL - Ensure proper path format
                     let fileUrl = filePath;
                     
                     if (fileUrl) {
                         // Remove any backslashes (Windows path separator)
                         fileUrl = fileUrl.replace(/\\\\/g, '/');
                         
-                        // ✅ Ensure path starts with /uploads/
+                        // <i class="fas fa-check-circle text-success"></i> Ensure path starts with /uploads/
                         if (fileUrl.includes('uploads')) {
                             // Extract the part starting from 'uploads'
                             const uploadsIndex = fileUrl.indexOf('uploads');
@@ -5430,7 +5430,7 @@
                 }
                 
                 if (!hasAnyFiles) {
-                    return `<p style="padding: 10px; background: #fff3cd; border-radius: 4px; color: #856404;">📁 Belum ada dokumen</p>`;
+                    return `<p style="padding: 10px; background: #fff3cd; border-radius: 4px; color: #856404;"><i class="fas fa-folder"></i> Belum ada dokumen</p>`;
                 }
                 
                 html += '</div>';
@@ -5566,24 +5566,24 @@
                 </div>
             `;
             
-            // ✅ NEW: Map database file columns to documents object
+            // <i class="fas fa-check-circle text-success"></i> NEW: Map database file columns to documents object
             const mapDatabaseToDocuments = (dataObj) => {
                 // Use documents object directly from API response
                 return dataObj.documents || {};
             };
             
-            // ✅ NEW: Document upload field generator
+            // <i class="fas fa-check-circle text-success"></i> NEW: Document upload field generator
             const documentField = (docType, docName, currentFilePath) => {
                 const fileId = `upload-${docType}`;
                 // API returns path like: /uploads/reenrollment/123/filename or uploads/reenrollment/123/filename
                 let fileUrl = currentFilePath;
                 
-                // ✅ ENSURE PROPER PATH FORMAT
+                // <i class="fas fa-check-circle text-success"></i> ENSURE PROPER PATH FORMAT
                 if (fileUrl) {
                     // Remove any backslashes (Windows path separator)
                     fileUrl = fileUrl.replace(/\\\\/g, '/');
                     
-                    // ✅ Ensure path starts with /uploads/
+                    // <i class="fas fa-check-circle text-success"></i> Ensure path starts with /uploads/
                     if (fileUrl.includes('uploads')) {
                         // Extract the part starting from 'uploads'
                         const uploadsIndex = fileUrl.indexOf('uploads');
@@ -5601,20 +5601,20 @@
                 return `
                     <div class="mb-3">
                         <label for="${fileId}" class="form-label" style="font-weight: 600; color: #333;">
-                            📄 ${docName}
+                            <i class="fas fa-file-alt"></i> ${docName}
                         </label>
                         ${fileUrl ? `
                             <div style="margin-bottom: 10px; padding: 8px; background: #e8f5e9; border-radius: 4px; font-size: 12px; color: #2e7d32;">
-                                ✅ File sudah ada - <a href="${fileUrl}" target="_blank" style="color: #1565c0;">Lihat File</a>
+                                <i class="fas fa-check-circle text-success"></i> File sudah ada - <a href="${fileUrl}" target="_blank" style="color: #1565c0;">Lihat File</a>
                             </div>
-                        ` : `<div style="margin-bottom: 10px; padding: 8px; background: #fff3cd; border-radius: 4px; font-size: 12px; color: #856404;">⏳ Belum ada file</div>`}
+                        ` : `<div style="margin-bottom: 10px; padding: 8px; background: #fff3cd; border-radius: 4px; font-size: 12px; color: #856404;"><i class="fas fa-hourglass-half"></i> Belum ada file</div>`}
                         <input type="file" class="form-control" id="${fileId}" accept=".pdf,.jpg,.jpeg,.png" style="cursor: pointer;" ${isReadonly ? 'disabled' : ''}>
                         <small style="color: #999; display: block; margin-top: 5px;">Format: JPG, PNG, PDF (Max 5MB)</small>
                     </div>
                 `;
             };
             
-            // ✅ Document types array
+            // <i class="fas fa-check-circle text-success"></i> Document types array
             const DOCUMENT_TYPES = [
                 { type: 'PAKTA_INTEGRITAS', name: 'Pakta Integritas' },
                 { type: 'IJAZAH', name: 'Ijazah' },
@@ -5691,7 +5691,7 @@
                                             <i class="fas fa-file-upload"></i> Edit Dokumen & Foto
                                         </h6>
                                         <div style="background: #fff3cd; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 12px; color: #856404;">
-                                            ℹ️ Hanya unggah dokumen yang ingin diubah. Dokumen yang sudah ada akan tetap tersimpan jika tidak diubah.
+                                            <i class="fas fa-info-circle"></i> Hanya unggah dokumen yang ingin diubah. Dokumen yang sudah ada akan tetap tersimpan jika tidak diubah.
                                         </div>
                                         ${documentFields}
                                     `}
@@ -5725,7 +5725,7 @@
             try {
                 console.log('🔵 [SAVE-START] reenrollmentId:', reenrollmentId);
                 
-                // ✅ EXACT SAME PATTERN AS submitEditForm() - USE FormData!
+                // <i class="fas fa-check-circle text-success"></i> EXACT SAME PATTERN AS submitEditForm() - USE FormData!
                 const formData = new FormData();
                 
                 // Collect text fields
@@ -5740,7 +5740,7 @@
                 formData.append('alumniRelation', document.getElementById('alumniRelation').value || '');
                 formData.append('alumniName', document.getElementById('alumniName').value || '');
                 
-                // ✅ Handle document file uploads - SAME PATTERN AS submitEditForm()
+                // <i class="fas fa-check-circle text-success"></i> Handle document file uploads - SAME PATTERN AS submitEditForm()
                 const DOCUMENT_TYPES = ['PAKTA_INTEGRITAS', 'IJAZAH', 'PASPHOTO', 'KARTU_KELUARGA', 'KARTU_TANDA_PENDUDUK', 'KETERANGAN_BEBAS_NARKOBA', 'SKCK'];
                 
                 let fileUploadCount = 0;
@@ -5763,7 +5763,7 @@
                 
                 console.log(`📤 Collected ${fileUploadCount} file(s) to upload`);
                 
-                // ✅ GET FRESH AUTH TOKEN
+                // <i class="fas fa-check-circle text-success"></i> GET FRESH AUTH TOKEN
                 const currentAuthToken = getAuthToken();
                 if (!currentAuthToken || currentAuthToken.trim() === '') {
                     console.error('❌ [AUTH-ERROR] Auth token is null or empty!');
@@ -5771,7 +5771,7 @@
                 }
                 console.log(`✅ [AUTH-OK] Token length: ${currentAuthToken.length}`);
                 
-                // ✅ EXACT SAME PATTERN AS submitEditForm():
+                // <i class="fas fa-check-circle text-success"></i> EXACT SAME PATTERN AS submitEditForm():
                 // - Use FormData (not JSON)
                 // - Don't set Content-Type header (browser sets it automatically for multipart)
                 // - Authorization header with Bearer token
@@ -5780,9 +5780,9 @@
                     method: 'PUT',
                     headers: {
                         'Authorization': 'Bearer ' + currentAuthToken
-                        // ✅ DO NOT set Content-Type - let browser set multipart/form-data with boundary
+                        // <i class="fas fa-check-circle text-success"></i> DO NOT set Content-Type - let browser set multipart/form-data with boundary
                     },
-                    body: formData  // ✅ FormData object (same as submitEditForm)
+                    body: formData  // <i class="fas fa-check-circle text-success"></i> FormData object (same as submitEditForm)
                 });
                 
                 console.log('📥 Response status:', response.status, response.statusText);
@@ -5801,12 +5801,12 @@
                 const result = await response.json();
                 console.log('✅ Perubahan berhasil disimpan:', result);
                 
-                // ✅ CRITICAL: Wait 500ms for backend to finish transaction
+                // <i class="fas fa-check-circle text-success"></i> CRITICAL: Wait 500ms for backend to finish transaction
                 // Then RELOAD reenrollment data to get updated documents
                 console.log('⏳ Waiting 500ms for backend transaction...');
                 await new Promise(resolve => setTimeout(resolve, 500));
                 
-                // ✅ FORCE RELOAD: Fetch fresh reenrollment data from backend
+                // <i class="fas fa-check-circle text-success"></i> FORCE RELOAD: Fetch fresh reenrollment data from backend
                 // This ensures UI shows updated document list
                 try {
                     console.log('🔄 Reloading reenrollment data after save...');
@@ -5830,28 +5830,28 @@
                 const modal = bootstrap.Modal.getInstance(document.getElementById('editReenrollmentModal'));
                 modal.hide();
                 
-                alert('✅ Data daftar ulang berhasil diperbarui!');
+ alert(' Data daftar ulang berhasil diperbarui!');
                 
                 // Reload dashboard to show updated data
                 loadAdmissionStatus();
                 
             } catch (e) {
                 console.error('❌ [ERROR]', e);
-                alert('❌ Gagal menyimpan: ' + e.message);
+ alert(' Gagal menyimpan: ' + e.message);
             }
         }
 
         // Load status on page load
         loadAdmissionStatus();
 
-        // ✅ AUTO-REFRESH ADMISSION STATUS EVERY 3 SECONDS
+        // <i class="fas fa-check-circle text-success"></i> AUTO-REFRESH ADMISSION STATUS EVERY 3 SECONDS
         // Student dashboard updates immediately when admin approves/rejects/revises
         console.log('🔄 [CAMABA-POLLING] Starting dashboard polling every 3 seconds');
         setInterval(function() {
             loadAdmissionStatus();
         }, 3000); // Check every 3 seconds for status changes
 
-        // ✅ NEW: MOBILE STATUS MODAL FUNCTIONS
+        // <i class="fas fa-check-circle text-success"></i> NEW: MOBILE STATUS MODAL FUNCTIONS
         // Open status modal when eye button clicked on mobile
         function openStatusModal(buttonEl, itemId) {
             const overlay = document.getElementById('statusModalOverlay');
@@ -5863,7 +5863,7 @@
 
             // Get status badge HTML
             const statusBadgeEl = progressItem.querySelector('.progress-status .status-badge');
-            const statusBadgeHTML = statusBadgeEl ? statusBadgeEl.innerHTML : '⏳ Menunggu';
+            const statusBadgeHTML = statusBadgeEl ? statusBadgeEl.innerHTML : '<i class="fas fa-hourglass-half"></i> Menunggu';
             
             // Get progress info (title and description)
             const progressInfoH4 = progressItem.querySelector('.progress-info h4');
@@ -5937,7 +5937,7 @@
         });
     </script>
 
-    <!-- ✅ STATUS MODAL FOR MOBILE VIEW -->
+    <!-- <i class="fas fa-check-circle text-success"></i> STATUS MODAL FOR MOBILE VIEW -->
     <div class="status-modal-overlay" id="statusModalOverlay">
         <div class="status-modal-content" id="statusModalContent">
             <!-- Content will be populated by openStatusModal() -->

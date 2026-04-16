@@ -650,9 +650,9 @@
                 if (settings.email_support || settings.whatsapp_admin) {
                     footerHTML += `<div style="margin-bottom: 20px;">
                         <strong>Hubungi Kami</strong><br>
-                        ${settings.email_support ? `📧 <a href="mailto:${settings.email_support}" style="color: white; text-decoration: underline;">${settings.email_support}</a><br>` : ''}
-                        📞 (061) 8201920<br>
-                        ${settings.whatsapp_admin ? `💬 <a href="https://wa.me/${settings.whatsapp_admin}" style="color: white; text-decoration: underline;">WhatsApp</a>` : ''}
+                        ${settings.email_support ? `<i class="fas fa-envelope"></i> <a href="mailto:${settings.email_support}" style="color: white; text-decoration: underline;">${settings.email_support}</a><br>` : ''}
+                        <i class="fas fa-phone"></i> (061) 8201920<br>
+                        ${settings.whatsapp_admin ? `<i class="fas fa-comments"></i> <a href="https://wa.me/${settings.whatsapp_admin}" style="color: white; text-decoration: underline;">WhatsApp</a>` : ''}
                     </div>`;
                 }
 
@@ -670,9 +670,9 @@
                 if (settings.facebook_url || settings.instagram_handle || settings.website_url) {
                     footerHTML += `<div style="margin-bottom: 20px;">
                         <strong>Media Sosial & Website</strong><br>
-                        ${settings.website_url ? `🌐 <a href="${settings.website_url}" target="_blank" style="color: white; text-decoration: underline;">Website</a> | ` : ''}
+                        ${settings.website_url ? `<i class="fas fa-globe"></i> <a href="${settings.website_url}" target="_blank" style="color: white; text-decoration: underline;">Website</a> | ` : ''}
                         ${settings.facebook_url ? `f <a href="${settings.facebook_url}" target="_blank" style="color: white; text-decoration: underline;">Facebook</a> | ` : ''}
-                        ${settings.instagram_handle ? `📷 <a href="https://instagram.com/${settings.instagram_handle}" target="_blank" style="color: white; text-decoration: underline;">Instagram</a>` : ''}
+                        ${settings.instagram_handle ? `<i class="fas fa-camera"></i> <a href="https://instagram.com/${settings.instagram_handle}" target="_blank" style="color: white; text-decoration: underline;">Instagram</a>` : ''}
                     </div>`;
                 }
 
@@ -856,21 +856,21 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎓 PMB HKBP Nommensen</h1>
+            <h1><i class="fas fa-graduation-cap"></i> PMB HKBP Nommensen</h1>
             <p>Sistem Penerimaan Mahasiswa Baru Terintegrasi</p>
         </div>
 
         <div class="content">
             <!-- Overview Section -->
             <div class="section">
-                <h2>📋 Ringkasan Proyek</h2>
+                <h2><i class="fas fa-clipboard-list"></i> Ringkasan Proyek</h2>
                 <p>Sistem informasi web berbasis <strong>Spring Boot Framework</strong> untuk mengelola proses penerimaan mahasiswa baru (PMB) di Universitas HKBP Nommensen secara terintegrasi, otomatis, dan transparan.</p>
                 <p style="margin-top: 15px; color: #666;"><strong>Nama Penulis:</strong> Mychael Daniel N (122140104) | <strong>Program:</strong> Teknik Informatika | <strong>Institusi:</strong> Institut Teknologi Sumatera</p>
             </div>
 
             <!-- Technology Stack -->
             <div class="section">
-                <h2>🛠️ Technology Stack</h2>
+                <h2><i class="fas fa-tools"></i> Technology Stack</h2>
                 <div class="tech-stack">
                     <span class="tech-tag">Java 21</span>
                     <span class="tech-tag">Spring Boot 3.2</span>
@@ -889,7 +889,7 @@
 
             <!-- Completed Features -->
             <div class="section">
-                <h2>✅ Fitur yang Telah Diimplementasikan</h2>
+                <h2><i class="fas fa-check-circle text-success"></i> Fitur yang Telah Diimplementasikan</h2>
                 
                 <h3>Core Backend</h3>
                 <ul class="checklist">
@@ -947,7 +947,7 @@
 
             <!-- File Structure -->
             <div class="section">
-                <h2>📁 Struktur File yang Telah Dibuat</h2>
+                <h2><i class="fas fa-folder"></i> Struktur File yang Telah Dibuat</h2>
                 <div class="code-block">
 pmb-system/
 ├── pom.xml                               # Maven Dependencies
@@ -1010,7 +1010,7 @@ pmb-system/
 
             <!-- Implementation Details -->
             <div class="section">
-                <h2>🔧 Detail Implementasi</h2>
+                <h2><i class="fas fa-wrench"></i> Detail Implementasi</h2>
                 
                 <h3>Database Setup (application.properties)</h3>
                 <div class="code-block">
@@ -1041,7 +1041,7 @@ jwt.expiration=86400000  # 24 hours
 
             <!-- API Documentation -->
             <div class="section">
-                <h2>🌐 API Endpoints</h2>
+                <h2><i class="fas fa-globe"></i> API Endpoints</h2>
                 <table>
                     <thead>
                         <tr>
@@ -1106,30 +1106,30 @@ jwt.expiration=86400000  # 24 hours
 
             <!-- Key Features -->
             <div class="section">
-                <h2>✨ Fitur Utama Sistem</h2>
+                <h2><i class="fas fa-star"></i> Fitur Utama Sistem</h2>
                 <div class="grid">
                     <div class="card">
-                        <h4>📝 Registrasi Mudah</h4>
+                        <h4><i class="fas fa-edit"></i> Registrasi Mudah</h4>
                         <p>Proses registrasi yang simple dengan validasi email dan password strength checker</p>
                     </div>
                     <div class="card">
-                        <h4>💳 Integrasi BRIVA</h4>
+                        <h4><i class="fas fa-credit-card"></i> Integrasi BRIVA</h4>
                         <p>Pembayaran otomatis melalui Virtual Account dengan callback verification</p>
                     </div>
                     <div class="card">
-                        <h4>📧 Notifikasi Email</h4>
+                        <h4><i class="fas fa-envelope"></i> Notifikasi Email</h4>
                         <p>Email otomatis untuk setiap tahap pendaftaran, ujian, dan hasil</p>
                     </div>
                     <div class="card">
-                        <h4>🔐 Security Terbaik</h4>
+                        <h4><i class="fas fa-lock"></i> Security Terbaik</h4>
                         <p>JWT Authentication, encryption password, dan role-based access control</p>
                     </div>
                     <div class="card">
-                        <h4>📱 Responsive Design</h4>
+                        <h4><i class="fas fa-mobile-alt"></i> Responsive Design</h4>
                         <p>Interface yang bekerja sempurna di desktop dan mobile devices</p>
                     </div>
                     <div class="card">
-                        <h4>⚡ Real-time Update</h4>
+                        <h4><i class="fas fa-bolt"></i> Real-time Update</h4>
                         <p>Data selalu ter-update dengan AJAX dan asynchronous operations</p>
                     </div>
                 </div>
@@ -1137,7 +1137,7 @@ jwt.expiration=86400000  # 24 hours
 
             <!-- Setup Instructions -->
             <div class="section">
-                <h2>🚀 Instruksi Setup</h2>
+                <h2><i class="fas fa-rocket"></i> Instruksi Setup</h2>
                 <h3>1. Persiapan</h3>
                 <ul class="checklist">
                     <li>Install Java JDK 21</li>
@@ -1162,7 +1162,7 @@ mvn spring-boot:run
 
             <!-- Next Steps -->
             <div class="section">
-                <h2>📋 Langkah Selanjutnya</h2>
+                <h2><i class="fas fa-clipboard-list"></i> Langkah Selanjutnya</h2>
                 <h3>Testing & Quality Assurance</h3>
                 <ul class="checklist">
                     <li>Unit testing dengan JUnit 5</li>
@@ -1193,7 +1193,7 @@ mvn spring-boot:run
 
             <!-- Documentation -->
             <div class="section">
-                <h2>📚 Dokumentasi</h2>
+                <h2><i class="fas fa-book"></i> Dokumentasi</h2>
                 <p>File README.md lengkap tersedia dengan:</p>
                 <ul class="checklist">
                     <li>Persyaratan sistem detail</li>
@@ -1208,7 +1208,7 @@ mvn spring-boot:run
 
             <!-- Contact -->
             <div class="section" style="background: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
-                <h2>📞 Informasi Kontak</h2>
+                <h2><i class="fas fa-phone"></i> Informasi Kontak</h2>
                 <p><strong>Penulis:</strong> Mychael Daniel N (122140104)</p>
                 <p><strong>Program:</strong> Teknik Informatika</p>
                 <p><strong>Institusi:</strong> Institut Teknologi Sumatera Lampung Selatan</p>
@@ -1218,9 +1218,9 @@ mvn spring-boot:run
 
             <!-- Downloads -->
             <div class="section">
-                <h2>📥 File & Resources</h2>
+                <h2><i class="fas fa-download"></i> File & Resources</h2>
                 <div style="background: #f9f9f9; padding: 20px; border-radius: 8px;">
-                    <p><a href="README.md" class="btn">📖 Download README.md</a></p>
+                    <p><a href="README.md" class="btn"><i class="fas fa-book-open"></i> Download README.md</a></p>
                     <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">Panduan lengkap setup, konfigurasi, dan penggunaan sistem tersedia di README.md</p>
                 </div>
             </div>
@@ -1256,9 +1256,9 @@ mvn spring-boot:run
                 if (settings.email_support || settings.whatsapp_admin) {
                     footerHTML += `<div style="margin-bottom: 20px;">
                         <strong>Hubungi Kami</strong><br>
-                        ${settings.email_support ? `📧 <a href="mailto:${settings.email_support}">${settings.email_support}</a><br>` : ''}
-                        📞 (061) 8201920<br>
-                        ${settings.whatsapp_admin ? `💬 <a href="https://wa.me/${settings.whatsapp_admin}">WhatsApp</a>` : ''}
+                        ${settings.email_support ? `<i class="fas fa-envelope"></i> <a href="mailto:${settings.email_support}">${settings.email_support}</a><br>` : ''}
+                        <i class="fas fa-phone"></i> (061) 8201920<br>
+                        ${settings.whatsapp_admin ? `<i class="fas fa-comments"></i> <a href="https://wa.me/${settings.whatsapp_admin}">WhatsApp</a>` : ''}
                     </div>`;
                 }
 
@@ -1276,9 +1276,9 @@ mvn spring-boot:run
                 if (settings.facebook_url || settings.instagram_handle || settings.website_url) {
                     footerHTML += `<div style="margin-bottom: 20px;">
                         <strong>Media Sosial & Website</strong><br>
-                        ${settings.website_url ? `🌐 <a href="${settings.website_url}" target="_blank">Website</a> | ` : ''}
+                        ${settings.website_url ? `<i class="fas fa-globe"></i> <a href="${settings.website_url}" target="_blank">Website</a> | ` : ''}
                         ${settings.facebook_url ? `f <a href="${settings.facebook_url}" target="_blank">Facebook</a> | ` : ''}
-                        ${settings.instagram_handle ? `📷 <a href="https://instagram.com/${settings.instagram_handle}" target="_blank">Instagram</a>` : ''}
+                        ${settings.instagram_handle ? `<i class="fas fa-camera"></i> <a href="https://instagram.com/${settings.instagram_handle}" target="_blank">Instagram</a>` : ''}
                     </div>`;
                 }
 
@@ -1295,7 +1295,7 @@ mvn spring-boot:run
         // Load settings on page load
         window.addEventListener('load', loadFooterSettings);
         
-        // ✅ NO AUTO REDIRECT - Landing page stays as landing page
+        // <i class="fas fa-check-circle text-success"></i> NO AUTO REDIRECT - Landing page stays as landing page
         // User must click "Login" button to go to login/dashboard
     </script></body>
 </html>

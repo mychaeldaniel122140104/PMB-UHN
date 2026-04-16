@@ -153,7 +153,7 @@
                 return;
             }
             
-            log(output, '📤 [LOAD-ACCOUNTS] Sending request with token: ' + (authToken ? authToken.substring(0, 30) + '...' : 'NO TOKEN'));
+            log(output, '<i class="fas fa-upload"></i> [LOAD-ACCOUNTS] Sending request with token: ' + (authToken ? authToken.substring(0, 30) + '...' : 'NO TOKEN'));
             
             try {
                 const response = await fetch('/admin/api/users', {
@@ -162,14 +162,14 @@
 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    log(output, '❌ [LOAD-ACCOUNTS] Error response - Status: ' + response.status + ' Text: ' + errorText, true);
+                    log(output, '<i class="fas fa-times-circle text-danger"></i> [LOAD-ACCOUNTS] Error response - Status: ' + response.status + ' Text: ' + errorText, true);
                     return;
                 }
 
                 const data = await response.json();
-                log(output, '✅ [LOAD-ACCOUNTS] Success - Received data: ' + JSON.stringify(data, null, 2), false);
+                log(output, '<i class="fas fa-check-circle text-success"></i> [LOAD-ACCOUNTS] Success - Received data: ' + JSON.stringify(data, null, 2), false);
             } catch (error) {
-                log(output, '❌ Error: ' + error.message, true);
+                log(output, '<i class="fas fa-times-circle text-danger"></i> Error: ' + error.message, true);
             }
         }
 

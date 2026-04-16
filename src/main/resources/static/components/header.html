@@ -522,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// ✅ REAL-TIME MESSAGE BADGE POLLING (Sync dengan dashboard)
+// <i class="fas fa-check-circle text-success"></i> REAL-TIME MESSAGE BADGE POLLING (Sync dengan dashboard)
 // Poll untuk unread messages setiap 5 detik
 setInterval(function() {
   try {
@@ -579,7 +579,7 @@ function showCustomerServiceAlert() {
     const overlayHtml = `
       <div id="csAlertOverlay" class="cs-alert-overlay">
         <div class="cs-alert-modal">
-          <div class="cs-alert-icon">⚠️</div>
+          <div class="cs-alert-icon"><i class="fas fa-exclamation-triangle text-warning"></i></div>
           <div class="cs-alert-title">Customer Service</div>
           <div class="cs-alert-message">
             Customer Service hanya tersedia di halaman Dashboard. Silakan kembali ke Dashboard untuk menghubungi kami.

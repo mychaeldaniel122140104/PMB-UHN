@@ -306,7 +306,7 @@
 
             <!-- WARNING BANNER: NO SELECTION TYPE -->
             <div class="alert alert-danger" id="warningNoSelectionType" style="display: none; margin-top: 15px;">
-                <h5>⚠️ Belum Ada Jenis Pendaftaran yang Dipilih</h5>
+                <h5><i class="fas fa-exclamation-triangle text-warning"></i> Belum Ada Jenis Pendaftaran yang Dipilih</h5>
                 <p>Anda harus memilih jenis pendaftaran terlebih dahulu sebelum mengisi formulir ini.</p>
                 <p style="margin-bottom: 0;"><strong>Langkah:</strong></p>
                 <ol style="margin-bottom: 0;">
@@ -324,7 +324,7 @@
                 <strong>Penting:</strong> Setelah formulir disetujui, kartu ujian akan dikirim ke alamat email Anda.
             </div>
 
-            <!-- ✅ NEW: Display selected gelombang and formula info -->
+            <!-- <i class="fas fa-check-circle text-success"></i> NEW: Display selected gelombang and formula info -->
             <div class="alert alert-light" id="selectionInfoSection" style="background: #f8f9fa; border: 1px solid #dee2e6; border-left: 4px solid var(--primary); display: none; margin-bottom: 25px;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div>
@@ -785,7 +785,7 @@
                         <input type="file" class="file-input" id="transcriptFile" accept="image/*, .pdf" onchange="handleFileSelect(event, 'transcript')">
                     </div>
 
-                    <!-- ✅ NEW: Nilai File - Conditional for RANKING_NO_TEST wave -->
+                    <!-- <i class="fas fa-check-circle text-success"></i> NEW: Nilai File - Conditional for RANKING_NO_TEST wave -->
                     <div class="form-group" id="nilaiFileSection" style="display: none;">
                         <label class="required">Bukti Nilai <small class="text-muted">(Untuk Jalur Ranking)</small></label>
                         <div class="file-upload-area" id="nilaiFile" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
@@ -797,7 +797,7 @@
                         <small class="text-muted d-block mt-2">Upload bukti nilai akademik atau prestasi yang relevan</small>
                     </div>
 
-                    <!-- ✅ NEW: Ranking File - Conditional for RANKING_NO_TEST wave -->
+                    <!-- <i class="fas fa-check-circle text-success"></i> NEW: Ranking File - Conditional for RANKING_NO_TEST wave -->
                     <div class="form-group" id="rankingFileSection" style="display: none;">
                         <label class="required">Bukti Ranking <small class="text-muted">(Untuk Jalur Ranking)</small></label>
                         <div class="file-upload-area" id="rankingFile" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
@@ -880,11 +880,11 @@
         const AUTH_TOKEN_KEY = 'authToken';
         const USER_EMAIL_KEY = 'userEmail';
         
-        // ✅ Check sessionStorage first (per-tab), fallback to localStorage
+        // <i class="fas fa-check-circle text-success"></i> Check sessionStorage first (per-tab), fallback to localStorage
         let authToken = sessionStorage.getItem(AUTH_TOKEN_KEY) || localStorage.getItem(AUTH_TOKEN_KEY);
         let userEmail = localStorage.getItem(USER_EMAIL_KEY);
         let selectionTypeId = null;
-        let jenisSeleksiId = null;  // ✅ GLOBAL: Will be set during form init
+        let jenisSeleksiId = null;  // <i class="fas fa-check-circle text-success"></i> GLOBAL: Will be set during form init
         let requireTesting = false;
         let isKedokteranProgram = false; // Track if user selected Kedokteran program
         let autoSaveActive = false;
@@ -944,14 +944,14 @@
             const submitBtn = document.getElementById('submitFormBtn');
             
             if (!isValid) {
-                log('❌ Selection type INVALID or EMPTY');
+                log('<i class="fas fa-times-circle text-danger"></i> Selection type INVALID or EMPTY');
                 if (warningBanner) warningBanner.style.display = 'block';
                 if (submitBtn) {
                     submitBtn.disabled = true;
                     submitBtn.title = 'Pilih jenis pendaftaran terlebih dahulu';
                 }
             } else {
-                log('✅ Selection type VALID: ' + selectionTypeId);
+                log('<i class="fas fa-check-circle text-success"></i> Selection type VALID: ' + selectionTypeId);
                 if (warningBanner) warningBanner.style.display = 'none';
                 if (submitBtn) {
                     submitBtn.disabled = false;
@@ -962,7 +962,7 @@
 
         // ===== FILTER PROGRAM STUDI BY FORMULA SELECTION (NOT KEDOKTERAN/NON-KEDOKTERAN) =====
         function filterProgramStudiBySelectionType() {
-            log('🔍 filterProgramStudiBySelectionType() CALLED');
+            log('<i class="fas fa-search"></i> filterProgramStudiBySelectionType() CALLED');
             
             // Get linked programs from sessionStorage (set by displaySelectionInfoAndLoadPrograms)
             let linkedPrograms = linkedProgramStudiList;
@@ -977,7 +977,7 @@
                         log('✓ Restored linkedProgramStudiList from sessionStorage: ' + linkedPrograms.length + ' programs');
                     }
                 } catch (e) {
-                    log('⚠️ Could not restore from sessionStorage');
+                    log('<i class="fas fa-exclamation-triangle text-warning"></i> Could not restore from sessionStorage');
                 }
             }
             
@@ -1013,8 +1013,8 @@
                 return;
             }
             
-            // ✅ HAS linked programs = show ONLY those
-            log('✅ Using FORMULA-BASED filtering with ' + linkedPrograms.length + ' linked programs');
+            // <i class="fas fa-check-circle text-success"></i> HAS linked programs = show ONLY those
+            log('<i class="fas fa-check-circle text-success"></i> Using FORMULA-BASED filtering with ' + linkedPrograms.length + ' linked programs');
             
             // Build set of program names/codes to keep
             const linkedProgramSet = new Set();
@@ -1031,7 +1031,7 @@
             
             selectElements.forEach((select, idx) => {
                 if (!select) {
-                    log('  ⚠️ Select ' + idx + ' not found');
+                    log('  <i class="fas fa-exclamation-triangle text-warning"></i> Select ' + idx + ' not found');
                     return;
                 }
                 
@@ -1066,7 +1066,7 @@
                 log('  Select ' + idx + ': ' + shownCount + ' shown, ' + hiddenCount + ' hidden');
             });
             
-            log('✅ Program studi filtering COMPLETE');
+            log('<i class="fas fa-check-circle text-success"></i> Program studi filtering COMPLETE');
         }
 
         // ===== FILTER PARENT OCCUPATIONS BY PROGRAM TYPE =====
@@ -1241,14 +1241,14 @@
                 log('   Checking for: #' + selectId);
                 const select = document.getElementById(selectId);
                 if (select) {
-                    log('   ✅ FOUND: #' + selectId + ' - tagName: ' + select.tagName + ', type: ' + select.type);
+                    log('   <i class="fas fa-check-circle text-success"></i> FOUND: #' + selectId + ' - tagName: ' + select.tagName + ', type: ' + select.type);
                     
                     select.addEventListener('change', function() {
                         const choice1Val = document.getElementById('programChoice1')?.value || '';
                         const choice2Val = document.getElementById('programChoice2')?.value || '';
                         const choice3Val = document.getElementById('programChoice3')?.value || '';
                         
-                        log('🔄 PROGRAM CHANGED: ' + selectId + ' = ' + this.value);
+                        log('<i class="fas fa-sync-alt"></i> PROGRAM CHANGED: ' + selectId + ' = ' + this.value);
                         log('   Current selections: [' + choice1Val + ', ' + choice2Val + ', ' + choice3Val + ']');
                         log('   isKedokteranProgram (API): ' + isKedokteranProgram);
                         
@@ -1267,16 +1267,16 @@
                         }, 50);
                     });
                     attachedCount++;
-                    log('   ✅ Listener ATTACHED to: ' + selectId);
+                    log('   <i class="fas fa-check-circle text-success"></i> Listener ATTACHED to: ' + selectId);
                 } else {
-                    logError('   ❌ Element NOT FOUND: #' + selectId + ' - Check if this ID exists in HTML!');
+                    logError('   <i class="fas fa-times-circle text-danger"></i> Element NOT FOUND: #' + selectId + ' - Check if this ID exists in HTML!');
                 }
             });
             
             log('========== SUMMARY: ' + attachedCount + '/3 program choice listeners attached ==========');
         }
 
-        // ✅ NEW: Display selection info and load program studi based on formula
+        // <i class="fas fa-check-circle text-success"></i> NEW: Display selection info and load program studi based on formula
         let linkedProgramStudiList = []; // Store program studi linked to selected formula
         
         async function displaySelectionInfoAndLoadPrograms() {
@@ -1315,7 +1315,7 @@
                     }
                 }
                 
-                // ✅ Get jenisSeleksiId from localStorage (set by formula-selection.html or URL param in edit mode)
+                // <i class="fas fa-check-circle text-success"></i> Get jenisSeleksiId from localStorage (set by formula-selection.html or URL param in edit mode)
                 jenisSeleksiId = localStorage.getItem('jenisSeleksiId');
                 if (jenisSeleksiId) {
                     jenisSeleksiId = parseInt(jenisSeleksiId);
@@ -1327,12 +1327,12 @@
                 document.getElementById('displayFormulaName').textContent = formulaName;
                 document.getElementById('selectionInfoSection').style.display = 'block';
                 
-                // ✅ MAIN: Load linked program studi from BACKEND based on jenisSeleksiId
+                // <i class="fas fa-check-circle text-success"></i> MAIN: Load linked program studi from BACKEND based on jenisSeleksiId
                 if (jenisSeleksiId && jenisSeleksiId > 0) {
-                    log('📋 Loading LINKED programs from backend for jenis seleksi: ' + jenisSeleksiId);
+                    log('<i class="fas fa-clipboard-list"></i> Loading LINKED programs from backend for jenis seleksi: ' + jenisSeleksiId);
                     
                     try {
-                        // ✅ Call backend API to get ONLY programs linked to this jenis seleksi
+                        // <i class="fas fa-check-circle text-success"></i> Call backend API to get ONLY programs linked to this jenis seleksi
                         const response = await fetch(`/api/camaba/jenis-seleksi/${jenisSeleksiId}/program-studi`, {
                             method: 'GET',
                             headers: {
@@ -1348,18 +1348,18 @@
                         const programs = await response.json();
                         linkedProgramStudiList = programs;
                         
-                        // ✅ PERSIST to sessionStorage so it's available after page reload
+                        // <i class="fas fa-check-circle text-success"></i> PERSIST to sessionStorage so it's available after page reload
                         try {
                             sessionStorage.setItem('linkedProgramStudiList', JSON.stringify(programs));
                             log('✓ Saved ' + programs.length + ' LINKED programs to sessionStorage');
                         } catch (e) {
-                            log('⚠️ Could not save to sessionStorage: ' + e.message);
+                            log('<i class="fas fa-exclamation-triangle text-warning"></i> Could not save to sessionStorage: ' + e.message);
                         }
                         
-                        log('✅ Loaded ' + programs.length + ' LINKED programs from backend');
+                        log('<i class="fas fa-check-circle text-success"></i> Loaded ' + programs.length + ' LINKED programs from backend');
                         console.table(programs);
                         
-                        // ✅ NOW POPULATE the select boxes with ONLY THESE LINKED PROGRAMS
+                        // <i class="fas fa-check-circle text-success"></i> NOW POPULATE the select boxes with ONLY THESE LINKED PROGRAMS
                         populateProgramStudiSelects(programs);
                     } catch (error) {
                         logError('Error loading LINKED program studi: ' + error.message);
@@ -1368,7 +1368,7 @@
                         if (sessionLinkedPrograms) {
                             try {
                                 const programs = JSON.parse(sessionLinkedPrograms);
-                                log('⚠️ Using cached programs from sessionStorage: ' + programs.length);
+                                log('<i class="fas fa-exclamation-triangle text-warning"></i> Using cached programs from sessionStorage: ' + programs.length);
                                 populateProgramStudiSelects(programs);
                             } catch (e) {
                                 logError('Failed to parse cached programs: ' + e.message);
@@ -1376,7 +1376,7 @@
                         }
                     }
                 } else {
-                    log('⚠️ CANNOT load programs - jenisSeleksiId is null or 0');
+                    log('<i class="fas fa-exclamation-triangle text-warning"></i> CANNOT load programs - jenisSeleksiId is null or 0');
                 }
                 
                 log('========== SELECTION INFO DISPLAY COMPLETE ==========');
@@ -1385,12 +1385,12 @@
             }
         }
         
-        // ✅ NEW FUNCTION: Populate select boxes with program studi options
+        // <i class="fas fa-check-circle text-success"></i> NEW FUNCTION: Populate select boxes with program studi options
         function populateProgramStudiSelects(programs) {
             log('========== POPULATING PROGRAM STUDI SELECT BOXES ==========');
             
             if (!programs || programs.length === 0) {
-                log('⚠️ No programs to populate');
+                log('<i class="fas fa-exclamation-triangle text-warning"></i> No programs to populate');
                 return;
             }
             
@@ -1399,11 +1399,11 @@
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
                 if (!select) {
-                    log('  ❌ Select NOT FOUND: ' + selectId);
+                    log('  <i class="fas fa-times-circle text-danger"></i> Select NOT FOUND: ' + selectId);
                     return;
                 }
                 
-                log('  📝 Populating: ' + selectId);
+                log('  <i class="fas fa-edit"></i> Populating: ' + selectId);
                 
                 // Remove all options except the placeholder
                 Array.from(select.options).forEach((option, idx) => {
@@ -1422,18 +1422,18 @@
                     log('    ✓ Added: ' + (prog.nama || prog.name));
                 });
                 
-                log('  ✅ ' + selectId + ' populated with ' + programs.length + ' options');
+                log('  <i class="fas fa-check-circle text-success"></i> ' + selectId + ' populated with ' + programs.length + ' options');
             });
             
             log('========== PROGRAM STUDI POPULATION COMPLETE ==========');
         }
         
-        // ✅ NEW: Filter program choice dropdowns to only show linked programs
+        // <i class="fas fa-check-circle text-success"></i> NEW: Filter program choice dropdowns to only show linked programs
         function filterProgramChoicesByFormula(linkedPrograms) {
             log('========== FILTERING PROGRAM CHOICES BY FORMULA ==========');
             
             if (!linkedPrograms || linkedPrograms.length === 0) {
-                log('⚠️ No programs linked to this formula - all programs available');
+                log('<i class="fas fa-exclamation-triangle text-warning"></i> No programs linked to this formula - all programs available');
                 return;
             }
             
@@ -1451,7 +1451,7 @@
             choiceSelects.forEach(selectId => {
                 const select = document.getElementById(selectId);
                 if (!select) {
-                    log('  ⚠️ Select ' + selectId + ' not found');
+                    log('  <i class="fas fa-exclamation-triangle text-warning"></i> Select ' + selectId + ' not found');
                     return;
                 }
                 
@@ -1496,7 +1496,7 @@
                     const currentOption = select.options[select.selectedIndex];
                     if (currentOption && currentOption.style.display === 'none') {
                         select.value = ''; // Reset to placeholder
-                        log('    ⚠️ Cleared previous value: ' + currentValue + ' (no longer available)');
+                        log('    <i class="fas fa-exclamation-triangle text-warning"></i> Cleared previous value: ' + currentValue + ' (no longer available)');
                     }
                 }
                 
@@ -1506,9 +1506,9 @@
             log('========== PROGRAM FILTERING COMPLETE ==========');
         }
 
-        // ✅ NEW: Toggle conditional fields based on Wave Type
+        // <i class="fas fa-check-circle text-success"></i> NEW: Toggle conditional fields based on Wave Type
         function updateConditionalFieldsByWaveType() {
-            log('📋 updateConditionalFieldsByWaveType() CALLED');
+            log('<i class="fas fa-clipboard-list"></i> updateConditionalFieldsByWaveType() CALLED');
             console.log('📋 updateConditionalFieldsByWaveType() CALLED');
             
             // Get waveType from sessionStorage (stored from registration period)
@@ -1565,7 +1565,7 @@
             const rankingFileSection = document.getElementById('rankingFileSection');
             
             if (waveType === 'RANKING_NO_TEST') {
-                log('   ✅ Wave type is RANKING_NO_TEST - SHOWING conditional fields');
+                log('   <i class="fas fa-check-circle text-success"></i> Wave type is RANKING_NO_TEST - SHOWING conditional fields');
                 console.log('   ✅ [FORM-RANKING] Wave type is RANKING_NO_TEST - SHOWING Bukti Nilai + Bukti Ranking uploads');
                 if (nilaiFileSection) nilaiFileSection.style.display = 'block';
                 if (rankingFileSection) rankingFileSection.style.display = 'block';
@@ -1575,13 +1575,13 @@
                 if (nilaiFileSection) nilaiFileSection.style.display = 'none';
                 if (rankingFileSection) rankingFileSection.style.display = 'none';
             } else {
-                log('   ❌ Wave type is NOT RANKING_NO_TEST - HIDING conditional fields');
+                log('   <i class="fas fa-times-circle text-danger"></i> Wave type is NOT RANKING_NO_TEST - HIDING conditional fields');
                 console.log('   📋 [FORM-REGULAR] Wave type is REGULAR_TEST - 5-minute exam required, NO ranking files');
                 if (nilaiFileSection) nilaiFileSection.style.display = 'none';
                 if (rankingFileSection) rankingFileSection.style.display = 'none';
             }
             
-            log('   ✅ Conditional field visibility updated');
+            log('   <i class="fas fa-check-circle text-success"></i> Conditional field visibility updated');
             console.log('   ✅ Conditional field visibility updated');
         }
 
@@ -1599,7 +1599,7 @@
                     const messageElement = authModal.querySelector('.text-muted');
                     if (messageElement) {
                         messageElement.innerHTML = customMessage;
-                        logError('🔴 Auth Error Modal: ' + customMessage);
+                        logError('<i class="fas fa-circle text-danger" style="font-size:0.6em"></i> Auth Error Modal: ' + customMessage);
                     }
                 }
                 
@@ -1621,7 +1621,7 @@
             }
         }
         
-        // ✅ NEW FUNCTION - Check if user already submitted form
+        // <i class="fas fa-check-circle text-success"></i> NEW FUNCTION - Check if user already submitted form
         async function checkSubmissionStatus() {
             try {
                 const response = await fetch('/api/camaba/submission-status', {
@@ -1633,7 +1633,7 @@
                 });
                 
                 if (!response.ok) {
-                    logError('❌ Failed to check submission status: ' + response.status);
+                    logError('<i class="fas fa-times-circle text-danger"></i> Failed to check submission status: ' + response.status);
                     return null;
                 }
                 
@@ -1641,12 +1641,12 @@
                 log('✓ Submission status retrieved: ' + JSON.stringify(data));
                 return data;
             } catch (error) {
-                logError('❌ Error checking submission status: ' + error.message);
+                logError('<i class="fas fa-times-circle text-danger"></i> Error checking submission status: ' + error.message);
                 return null;
             }
         }
         
-        // ✅ NEW FUNCTION - Show "Waiting for Verification" modal
+        // <i class="fas fa-check-circle text-success"></i> NEW FUNCTION - Show "Waiting for Verification" modal
         function showWaitingVerificationModal(statusData) {
             const isEditable = statusData.isEditable === true;
             const hoursRemaining = statusData.hoursRemaining || 0;
@@ -1667,7 +1667,7 @@
                             <div style="font-size: 60px; color: #f39c12; margin-bottom: 20px;">
                                 <i class="fas fa-clock"></i>
                             </div>
-                            <h4 style="color: #1a472a; font-weight: 700; margin-bottom: 15px; font-size: 22px;">Formulir Sedang Diverifikasi ⏳</h4>
+                            <h4 style="color: #1a472a; font-weight: 700; margin-bottom: 15px; font-size: 22px;">Formulir Sedang Diverifikasi <i class="fas fa-hourglass-half"></i></h4>
                             <p style="color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
                                 <strong style="color: #e74c3c; display: block; margin-bottom: 10px; font-size: 15px;">Status: ${statusData.status}</strong>
                                 Formulir Anda telah diterima dan sedang dalam proses verifikasi oleh admin. Perkiraan waktu verifikasi: <strong>3-5 hari kerja</strong>.
@@ -1723,13 +1723,13 @@
         
         async function checkAuthentication() {
             if (!authToken) {
-                log('❌ No auth token stored - User needs to log in');
+                log('<i class="fas fa-times-circle text-danger"></i> No auth token stored - User needs to log in');
                 showAuthRequiredModal('Anda belum login. Silahkan login untuk melanjutkan.');
                 return false;
             }
 
             try {
-                log('🔍 Checking authentication with token...');
+                log('<i class="fas fa-search"></i> Checking authentication with token...');
                 const response = await fetch('/api/camaba/profile', {
                     method: 'GET',
                     headers: {
@@ -1741,13 +1741,13 @@
                 log('Response status: ' + response.status + ' ' + response.statusText);
 
                 if (response.status === 401) {
-                    log('❌ Token unauthorized (401) - Token invalid atau expired');
+                    log('<i class="fas fa-times-circle text-danger"></i> Token unauthorized (401) - Token invalid atau expired');
                     showAuthRequiredModal('Sesi Anda telah berakhir. Silahkan login kembali.');
                     return false;
                 }
                 
                 if (response.status === 403) {
-                    log('❌ Token forbidden (403) - User tidak memiliki akses');
+                    log('<i class="fas fa-times-circle text-danger"></i> Token forbidden (403) - User tidak memiliki akses');
                     showAuthRequiredModal('Anda tidak memiliki akses untuk halaman ini.');
                     return false;
                 }
@@ -1755,16 +1755,16 @@
                 if (response.status === 500) {
                     const errorData = await response.json().catch(() => ({}));
                     const errorMsg = errorData.message || 'Server error - User tidak ditemukan di database';
-                    log('❌ Server error (500): ' + errorMsg);
-                    showAuthRequiredModal('❌ Server Error: ' + errorMsg + '\n\nSilahkan logout dan login kembali.');
+                    log('<i class="fas fa-times-circle text-danger"></i> Server error (500): ' + errorMsg);
+                    showAuthRequiredModal('<i class="fas fa-times-circle text-danger"></i> Server Error: ' + errorMsg + '\n\nSilahkan logout dan login kembali.');
                     return false;
                 }
 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));
                     const errorMsg = errorData.message || ('HTTP ' + response.status + ' error');
-                    log('❌ Auth check failed (' + response.status + '): ' + errorMsg);
-                    showAuthRequiredModal('❌ Authentication Error: ' + errorMsg + '\n\nSilahkan login kembali.');
+                    log('<i class="fas fa-times-circle text-danger"></i> Auth check failed (' + response.status + '): ' + errorMsg);
+                    showAuthRequiredModal('<i class="fas fa-times-circle text-danger"></i> Authentication Error: ' + errorMsg + '\n\nSilahkan login kembali.');
                     return false;
                 }
 
@@ -1772,8 +1772,8 @@
                 log('✓ Authentication verified - User: ' + (userData.email || userData.fullName || 'User'));
                 return true;
             } catch (error) {
-                logError('❌ Network error during auth check: ' + error.message);
-                showAuthRequiredModal('❌ Jaringan Error: ' + error.message + '\n\nPeriksa koneksi internet Anda.');
+                logError('<i class="fas fa-times-circle text-danger"></i> Network error during auth check: ' + error.message);
+                showAuthRequiredModal('<i class="fas fa-times-circle text-danger"></i> Jaringan Error: ' + error.message + '\n\nPeriksa koneksi internet Anda.');
                 logout();
                 return false;
             }
@@ -1797,7 +1797,7 @@
             
             // 🔥 SIMPLIFIED: ALWAYS EDIT MODE
             // Form pendaftaran is always editable - users must fill the form
-            log('✏️ ENTERING EDIT MODE - Enabling inputs for editing');
+            log('<i class="fas fa-pencil-alt"></i> ENTERING EDIT MODE - Enabling inputs for editing');
             
             // Enable all input fields
             const inputs = document.querySelectorAll('input, select, textarea');
@@ -1849,7 +1849,7 @@
                 });
                 
                 if (!response.ok) {
-                    log('⚠️ Could not fetch saved form data (this is ok for first submission): ' + response.status);
+                    log('<i class="fas fa-exclamation-triangle text-warning"></i> Could not fetch saved form data (this is ok for first submission): ' + response.status);
                     return;
                 }
                 
@@ -1941,24 +1941,24 @@
                 const isAuth = await checkAuthentication();
                 if (!isAuth) return;
                 
-                // ✅ NEW: Step 0.5 - Check submission status (only in edit mode)
+                // <i class="fas fa-check-circle text-success"></i> NEW: Step 0.5 - Check submission status (only in edit mode)
                 if (formMode === 'edit') {
                     log('Step 0.5: Checking submission status...');
                     const submissionStatus = await checkSubmissionStatus();
                     log('Submission status: ' + JSON.stringify(submissionStatus));
                     
                     if (submissionStatus && submissionStatus.hasSubmitted) {
-                        // ✅ USER ALREADY SUBMITTED - Check if still editable
+                        // <i class="fas fa-check-circle text-success"></i> USER ALREADY SUBMITTED - Check if still editable
                         const isEditable = submissionStatus.isEditable === true;
                         const hoursRemaining = submissionStatus.hoursRemaining || 0;
                         
                         if (!isEditable || hoursRemaining <= 0) {
-                            // ❌ CANNOT EDIT - Show waiting modal with no edit button
+                            // <i class="fas fa-times-circle text-danger"></i> CANNOT EDIT - Show waiting modal with no edit button
                             log('✓✓✓ USER ALREADY SUBMITTED & CANNOT EDIT - SHOWING WAITING MODAL ✓✓✓');
                             showWaitingVerificationModal(submissionStatus);
                             return; // Stop - deadline has passed
                         } else {
-                            // ✅ CAN STILL EDIT - Continue with form in edit mode
+                            // <i class="fas fa-check-circle text-success"></i> CAN STILL EDIT - Continue with form in edit mode
                             log('✓✓✓ USER ALREADY SUBMITTED BUT CAN STILL EDIT (Hours Remaining: ' + hoursRemaining + ') ✓✓✓');
                             // Continue with initialization - don't return
                         }
@@ -1973,9 +1973,9 @@
                 // 🔥 CHECK 1: selectedGelombang MUST exist in localStorage
                 let selectedGelombang = localStorage.getItem('selectedGelombang');
                 if (!selectedGelombang) {
-                    logError('❌ FATAL ERROR: selectedGelombang TIDAK ada di localStorage!');
+                    logError('<i class="fas fa-times-circle text-danger"></i> FATAL ERROR: selectedGelombang TIDAK ada di localStorage!');
                     logError('   User HARUS memilih gelombang di gelombang-selection.html');
-                    showError('❌ ERROR VALIDASI FATAL\n\nAnda belum memilih gelombang!\n\n1. Klik "KEMBALI KE PILIHAN GELOMBANG"\n2. Pilih gelombang\n3. Confirm pilihan Anda\n4. Form akan muncul otomatis');
+                    showError('<i class="fas fa-times-circle text-danger"></i> ERROR VALIDASI FATAL\n\nAnda belum memilih gelombang!\n\n1. Klik "KEMBALI KE PILIHAN GELOMBANG"\n2. Pilih gelombang\n3. Confirm pilihan Anda\n4. Form akan muncul otomatis');
                     return;  // STOP - Don't proceed
                 }
                 
@@ -1983,36 +1983,36 @@
                 try {
                     selectedGelombangObj = JSON.parse(selectedGelombang);
                     if (!selectedGelombangObj.id || selectedGelombangObj.id <= 0) {
-                        logError('❌ selectedGelombang.id INVALID:', selectedGelombangObj.id);
+                        logError('<i class="fas fa-times-circle text-danger"></i> selectedGelombang.id INVALID:', selectedGelombangObj.id);
                         throw new Error('Invalid gelombang ID');
                     }
-                    log('✅ selectedGelombang parsed & valid: ', selectedGelombangObj);
+                    log('<i class="fas fa-check-circle text-success"></i> selectedGelombang parsed & valid: ', selectedGelombangObj);
                 } catch (e) {
-                    logError('❌ selectedGelombang JSON parse error:', e.message);
-                    showError('❌ ERROR: Data gelombang rusak. Silakan pilih ulang gelombang.');
+                    logError('<i class="fas fa-times-circle text-danger"></i> selectedGelombang JSON parse error:', e.message);
+                    showError('<i class="fas fa-times-circle text-danger"></i> ERROR: Data gelombang rusak. Silakan pilih ulang gelombang.');
                     return;  // STOP
                 }
                 
                 // 🔥 CHECK 2: periodId from selectedGelombang.id
                 let periodId = String(selectedGelombangObj.id);
                 selectionTypeId = periodId;  // Set global variable
-                log('✅ selectionTypeId (from gelombang.id): ' + selectionTypeId);
+                log('<i class="fas fa-check-circle text-success"></i> selectionTypeId (from gelombang.id): ' + selectionTypeId);
                 
                 // 🔥 CHECK 3: jenisSeleksiId MUST exist in localStorage
                 jenisSeleksiId = localStorage.getItem('jenisSeleksiId');  // Assign to GLOBAL variable
                 if (!jenisSeleksiId || jenisSeleksiId === 'null' || isNaN(parseInt(jenisSeleksiId)) || parseInt(jenisSeleksiId) <= 0) {
-                    logError('❌ FATAL ERROR: jenisSeleksiId INVALID atau TIDAK ada!');
+                    logError('<i class="fas fa-times-circle text-danger"></i> FATAL ERROR: jenisSeleksiId INVALID atau TIDAK ada!');
                     logError('   Value dari localStorage:', jenisSeleksiId);
                     logError('   User HARUS memilih formula di formula-selection.html');
-                    showError('❌ ERROR VALIDASI FATAL\n\nAnda belum memilih formula/jenis seleksi!\n\n1. Klik "KEMBALI KE PILIHAN FORMULA"\n2. Pilih formula\n3. Confirm pilihan Anda\n4. Form akan muncul otomatis');
+                    showError('<i class="fas fa-times-circle text-danger"></i> ERROR VALIDASI FATAL\n\nAnda belum memilih formula/jenis seleksi!\n\n1. Klik "KEMBALI KE PILIHAN FORMULA"\n2. Pilih formula\n3. Confirm pilihan Anda\n4. Form akan muncul otomatis');
                     return;  // STOP - Don't proceed
                 }
                 
                 jenisSeleksiId = String(parseInt(jenisSeleksiId));  // Clean value
-                log('✅ jenisSeleksiId (JENIS_SELEKSI_ID): ' + jenisSeleksiId);
+                log('<i class="fas fa-check-circle text-success"></i> jenisSeleksiId (JENIS_SELEKSI_ID): ' + jenisSeleksiId);
                 
                 log('═══════════════════════════════════════════════════════════');
-                log('✅ SEMUA VALIDASI PASSED! Form dapat dilanjutkan');
+                log('<i class="fas fa-check-circle text-success"></i> SEMUA VALIDASI PASSED! Form dapat dilanjutkan');
                 log('   selectionTypeId:', selectionTypeId);
                 log('   jenisSeleksiId:', jenisSeleksiId);
                 log('═══════════════════════════════════════════════════════════');
@@ -2021,7 +2021,7 @@
                 log('isValidSelectionTypeId(' + selectionTypeId + ') returns: ' + isValidSelectionTypeId(selectionTypeId));
                 updateSelectionTypeStatus();
                 
-                // 🔑 NEW: Get formType from stored formula (instead of fetching from API)
+                // <i class="fas fa-key"></i> NEW: Get formType from stored formula (instead of fetching from API)
                 const selectedFormulaStr = localStorage.getItem('selectedFormula');
                 if (selectedFormulaStr) {
                     try {
@@ -2033,7 +2033,7 @@
                         requireTesting = (formType === 'MEDICAL' || formType.toUpperCase() === 'MEDICAL');
                         isKedokteranProgram = (formType === 'MEDICAL' || formType.toUpperCase() === 'MEDICAL');
                         
-                        log('✅ Got formType from localStorage formula: ' + formType);
+                        log('<i class="fas fa-check-circle text-success"></i> Got formType from localStorage formula: ' + formType);
                         log('✓ requireTesting SET TO: ' + requireTesting);
                         log('✓ isKedokteranProgram SET TO: ' + isKedokteranProgram);
                         
@@ -2054,7 +2054,7 @@
                         document.getElementById('participantNumberField').style.display = 'none';
                     }
                 } else {
-                    log('⚠️ No selectedFormula in localStorage');
+                    log('<i class="fas fa-exclamation-triangle text-warning"></i> No selectedFormula in localStorage');
                     requireTesting = false;
                     isKedokteranProgram = false;
                     document.getElementById('examSection').style.display = 'none';
@@ -2067,7 +2067,7 @@
                 // Apply occupation filtering
                 filterOccupationsByProgram();
                 
-                // ✅ LOAD PREVIOUSLY SELECTED GELOMBANG
+                // <i class="fas fa-check-circle text-success"></i> LOAD PREVIOUSLY SELECTED GELOMBANG
                 try {
                     log('📍 STEP: Loading previously selected gelombang...');
                     console.log('%c===== LOADING GELOMBANG =====', 'background: #2196F3; color: white; padding: 5px 10px; font-weight: bold;');
@@ -2077,7 +2077,7 @@
                     if (selectedGelombang) {
                         try {
                             const gelombang = JSON.parse(selectedGelombang);
-                            log('✅ Gelombang loaded from storage:');
+                            log('<i class="fas fa-check-circle text-success"></i> Gelombang loaded from storage:');
                             log('   ID: ' + gelombang.id);
                             log('   Title: ' + gelombang.title);
                             log('   Wave Type: ' + gelombang.waveType);
@@ -2098,7 +2098,7 @@
                             console.error('%c❌ Parse Error:', 'color: #f44336;', parseError.message);
                         }
                     } else {
-                        log('⚠️ No previously selected gelombang found in localStorage');
+                        log('<i class="fas fa-exclamation-triangle text-warning"></i> No previously selected gelombang found in localStorage');
                         console.warn('%c⚠️ [NO GELOMBANG]', 'color: #ff9800;', 'selectedGelombang not found in localStorage');
                     }
                     
@@ -2113,7 +2113,7 @@
                 attachAutoSaveListeners();
                 attachProgramChoiceListeners();
                 
-                // ✅ NEW Step 2.5: Display selection info and load linked programs
+                // <i class="fas fa-check-circle text-success"></i> NEW Step 2.5: Display selection info and load linked programs
                 log('Step 2.5: Displaying selection info and loading program studi...');
                 await displaySelectionInfoAndLoadPrograms();
                 
@@ -2121,7 +2121,7 @@
                 log('Step 3: Restoring saved data...');
                 restoreFormFromLocalStorage();
                 
-                // ✅ NEW Step 3.5: RE-APPLY PROGRAM FILTERING after restore
+                // <i class="fas fa-check-circle text-success"></i> NEW Step 3.5: RE-APPLY PROGRAM FILTERING after restore
                 // This ensures filtering persists even after form is restored
                 log('Step 3.5: Re-applying program filtering after restore...');
                 if (linkedProgramStudiList && linkedProgramStudiList.length > 0) {
@@ -2143,7 +2143,7 @@
                 // Still try to enable auto-save
                 attachAutoSaveListeners();
                 attachProgramChoiceListeners();
-                // ✅ Also try to display selection info
+                // <i class="fas fa-check-circle text-success"></i> Also try to display selection info
                 await displaySelectionInfoAndLoadPrograms();
                 restoreFormFromLocalStorage();
                 // Still load saved files even if there's an error
@@ -2286,7 +2286,7 @@
                 { areaId: 'photoId', inputId: 'photoIdFile' },
                 { areaId: 'certificate', inputId: 'certificateFile' },
                 { areaId: 'transcript', inputId: 'transcriptFile' },
-                // ✅ NEW: Conditional file fields (shown only for RANKING_NO_TEST wave)
+                // <i class="fas fa-check-circle text-success"></i> NEW: Conditional file fields (shown only for RANKING_NO_TEST wave)
                 { areaId: 'nilaiFile', inputId: 'nilaiFileInput' },
                 { areaId: 'rankingFile', inputId: 'rankingFileInput' }
             ];
@@ -2345,28 +2345,28 @@
                 
                 // Check if files exist and have content
                 if (!photoIdFile || !photoIdFile.files || photoIdFile.files.length === 0) {
-                    showError('⚠️ Foto Identitas (KTP/Paspor) belum diunggah. Klik area upload untuk memilih file.');
+                    showError('<i class="fas fa-exclamation-triangle text-warning"></i> Foto Identitas (KTP/Paspor) belum diunggah. Klik area upload untuk memilih file.');
                     return;
                 }
 
                 if (!certificateFile || !certificateFile.files || certificateFile.files.length === 0) {
-                    showError('⚠️ Ijazah/Sertifikat Lulus belum diunggah. Klik area upload untuk memilih file.');
+                    showError('<i class="fas fa-exclamation-triangle text-warning"></i> Ijazah/Sertifikat Lulus belum diunggah. Klik area upload untuk memilih file.');
                     return;
                 }
 
-                // ✅ NEW: Validate conditional files for RANKING_NO_TEST wave
+                // <i class="fas fa-check-circle text-success"></i> NEW: Validate conditional files for RANKING_NO_TEST wave
                 const waveType = localStorage.getItem('currentWaveType');
                 if (waveType === 'RANKING_NO_TEST') {
                     const nilaiFileInput = document.getElementById('nilaiFileInput');
                     const rankingFileInput = document.getElementById('rankingFileInput');
                     
                     if (!nilaiFileInput || !nilaiFileInput.files || nilaiFileInput.files.length === 0) {
-                        showError('⚠️ Bukti Nilai belum diunggah. Klik area upload untuk memilih file.');
+                        showError('<i class="fas fa-exclamation-triangle text-warning"></i> Bukti Nilai belum diunggah. Klik area upload untuk memilih file.');
                         return;
                     }
                     
                     if (!rankingFileInput || !rankingFileInput.files || rankingFileInput.files.length === 0) {
-                        showError('⚠️ Bukti Ranking belum diunggah. Klik area upload untuk memilih file.');
+                        showError('<i class="fas fa-exclamation-triangle text-warning"></i> Bukti Ranking belum diunggah. Klik area upload untuk memilih file.');
                         return;
                     }
                     
@@ -2402,10 +2402,10 @@
                 log('Triple-checking selectionTypeId...');
                 if (!isValidSelectionTypeId(selectionTypeId)) {
                     logError('VALIDATION FAILED: selectionTypeId is not valid!');
-                    showError('❌ VALIDASI GAGAL\n\nAnda belum memilih jenis pendaftaran!\n\nMohon:\n1. Klik tombol "KEMBALI KE PILIHAN JENIS PENDAFTARAN"\n2. Pilih jenis pendaftaran Anda\n3. Form ini akan tertampil otomatis dengan data tersimpan');
+                    showError('<i class="fas fa-times-circle text-danger"></i> VALIDASI GAGAL\n\nAnda belum memilih jenis pendaftaran!\n\nMohon:\n1. Klik tombol "KEMBALI KE PILIHAN JENIS PENDAFTARAN"\n2. Pilih jenis pendaftaran Anda\n3. Form ini akan tertampil otomatis dengan data tersimpan');
                     return;
                 }
-                log('✅ selectionTypeId VALID for submission: ' + selectionTypeId);
+                log('<i class="fas fa-check-circle text-success"></i> selectionTypeId VALID for submission: ' + selectionTypeId);
 
                 // For exam selection, validate program choice 1
                 if (requireTesting) {
@@ -2418,16 +2418,16 @@
                 // ===== PREPARE FORMDATA (STEP 3) =====
                 log('Step 3: Preparing FormData for submission...');
                 
-                // ✅ selectionTypeId and jenisSeleksiId already validated during init
+                // <i class="fas fa-check-circle text-success"></i> selectionTypeId and jenisSeleksiId already validated during init
                 // Both are guaranteed to be valid at this point
-                log('✅ Using validated selectionTypeId: ' + selectionTypeId);
-                log('✅ Using validated jenisSeleksiId: ' + jenisSeleksiId);
+                log('<i class="fas fa-check-circle text-success"></i> Using validated selectionTypeId: ' + selectionTypeId);
+                log('<i class="fas fa-check-circle text-success"></i> Using validated jenisSeleksiId: ' + jenisSeleksiId);
                 
                 const formData = new FormData();
                 
                 // Selection type and testing info - CRITICAL
                 formData.append('selectionTypeId', String(selectionTypeId).trim());
-                formData.append('jenisSeleksiId', String(jenisSeleksiId || '').trim());  // ✅ ALSO SEND jenisSeleksiId
+                formData.append('jenisSeleksiId', String(jenisSeleksiId || '').trim());  // <i class="fas fa-check-circle text-success"></i> ALSO SEND jenisSeleksiId
                 formData.append('requireTesting', requireTesting);
 
                 // Program choices
@@ -2503,7 +2503,7 @@
                     log('Transcript file appended: ' + transcriptFile.files[0].name);
                 }
                 
-                // ✅ NEW: Append conditional files for RANKING_NO_TEST wave
+                // <i class="fas fa-check-circle text-success"></i> NEW: Append conditional files for RANKING_NO_TEST wave
                 const currentWaveType = localStorage.getItem('currentWaveType');
                 if (currentWaveType === 'RANKING_NO_TEST') {
                     const nilaiFileInput = document.getElementById('nilaiFileInput');
@@ -2543,14 +2543,14 @@
                 });
                 
                 if (tokenCheckResponse.status === 401) {
-                    logError('❌ FATAL: Token expired or invalid before submission!');
-                    showAuthRequiredModal('❌ Sesi Anda telah berakhir. Silahkan login kembali dan lanjutkan mengisi formulir.');
+                    logError('<i class="fas fa-times-circle text-danger"></i> FATAL: Token expired or invalid before submission!');
+                    showAuthRequiredModal('<i class="fas fa-times-circle text-danger"></i> Sesi Anda telah berakhir. Silahkan login kembali dan lanjutkan mengisi formulir.');
                     document.getElementById('submitFormBtn').disabled = false;
                     document.getElementById('submitFormBtn').innerHTML = originalBtnText;
                     return;
                 }
                 
-                log('✅ Token VERIFIED as valid - Safe to proceed with submission');
+                log('<i class="fas fa-check-circle text-success"></i> Token VERIFIED as valid - Safe to proceed with submission');
                 
                 // Show loading state on button
                 const submitBtn = document.getElementById('submitFormBtn');
@@ -2572,14 +2572,14 @@
                     log('🔔 Response received - Status: ' + response.status + ' ' + response.statusText);
                     
                     if (response.status === 401 || response.status === 403) {
-                        logError('❌ Auth error (401/403) - logging out');
+                        logError('<i class="fas fa-times-circle text-danger"></i> Auth error (401/403) - logging out');
                         showError('Sesi Anda sudah kadaluarsa. Silahkan login kembali.');
                         setTimeout(() => logout(), 2000);
                         return null;
                     }
                     
                     if (!response.ok) {
-                        logError('❌ HTTP Error: ' + response.status);
+                        logError('<i class="fas fa-times-circle text-danger"></i> HTTP Error: ' + response.status);
                         return response.text().then(text => {
                             logError('Response body: ' + text);
                             throw new Error('HTTP ' + response.status + ': ' + text);
@@ -2647,7 +2647,7 @@
                                 const periodId = localStorage.getItem('selectedPeriodId');
                                 log('📍 [PAYMENT-REDIRECT] periodId:', periodId, ', selectionTypeId:', selectionTypeId);
                                 if (!periodId) {
-                                    logError('❌ ERROR: periodId tidak ada saat redirect ke payment!');
+                                    logError('<i class="fas fa-times-circle text-danger"></i> ERROR: periodId tidak ada saat redirect ke payment!');
                                     window.location.href = `/payment-briva.html?selectionTypeId=${selectionTypeId}&periodId=0`;
                                 } else {
                                     window.location.href = `/payment-briva.html?selectionTypeId=${selectionTypeId}&periodId=${periodId}`;
@@ -2672,9 +2672,9 @@
                     }
                 })
                 .catch(error => {
-                    logError('❌ NETWORK ERROR: ' + error.message);
+                    logError('<i class="fas fa-times-circle text-danger"></i> NETWORK ERROR: ' + error.message);
                     logError('Full error: ', error);
-                    showError('❌ Kesalahan jaringan: ' + error.message + '\n\nPeriksa koneksi internet dan coba lagi.');
+                    showError('<i class="fas fa-times-circle text-danger"></i> Kesalahan jaringan: ' + error.message + '\n\nPeriksa koneksi internet dan coba lagi.');
                     console.error('Form submission network error:', error);
                     // Restore button on error
                     submitBtn.disabled = false;
@@ -2732,9 +2732,9 @@
                 log(JSON.stringify(data, null, 2));
                 
                 if (data.success) {
-                    log('✅ TEST PASSED! selectionTypeId was received correctly');
+                    log('<i class="fas fa-check-circle text-success"></i> TEST PASSED! selectionTypeId was received correctly');
                 } else {
-                    logError('❌ TEST FAILED: ' + data.error);
+                    logError('<i class="fas fa-times-circle text-danger"></i> TEST FAILED: ' + data.error);
                 }
             })
             .catch(error => {

@@ -277,7 +277,7 @@
             color: #0d47a1;
         }
 
-        /* ✅ PAKTA INTEGRITAS SECTION */
+        /* <i class="fas fa-check-circle text-success"></i> PAKTA INTEGRITAS SECTION */
         .pakta-integritas-section {
             background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%);
             border: 2px solid #ffa726;
@@ -486,7 +486,7 @@
             <form id="reenrollmentForm" onsubmit="submitReenrollment(event)">
                 <!-- Progress Info -->
                 <div class="progress-info">
-                    <div class="progress-info-title">📋 Instruksi</div>
+                    <div class="progress-info-title"><i class="fas fa-clipboard-list"></i> Instruksi</div>
                     <div class="progress-info-text">
                         Silakan isi formulir daftar ulang di bawah dan upload semua dokumen yang diperlukan. 
                         Pastikan semua file dalam format PDF atau gambar (JPG/PNG) dengan ukuran maksimal 5MB.
@@ -498,7 +498,7 @@
                     <div class="pakta-header">
                         <i class="fas fa-file-pdf"></i>
                         <div class="pakta-text">
-                            <h4>📝 Pakta Integritas</h4>
+                            <h4><i class="fas fa-edit"></i> Pakta Integritas</h4>
                             <p>Silakan download dan baca Pakta Integritas sebelum melanjutkan proses daftar ulang</p>
                         </div>
                     </div>
@@ -614,7 +614,7 @@
         // Store uploaded files
         let uploadedFiles = {};
 
-        // ✅ NEW: Check Re-enrollment Eligibility (Simplified - Only Auth + Cicilan Status)
+        // <i class="fas fa-check-circle text-success"></i> NEW: Check Re-enrollment Eligibility (Simplified - Only Auth + Cicilan Status)
         async function checkReenrollmentEligibility() {
             try {
                 console.log('🔍 [DAFTAR-ULANG] ========== CHECKING RE-ENROLLMENT ELIGIBILITY ==========');
@@ -628,7 +628,7 @@
                     console.log('❌ [DAFTAR-ULANG] No auth token found');
                     showReenrollmentAccessGuard(
                         'Belum Login',
-                        '🔐 Anda harus login terlebih dahulu untuk mengakses halaman daftar ulang.',
+                        '<i class="fas fa-lock"></i> Anda harus login terlebih dahulu untuk mengakses halaman daftar ulang.',
                         '/login.html',
                         'Ke Halaman Login'
                     );
@@ -645,7 +645,7 @@
                     console.log('❌ [DAFTAR-ULANG] Profile fetch failed - Status:', profileResponse.status);
                     showReenrollmentAccessGuard(
                         'Sesi Berakhir',
-                        '⏱️ Sesi login Anda telah berakhir. Silakan login kembali.',
+                        '<i class="fas fa-stopwatch"></i> Sesi login Anda telah berakhir. Silakan login kembali.',
                         '/login.html',
                         'Ke Halaman Login'
                     );
@@ -660,7 +660,7 @@
                     console.log('❌ [DAFTAR-ULANG] Invalid student data - no studentId');
                     showReenrollmentAccessGuard(
                         'Data Tidak Valid',
-                        '⚠️ Data profil Anda tidak valid. Silakan hubungi admin.',
+                        '<i class="fas fa-exclamation-triangle text-warning"></i> Data profil Anda tidak valid. Silakan hubungi admin.',
                         '/dashboard-camaba.html',
                         'Kembali ke Dashboard'
                     );
@@ -668,8 +668,8 @@
                 }
 
                 // STEP 3: Check payment status - only PAYMENT_BRIVA = SELESAI is required for re-enrollment
-                // ❌ NO MORE: Validation status check (formulir approval)
-                // ✅ ONLY: Cicilan pembayaran status check
+                // <i class="fas fa-times-circle text-danger"></i> NO MORE: Validation status check (formulir approval)
+                // <i class="fas fa-check-circle text-success"></i> ONLY: Cicilan pembayaran status check
                 console.log('💳 [DAFTAR-ULANG] STEP 3: Fetching registration status (cicilan check)...');
                 
                 const statusResponse = await fetch(`/api/camaba/registration-status/all`, {
@@ -680,7 +680,7 @@
                     console.log('❌ [DAFTAR-ULANG] Error fetching registration status - Status:', statusResponse.status);
                     showReenrollmentAccessGuard(
                         'Cicilan Belum Dikonfirmasi',
-                        '⚠️ Status cicilan Anda belum dapat diakses. Silakan hubungi admin.',
+                        '<i class="fas fa-exclamation-triangle text-warning"></i> Status cicilan Anda belum dapat diakses. Silakan hubungi admin.',
                         '/dashboard-camaba.html',
                         'Kembali ke Dashboard'
                     );
@@ -701,7 +701,7 @@
                     });
                 }
 
-                // ✅ Only check PAYMENT_BRIVA status - must be SELESAI
+                // <i class="fas fa-check-circle text-success"></i> Only check PAYMENT_BRIVA status - must be SELESAI
                 const paymentStatus = registrationStatuses.find(s => s.stage === 'PAYMENT_BRIVA');
                 
                 console.log('🔍 [DAFTAR-ULANG] Looking for PAYMENT_BRIVA stage...');
@@ -718,23 +718,23 @@
                     console.log('❌ [DAFTAR-ULANG] PAYMENT_BRIVA stage not found - showing error');
                     showReenrollmentAccessGuard(
                         'Cicilan Belum Dicek',
-                        '⏳ Cicilan pembayaran Anda belum diproses. Hubungi admin untuk konfirmasi.',
+                        '<i class="fas fa-hourglass-half"></i> Cicilan pembayaran Anda belum diproses. Hubungi admin untuk konfirmasi.',
                         '/dashboard-camaba.html',
                         'Kembali ke Dashboard'
                     );
                     return false;
                 }
 
-                // ✅ ONLY requirement: Payment status must be SELESAI
+                // <i class="fas fa-check-circle text-success"></i> ONLY requirement: Payment status must be SELESAI
                 console.log('🔍 [DAFTAR-ULANG] Checking if PAYMENT_BRIVA status is SELESAI...');
                 console.log('  Current status:', paymentStatus.status);
                 
                 if (paymentStatus.status !== 'SELESAI') {
                     console.log('❌ [DAFTAR-ULANG] Payment status is NOT SELESAI:', paymentStatus.status);
-                    let message = '💳 Cicilan belum dibayar. Harap selesaikan pembayaran cicilan terlebih dahulu.';
+                    let message = '<i class="fas fa-credit-card"></i> Cicilan belum dibayar. Harap selesaikan pembayaran cicilan terlebih dahulu.';
                     
                     if (paymentStatus.status === 'MENUNGGU') {
-                        message = '⏳ Cicilan Anda sedang diproses. Tunggu beberapa saat.';
+                        message = '<i class="fas fa-hourglass-half"></i> Cicilan Anda sedang diproses. Tunggu beberapa saat.';
                     }
 
                     showReenrollmentAccessGuard(
@@ -746,7 +746,7 @@
                     return false;
                 }
 
-                // ✅ Access approved - only requirement: PAYMENT_BRIVA = SELESAI
+                // <i class="fas fa-check-circle text-success"></i> Access approved - only requirement: PAYMENT_BRIVA = SELESAI
                 console.log('✅ [DAFTAR-ULANG] Re-enrollment access GRANTED! (PAYMENT_BRIVA = SELESAI)');
                 return true;
             } catch (error) {
@@ -755,7 +755,7 @@
                 console.error('  Error stack:', error.stack);
                 showReenrollmentAccessGuard(
                     'Terjadi Kesalahan',
-                    '⚠️ Terjadi kesalahan. Silakan coba lagi atau hubungi admin.',
+                    '<i class="fas fa-exclamation-triangle text-warning"></i> Terjadi kesalahan. Silakan coba lagi atau hubungi admin.',
                     '/dashboard-camaba.html',
                     'Kembali ke Dashboard'
                 );
@@ -768,7 +768,7 @@
             const container = document.querySelector('.form-content');
             container.innerHTML = `
                 <div class="guard-modal">
-                    <div class="guard-modal-icon">🚫</div>
+                    <div class="guard-modal-icon"><i class="fas fa-ban text-danger"></i></div>
                     <div class="guard-modal-title">${title}</div>
                     <div class="guard-modal-message">${message}</div>
                     <div class="guard-modal-buttons">
@@ -784,7 +784,7 @@
         }
 
         // Initialize form on page load
-        // ✅ INITIALIZE AUTH TOKEN EARLY (before DOMContentLoaded)
+        // <i class="fas fa-check-circle text-success"></i> INITIALIZE AUTH TOKEN EARLY (before DOMContentLoaded)
         if (!authToken) {
             authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
             console.log('🔑 [INIT-AUTH] authToken initialized:', authToken ? authToken.substring(0, 20) + '...' : 'NULL');
@@ -799,7 +799,7 @@
             initializeDocumentUploads();
             setupAlumniToggle();
             
-            // ✅ NEW: Load existing reenrollment data if it exists
+            // <i class="fas fa-check-circle text-success"></i> NEW: Load existing reenrollment data if it exists
             await loadExistingReerollmentData();
         });
 
@@ -919,7 +919,7 @@
             });
         }
 
-        // ✅ NEW: Load existing reenrollment data from API
+        // <i class="fas fa-check-circle text-success"></i> NEW: Load existing reenrollment data from API
         async function loadExistingReerollmentData() {
             try {
                 const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
@@ -943,7 +943,7 @@
 
                 console.log('✅ [LOAD-EXISTING] Loaded existing reenrollment data:', data);
 
-                // ✅ Populate form fields from existing data
+                // <i class="fas fa-check-circle text-success"></i> Populate form fields from existing data
                 if (data.parentName) document.getElementById('parentName').value = data.parentName;
                 if (data.parentPhone) document.getElementById('parentPhone').value = data.parentPhone;
                 if (data.parentEmail) document.getElementById('parentEmail').value = data.parentEmail;
@@ -956,7 +956,7 @@
                 if (data.alumniName) document.getElementById('alumniName').value = data.alumniName;
                 if (data.alumniRelation) document.getElementById('alumniRelation').value = data.alumniRelation;
 
-                // ✅ Display existing documents
+                // <i class="fas fa-check-circle text-success"></i> Display existing documents
                 if (data.documents && Object.keys(data.documents).length > 0) {
                     console.log('📄 [LOAD-EXISTING] Displaying existing documents:', data.documents);
                     displayExistingDocuments(data.documents);
@@ -970,7 +970,7 @@
             }
         }
 
-        // ✅ NEW: Display existing document files in edit form
+        // <i class="fas fa-check-circle text-success"></i> NEW: Display existing document files in edit form
         function displayExistingDocuments(documents) {
             const documentMap = {
                 'PAKTA_INTEGRITAS': 'Pakta Integritas',
@@ -1051,7 +1051,7 @@
                 console.log('📤 Step 1: Submitting reenrollment data to /api/camaba/reenrollment/submit');
                 console.log('   Total files:', Object.keys(uploadedFiles).length);
                 
-                // ✅ RETRY LOGIC: Attempt up to 3 times for transient failures
+                // <i class="fas fa-check-circle text-success"></i> RETRY LOGIC: Attempt up to 3 times for transient failures
                 let response = null;
                 let lastError = null;
                 let maxRetries = 3;
@@ -1110,7 +1110,7 @@
                 const result = await response.json();
                 console.log('✅ Step 1 SUCCESS: Reenrollment submitted successfully:', result);
                 
-                // ✅ STEP 2 (CRITICAL): Update registration status to DAFTAR_ULANG/complete
+                // <i class="fas fa-check-circle text-success"></i> STEP 2 (CRITICAL): Update registration status to DAFTAR_ULANG/complete
                 // Use dedicated endpoint specifically for marking daftar ulang as complete
                 // Pattern follows other stages: gelombang, formula, payment, etc.
                 console.log('📤 Step 2: Marking DAFTAR_ULANG stage as complete');
@@ -1171,7 +1171,7 @@
                     console.warn('⚠️ But continuing anyway - reenrollment was already submitted in Step 1');
                 }
                 
-                showAlert('✅ Daftar ulang berhasil dikirim! Silakan tunggu konfirmasi dari admin.', 'success');
+                showAlert('<i class="fas fa-check-circle text-success"></i> Daftar ulang berhasil dikirim! Silakan tunggu konfirmasi dari admin.', 'success');
                 
                 // Small delay to allow status to propagate
                 setTimeout(() => {

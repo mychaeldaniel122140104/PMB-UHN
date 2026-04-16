@@ -102,7 +102,7 @@
             font-size: 16px;
         }
 
-        /* ✅ STYLING UNTUK HARGA YANG HARUS DIBAYAR SECTION */
+        /* <i class="fas fa-check-circle text-success"></i> STYLING UNTUK HARGA YANG HARUS DIBAYAR SECTION */
         #cicilanSelectionSection .payment-info-box {
             margin-bottom: 16px !important;
         }
@@ -511,7 +511,7 @@
             margin-left: 10px;
         }
 
-        /* ✅ CICILAN SELECTION SECTION STYLING */
+        /* <i class="fas fa-check-circle text-success"></i> CICILAN SELECTION SECTION STYLING */
         #cicilanSelectionSection .card {
             border: 2px solid var(--success) !important;
             border-radius: 12px;
@@ -562,7 +562,7 @@
             color: #333;
         }
 
-        /* ✅ WAITING APPROVAL SECTION STYLING */
+        /* <i class="fas fa-check-circle text-success"></i> WAITING APPROVAL SECTION STYLING */
         .waiting-card {
             background: white;
             border: 2px solid var(--success);
@@ -821,7 +821,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ✅ SUCCESS HEADER SECTION */
+        /* <i class="fas fa-check-circle text-success"></i> SUCCESS HEADER SECTION */
         .success-header-section {
             text-align: center;
             background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
@@ -961,7 +961,7 @@
                     <div class="card-body">
                         <!-- Prodi Selection -->
                         <div class="mb-4">
-                            <label for="programStudiSelect" class="form-label"><strong>🎓 Pilih Program Studi Tujuan Anda</strong></label>
+                            <label for="programStudiSelect" class="form-label"><strong><i class="fas fa-graduation-cap"></i> Pilih Program Studi Tujuan Anda</strong></label>
                             <select class="form-select" id="programStudiSelect" onchange="onProgramStudiChange()">
                                 <option value="">-- Pilih Program Studi --</option>
                             </select>
@@ -970,7 +970,7 @@
 
                         <!-- Cicilan Count Selection -->
                         <div class="mb-4">
-                            <label class="form-label"><strong>📊 Tentukan Jumlah Cicilan (Maksimum 6 Kali)</strong></label>
+                            <label class="form-label"><strong><i class="fas fa-chart-bar"></i> Tentukan Jumlah Cicilan (Maksimum 6 Kali)</strong></label>
                             <div class="row g-3">
                                 <div class="col-md-5">
                                     <div class="input-group" style="height: 45px;">
@@ -985,7 +985,7 @@
                         <!-- HARGA YANG HARUS DIBAYAR - Besar dan Prominent -->
                         <div class="mb-5" style="border-top: 3px solid #e5e5e5; padding-top: 30px;">
                             <h3 style="color: var(--success); font-weight: 700; font-size: 22px; margin-bottom: 25px; text-align: center;">
-                                💰 Harga yang Harus Dibayar
+                                <i class="fas fa-coins"></i> Harga yang Harus Dibayar
                             </h3>
 
                             <!-- Harga Total -->
@@ -1007,7 +1007,7 @@
                             <!-- Keterangan Cicilan Selanjutnya -->
                             <div class="payment-info-box mb-0">
                                 <div style="font-size: 15px; color: #333; line-height: 1.8;">
-                                    <div style="margin-bottom: 15px; font-weight: 700; color: var(--success); font-size: 16px;">📋 Keterangan Cicilan Selanjutnya</div>
+                                    <div style="margin-bottom: 15px; font-weight: 700; color: var(--success); font-size: 16px;"><i class="fas fa-clipboard-list"></i> Keterangan Cicilan Selanjutnya</div>
                                     
                                     <div style="margin-bottom: 10px;">
                                         <strong>Jumlah cicilan:</strong> <span id="displayJumlahCicilan">1</span>
@@ -1030,7 +1030,7 @@
 
                         <!-- Payment Method Selection -->
                         <div class="mb-4">
-                            <label class="form-label"><strong>🛠️ Pilih Metode Pembayaran yang Anda Inginkan</strong></label>
+                            <label class="form-label"><strong><i class="fas fa-tools"></i> Pilih Metode Pembayaran yang Anda Inginkan</strong></label>
                             <div class="cicilan-methods">
                                 <div class="method-card" onclick="selectPaymentMethod('SIMULATION')">
                                     <i class="fas fa-university"></i>
@@ -1292,14 +1292,14 @@
                 console.log('Token:', authToken ? '✅ Present' : '❌ Missing');
                 console.log('Admission Form ID:', admissionFormId || '❌ Not in URL params');
 
-                // ✅ Validate auth before proceeding
+                // <i class="fas fa-check-circle text-success"></i> Validate auth before proceeding
                 if (!authToken) {
                     console.error('❌ No authentication token found');
                     showAuthenticationPopup();
                     return;
                 }
 
-                // ✅ Step 1: Fetch admission form to get PROGRAM_STUDI_1, 2, 3
+                // <i class="fas fa-check-circle text-success"></i> Step 1: Fetch admission form to get PROGRAM_STUDI_1, 2, 3
                 console.log('\n📍 Step 1: Fetching admission form from /api/camaba/admission-forms/current');
                 
                 const response = await fetch('/api/camaba/admission-forms/current', {
@@ -1308,7 +1308,7 @@
 
                 console.log(`Response status: ${response.status}`);
 
-                // ✅ Check for authentication errors
+                // <i class="fas fa-check-circle text-success"></i> Check for authentication errors
                 if (response.status === 401 || response.status === 403) {
                     console.error(`❌ Authentication failed: ${response.status}`);
                     showAuthenticationPopup();
@@ -1338,7 +1338,7 @@
                 console.log(`   - Student ID: ${form.studentId}`);
                 console.log(`   - Available fields:`, Object.keys(form).slice(0, 10).join(', ') + '...');
 
-                // ✅ Step 2: Get the 3 program studi IDs (try multiple field name variations)
+                // <i class="fas fa-check-circle text-success"></i> Step 2: Get the 3 program studi IDs (try multiple field name variations)
                 console.log('\n📍 Step 2: Extracting program studi IDs');
                 console.log('All form fields:', Object.keys(form));
                 
@@ -1364,7 +1364,7 @@
                     }
                 }
 
-                // ✅ If no program studi found in current response, try alternative endpoint
+                // <i class="fas fa-check-circle text-success"></i> If no program studi found in current response, try alternative endpoint
                 if (programStudiIds.length === 0) {
                     console.warn('\n⚠️ Program studi IDs not found in /current response');
                     console.warn('   Trying alternative: /api/camaba/admission-forms/{studentId}');
@@ -1413,7 +1413,7 @@
 
                 console.log(`\n✅ Successfully extracted ${programStudiIds.length} program studi IDs:`, programStudiIds);
 
-                // ✅ Step 3: Fetch all program studi details
+                // <i class="fas fa-check-circle text-success"></i> Step 3: Fetch all program studi details
                 console.log('\n📍 Step 3: Fetching program studi details');
                 
                 const select = document.getElementById('programStudiSelect');
@@ -1531,7 +1531,7 @@
 
                 console.log(`\n✅ Successfully loaded ${successCount}/${programStudiIds.length} programs`);
 
-                // ✅ Step 4: Set default selection to priority 1 (first program)
+                // <i class="fas fa-check-circle text-success"></i> Step 4: Set default selection to priority 1 (first program)
                 if (defaultProdiId) {
                     select.value = defaultProdiId;
                     onProgramStudiChange();
@@ -1670,7 +1670,7 @@
             document.getElementById('formulaTotal').textContent = formatCurrency(hargaTotal);
             document.getElementById('formulaCicilan1').textContent = formatCurrency(hargaCicilan1);
 
-            // ✅ NEW LOGIC: Cicilan pertama fixed, sisa cicilan dibagi rata
+            // <i class="fas fa-check-circle text-success"></i> NEW LOGIC: Cicilan pertama fixed, sisa cicilan dibagi rata
             if (jumlahCicilan === 1) {
                 // Jika hanya 1 cicilan, semuanya dibayar di cicilan pertama
                 document.getElementById('formulaSisaCicilan').textContent = '1';
@@ -1709,29 +1709,29 @@
                 const paymentMethod = selectedPaymentMethod;
 
                 if (!prodiSelect.value || prodiSelect.value <= 0) {
-                    alert('❌ Pilih program studi yang valid terlebih dahulu');
+ alert(' Pilih program studi yang valid terlebih dahulu');
                     return;
                 }
 
                 if (!paymentMethod) {
-                    alert('❌ Pilih metode pembayaran terlebih dahulu');
+ alert(' Pilih metode pembayaran terlebih dahulu');
                     return;
                 }
 
                 const programStudiId = parseInt(prodiSelect.value);
                 
-                // ✅ Validate program studi ID
+                // <i class="fas fa-check-circle text-success"></i> Validate program studi ID
                 console.log('📤 Submitting cicilan with:');
                 console.log('   programStudiId:', programStudiId);
                 console.log('   jumlahCicilan:', jumlahCicilan);
                 console.log('   paymentMethod:', paymentMethod);
 
                 if (!Number.isInteger(programStudiId) || programStudiId <= 0) {
-                    alert('❌ Program Studi ID tidak valid (harus integer > 0)');
+ alert(' Program Studi ID tidak valid (harus integer > 0)');
                     return;
                 }
 
-                // ✅ Use studentId from authenticated user (no need for admissionFormId)
+                // <i class="fas fa-check-circle text-success"></i> Use studentId from authenticated user (no need for admissionFormId)
                 const payload = {
                     programStudiId: programStudiId,
                     jumlahCicilan: jumlahCicilan,
@@ -1747,7 +1747,7 @@
                     body: JSON.stringify(payload)
                 });
 
-                // ✅ Check for authentication errors
+                // <i class="fas fa-check-circle text-success"></i> Check for authentication errors
                 if (response.status === 401 || response.status === 403) {
                     console.error(`❌ Authentication failed: ${response.status}`);
                     showAuthenticationPopup();
@@ -1758,13 +1758,13 @@
                     const result = await response.json();
                     console.log('✅ Cicilan request submitted:', result);
                     
-                    // ✅ Store cicilan data for later use
+                    // <i class="fas fa-check-circle text-success"></i> Store cicilan data for later use
                     cicilanData = result.data || result;
                     
-                    // ✅ Hide form, show waiting validation section
+                    // <i class="fas fa-check-circle text-success"></i> Hide form, show waiting validation section
                     showSection('waitingApprovalSection');
                     
-                    alert('✅ Request cicilan berhasil disubmit!\n\nHalaman akan menampilkan status "Menunggu Validasi Admin".\nSilakan tunggu validasi dari admin, biasanya memakan waktu beberapa jam.');
+ alert(' Request cicilan berhasil disubmit!\n\nHalaman akan menampilkan status "Menunggu Validasi Admin".\nSilakan tunggu validasi dari admin, biasanya memakan waktu beberapa jam.');
                     
                     // Check status if admissionFormId available
                     if (admissionFormId) {
@@ -1784,7 +1784,7 @@
             try {
                 console.log('🔍 [CICILAN-CHECK] Checking cicilan status for authenticated user...');
                 
-                // ✅ Build URL based on available info
+                // <i class="fas fa-check-circle text-success"></i> Build URL based on available info
                 // Try endpoint for current user first (no admissionFormId needed)
                 let url = '/api/cicilan/my-status';  // NEW: Check current user's cicilan
                 if (admissionFormId && admissionFormId > 0) {
@@ -1798,7 +1798,7 @@
                 
                 console.log('📡 [CICILAN-CHECK] Response status:', response.status);
 
-                // ✅ Check for authentication errors
+                // <i class="fas fa-check-circle text-success"></i> Check for authentication errors
                 if (response.status === 401 || response.status === 403) {
                     console.error(`❌ Authentication failed: ${response.status}`);
                     showAuthenticationPopup();
@@ -1865,7 +1865,7 @@
             console.log('   - hargaTotal:', hargaTotal);
             console.log('   - hargaCicilan1:', hargaCicilan1);
             
-            // ✅ Update VA Number in simulasi section
+            // <i class="fas fa-check-circle text-success"></i> Update VA Number in simulasi section
             if (briva) {
                 const vaNumberEl = document.getElementById('vaNumber');
                 if (vaNumberEl) {
@@ -1874,10 +1874,10 @@
                 }
             }
             
-            // ✅ ADD: Payment note - currently only need to pay cicilan 1
+            // <i class="fas fa-check-circle text-success"></i> ADD: Payment note - currently only need to pay cicilan 1
             const noteDiv = document.createElement('div');
             noteDiv.style.cssText = 'background: #e8f4f8; border-left: 4px solid #0288d1; padding: 12px 15px; margin-bottom: 15px; border-radius: 4px; font-size: 24px; color: #01579b;';
-            noteDiv.innerHTML = `<strong>ℹ️ Catatan:</strong> Saat ini cukup membayar <strong>Cicilan ke-1</strong> dengan nominal <strong>Rp ${formatCurrency(hargaCicilan1)}</strong>. Cicilan berikutnya akan Dilaksanakan pada Website Berbeda.`;
+            noteDiv.innerHTML = `<strong><i class="fas fa-info-circle"></i> Catatan:</strong> Saat ini cukup membayar <strong>Cicilan ke-1</strong> dengan nominal <strong>Rp ${formatCurrency(hargaCicilan1)}</strong>. Cicilan berikutnya akan Dilaksanakan pada Website Berbeda.`;
             container.appendChild(noteDiv);
             
             // Calculate remaining after cicilan 1
@@ -1913,7 +1913,7 @@
             });
         }
 
-        // ✅ NEW: Load and display BRIVA before showing VA section
+        // <i class="fas fa-check-circle text-success"></i> NEW: Load and display BRIVA before showing VA section
         async function displayVAPaymentSection() {
             try {
                 console.log('💳 [VA-SECTION] Displaying VA payment section...');
@@ -1925,7 +1925,7 @@
                 if (!briva) {
                     console.warn('⚠️ [VA-SECTION] BRIVA not found in cicilan data');
                     console.warn('   Available fields:', Object.keys(cicilanData || {}));
-                    alert('⚠️ Nomor BRIVA belum tersedia. Hubungi admin untuk konfirmasi.');
+ alert(' Nomor BRIVA belum tersedia. Hubungi admin untuk konfirmasi.');
                     return;
                 }
                 
@@ -1950,21 +1950,21 @@
             }
         }
 
-        // ✅ UPDATED: Match manual payment success flow
+        // <i class="fas fa-check-circle text-success"></i> UPDATED: Match manual payment success flow
         async function simulateVAPayment() {
             try {
                 if (!confirm('Simulasi pembayaran VA berhasil untuk testing?\n\nStatus akan diubah menjadi LUNAS.')) return;
                 
                 console.log('⭐ SIMULATING VA PAYMENT SUCCESS...');
                 
-                // ✅ STEP 1: Show success message (like manual payment)
+                // <i class="fas fa-check-circle text-success"></i> STEP 1: Show success message (like manual payment)
                 showCicilanPaymentSuccess();
                 
-                // ✅ STEP 2: Update backend status
+                // <i class="fas fa-check-circle text-success"></i> STEP 2: Update backend status
                 console.log('🔄 [VA-SIMULASI] Updating backend cicilan status...');
                 await updateCicilanPaymentStatusInBackend();
                 
-                // ✅ STEP 3: Redirect to dashboard in 3 seconds (like manual payment)
+                // <i class="fas fa-check-circle text-success"></i> STEP 3: Redirect to dashboard in 3 seconds (like manual payment)
                 console.log('⏳ [VA-SIMULASI] Redirecting to dashboard in 3 seconds...');
                 setTimeout(() => {
                     console.log('🚀 [VA-SIMULASI] Redirecting to /dashboard-camaba.html');
@@ -1973,7 +1973,7 @@
                 
             } catch (error) {
                 console.error('❌ Error in simulateVAPayment:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -2040,7 +2040,7 @@
 
                 console.log('📊 [CICILAN-MANUAL] Response status:', response.status);
 
-                // ✅ Check for authentication errors
+                // <i class="fas fa-check-circle text-success"></i> Check for authentication errors
                 if (response.status === 401 || response.status === 403) {
                     console.error(`❌ [CICILAN-MANUAL] Authentication failed: ${response.status}`);
                     showAuthenticationPopup();
@@ -2052,7 +2052,7 @@
                     const result = await response.json();
                     console.log('✅ [CICILAN-MANUAL] Manual payment submitted successfully:', result);
                     
-                    // ✅ MATCH PAYMENT-BRIVA PATTERN: 
+                    // <i class="fas fa-check-circle text-success"></i> MATCH PAYMENT-BRIVA PATTERN: 
                     // Show success message first
                     showCicilanPaymentSuccess();
                     
@@ -2080,7 +2080,7 @@
             }
         }
 
-        // ✅ NEW: Match payment-briva.html pattern - update cicilan status in backend
+        // <i class="fas fa-check-circle text-success"></i> NEW: Match payment-briva.html pattern - update cicilan status in backend
         async function updateCicilanPaymentStatusInBackend() {
             try {
                 if (!cicilanData || !cicilanData.id) {
@@ -2116,7 +2116,7 @@
             }
         }
 
-        // ✅ NEW: Show success message like payment-briva.html
+        // <i class="fas fa-check-circle text-success"></i> NEW: Show success message like payment-briva.html
         function showCicilanPaymentSuccess() {
             // Create/show success message
             const successDiv = document.createElement('div');
@@ -2138,7 +2138,7 @@
                 <div style="display: flex; gap: 15px; align-items: center;">
                     <i class="fas fa-check-circle" style="font-size: 28px; color: #28a745; flex-shrink: 0;"></i>
                     <div>
-                        <strong style="color: #155724; font-size: 16px;">✅ Bukti Pembayaran Berhasil Dikirim!</strong>
+                        <strong style="color: #155724; font-size: 16px;"><i class="fas fa-check-circle text-success"></i> Bukti Pembayaran Berhasil Dikirim!</strong>
                         <p style="margin-bottom: 5px; font-size: 14px; color: #155724;">Bukti pembayaran Anda sedang menunggu verifikasi admin. Silakan tunggu notifikasi selanjutnya.</p>
                         <p style="margin: 0; font-size: 12px; color: #0c5460;">Anda akan diarahkan ke dashboard dalam beberapa detik...</p>
                     </div>
@@ -2191,7 +2191,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-danger">
                         <div class="modal-header bg-danger text-white">
-                            <h5 class="modal-title">🔐 Sesi Berakhir</h5>
+                            <h5 class="modal-title"><i class="fas fa-lock"></i> Sesi Berakhir</h5>
                             <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -2202,7 +2202,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" onclick="redirectToLogin()">
-                                🔄 Kembali ke Login
+                                <i class="fas fa-sync-alt"></i> Kembali ke Login
                             </button>
                         </div>
                     </div>
@@ -2235,7 +2235,7 @@
 
             loadProgramStudiOptions();
             
-            // ✅ Always check cicilan status on page load
+            // <i class="fas fa-check-circle text-success"></i> Always check cicilan status on page load
             // Even if no admissionFormId in URL, check if user already has approved cicilan
             checkCicilanStatus();
         });
@@ -2261,7 +2261,7 @@
             <div class="modal-content" style="border: 3px solid #f39c12;">
                 <div class="modal-header" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; border: none;">
                     <h5 class="modal-title" style="color: white; font-weight: 700;">
-                        <i class="fas fa-exclamation-triangle"></i> ⚠️ WARNING - PERLU REVISI
+                        <i class="fas fa-exclamation-triangle"></i> <i class="fas fa-exclamation-triangle text-warning"></i> WARNING - PERLU REVISI
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="closeWarningModal()"></button>
                 </div>
@@ -2277,21 +2277,21 @@
                             
                             <div style="background: #fff3e0; border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
                                 <p style="margin: 0; color: #d68910; font-weight: 600;">
-                                    ✉️ Silahkan cek <strong>GMAIL Anda</strong> mengenai penolakan request cicilan!
+                                    <i class="fas fa-envelope"></i> Silahkan cek <strong>GMAIL Anda</strong> mengenai penolakan request cicilan!
                                 </p>
                             </div>
 
                             <p style="margin-bottom: 12px; padding-left: 20px;">
-                                <strong>📧 Gmail yang menerima pesan:</strong> Sesuai dengan gmail yang Anda gunakan untuk mendaftar
+                                <strong><i class="fas fa-envelope"></i> Gmail yang menerima pesan:</strong> Sesuai dengan gmail yang Anda gunakan untuk mendaftar
                             </p>
 
                             <p style="margin-bottom: 12px; padding-left: 20px;">
-                                <strong>📝 Isi pesan:</strong> Berisi <strong>alasan penolakan</strong> request cicilan Anda
+                                <strong><i class="fas fa-edit"></i> Isi pesan:</strong> Berisi <strong>alasan penolakan</strong> request cicilan Anda
                             </p>
 
                             <div style="background: #f0f7ff; border: 1px solid #3498db; border-left: 4px solid #3498db; padding: 15px; border-radius: 6px; margin-top: 18px;">
                                 <p style="margin: 0; color: #2c3e50;">
-                                    <strong>✅ Langkah Selanjutnya:</strong> Perbaiki data sesuai dengan alasan yang ada di pesan email, kemudian lakukan request cicilan kembali.
+                                    <strong><i class="fas fa-check-circle text-success"></i> Langkah Selanjutnya:</strong> Perbaiki data sesuai dengan alasan yang ada di pesan email, kemudian lakukan request cicilan kembali.
                                 </p>
                             </div>
                         </div>

@@ -38,9 +38,9 @@
                 <p class="info-text">Tabel lengkap hasil akhir dengan informasi gelombang, tipe seleksi, dan program studi</p>
             </div>
             <div class="btn-group-actions">
-                <button class="btn btn-primary" onclick="downloadCSV()"><i class="bi">⬇</i> CSV</button>
-                <button class="btn btn-secondary" onclick="downloadJSON()"><i class="bi">⬇</i> JSON</button>
-                <button class="btn btn-info" onclick="window.print()"><i class="bi">🖨</i> Print (Ctrl+P)</button>
+                <button class="btn btn-primary" onclick="downloadCSV()"><i class="bi"><i class="fas fa-arrow-down"></i></i> CSV</button>
+                <button class="btn btn-secondary" onclick="downloadJSON()"><i class="bi"><i class="fas fa-arrow-down"></i></i> JSON</button>
+                <button class="btn btn-info" onclick="window.print()"><i class="bi"><i class="fas fa-print"></i></i> Print (Ctrl+P)</button>
             </div>
         </div>
 
@@ -88,7 +88,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
                     <h5 class="modal-title" id="documentsModalLabel">
-                        📄 Dokumen Pendaftaran Ulang - <strong id="modalStudentName"></strong>
+                        <i class="fas fa-file-alt"></i> Dokumen Pendaftaran Ulang - <strong id="modalStudentName"></strong>
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -247,7 +247,7 @@
                     <td>${new Date(row.updatedAt).toLocaleDateString('id-ID')}</td>
                     <td style="text-align: center;">
                         <button class="btn btn-sm ${docButtonClass}" onclick="showDocumentsModal('${row.studentId}', '${row.studentName}')">
-                            📄 ${docCount}
+                            <i class="fas fa-file-alt"></i> ${docCount}
                         </button>
                     </td>
                 `;
@@ -266,12 +266,12 @@
                 docContents.innerHTML = '<div class="alert alert-warning">Tidak ada dokumen untuk mahasiswa ini</div>';
             } else {
                 const docLabels = {
-                    ijazah: '📜 Ijazah',
-                    kk: '👨‍👩‍👧‍👦 Kartu Keluarga',
+                    ijazah: '<i class="fas fa-scroll"></i> Ijazah',
+                    kk: '<i class="fas fa-users"></i> Kartu Keluarga',
                     ktp: '🆔 KTP',
-                    pasphoto: '📷 Pas Foto',
-                    skck: '📋 SKCK',
-                    sbn: '🚫 Surat Bebas Narkoba'
+                    pasphoto: '<i class="fas fa-camera"></i> Pas Foto',
+                    skck: '<i class="fas fa-clipboard-list"></i> SKCK',
+                    sbn: '<i class="fas fa-ban text-danger"></i> Surat Bebas Narkoba'
                 };
                 
                 let html = '<table class="table table-sm">';
@@ -289,7 +289,7 @@
                                 <td style="word-break: break-all; font-size: 12px; color: #666;">${fileName}</td>
                                 <td style="text-align: right; min-width: 100px;">
                                     <button class="btn btn-xs btn-primary" onclick="downloadDocument('${filePath}', '${fileName}')">
-                                        ⬇️ Download
+                                        <i class="fas fa-arrow-down"></i> Download
                                     </button>
                                 </td>
                             </tr>
@@ -328,11 +328,11 @@
                     document.body.removeChild(link);
                     window.URL.revokeObjectURL(url);
                 } else {
-                    alert('❌ Gagal download file');
+ alert(' Gagal download file');
                 }
             } catch (error) {
                 console.error('Error downloading document:', error);
-                alert('❌ Terjadi kesalahan saat download');
+ alert(' Terjadi kesalahan saat download');
             }
         }
 

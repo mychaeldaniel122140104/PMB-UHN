@@ -15,10 +15,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔐 Test Token & Authentication</h1>
+        <h1><i class="fas fa-lock"></i> Test Token & Authentication</h1>
         
         <div class="card">
-            <div class="card-header">📍 LocalStorage Status</div>
+            <div class="card-header"><i class="fas fa-map-marker-alt"></i> LocalStorage Status</div>
             <div class="card-body">
                 <p><strong>authToken:</strong> <span id="tokenStatus" class="error">Loading...</span></p>
                 <p><strong>Token Length:</strong> <span id="tokenLength">-</span> characters</p>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="card">
-            <div class="card-header">🧪 Test API Endpoints</div>
+            <div class="card-header"><i class="fas fa-flask"></i> Test API Endpoints</div>
             <div class="card-body">
                 <button class="btn btn-primary mb-2" onclick="testDebugAuth()">Test /api/camaba/debug-auth (NO auth required)</button>
                 <button class="btn btn-info mb-2" onclick="testGetAdmissionForm()">Test /api/camaba/admission-form (WITH auth)</button>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="card">
-            <div class="card-header">🔧 Actions</div>
+            <div class="card-header"><i class="fas fa-wrench"></i> Actions</div>
             <div class="card-body">
                 <button class="btn btn-warning" onclick="clearStorage()">Clear LocalStorage</button>
                 <button class="btn btn-info" onclick="goLogin()">Go to Login</button>
@@ -115,7 +115,7 @@
 
         function clearStorage() {
             localStorage.clear();
-            alert('✅ LocalStorage cleared');
+ alert(' LocalStorage cleared');
             location.reload();
         }
 
@@ -133,12 +133,12 @@
             const role = localStorage.getItem('userRole');
             
             if (token) {
-                document.getElementById('tokenStatus').textContent = '✅ Token Found';
+                document.getElementById('tokenStatus').textContent = '<i class="fas fa-check-circle text-success"></i> Token Found';
                 document.getElementById('tokenStatus').className = 'success';
                 document.getElementById('tokenLength').textContent = token.length;
                 document.getElementById('fullToken').textContent = token;
             } else {
-                document.getElementById('tokenStatus').textContent = '❌ No Token';
+                document.getElementById('tokenStatus').textContent = '<i class="fas fa-times-circle text-danger"></i> No Token';
                 document.getElementById('tokenStatus').className = 'error';
             }
 

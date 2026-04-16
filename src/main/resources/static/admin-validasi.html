@@ -272,7 +272,7 @@
         let allForms = [];
         let currentForm = null;
 
-        // ✅ ADD ROLE/AUTHORITY LOGGING
+        // <i class="fas fa-check-circle text-success"></i> ADD ROLE/AUTHORITY LOGGING
         console.log('🔐 [ADMIN-VALIDASI] User joining dashboard:');
         console.log('   📧 User Email:', userEmail);
         console.log('   🔑 Auth Token exists:', !!authToken);
@@ -382,7 +382,7 @@
 
             tbody.innerHTML = allForms.map(form => {
                 const statusDisplay = form.status === 'SUBMITTED' ? 'pending' : form.status.toLowerCase();
-                const statusText = statusDisplay === 'pending' ? '⏳ Menunggu' : 
+                const statusText = statusDisplay === 'pending' ? '<i class="fas fa-hourglass-half"></i> Menunggu' : 
                                   statusDisplay === 'verified' ? '✓ Terverifikasi' : '✗ Ditolak';
                 
                 return `

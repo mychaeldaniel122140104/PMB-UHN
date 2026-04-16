@@ -541,7 +541,7 @@
                         </td>
                         <td>
                             <span class="status-badge status-${student.status}">
-                                ${student.status === 'pending' ? '⏳ Belum VA' : student.status === 'active' ? '✓ Aktif' : '✓ Bayar'}
+                                ${student.status === 'pending' ? '<i class="fas fa-hourglass-half"></i> Belum VA' : student.status === 'active' ? '✓ Aktif' : '✓ Bayar'}
                             </span>
                             ${student.cicilan ? '<br><small>' + cicilStatus + '</small>' : ''}
                         </td>
@@ -632,7 +632,7 @@
 
             let html = `<strong>${student.name}</strong><hr>`;
             cicilan.forEach(c => {
-                const statusBadge = c.status === 'paid' ? '<span class="badge bg-success">✓ Terbayar</span>' : '<span class="badge bg-warning">⏳ Belum Bayar</span>';
+                const statusBadge = c.status === 'paid' ? '<span class="badge bg-success">✓ Terbayar</span>' : '<span class="badge bg-warning"><i class="fas fa-hourglass-half"></i> Belum Bayar</span>';
                 html += `
                     <div class="mb-3">
                         <p>Cicilan ${c.no}: Rp ${c.amount.toLocaleString('id-ID')} - Jatuh Tempo: ${c.dueDate}</p>

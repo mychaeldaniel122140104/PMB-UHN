@@ -330,7 +330,7 @@
         let selectedGelombang = null;
         let gelombangData = []; // Will be populated from API
 
-        // ✅ ALLOW PUBLIC ACCESS - gelombang selection is public, gampang aja tanpa harus login dulu
+        // <i class="fas fa-check-circle text-success"></i> ALLOW PUBLIC ACCESS - gelombang selection is public, gampang aja tanpa harus login dulu
 
         /**
          * Check & validate authentication on page load
@@ -339,7 +339,7 @@
             const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
             const email = localStorage.getItem('userEmail') || sessionStorage.getItem('userEmail');
             
-            // ✅ For gelombang selection, we allow public access - only login when actually registering
+            // <i class="fas fa-check-circle text-success"></i> For gelombang selection, we allow public access - only login when actually registering
             console.log('ℹ️ Gelombang selection is public - no login required');
             return true;
         }
@@ -365,7 +365,7 @@
                 'Content-Type': 'application/json'
             };
             
-            // ✅ Only add auth header if token exists (for logged-in users)
+            // <i class="fas fa-check-circle text-success"></i> Only add auth header if token exists (for logged-in users)
             if (authToken) {
                 headers['Authorization'] = 'Bearer ' + authToken;
             }
@@ -393,7 +393,7 @@
                     const reenStart = new Date(period.reenrollmentStartDate);
                     const reenEnd = new Date(period.reenrollmentEndDate);
                     
-                    // ✅ NEW: Determine waveType from API response OR from title
+                    // <i class="fas fa-check-circle text-success"></i> NEW: Determine waveType from API response OR from title
                     let waveTypeFromApi = period.waveType || null;
                     let derivedWaveType = 'REGULAR_TEST'; // Default
                     const nameOrTitle = period.name || '';
@@ -412,7 +412,7 @@
                     
                     console.log('   -> Derived: ' + derivedWaveType + ' | Final: ' + finalWaveType);
                     
-                    const icons = ['📝', '🏆', '📅'];
+                    const icons = ['<i class="fas fa-edit"></i>', '<i class="fas fa-trophy"></i>', '<i class="fas fa-calendar-alt"></i>'];
                     
                     return {
                         id: period.id,
@@ -429,7 +429,7 @@
                             : period.displayStatus === 'closed'
                             ? 'Pendaftaran sudah ditutup'
                             : 'Terbuka untuk semua peserta',
-                        waveType: finalWaveType  // ✅ NEW: Include waveType in object
+                        waveType: finalWaveType  // <i class="fas fa-check-circle text-success"></i> NEW: Include waveType in object
                     };
                 });
                 
@@ -466,7 +466,7 @@
             const htmlContent = gelombangData.map(g => `
                 <div class="gelombang-card ${(g.status === 'notopen' || g.status === 'closed') ? 'closed' : ''} gelombang-${g.id}">
                     <span class="badge-status ${g.status === 'open' ? 'badge-open' : 'badge-closed'}">
-                        ${g.status === 'open' ? '✓ DIBUKA' : g.status === 'notopen' ? '⏳ BELUM DIBUKA' : '✗ DITUTUP'}
+                        ${g.status === 'open' ? '✓ DIBUKA' : g.status === 'notopen' ? '<i class="fas fa-hourglass-half"></i> BELUM DIBUKA' : '✗ DITUTUP'}
                     </span>
                     <div class="gelombang-icon">${g.icon}</div>
                     <div class="gelombang-number">${g.number}</div>
@@ -501,7 +501,7 @@
                 return;
             }
 
-            // ✅ UPDATED: Use waveType passed from onclick (already validated in fetchGelombangData)
+            // <i class="fas fa-check-circle text-success"></i> UPDATED: Use waveType passed from onclick (already validated in fetchGelombangData)
             console.log('✅ [GELOMBANG-SELECT] Wave type received:', waveType);
             console.log('✅ [GELOMBANG-SELECT] Title:', title);
             
@@ -574,7 +574,7 @@
                 });
             })
             .then(response => {
-                // ✅ FIXED: Check HTTP status before parsing JSON
+                // <i class="fas fa-check-circle text-success"></i> FIXED: Check HTTP status before parsing JSON
                 if (!response.ok) {
                     if (response.status === 403) {
                         throw new Error('Sesi Anda telah berakhir. Silahkan login kembali.');
@@ -614,7 +614,7 @@
                     console.log('   PERIOD_ID akan jadi:', periodIdValue);
                     
                     // Also get jenisSeleksiId from localStorage in case already selected
-                    // ✅ Proceed directly to formula-selection (no update-selection call needed)
+                    // <i class="fas fa-check-circle text-success"></i> Proceed directly to formula-selection (no update-selection call needed)
                     console.log('✅ Gelombang dipilih - proceed to formula selection');
                     window.location.href = '/formula-selection.html';
                 } else {
@@ -649,7 +649,7 @@
         }
 
         // Load gelombang on page load - fetch from API
-        // ✅ INITIALIZE AUTH TOKEN EARLY (before DOMContentLoaded)
+        // <i class="fas fa-check-circle text-success"></i> INITIALIZE AUTH TOKEN EARLY (before DOMContentLoaded)
         if (!authToken) {
             authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
             console.log('🔑 [INIT-AUTH] authToken initialized:', authToken ? authToken.substring(0, 20) + '...' : 'NULL');
@@ -658,7 +658,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('📄 Page loaded - gelombang selection is PUBLIC, no auth required');
             
-            // ✅ Gelombang selection is PUBLIC - no validation needed
+            // <i class="fas fa-check-circle text-success"></i> Gelombang selection is PUBLIC - no validation needed
             // Just fetch data directly
             console.log('📄 Fetching gelombang data (PUBLIC ACCESS)...');
             fetchGelombangData();

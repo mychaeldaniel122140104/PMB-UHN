@@ -72,7 +72,7 @@
             font-size: 15px;
         }
         
-        /* ✅ NEW: Revision notice styling */
+        /* <i class="fas fa-check-circle text-success"></i> NEW: Revision notice styling */
         .revision-notice {
             background: #fff8e1;
             border-left: 4px solid var(--warning);
@@ -309,7 +309,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/dashboard-camaba.html">🎓 PMB HKBP</a>
+            <a class="navbar-brand" href="/dashboard-camaba.html"><i class="fas fa-graduation-cap"></i> PMB HKBP</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -333,11 +333,11 @@
         <div class="form-container">
             <!-- Header -->
             <div class="header-section">
-                <h1>📝 Form Revisi Pendaftaran</h1>
+                <h1><i class="fas fa-edit"></i> Form Revisi Pendaftaran</h1>
                 <p>Silakan perbaiki data pendaftaran Anda sesuai catatan admin</p>
             </div>
 
-            <!-- ✅ NEW: Revision Notice -->
+            <!-- <i class="fas fa-check-circle text-success"></i> NEW: Revision Notice -->
             <div class="revision-notice" id="revisionNotice" style="display:none;">
                 <div class="notice-title">
                     <i class="fas fa-exclamation-triangle"></i> Perhatian: Revisi Diperlukan
@@ -770,7 +770,7 @@
             // Get auth token
             authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
             if (!authToken) {
-                log('❌ No auth token found, redirecting to login');
+                log('<i class="fas fa-times-circle text-danger"></i> No auth token found, redirecting to login');
                 window.location.href = '/login.html';
                 return;
             }
@@ -783,7 +783,7 @@
             log('Revision Reason: ' + revisionReason);
 
             if (!revisionStudentId) {
-                log('❌ No revision student ID found');
+                log('<i class="fas fa-times-circle text-danger"></i> No revision student ID found');
                 showError('Data revisi tidak ditemukan. Silakan kembali ke dashboard dan coba lagi.');
                 return;
             }
@@ -802,7 +802,7 @@
             // Setup file upload handlers
             setupFileUploadHandlers();
 
-            log('✅ Revision form initialized');
+            log('<i class="fas fa-check-circle text-success"></i> Revision form initialized');
         });
 
         // Load existing form data from API
@@ -815,19 +815,19 @@
                 });
 
                 if (!res.ok) {
-                    log('⚠️ Could not load existing form data: ' + res.status);
+                    log('<i class="fas fa-exclamation-triangle text-warning"></i> Could not load existing form data: ' + res.status);
                     return;
                 }
 
                 const form = await res.json();
-                log('✅ Form data loaded: ID=' + form.id);
+                log('<i class="fas fa-check-circle text-success"></i> Form data loaded: ID=' + form.id);
                 revisionFormId = form.id;
 
                 // Pre-fill form fields
                 fillFormFields(form);
                 
             } catch (error) {
-                log('❌ Error loading form data: ' + error.message);
+                log('<i class="fas fa-times-circle text-danger"></i> Error loading form data: ' + error.message);
             }
         }
 
@@ -855,7 +855,7 @@
                 }
             });
 
-            log('✅ Form fields filled');
+            log('<i class="fas fa-check-circle text-success"></i> Form fields filled');
         }
 
         // Setup file upload handlers
@@ -870,7 +870,7 @@
                 input.addEventListener('change', function(e) {
                     const file = this.files[0];
                     if (file) {
-                        nameDisplay.textContent = '✅ ' + file.name + ' (' + (file.size / 1024).toFixed(2) + ' KB)';
+                        nameDisplay.textContent = '<i class="fas fa-check-circle text-success"></i> ' + file.name + ' (' + (file.size / 1024).toFixed(2) + ' KB)';
                         area.style.borderColor = '#27ae60';
                         log('File selected: ' + file.name);
                     }
@@ -904,7 +904,7 @@
             log('========== REVISION FORM SUBMIT ==========');
 
             if (!revisionFormId) {
-                showError('❌ Form ID tidak ditemukan. Silakan refresh halaman dan coba lagi.');
+                showError('<i class="fas fa-times-circle text-danger"></i> Form ID tidak ditemukan. Silakan refresh halaman dan coba lagi.');
                 return;
             }
 
@@ -920,7 +920,7 @@
             for (let field of requiredFields) {
                 const el = document.getElementById(field);
                 if (!el || !el.value) {
-                    showError('❌ Silakan isi semua field yang wajib diisi: ' + field);
+                    showError('<i class="fas fa-times-circle text-danger"></i> Silakan isi semua field yang wajib diisi: ' + field);
                     return;
                 }
             }
@@ -978,7 +978,7 @@
                 log('Response status: ' + response.status);
 
                 if (response.status === 401 || response.status === 403) {
-                    log('❌ Auth error');
+                    log('<i class="fas fa-times-circle text-danger"></i> Auth error');
                     showError('Sesi Anda sudah kadaluarsa. Silahkan login kembali.');
                     setTimeout(() => logout(), 2000);
                     return;
@@ -993,7 +993,7 @@
                 log('Response data: ', data);
 
                 if (data && data.success === true) {
-                    log('✅✅✅ REVISION SUBMITTED SUCCESSFULLY ✅✅✅');
+                    log('<i class="fas fa-check-circle text-success"></i><i class="fas fa-check-circle text-success"></i><i class="fas fa-check-circle text-success"></i> REVISION SUBMITTED SUCCESSFULLY <i class="fas fa-check-circle text-success"></i><i class="fas fa-check-circle text-success"></i><i class="fas fa-check-circle text-success"></i>');
                     
                     // Show success modal
                     const successHtml = `
@@ -1039,14 +1039,14 @@
                     }, 1000);
 
                 } else {
-                    showError('❌ ' + (data.message || 'Terjadi kesalahan'));
+                    showError('<i class="fas fa-times-circle text-danger"></i> ' + (data.message || 'Terjadi kesalahan'));
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalBtnText;
                 }
 
             } catch (error) {
-                log('❌ Error: ' + error.message);
-                showError('❌ Gagal mengirim revisi: ' + error.message);
+                log('<i class="fas fa-times-circle text-danger"></i> Error: ' + error.message);
+                showError('<i class="fas fa-times-circle text-danger"></i> Gagal mengirim revisi: ' + error.message);
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnText;
             }

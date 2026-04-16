@@ -859,12 +859,12 @@
             <!-- Payment Method Selection -->
             <div class="payment-method-selection" id="methodSelection" style="display: none;">
                 <div class="method-card" id="methodBriva" onclick="openBrivaModal()" style="cursor: pointer;">
-                    <div class="method-card-icon">🏦</div>
+                    <div class="method-card-icon"><i class="fas fa-university"></i></div>
                     <h4>Virtual Account (BRIVA)</h4>
                     <p>Transfer via rekening virtual<br>Konfirmasi otomatis instan</p>
                 </div>
                 <div class="method-card" id="methodManual" onclick="openManualModal()" style="cursor: pointer;">
-                    <div class="method-card-icon">📸</div>
+                    <div class="method-card-icon"><i class="fas fa-camera"></i></div>
                     <h4>Manual Upload</h4>
                     <p>Transfer ke rekening kami<br>Upload bukti pembayaran</p>
                 </div>
@@ -976,7 +976,7 @@
                         </div>
 
                         <div class="file-upload-area" id="fileUploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" onclick="document.getElementById('fileInput').click()">
-                            <div class="file-upload-icon">📤</div>
+                            <div class="file-upload-icon"><i class="fas fa-upload"></i></div>
                             <p><strong>Klik untuk pilih file</strong> atau drag & drop di sini</p>
                             <p class="small">Format: JPG, PNG, PDF • Maksimal 10 MB</p>
                         </div>
@@ -1066,7 +1066,7 @@
 
     <script>
         const getAuthToken = () => {
-            // ✅ Check sessionStorage first (per-tab), fallback to localStorage (backward compat)
+            // <i class="fas fa-check-circle text-success"></i> Check sessionStorage first (per-tab), fallback to localStorage (backward compat)
             const sessionToken = sessionStorage.getItem('authToken');
             if (sessionToken) return sessionToken;
             return localStorage.getItem('authToken');
@@ -1078,7 +1078,7 @@
             window.location.href = '/login.html';
         }
 
-        // ✅ NEW: Strict authentication - check if student has registered and selected gelombang
+        // <i class="fas fa-check-circle text-success"></i> NEW: Strict authentication - check if student has registered and selected gelombang
         async function checkRegistrationStatus() {
             try {
                 console.log('🔍 Checking registration status via API...');
@@ -1095,22 +1095,22 @@
                 const statusData = await statusResponse.json();
                 const statuses = statusData.data || [];
 
-                // ❌ Not submitted form yet
+                // <i class="fas fa-times-circle text-danger"></i> Not submitted form yet
                 const formStatus = statuses.find(s => s.stage === 'FORM_SUBMISSION');
                 if (!formStatus || formStatus.status !== 'SELESAI') {
                     console.warn('⚠️ Student has not submitted a form yet - Form status:', formStatus?.status || 'not found');
-                    showRegistrationGuard('📝 Belum Terdaftar', 
+                    showRegistrationGuard('<i class="fas fa-edit"></i> Belum Terdaftar', 
                         'Anda harus melengkapi formulir pendaftaran terlebih dahulu sebelum bisa melakukan pembayaran.<br><br>' +
                         'Silahkan klik tombol "Mulai Pendaftaran" untuk mengisi formulir.',
                         '/form-pendaftaran.html', 'Mulai Pendaftaran');
                     return false;
                 }
 
-                // ❌ Not selected gelombang/wave yet
+                // <i class="fas fa-times-circle text-danger"></i> Not selected gelombang/wave yet
                 const gelombangStatus = statuses.find(s => s.stage === 'GELOMBANG_SELECTION');
                 if (!gelombangStatus || gelombangStatus.status !== 'SELESAI') {
                     console.warn('⚠️ Student has not selected a gelombang yet - Gelombang status:', gelombangStatus?.status || 'not found');
-                    showRegistrationGuard('🌊 Belum Memilih Gelombang',
+                    showRegistrationGuard('<i class="fas fa-water"></i> Belum Memilih Gelombang',
                         'Anda harus memilih gelombang (formula/program) terlebih dahulu sebelum bisa melakukan pembayaran.<br><br>' +
                         'Silahkan pilih gelombang yang sesuai dengan jadwal Anda.',
                         '/gelombang-selection.html', 'Pilih Gelombang');
@@ -1127,14 +1127,14 @@
             }
         }
 
-        // ✅ NEW: Show guard message
+        // <i class="fas fa-check-circle text-success"></i> NEW: Show guard message
         function showRegistrationGuard(title, message, redirectUrl, buttonText) {
             document.getElementById('loadingState').style.display = 'none';
             document.getElementById('vaSection').style.display = 'none';
             document.querySelector('.action-buttons').style.display = 'none';
             document.querySelector('.payment-info-box').innerHTML = `
                 <div style="text-align: center; padding: 40px; background: #fff3cd; border-radius: 10px; border: 2px dashed #ffc107;">
-                    <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+                    <div style="font-size: 48px; margin-bottom: 20px;"><i class="fas fa-exclamation-triangle text-warning"></i></div>
                     <h2 style="color: #856404; margin-bottom: 15px;">${title}</h2>
                     <p style="color: #666; font-size: 16px; margin-bottom: 30px;">
                         ${message}
@@ -1157,7 +1157,7 @@
             document.querySelector('.action-buttons').style.display = 'none';
             document.querySelector('.payment-info-box').innerHTML = `
                 <div style="text-align: center; padding: 40px; background: #f8d7da; border-radius: 10px; border: 2px dashed #f5c6cb;">
-                    <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
+                    <div style="font-size: 48px; margin-bottom: 20px;"><i class="fas fa-times-circle text-danger"></i></div>
                     <h2 style="color: #721c24; margin-bottom: 15px;">${title}</h2>
                     <p style="color: #721c24; font-size: 16px; margin-bottom: 30px;">
                         ${message}
@@ -1176,7 +1176,7 @@
         let selectedPaymentMethod = 'BRIVA'; // Default method
         let selectedFile = null;
 
-        // ✅ MODAL FUNCTIONS
+        // <i class="fas fa-check-circle text-success"></i> MODAL FUNCTIONS
         function openBrivaModal() {
             selectedPaymentMethod = 'BRIVA';
             document.getElementById('brivaModal').classList.add('show');
@@ -1212,7 +1212,7 @@
             console.log('📸 Manual modal closed');
         }
 
-        // ✅ FILE UPLOAD HANDLING
+        // <i class="fas fa-check-circle text-success"></i> FILE UPLOAD HANDLING
         function handleDragOver(e) {
             e.preventDefault();
             document.getElementById('fileUploadArea').classList.add('drag-over');
@@ -1239,14 +1239,14 @@
 
             // Validate file size (10 MB max - match backend)
             if (file.size > 10 * 1024 * 1024) {
-                alert('❌ File terlalu besar! Maksimal 10 MB');
+ alert(' File terlalu besar! Maksimal 10 MB');
                 return;
             }
 
             // Validate file type (match backend)
             const contentType = file.type;
             if (!contentType || (!contentType.startsWith('image/') && contentType !== 'application/pdf')) {
-                alert('❌ Tipe file tidak didukung! Gunakan JPG, PNG, atau PDF');
+ alert(' Tipe file tidak didukung! Gunakan JPG, PNG, atau PDF');
                 return;
             }
 
@@ -1295,10 +1295,10 @@
             console.log('🗑️ File preview removed');
         }
 
-        // ✅ SUBMIT MANUAL PAYMENT
+        // <i class="fas fa-check-circle text-success"></i> SUBMIT MANUAL PAYMENT
         async function submitManualPayment() {
             if (!selectedFile) {
-                alert('❌ Silahkan pilih file bukti pembayaran terlebih dahulu');
+ alert(' Silahkan pilih file bukti pembayaran terlebih dahulu');
                 return;
             }
 
@@ -1356,7 +1356,7 @@
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <i class="fas fa-check-circle" style="font-size: 24px; color: #28a745;"></i>
                                 <div>
-                                    <strong>✅ Pembayaran Selesai!</strong>
+                                    <strong><i class="fas fa-check-circle text-success"></i> Pembayaran Selesai!</strong>
                                     <p style="margin-bottom: 0; font-size: 14px;">Bukti pembayaran Anda telah diterima. Silakan lanjutkan ke tahap berikutnya.</p>
                                 </div>
                             </div>
@@ -1380,7 +1380,7 @@
 
             } catch (error) {
                 console.error('❌ Error:', error.message);
-                alert('❌ ' + error.message);
+ alert(' ' + error.message);
 
                 const submitBtn = document.getElementById('submitManualBtn');
                 submitBtn.disabled = false;
@@ -1395,7 +1395,7 @@
                 document.getElementById('loadingState').style.display = 'block';
                 document.getElementById('vaSection').style.display = 'none';
 
-                // ✅ NEW: FETCH ADMISSION FORM FOR CURRENT STUDENT (NOT FROM URL PARAMS)
+                // <i class="fas fa-check-circle text-success"></i> NEW: FETCH ADMISSION FORM FOR CURRENT STUDENT (NOT FROM URL PARAMS)
                 console.log('🔍 Step 1: Fetching admission form for current student...');
                 const admissionRes = await fetch('/api/camaba/admission-forms/current', {
                     headers: { 'Authorization': `Bearer ${authToken}` }
@@ -1423,7 +1423,7 @@
                     throw new Error('Could not fetch admission form. Please check backend endpoints /api/camaba/admission-forms/current or /me');
                 }
 
-                // ✅ LOG FULL ADMISSION FORM TO CONSOLE
+                // <i class="fas fa-check-circle text-success"></i> LOG FULL ADMISSION FORM TO CONSOLE
                 console.log('================================');
                 console.log('📋 ADMISSION FORM DATA (FROM DATABASE)');
                 console.log('================================');
@@ -1441,7 +1441,7 @@
                 console.log('  - Created At:', admissionForm.createdAt);
                 console.log('================================\n');
 
-                // ✅ EXTRACT IDs FROM ADMISSION FORM (RELIABLE SOURCE)
+                // <i class="fas fa-check-circle text-success"></i> EXTRACT IDs FROM ADMISSION FORM (RELIABLE SOURCE)
                 const jenisSeleksiId = admissionForm.jenisSeleksiId;
                 const periodId = admissionForm.periodId;
 
@@ -1453,7 +1453,7 @@
                 console.log('   - JENIS_SELEKSI_ID: ' + jenisSeleksiId);
                 console.log('   - PERIOD_ID: ' + periodId);
 
-                // ✅ FETCH JENIS_SELEKSI DETAILS WITH CORRECT ID (FROM DATABASE)
+                // <i class="fas fa-check-circle text-success"></i> FETCH JENIS_SELEKSI DETAILS WITH CORRECT ID (FROM DATABASE)
                 console.log('\n🔍 Step 2: Fetching Jenis Seleksi details with ID: ' + jenisSeleksiId);
                 const selTypeRes = await fetch(`/api/camaba/jenis-seleksi-detail/${jenisSeleksiId}`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
@@ -1474,7 +1474,7 @@
                 console.log('    - price:', selectionType.price);
                 console.log('    - amount:', selectionType.amount);
 
-                // ✅ FETCH PERIOD DETAILS WITH CORRECT ID (FROM DATABASE)
+                // <i class="fas fa-check-circle text-success"></i> FETCH PERIOD DETAILS WITH CORRECT ID (FROM DATABASE)
                 console.log('\n🔍 Step 3: Fetching Period (Gelombang) details with ID: ' + periodId);
                 const periodRes = await fetch(`/api/camaba/registration-periods/${periodId}`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
@@ -1491,11 +1491,11 @@
                     period = { id: periodId, name: 'Period #' + periodId };
                 }
 
-                // ✅ EXTRACT PRICE FROM DATABASE (NOT DUMMY)
+                // <i class="fas fa-check-circle text-success"></i> EXTRACT PRICE FROM DATABASE (NOT DUMMY)
                 // Harga dari JENIS_SELEKSI table, bukan hardcoded di frontend
                 const price = selectionType.price || selectionType.amount || 500000;
                 
-                // ✅ VALIDATE PRICE
+                // <i class="fas fa-check-circle text-success"></i> VALIDATE PRICE
                 if (!price || isNaN(price) || price <= 0) {
                     console.error('❌ INVALID PRICE!');
                     console.error('   - Received price:', selectionType.price);
@@ -1607,9 +1607,9 @@
                     // Create Virtual Account via API
                     console.log('\n🔍 Step 4b: Creating new Virtual Account...');
                     const requestBody = {
-                        selectionTypeId: parseInt(jenisSeleksiId),  // ✅ FIXED: Must send as 'selectionTypeId' (backend expects this field name)
+                        selectionTypeId: parseInt(jenisSeleksiId),  // <i class="fas fa-check-circle text-success"></i> FIXED: Must send as 'selectionTypeId' (backend expects this field name)
                         periodId: parseInt(periodId),
-                        amount: Math.round(price)  // ✅ Ensure it's a proper integer
+                        amount: Math.round(price)  // <i class="fas fa-check-circle text-success"></i> Ensure it's a proper integer
                     };
                     
                     console.log('📤 Request body to create-virtual-account:');
@@ -1668,7 +1668,7 @@
                 
                 // Check for specific error types
                 if (err.message.includes('Selection type') && err.message.includes('not found')) {
-                    errorTitle = '⚠️ Program Studi Tidak Valid';
+                    errorTitle = '<i class="fas fa-exclamation-triangle text-warning"></i> Program Studi Tidak Valid';
                     errorMessage = 'Program studi yang Anda pilih tidak tersedia lagi. Silakan kembali dan pilih program studi lain.';
                     actionButtons = `
                         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
@@ -1681,7 +1681,7 @@
                         </div>
                     `;
                 } else if (err.message.includes('Period') && err.message.includes('not found')) {
-                    errorTitle = '⚠️ Gelombang Tidak Valid';
+                    errorTitle = '<i class="fas fa-exclamation-triangle text-warning"></i> Gelombang Tidak Valid';
                     errorMessage = 'Gelombang yang Anda pilih tidak lagi tersedia. Silakan kembali dan pilih gelombang lain.';
                     actionButtons = `
                         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
@@ -1807,14 +1807,14 @@
                     if (checkPaymentInterval) clearInterval(checkPaymentInterval);
 
                     console.log('⏳ Redirecting to dashboard in 3 seconds...');
-                    // ✅ Redirect to dashboard (NOT form-pendaftaran)
+                    // <i class="fas fa-check-circle text-success"></i> Redirect to dashboard (NOT form-pendaftaran)
                     setTimeout(() => {
                         console.log('🚀 Redirecting to /dashboard-camaba.html');
                         window.location.href = '/dashboard-camaba.html';
                     }, 3000);
                 } else {
                     // Still waiting
-                    statusBadge.textContent = '⏳ Menunggu Pembayaran (' + checkCount + ')';
+                    statusBadge.textContent = '<i class="fas fa-hourglass-half"></i> Menunggu Pembayaran (' + checkCount + ')';
                     statusBadge.className = 'status-badge status-waiting';
                     console.log(`⏳ Status: ${result.status} - Akan dicek lagi dalam 5 detik...`);
                 }
@@ -1828,7 +1828,7 @@
             window.location.href = '/gelombang-selection.html';
         }
 
-        // ✅ UPDATED: Match manual cicilan payment success flow
+        // <i class="fas fa-check-circle text-success"></i> UPDATED: Match manual cicilan payment success flow
         async function simulatePaymentSuccess() {
             try {
                 if (!confirm('Simulasi pembayaran sukses untuk testing?\n\nPembayaran akan ditandai sebagai LUNAS.')) return;
@@ -1838,14 +1838,14 @@
                 // Stop payment checking
                 if (checkPaymentInterval) clearInterval(checkPaymentInterval);
                 
-                // ✅ STEP 1: Show nice success message (like manual cicilan)
+                // <i class="fas fa-check-circle text-success"></i> STEP 1: Show nice success message (like manual cicilan)
                 showBrivaPaymentSuccess();
                 
-                // ✅ STEP 2: Update backend payment status
+                // <i class="fas fa-check-circle text-success"></i> STEP 2: Update backend payment status
                 console.log('🔄 [BRIVA-SIMULASI] Updating backend payment status...');
                 await updatePaymentStatusInBackend();
                 
-                // ✅ STEP 3: Redirect to dashboard after 3 seconds (like manual cicilan)
+                // <i class="fas fa-check-circle text-success"></i> STEP 3: Redirect to dashboard after 3 seconds (like manual cicilan)
                 console.log('⏳ [BRIVA-SIMULASI] Redirecting to dashboard in 3 seconds...');
                 setTimeout(() => {
                     console.log('🚀 [BRIVA-SIMULASI] Redirecting to /dashboard-camaba.html');
@@ -1854,11 +1854,11 @@
                 
             } catch (error) {
                 console.error('❌ Error in simulatePaymentSuccess:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
-        // ✅ NEW: Show success message like showCicilanPaymentSuccess
+        // <i class="fas fa-check-circle text-success"></i> NEW: Show success message like showCicilanPaymentSuccess
         function showBrivaPaymentSuccess() {
             // Create success message div
             const successDiv = document.createElement('div');
@@ -1880,7 +1880,7 @@
                 <div style="display: flex; gap: 15px; align-items: center;">
                     <i class="fas fa-check-circle" style="font-size: 28px; color: #28a745; flex-shrink: 0;"></i>
                     <div>
-                        <strong style="color: #155724; font-size: 16px;">✅ Pembayaran BRIVA Berhasil!</strong>
+                        <strong style="color: #155724; font-size: 16px;"><i class="fas fa-check-circle text-success"></i> Pembayaran BRIVA Berhasil!</strong>
                         <p style="margin-bottom: 5px; font-size: 14px; color: #155724;">Pembayaran Anda telah dikonfirmasi dan status sudah diubah menjadi LUNAS.</p>
                         <p style="margin: 0; font-size: 12px; color: #0c5460;">Anda akan diarahkan ke dashboard dalam beberapa detik...</p>
                     </div>
@@ -1932,7 +1932,7 @@
                     
                     const autoCheckInfo = document.getElementById('autoCheckInfo');
                     if (autoCheckInfo) {
-                        autoCheckInfo.textContent = 'Pembayaran Anda telah dikonfirmasi! ✅';
+                        autoCheckInfo.textContent = 'Pembayaran Anda telah dikonfirmasi! <i class="fas fa-check-circle text-success"></i>';
                     }
                 } else {
                     console.warn('⚠️ [BRIVA-SIMULASI] Backend update failed, but continuing:', res.status);
@@ -1952,7 +1952,7 @@
 
         // Initialize on page load
         window.addEventListener('load', async () => {
-            // ✅ NEW: Check registration status first
+            // <i class="fas fa-check-circle text-success"></i> NEW: Check registration status first
             const isEligible = await checkRegistrationStatus();
             if (isEligible) {
                 initializePayment();

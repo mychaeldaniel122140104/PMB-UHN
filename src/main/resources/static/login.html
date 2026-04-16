@@ -479,14 +479,14 @@
 
                             function showIndex(next, isInitial = false){
                                 if (isInitial) {
-                                    // ✅ Initial load: show immediately WITHOUT fade
+                                    // <i class="fas fa-check-circle text-success"></i> Initial load: show immediately WITHOUT fade
                                     img.src = images[next];
                                     captionEl.textContent = captions[next];
                                     setActive(next);
                                     img.style.opacity = 1;
                                     captionEl.style.opacity = 1;
                                 } else {
-                                    // ✅ Transition: fade out then in
+                                    // <i class="fas fa-check-circle text-success"></i> Transition: fade out then in
                                     img.style.opacity = 0;
                                     captionEl.style.opacity = 0;
                                     setTimeout(() => {
@@ -499,7 +499,7 @@
                                 }
                             }
 
-                            // ✅ Initialize: show first image immediately
+                            // <i class="fas fa-check-circle text-success"></i> Initialize: show first image immediately
                             showIndex(0, true);
 
                             // dot click
@@ -573,7 +573,7 @@
                 if (response.ok) {
                     console.log('✅ [LOGIN] Login successful, response:', data);
                     
-                    // ✅ Store in sessionStorage (per-tab) AND localStorage (backward compat)
+                    // <i class="fas fa-check-circle text-success"></i> Store in sessionStorage (per-tab) AND localStorage (backward compat)
                     try {
                         sessionStorage.setItem('authToken', data.token);
                         sessionStorage.setItem('userRole', data.role);
@@ -589,11 +589,11 @@
                         });
                     } catch (e) {
                         console.error('❌ [LOGIN] sessionStorage.setItem FAILED:', e.message);
-                        alert('⚠️ STORAGE ERROR: ' + e.message);
+ alert(' STORAGE ERROR: ' + e.message);
                         return;
                     }
                     
-                    // ✅ Redirect based on role
+                    // <i class="fas fa-check-circle text-success"></i> Redirect based on role
                     console.log('🔄 [LOGIN] Redirecting to:', data.role);
                     if (data.role === 'CAMABA') {
                         window.location.href = '/dashboard-camaba.html';

@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>🔐 JWT Authorities Testing</h1>
+    <h1><i class="fas fa-lock"></i> JWT Authorities Testing</h1>
     <p><em>This page tests if JWT tokens now include authorities/roles</em></p>
 
     <div class="test-section">
@@ -30,13 +30,13 @@
             <label>Password:</label>
             <input type="password" id="password" class="form-control" value="validasi123" placeholder="validasi123">
         </div>
-        <button class="btn btn-primary" onclick="testLogin()">🔓 Login</button>
-        <button class="btn btn-secondary" onclick="clearStorageAndToken()">🗑️ Clear Token</button>
+        <button class="btn btn-primary" onclick="testLogin()"><i class="fas fa-unlock"></i> Login</button>
+        <button class="btn btn-secondary" onclick="clearStorageAndToken()"><i class="fas fa-trash"></i> Clear Token</button>
     </div>
 
     <div class="test-section">
         <h3>Step 2: JWT Token Analysis</h3>
-        <button class="btn btn-info" onclick="decodeAndDisplayToken()">🔍 Decode Token</button>
+        <button class="btn btn-info" onclick="decodeAndDisplayToken()"><i class="fas fa-search"></i> Decode Token</button>
         <div id="tokenAnalysis" style="margin-top: 15px;"></div>
     </div>
 
@@ -44,13 +44,13 @@
         <h3>Step 3: Test Protected Endpoints</h3>
         <p><em>These endpoints need authorities in JWT to work</em></p>
         <button class="btn btn-warning" onclick="testEndpoint('/api/validasi/formulir/1/details')">
-            📋 Test /api/validasi/formulir/1/details
+            <i class="fas fa-clipboard-list"></i> Test /api/validasi/formulir/1/details
         </button>
         <button class="btn btn-warning" onclick="testEndpoint('/api/send-reminder')">
-            📧 Test /api/send-reminder
+            <i class="fas fa-envelope"></i> Test /api/send-reminder
         </button>
         <button class="btn btn-warning" onclick="testEndpoint('/admin/api/exam/student-list')">
-            👥 Test /admin/api/exam/student-list  
+            <i class="fas fa-users"></i> Test /admin/api/exam/student-list  
         </button>
         <div id="endpointResults" style="margin-top: 15px;"></div>
     </div>
@@ -67,11 +67,11 @@
     function logToConsole(message, type = 'info') {
         const timestamp = new Date().toLocaleTimeString();
         const prefix = {
-            'info': 'ℹ️',
-            'success': '✅',
-            'error': '❌',
-            'warning': '⚠️'
-        }[type] || 'ℹ️';
+            'info': '<i class="fas fa-info-circle"></i>',
+            'success': '<i class="fas fa-check-circle text-success"></i>',
+            'error': '<i class="fas fa-times-circle text-danger"></i>',
+            'warning': '<i class="fas fa-exclamation-triangle text-warning"></i>'
+        }[type] || '<i class="fas fa-info-circle"></i>';
         
         const fullMessage = `[${timestamp}] ${prefix} ${message}`;
         logs.push(fullMessage);
@@ -86,7 +86,7 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        logToConsole(`🔐 Testing login with: ${email}`, 'info');
+        logToConsole(`<i class="fas fa-lock"></i> Testing login with: ${email}`, 'info');
 
         try {
             const response = await fetch('/api/login', {
@@ -96,10 +96,10 @@
             });
 
             const text = await response.text();
-            logToConsole(`📡 Response status: ${response.status}`, response.ok ? 'success' : 'error');
+            logToConsole(`<i class="fas fa-satellite-dish"></i> Response status: ${response.status}`, response.ok ? 'success' : 'error');
 
             if (!text) {
-                logToConsole(`⚠️ Response body is empty!`, 'warning');
+                logToConsole(`<i class="fas fa-exclamation-triangle text-warning"></i> Response body is empty!`, 'warning');
                 return;
             }
 
@@ -108,17 +108,17 @@
             if (data.token) {
                 sessionStorage.setItem('authToken', data.token);
                 sessionStorage.setItem('userRole', data.role);
-                logToConsole(`✅ Token saved (${data.token.length} chars)`, 'success');
-                logToConsole(`👤 Role: ${data.role}`, 'success');
+                logToConsole(`<i class="fas fa-check-circle text-success"></i> Token saved (${data.token.length} chars)`, 'success');
+                logToConsole(`<i class="fas fa-user"></i> Role: ${data.role}`, 'success');
                 
                 // Auto-decode after login
                 setTimeout(() => decodeAndDisplayToken(), 500);
             } else {
-                logToConsole(`❌ No token in response!`, 'error');
+                logToConsole(`<i class="fas fa-times-circle text-danger"></i> No token in response!`, 'error');
                 logToConsole(`Response: ${JSON.stringify(data)}`, 'error');
             }
         } catch (e) {
-            logToConsole(`❌ Login failed: ${e.message}`, 'error');
+            logToConsole(`<i class="fas fa-times-circle text-danger"></i> Login failed: ${e.message}`, 'error');
         }
     }
 
@@ -127,8 +127,8 @@
         const analysisDiv = document.getElementById('tokenAnalysis');
 
         if (!token) {
-            analysisDiv.innerHTML = '<p class="error">❌ No token found in localStorage</p>';
-            logToConsole('❌ No token in localStorage', 'error');
+            analysisDiv.innerHTML = '<p class="error"><i class="fas fa-times-circle text-danger"></i> No token found in localStorage</p>';
+            logToConsole('<i class="fas fa-times-circle text-danger"></i> No token in localStorage', 'error');
             return;
         }
 
@@ -139,33 +139,33 @@
             }
 
             const payload = JSON.parse(atob(parts[1]));
-            logToConsole(`🔓 JWT Decoded successfully`, 'success');
+            logToConsole(`<i class="fas fa-unlock"></i> JWT Decoded successfully`, 'success');
 
-            let html = '<h5>🔓 JWT Token Payload:</h5><pre>';
+            let html = '<h5><i class="fas fa-unlock"></i> JWT Token Payload:</h5><pre>';
             html += JSON.stringify(payload, null, 2);
             html += '</pre>';
 
-            html += '<h5>📊 Analysis:</h5><ul>';
+            html += '<h5><i class="fas fa-chart-bar"></i> Analysis:</h5><ul>';
             html += `<li><strong>Subject (Email):</strong> <span class="info">${payload.sub}</span></li>`;
             html += `<li><strong>Issued At:</strong> ${new Date(payload.iat * 1000).toLocaleString()}</li>`;
             html += `<li><strong>Expires At:</strong> ${new Date(payload.exp * 1000).toLocaleString()}</li>`;
             
             if (payload.authorities) {
-                html += `<li><strong>Authorities:</strong> <span class="success">✅ ${payload.authorities}</span></li>`;
-                logToConsole(`✅ Authorities found in token: ${payload.authorities}`, 'success');
+                html += `<li><strong>Authorities:</strong> <span class="success"><i class="fas fa-check-circle text-success"></i> ${payload.authorities}</span></li>`;
+                logToConsole(`<i class="fas fa-check-circle text-success"></i> Authorities found in token: ${payload.authorities}`, 'success');
             } else if (payload.roles) {
-                html += `<li><strong>Roles:</strong> <span class="success">✅ ${payload.roles}</span></li>`;
-                logToConsole(`✅ Roles found in token: ${payload.roles}`, 'success');
+                html += `<li><strong>Roles:</strong> <span class="success"><i class="fas fa-check-circle text-success"></i> ${payload.roles}</span></li>`;
+                logToConsole(`<i class="fas fa-check-circle text-success"></i> Roles found in token: ${payload.roles}`, 'success');
             } else {
-                html += `<li><strong>Authorities:</strong> <span class="error">❌ NONE (PROBLEM!)</span></li>`;
-                logToConsole(`❌ No authorities in token!`, 'error');
+                html += `<li><strong>Authorities:</strong> <span class="error"><i class="fas fa-times-circle text-danger"></i> NONE (PROBLEM!)</span></li>`;
+                logToConsole(`<i class="fas fa-times-circle text-danger"></i> No authorities in token!`, 'error');
             }
             
             html += '</ul>';
             analysisDiv.innerHTML = html;
         } catch (e) {
-            logToConsole(`❌ Token decode failed: ${e.message}`, 'error');
-            analysisDiv.innerHTML = `<p class="error">❌ Failed to decode token: ${e.message}</p>`;
+            logToConsole(`<i class="fas fa-times-circle text-danger"></i> Token decode failed: ${e.message}`, 'error');
+            analysisDiv.innerHTML = `<p class="error"><i class="fas fa-times-circle text-danger"></i> Failed to decode token: ${e.message}</p>`;
         }
     }
 
@@ -174,12 +174,12 @@
         const resultsDiv = document.getElementById('endpointResults');
 
         if (!token) {
-            logToConsole(`❌ No token - login first!`, 'error');
-            resultsDiv.innerHTML = '<p class="error">❌ Login first to get a token</p>';
+            logToConsole(`<i class="fas fa-times-circle text-danger"></i> No token - login first!`, 'error');
+            resultsDiv.innerHTML = '<p class="error"><i class="fas fa-times-circle text-danger"></i> Login first to get a token</p>';
             return;
         }
 
-        logToConsole(`📡 Testing: ${endpoint}`, 'info');
+        logToConsole(`<i class="fas fa-satellite-dish"></i> Testing: ${endpoint}`, 'info');
 
         try {
             // For POST endpoints, send empty body
@@ -206,7 +206,7 @@
             }
 
             const statusColor = response.ok ? 'success' : 'error';
-            const statusIcon = response.ok ? '✅' : '❌';
+            const statusIcon = response.ok ? '<i class="fas fa-check-circle text-success"></i>' : '<i class="fas fa-times-circle text-danger"></i>';
 
             logToConsole(`${statusIcon} ${endpoint} → HTTP ${response.status}`, statusColor);
 
@@ -215,15 +215,15 @@
             html += `<p><strong>Response:</strong></p><pre>${JSON.stringify(responseBody, null, 2)}</pre>`;
 
             if (response.status === 403) {
-                html += '<p class="warning">⚠️ Still getting 403 - JWT authorities may not be in effect yet</p>';
+                html += '<p class="warning"><i class="fas fa-exclamation-triangle text-warning"></i> Still getting 403 - JWT authorities may not be in effect yet</p>';
             } else if (response.ok) {
-                html += '<p class="success">✅ Endpoint working! JWT authorities are working</p>';
+                html += '<p class="success"><i class="fas fa-check-circle text-success"></i> Endpoint working! JWT authorities are working</p>';
             }
 
             resultsDiv.innerHTML += html + '<hr>';
         } catch (e) {
-            logToConsole(`❌ Request failed: ${e.message}`, 'error');
-            resultsDiv.innerHTML += `<p class="error">❌ Request failed: ${e.message}</p>`;
+            logToConsole(`<i class="fas fa-times-circle text-danger"></i> Request failed: ${e.message}`, 'error');
+            resultsDiv.innerHTML += `<p class="error"><i class="fas fa-times-circle text-danger"></i> Request failed: ${e.message}</p>`;
         }
     }
 
@@ -233,21 +233,21 @@
         localStorage.removeItem('authToken');
         localStorage.removeItem('userRole');
         sessionStorage.clear();
-        logToConsole('🗑️ Cleared all stored tokens and data', 'info');
+        logToConsole('<i class="fas fa-trash"></i> Cleared all stored tokens and data', 'info');
         document.getElementById('tokenAnalysis').innerHTML = '';
         document.getElementById('endpointResults').innerHTML = '';
     }
 
     // Log page load
     window.addEventListener('load', () => {
-        logToConsole('🚀 JWT Test Page Loaded', 'info');
+        logToConsole('<i class="fas fa-rocket"></i> JWT Test Page Loaded', 'info');
         
         const token = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
         if (token) {
-            logToConsole(`📌 Token found in localStorage (${token.length} chars)`, 'info');
+            logToConsole(`<i class="fas fa-thumbtack"></i> Token found in localStorage (${token.length} chars)`, 'info');
             decodeAndDisplayToken();
         } else {
-            logToConsole('ℹ️ No token - please login first', 'info');
+            logToConsole('<i class="fas fa-info-circle"></i> No token - please login first', 'info');
         }
     });
 </script>

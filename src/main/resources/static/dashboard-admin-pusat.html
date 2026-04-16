@@ -394,7 +394,7 @@
             }
         }
 
-        /* ✅ AUTH REQUIRED MODAL - STRONG OVERRIDE FOR BOOTSTRAP */
+        /* <i class="fas fa-check-circle text-success"></i> AUTH REQUIRED MODAL - STRONG OVERRIDE FOR BOOTSTRAP */
         .modal#authRequiredModal {
             display: none !important;
             position: fixed !important;
@@ -501,7 +501,7 @@
             transition: none !important;
         }
 
-        /* ✅ Sidebar Mobile Controls */
+        /* <i class="fas fa-check-circle text-success"></i> Sidebar Mobile Controls */
         .sidebar-toggle {
             display: none;
             background: white;
@@ -530,7 +530,7 @@
             display: block;
         }
 
-        /* ✅ Helper class for responsive tables with data attributes */
+        /* <i class="fas fa-check-circle text-success"></i> Helper class for responsive tables with data attributes */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 10px;
@@ -554,7 +554,7 @@
             }
         }
 
-        /* ✅ Responsive Layout */
+        /* <i class="fas fa-check-circle text-success"></i> Responsive Layout */
         @media (max-width: 992px) {
             .navbar {
                 padding: 0.5rem 0;
@@ -825,7 +825,7 @@
         </div>
     </nav>
 
-    <!-- ✅ Sidebar Overlay for Mobile -->
+    <!-- <i class="fas fa-check-circle text-success"></i> Sidebar Overlay for Mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <div class="container-fluid">
@@ -970,7 +970,7 @@
                 <!-- Periode Registrasi Section -->
                 <section id="periods-section" class="content-section d-none">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2>🗓️ Kelola Gelombang (Periode)</h2>
+                        <h2><i class="fas fa-calendar"></i> Kelola Gelombang (Periode)</h2>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPeriodModal">
                             <i class="bi bi-plus-circle"></i> Tambah Gelombang
                         </button>
@@ -1017,7 +1017,7 @@
 
                     <div class="card mt-3">
                         <div class="card-header">
-                            <h5 class="mb-0">📋 Daftar Tipe Seleksi</h5>
+                            <h5 class="mb-0"><i class="fas fa-clipboard-list"></i> Daftar Tipe Seleksi</h5>
                         </div>
                         <div class="card-body">
                             <div class="alert alert-info mb-3">
@@ -1043,7 +1043,7 @@
 
                     <div class="card mt-3">
                         <div class="card-header">
-                            <h5 class="mb-0">📚 Daftar Program Studi</h5>
+                            <h5 class="mb-0"><i class="fas fa-book"></i> Daftar Program Studi</h5>
                         </div>
                         <div class="card-body">
                             <div class="alert alert-info mb-3">
@@ -1078,7 +1078,7 @@
                     <!-- Setup Link Ujian per Gelombang -->
                     <div class="card mb-4">
                         <div class="card-header" style="background: #00b894; color: white;">
-                            <h5 class="mb-0">📝 Setup Ujian Per Gelombang (Online / Offline)</h5>
+                            <h5 class="mb-0"><i class="fas fa-edit"></i> Setup Ujian Per Gelombang (Online / Offline)</h5>
                         </div>
                         <div class="card-body">
                             <!-- Pilih Gelombang -->
@@ -1095,7 +1095,7 @@
                             <!-- Mode Selection (Online / Offline) -->
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label class="form-label"><strong>📋 Pilih Mode Ujian</strong></label>
+                                    <label class="form-label"><strong><i class="fas fa-clipboard-list"></i> Pilih Mode Ujian</strong></label>
                                     <div class="btn-group w-100" role="group">
                                         <input type="radio" class="btn-check" name="examMode" id="modeOnline" value="ONLINE" checked onchange="toggleExamMode('ONLINE')">
                                         <label class="btn btn-outline-info" for="modeOnline" style="border-color: #3b82f6;">
@@ -1114,7 +1114,7 @@
                             <div id="onlineModeSection">
                                 <div class="row mb-3">
                                     <div class="col-md-10">
-                                        <label class="form-label"><strong>🔗 Link Google Form Ujian</strong></label>
+                                        <label class="form-label"><strong><i class="fas fa-link"></i> Link Google Form Ujian</strong></label>
                                         <input type="text" id="setupUjianLink" class="form-control" placeholder="https://docs.google.com/forms/d/e/..." />
                                         <small class="text-info">Paste link Google Form yang telah Anda buat</small>
                                     </div>
@@ -1133,15 +1133,15 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-4">
-                                        <label class="form-label"><strong>📅 Tanggal Ujian</strong></label>
+                                        <label class="form-label"><strong><i class="fas fa-calendar-alt"></i> Tanggal Ujian</strong></label>
                                         <input type="text" id="setupExamDate" class="form-control" placeholder="cth: 15 April 2024" />
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label"><strong>🏢 Tempat / Gedung</strong></label>
+                                        <label class="form-label"><strong><i class="fas fa-building"></i> Tempat / Gedung</strong></label>
                                         <input type="text" id="setupExamPlace" class="form-control" placeholder="cth: Gedung A Lantai 3, Ruang 301" />
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-label"><strong>⏰ Jam Ujian</strong></label>
+                                        <label class="form-label"><strong><i class="fas fa-clock"></i> Jam Ujian</strong></label>
                                         <input type="text" id="setupExamTime" class="form-control" placeholder="cth: 08:00 - 10:00 WIB" />
                                     </div>
                                     <div class="col-md-1 d-flex align-items-end">
@@ -1157,7 +1157,7 @@
                     <!-- Tabel Daftar Link Ujian -->
                     <div class="card">
                         <div class="card-header" style="background: #00b894; color: white;">
-                            <h5 class="mb-0">📋 Daftar Ujian Per Gelombang</h5>
+                            <h5 class="mb-0"><i class="fas fa-clipboard-list"></i> Daftar Ujian Per Gelombang</h5>
                         </div>
                         <div class="card-body">
                             <div class="table-wrapper">
@@ -1231,14 +1231,14 @@
                     <!-- Admin Pusat Table -->
                     <div class="card mb-4">
                         <div class="card-header" style="background: #1a472a; color: white;">
-                            <h5 class="mb-0">👑 Admin Pusat</h5>
+                            <h5 class="mb-0"><i class="fas fa-crown"></i> Admin Pusat</h5>
                         </div>
                         <!-- Search & Pagination -->
                         <div class="card-body border-bottom">
                             <div class="row g-3">
                                 <div class="col-md-8">
                                     <input type="text" id="searchAdminPusat" class="form-control form-control-sm" 
-                                           placeholder="🔍 Cari email atau nama..." onkeyup="filterAdminTable('pusat')">
+                                           placeholder=" Cari email atau nama..." onkeyup="filterAdminTable('pusat')">
                                 </div>
                                 <div class="col-md-4 text-end">
                                     <select id="entriesAdminPusat" class="form-select form-select-sm" onchange="changeAdminPageSize('pusat')">
@@ -1278,14 +1278,14 @@
                     <!-- Admin Validasi Table -->
                     <div class="card mb-4">
                         <div class="card-header" style="background: #2c5aa0; color: white;">
-                            <h5 class="mb-0">👤 Admin Validasi</h5>
+                            <h5 class="mb-0"><i class="fas fa-user"></i> Admin Validasi</h5>
                         </div>
                         <!-- Search & Pagination -->
                         <div class="card-body border-bottom">
                             <div class="row g-3">
                                 <div class="col-md-8">
                                     <input type="text" id="searchAdminValidasi" class="form-control form-control-sm" 
-                                           placeholder="🔍 Cari email atau nama..." onkeyup="filterAdminTable('validasi')">
+                                           placeholder=" Cari email atau nama..." onkeyup="filterAdminTable('validasi')">
                                 </div>
                                 <div class="col-md-4 text-end">
                                     <select id="entriesAdminValidasi" class="form-select form-select-sm" onchange="changeAdminPageSize('validasi')">
@@ -1325,14 +1325,14 @@
                     <!-- Camaba (Mahasiswa) Table -->
                     <div class="card">
                         <div class="card-header" style="background: #28a745; color: white;">
-                            <h5 class="mb-0">👨‍🎓 Mahasiswa</h5>
+                            <h5 class="mb-0"><i class="fas fa-user-graduate"></i> Mahasiswa</h5>
                         </div>
                         <!-- Search & Pagination -->
                         <div class="card-body border-bottom">
                             <div class="row g-3">
                                 <div class="col-md-8">
                                     <input type="text" id="searchCamaba" class="form-control form-control-sm" 
-                                           placeholder="🔍 Cari email atau nama..." onkeyup="filterAdminTable('camaba')">
+                                           placeholder=" Cari email atau nama..." onkeyup="filterAdminTable('camaba')">
                                 </div>
                                 <div class="col-md-4 text-end">
                                     <select id="entriesCamaba" class="form-select form-select-sm" onchange="changeAdminPageSize('camaba')">
@@ -1372,32 +1372,32 @@
 
                 <!-- Settings Section -->
                 <section id="settings-section" class="content-section d-none">
-                    <h2 class="mb-4">⚙️ Pengaturan Sistem</h2>
+                    <h2 class="mb-4"><i class="fas fa-cog"></i> Pengaturan Sistem</h2>
                     
                     <!-- Contact Info Card -->
                     <div class="card mb-4">
                         <div class="card-header" style="background: #1a472a; color: white;">
-                            <h5 class="mb-0">📞 Edit Informasi Kontak (Hubungi Kami)</h5>
+                            <h5 class="mb-0"><i class="fas fa-phone"></i> Edit Informasi Kontak (Hubungi Kami)</h5>
                         </div>
                         <div class="card-body">
                             <form id="contactInfoForm">
                                 <div class="row mb-3">
                                     <div class="col-md-12">
-                                        <label class="form-label"><strong>📍 Alamat Kantor</strong></label>
+                                        <label class="form-label"><strong><i class="fas fa-map-marker-alt"></i> Alamat Kantor</strong></label>
                                         <textarea id="contactAddress" class="form-control" rows="2" placeholder="Jalan, No., Kota, Provinsi" required></textarea>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-4">
-                                        <label class="form-label"><strong>📞 Nomor Telepon</strong></label>
+                                        <label class="form-label"><strong><i class="fas fa-phone"></i> Nomor Telepon</strong></label>
                                         <input type="text" id="contactPhone" class="form-control" placeholder="(061) 4-15-555" required>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label"><strong>📧 Email</strong></label>
+                                        <label class="form-label"><strong><i class="fas fa-envelope"></i> Email</strong></label>
                                         <input type="email" id="contactEmail" class="form-control" placeholder="pmb@uhn.ac.id" required>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label"><strong>⏰ Jam Layanan</strong></label>
+                                        <label class="form-label"><strong><i class="fas fa-clock"></i> Jam Layanan</strong></label>
                                         <input type="text" id="contactHours" class="form-control" placeholder="Senin-Jumat 08:00-16:30" required>
                                     </div>
                                 </div>
@@ -1411,7 +1411,7 @@
                     <!-- System Links Card -->
                     <div class="card mb-4">
                         <div class="card-header" style="background: #1a472a; color: white;">
-                            <h5 class="mb-0">🔗 Kelola Link Sistem</h5>
+                            <h5 class="mb-0"><i class="fas fa-link"></i> Kelola Link Sistem</h5>
                         </div>
                         <div class="card-body">
                             <!-- Add New Link Form -->
@@ -1426,7 +1426,7 @@
                                         <small class="text-muted" style="display: block; color: #0ea5e9; font-weight: 600; margin-top: 4px;">
                                             <i class="bi bi-info-circle"></i> Format: NAMA_LINK (tanpa spasi)
                                             <button type="button" class="btn btn-sm btn-outline-info ms-2" style="padding: 2px 8px; font-size: 12px;" onclick="showLinkNameGuidance()" title="Lihat contoh nama link">
-                                                ℹ️ Contoh
+                                                <i class="fas fa-info-circle"></i> Contoh
                                             </button>
                                         </small>
                                     </div>
@@ -1434,10 +1434,10 @@
                                         <label class="form-label"><strong>Tipe Link</strong></label>
                                         <select id="newLinkType" class="form-select" required onchange="updateUrlPlaceholder()">
                                             <option value="">-- Pilih --</option>
-                                            <option value="YOUTUBE">📹 YouTube</option>
-                                            <option value="GOOGLE_DRIVE">📁 Google Drive</option>
-                                            <option value="GOOGLE_FORM">📝 Google Form</option>
-                                            <option value="EXTERNAL_URL">🔗 URL Eksternal</option>
+                                            <option value="YOUTUBE"><i class="fas fa-video"></i> YouTube</option>
+                                            <option value="GOOGLE_DRIVE"><i class="fas fa-folder"></i> Google Drive</option>
+                                            <option value="GOOGLE_FORM"><i class="fas fa-edit"></i> Google Form</option>
+                                            <option value="EXTERNAL_URL"><i class="fas fa-link"></i> URL Eksternal</option>
                                         </select>
                                         <small class="text-muted" style="display: block; color: #0ea5e9; font-weight: 600; margin-top: 4px;">
                                             <i class="bi bi-info-circle"></i> Pilih jenis link
@@ -1450,7 +1450,7 @@
                                             <i class="bi bi-info-circle"></i> <span id="urlHelpText">Pilih tipe link terlebih dahulu</span>
                                         </small>
                                         <small class="text-muted" style="display: block; margin-top: 2px;">
-                                            🔍 <strong id="exampleText">Tunggu tipe link dipilih...</strong>
+                                            <i class="fas fa-search"></i> <strong id="exampleText">Tunggu tipe link dipilih...</strong>
                                         </small>
                                     </div>
                                     <div class="col-md-2">
@@ -1490,13 +1490,13 @@
                     </div>
 
                     <button class="btn btn-success btn-lg w-100" onclick="saveAllSettings()">
-                        <i class="bi bi-check-circle"></i> ✅ Semua Pengaturan Tersimpan
+                        <i class="bi bi-check-circle"></i> <i class="fas fa-check-circle text-success"></i> Semua Pengaturan Tersimpan
                     </button>
                 </section>
 
                 <!-- Reports Section -->
                 <section id="reports-section" class="content-section d-none">
-                    <h2 class="mb-4">📊 Ekspor Data & Laporan</h2>
+                    <h2 class="mb-4"><i class="fas fa-chart-bar"></i> Ekspor Data & Laporan</h2>
                     
                     <div class="alert alert-info mb-4">
                         <i class="bi bi-info-circle"></i> <strong>Info:</strong> Klik tombol "Buka Halaman" pada setiap kartu untuk membuka tabel data dengan fitur print, download CSV/JSON, dan pencarian lengkap.
@@ -1685,7 +1685,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">🗓️ Tambah Gelombang Baru</h5>
+                    <h5 class="modal-title"><i class="fas fa-calendar"></i> Tambah Gelombang Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -1694,7 +1694,7 @@
                             <label class="form-label">Nama Gelombang <span class="text-danger">*</span></label>
                             <input type="text" id="addPeriodName" class="form-control" placeholder="cth: Gelombang I" required>
                         </div>
-                        <!-- ✅ MOVED: Tipe Gelombang now appears FIRST for better UX -->
+                        <!-- <i class="fas fa-check-circle text-success"></i> MOVED: Tipe Gelombang now appears FIRST for better UX -->
                         <div class="mb-3">
                             <label class="form-label">Tipe Gelombang <span class="text-danger">*</span></label>
                             <select id="addPeriodWaveType" class="form-select" required onchange="toggleAddExamFields()">
@@ -1714,7 +1714,7 @@
                                 <input type="datetime-local" id="addPeriodRegEnd" class="form-control" required>
                             </div>
                         </div>
-                        <!-- ✅ NEW: Exam fields only for REGULAR_TEST -->
+                        <!-- <i class="fas fa-check-circle text-success"></i> NEW: Exam fields only for REGULAR_TEST -->
                         <div class="row" id="addPeriodExamSection" style="display: none;">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Tanggal Ujian <span class="text-danger">*</span></label>
@@ -1758,7 +1758,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">✏️ Edit Gelombang</h5>
+                    <h5 class="modal-title"><i class="fas fa-pencil-alt"></i> Edit Gelombang</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -1768,7 +1768,7 @@
                             <label class="form-label">Nama Gelombang <span class="text-danger">*</span></label>
                             <input type="text" id="editPeriodName" class="form-control" placeholder="cth: Gelombang I" required>
                         </div>
-                        <!-- ✅ MOVED: Tipe Gelombang now appears FIRST for better UX -->
+                        <!-- <i class="fas fa-check-circle text-success"></i> MOVED: Tipe Gelombang now appears FIRST for better UX -->
                         <div class="mb-3">
                             <label class="form-label">Tipe Gelombang <span class="text-danger">*</span></label>
                             <select id="editPeriodWaveType" class="form-select" required onchange="toggleEditExamFields()">
@@ -1788,7 +1788,7 @@
                                 <input type="datetime-local" id="editPeriodRegEnd" class="form-control" required>
                             </div>
                         </div>
-                        <!-- ✅ NEW: Exam fields only for REGULAR_TEST -->
+                        <!-- <i class="fas fa-check-circle text-success"></i> NEW: Exam fields only for REGULAR_TEST -->
                         <div class="row" id="editPeriodExamSection" style="display: none;">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Tanggal Ujian <span class="text-danger">*</span></label>
@@ -1893,7 +1893,7 @@
                         
                         <div class="mb-3">
                             <label class="form-label">Logo/Icon (Emoji atau URL) <span class="text-danger">*</span></label>
-                            <input type="text" id="jenisSeleksiLogo" class="form-control" placeholder="cth: 📋, 🎖️, atau URL gambar" required>
+                            <input type="text" id="jenisSeleksiLogo" class="form-control" placeholder="cth: , , atau URL gambar" required>
                         </div>
                         
                         <div class="mb-3">
@@ -2058,7 +2058,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ✅ SAFE STORAGE ACCESS HELPERS (Handles Tracking Prevention blocking)
+        // <i class="fas fa-check-circle text-success"></i> SAFE STORAGE ACCESS HELPERS (Handles Tracking Prevention blocking)
         function safeGetStorage(key, defaultValue = null) {
             try {
                 const fromSession = sessionStorage.getItem(key);
@@ -2099,7 +2099,7 @@
         let currentSelectedUserId = null;
         let currentSelectedUserEmail = null;
         
-        // ✅ INITIALIZE AUTH TOKEN EARLY (before DOMContentLoaded - use existing from common-auth.js)
+        // <i class="fas fa-check-circle text-success"></i> INITIALIZE AUTH TOKEN EARLY (before DOMContentLoaded - use existing from common-auth.js)
         if (!authToken) {
             try {
                 authToken = safeGetStorage('authToken');
@@ -2119,7 +2119,7 @@
 
         // ===== EARLY AUTHENTICATION CHECK (Before everything) =====
         document.addEventListener('DOMContentLoaded', function() {
-            // ✅ Get from sessionStorage first (per-tab), fallback to localStorage
+            // <i class="fas fa-check-circle text-success"></i> Get from sessionStorage first (per-tab), fallback to localStorage
             try {
                 authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
                 userRole = sessionStorage.getItem('userRole') || localStorage.getItem('userRole');
@@ -2130,7 +2130,7 @@
             console.log('🔍 DOMContentLoaded - Checking auth:', authToken ? '✅ Token found' : '❌ No token', 'Role:', userRole);
             console.log('📊 authToken value:', authToken ? authToken.substring(0, 40) + '...' : 'UNDEFINED');
             
-            // ✅ DECODE JWT TO CHECK AUTHORITIES
+            // <i class="fas fa-check-circle text-success"></i> DECODE JWT TO CHECK AUTHORITIES
             if (authToken) {
                 try {
                     const parts = authToken.split('.');
@@ -2170,7 +2170,7 @@
 
                 if (!response.ok) {
                     const list = document.getElementById('msgConversationList');
-                    if (list) list.innerHTML = '<div class="text-center text-muted p-3">❌ Error loading messages</div>';
+                    if (list) list.innerHTML = '<div class="text-center text-muted p-3"><i class="fas fa-times-circle text-danger"></i> Error loading messages</div>';
                     return;
                 }
 
@@ -2372,7 +2372,7 @@
             const prioritySelect = document.getElementById('announcementPriority').value;
 
             if (!title || !content) {
-                alert('❌ Judul dan isi pengumuman harus diisi');
+ alert(' Judul dan isi pengumuman harus diisi');
                 return;
             }
 
@@ -2399,16 +2399,16 @@
                 const data = await response.json();
 
                 if (!response.ok) {
-                    alert('❌ Gagal membuat pengumuman: ' + data.message);
+ alert(' Gagal membuat pengumuman: ' + data.message);
                     return;
                 }
 
-                alert('✅ Pengumuman berhasil dibuat!');
+ alert(' Pengumuman berhasil dibuat!');
                 e.target.reset();
                 loadAnnouncements();
             } catch (error) {
                 console.error('Error creating announcement:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -2478,14 +2478,14 @@
                 });
 
                 if (response.ok) {
-                    alert('✅ Pengumuman berhasil diperbarui!');
+ alert(' Pengumuman berhasil diperbarui!');
                     loadAnnouncements();
                 } else {
-                    alert('❌ Gagal mengupdate pengumuman');
+ alert(' Gagal mengupdate pengumuman');
                 }
             } catch (error) {
                 console.error('Error updating announcement:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -2499,14 +2499,14 @@
                 });
 
                 if (response.ok) {
-                    alert('✅ Pengumuman berhasil dihapus!');
+ alert(' Pengumuman berhasil dihapus!');
                     loadAnnouncements();
                 } else {
-                    alert('❌ Gagal menghapus pengumuman');
+ alert(' Gagal menghapus pengumuman');
                 }
             } catch (error) {
                 console.error('Error deleting announcement:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -2697,12 +2697,12 @@
             const role = document.getElementById('accountRole').value;
 
             if (!email || !password || !fullName || !role) {
-                alert('❌ Semua field harus diisi');
+ alert(' Semua field harus diisi');
                 return;
             }
 
             if (password.length < 6) {
-                alert('❌ Password minimal 6 karakter');
+ alert(' Password minimal 6 karakter');
                 return;
             }
 
@@ -2724,15 +2724,15 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    alert('✅ Akun berhasil dibuat!');
+ alert(' Akun berhasil dibuat!');
                     document.getElementById('addAccountForm').reset();
                     await loadAccounts();
                 } else {
-                    alert('❌ Gagal membuat akun: ' + (data.message || 'Unknown error'));
+ alert(' Gagal membuat akun: ' + (data.message || 'Unknown error'));
                 }
             } catch (error) {
                 console.error('Error adding account:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -2742,7 +2742,7 @@
 
             const validRoles = ['ADMIN_VALIDASI', 'ADMIN_PUSAT', 'CAMABA'];
             if (!validRoles.includes(newRole)) {
-                alert('❌ Role tidak valid. Gunakan: ADMIN_VALIDASI, ADMIN_PUSAT, atau CAMABA');
+ alert(' Role tidak valid. Gunakan: ADMIN_VALIDASI, ADMIN_PUSAT, atau CAMABA');
                 return;
             }
 
@@ -2757,15 +2757,15 @@
                 });
 
                 if (response.ok) {
-                    alert('✅ Role berhasil diubah!');
+ alert(' Role berhasil diubah!');
                     await loadAccounts();
                 } else {
                     const error = await response.json();
-                    alert('❌ Gagal mengubah role: ' + (error.message || 'Unknown error'));
+ alert(' Gagal mengubah role: ' + (error.message || 'Unknown error'));
                 }
             } catch (error) {
                 console.error('Error updating role:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -2774,7 +2774,7 @@ const currentEmail = safeGetStorage('userEmail');
             
             // Prevent delete self
             if (currentEmail === email) {
-                alert('❌ Tidak bisa menghapus akun Anda sendiri!');
+ alert(' Tidak bisa menghapus akun Anda sendiri!');
                 return;
             }
 
@@ -2787,15 +2787,15 @@ const currentEmail = safeGetStorage('userEmail');
                 });
 
                 if (response.ok) {
-                    alert('✅ Akun berhasil dihapus!');
+ alert(' Akun berhasil dihapus!');
                     await loadAccounts();
                 } else {
                     const error = await response.json();
-                    alert('❌ Gagal menghapus akun: ' + (error.message || 'Error tidak diketahui'));
+ alert(' Gagal menghapus akun: ' + (error.message || 'Error tidak diketahui'));
                 }
             } catch (error) {
                 console.error('Error deleting account:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -2939,7 +2939,7 @@ const currentEmail = safeGetStorage('userEmail');
                         <div class="form-check">
                             <input class="form-check-input jenisSeleksiCheckbox" type="checkbox" value="${js.id}" id="addJS_${js.id}" data-id="${js.id}">
                             <label class="form-check-label" for="addJS_${js.id}">
-                                ${js.logoUrl || '📋'} <strong>${js.nama}</strong>
+                                ${js.logoUrl || '<i class="fas fa-clipboard-list"></i>'} <strong>${js.nama}</strong>
                                 <small class="text-muted">(${js.code})</small>
                             </label>
                         </div>
@@ -2994,7 +2994,7 @@ const currentEmail = safeGetStorage('userEmail');
                         <div class="form-check">
                             <input class="form-check-input jenisSeleksiCheckbox" type="checkbox" value="${js.id}" id="editJS_${js.id}" data-id="${js.id}" ${isSelected ? 'checked' : ''}>
                             <label class="form-check-label" for="editJS_${js.id}">
-                                ${js.logoUrl || '📋'} <strong>${js.nama}</strong>
+                                ${js.logoUrl || '<i class="fas fa-clipboard-list"></i>'} <strong>${js.nama}</strong>
                                 <small class="text-muted">(${js.code})</small>
                             </label>
                         </div>
@@ -3031,39 +3031,39 @@ const currentEmail = safeGetStorage('userEmail');
             const description = document.getElementById('addPeriodDescription').value.trim();
             const requirements = document.getElementById('addPeriodRequirements').value.trim();
             
-            // ✅ NEW: Get selected jenis seleksi
+            // <i class="fas fa-check-circle text-success"></i> NEW: Get selected jenis seleksi
             const jenisSeleksiIds = getSelectedJenisSeleksiIds('addPeriodJenisSeleksiContainer');
 
             if (!name) {
-                alert('❌ Nama gelombang harus diisi');
+ alert(' Nama gelombang harus diisi');
                 return;
             }
 
             if (!waveType) {
-                alert('❌ Tipe gelombang harus dipilih');
+ alert(' Tipe gelombang harus dipilih');
                 return;
             }
             
-            // ✅ NEW: Validate jenis seleksi selection
+            // <i class="fas fa-check-circle text-success"></i> NEW: Validate jenis seleksi selection
             if (jenisSeleksiIds.length === 0) {
-                alert('❌ Pilih minimal satu jenis seleksi');
+ alert(' Pilih minimal satu jenis seleksi');
                 return;
             }
 
             // Validate required dates
             if (!regStartDate || !regEndDate || !announcementDate) {
-                alert('❌ Tanggal registrasi dan pengumuman harus diisi');
+ alert(' Tanggal registrasi dan pengumuman harus diisi');
                 return;
             }
 
             // For REGULAR_TEST, validate exam dates
             if (waveType === 'REGULAR_TEST' && (!examStartDate || !examEndDate)) {
-                alert('❌ Tanggal ujian harus diisi untuk tipe REGULAR_TEST');
+ alert(' Tanggal ujian harus diisi untuk tipe REGULAR_TEST');
                 return;
             }
 
             try {
-                // ✅ For non-REGULAR_TEST waves, set unlimited exam dates (year 9999)
+                // <i class="fas fa-check-circle text-success"></i> For non-REGULAR_TEST waves, set unlimited exam dates (year 9999)
                 let finalExamStart, finalExamEnd;
                 
                 if (waveType === 'REGULAR_TEST') {
@@ -3090,7 +3090,7 @@ const currentEmail = safeGetStorage('userEmail');
                     description: description,
                     requirements: requirements,
                     waveType: waveType,
-                    jenisSeleksiIds: jenisSeleksiIds  // ✅ NEW: Include selected jenis seleksi
+                    jenisSeleksiIds: jenisSeleksiIds  // <i class="fas fa-check-circle text-success"></i> NEW: Include selected jenis seleksi
                 };
 
                 const response = await fetch('/admin/periods', {
@@ -3104,18 +3104,18 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const data = await response.json();
                 if (response.ok) {
-                    alert('✅ Gelombang berhasil ditambahkan dengan ' + jenisSeleksiIds.length + ' jenis seleksi');
+ alert(' Gelombang berhasil ditambahkan dengan ' + jenisSeleksiIds.length + ' jenis seleksi');
                     document.getElementById('addPeriodModal').querySelector('.btn-close').click();
                     document.getElementById('addPeriodForm').reset();
                     loadPeriods();
                     loadExamLinkPeriods();
                     loadSelectionTypePeriods();
                 } else {
-                    alert('❌ Error: ' + (data.message || 'Gagal menambahkan gelombang'));
+ alert(' Error: ' + (data.message || 'Gagal menambahkan gelombang'));
                 }
             } catch (error) {
                 console.error('Error adding period:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -3128,7 +3128,7 @@ const currentEmail = safeGetStorage('userEmail');
             .then(periods => {
                 const period = periods.find(p => p.id === id);
                 if (!period) {
-                    alert('❌ Gelombang tidak ditemukan');
+ alert(' Gelombang tidak ditemukan');
                     return;
                 }
 
@@ -3154,7 +3154,7 @@ const currentEmail = safeGetStorage('userEmail');
                 // Toggle exam fields based on wave type
                 toggleEditExamFields();
                 
-                // ✅ NEW: Populate jenis seleksi checkboxes
+                // <i class="fas fa-check-circle text-success"></i> NEW: Populate jenis seleksi checkboxes
                 populateEditJenisSeleksiCheckboxes(id);
 
                 // Show edit modal
@@ -3163,7 +3163,7 @@ const currentEmail = safeGetStorage('userEmail');
             })
             .catch(error => {
                 console.error('Error fetching period:', error);
-                alert('❌ Error: Gagal mengambil data gelombang');
+ alert(' Error: Gagal mengambil data gelombang');
             });
         }
 
@@ -3194,7 +3194,7 @@ const currentEmail = safeGetStorage('userEmail');
             console.log('   ExamEnd:', examEndDate);
             console.log('   AnnouncementDate:', announcementDate);
             
-            // ✅ NEW: Get selected jenis seleksi
+            // <i class="fas fa-check-circle text-success"></i> NEW: Get selected jenis seleksi
             const jenisSeleksiIds = getSelectedJenisSeleksiIds('editPeriodJenisSeleksiContainer');
             console.log('🔑 Auth Token present:', !!authToken);
             console.log('✅ Jenis Seleksi IDs:', jenisSeleksiIds);
@@ -3203,31 +3203,31 @@ const currentEmail = safeGetStorage('userEmail');
             console.log('🔍 VALIDATION START');
             if (!name) {
                 console.error('❌ Name is empty!');
-                alert('❌ Nama gelombang harus diisi');
+ alert(' Nama gelombang harus diisi');
                 return;
             }
 
             if (!waveType) {
                 console.error('❌ WaveType is empty!');
-                alert('❌ Tipe gelombang harus dipilih');
+ alert(' Tipe gelombang harus dipilih');
                 return;
             }
             
             if (jenisSeleksiIds.length === 0) {
                 console.error('❌ No jenis seleksi selected!');
-                alert('❌ Pilih minimal satu jenis seleksi');
+ alert(' Pilih minimal satu jenis seleksi');
                 return;
             }
 
             if (!regStartDate || !regEndDate || !announcementDate) {
                 console.error('❌ Required dates missing!');
-                alert('❌ Tanggal registrasi dan pengumuman harus diisi');
+ alert(' Tanggal registrasi dan pengumuman harus diisi');
                 return;
             }
 
             if (waveType === 'REGULAR_TEST' && (!examStartDate || !examEndDate)) {
                 console.error('❌ Exam dates required for REGULAR_TEST!');
-                alert('❌ Tanggal ujian harus diisi untuk tipe REGULAR_TEST');
+ alert(' Tanggal ujian harus diisi untuk tipe REGULAR_TEST');
                 return;
             }
             console.log('✅ VALIDATION PASSED');
@@ -3282,7 +3282,7 @@ const currentEmail = safeGetStorage('userEmail');
                 console.log('   StatusText:', response.statusText);
                 console.log('   OK flag:', response.ok);
                 
-                // ✅ Use response.ok like admin-validasi does
+                // <i class="fas fa-check-circle text-success"></i> Use response.ok like admin-validasi does
                 if (!response.ok) {
                     // Get error details from response body
                     const errorText = await response.text();
@@ -3301,7 +3301,7 @@ const currentEmail = safeGetStorage('userEmail');
                 }
                 
                 console.log('✅ [SAVE-SUCCESS] Period updated successfully');
-                alert('✅ Gelombang berhasil diperbarui dengan ' + jenisSeleksiIds.length + ' jenis seleksi');
+ alert(' Gelombang berhasil diperbarui dengan ' + jenisSeleksiIds.length + ' jenis seleksi');
                 const form = document.getElementById('editPeriodForm');
                 if (form) form.reset();
                 const editPeriodModal = document.getElementById('editPeriodModal');
@@ -3313,7 +3313,7 @@ const currentEmail = safeGetStorage('userEmail');
                 console.error('   Error:', error);
                 console.error('   Message:', error.message);
                 console.error('   Stack:', error.stack);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -3349,7 +3349,7 @@ const currentEmail = safeGetStorage('userEmail');
                 console.log('   StatusText:', response.statusText);
                 console.log('   OK flag:', response.ok);
                 
-                // ✅ Use response.ok like admin-validasi
+                // <i class="fas fa-check-circle text-success"></i> Use response.ok like admin-validasi
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('❌ [DELETE-PERIOD-ERROR] Request failed!');
@@ -3367,14 +3367,14 @@ const currentEmail = safeGetStorage('userEmail');
                 }
                 
                 console.log('✅ [DELETE-SUCCESS] Period deleted successfully');
-                alert('✅ Gelombang berhasil dihapus');
+ alert(' Gelombang berhasil dihapus');
                 loadPeriods();
             } catch (error) {
                 console.error('❌ [CATCH-ERROR] Exception thrown:');
                 console.error('   Error:', error);
                 console.error('   Message:', error.message);
                 console.error('   Stack:', error.stack);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -3456,7 +3456,7 @@ const currentEmail = safeGetStorage('userEmail');
             const description = document.getElementById('addExamLinkDescription').value.trim();
 
             if (!periodId || !linkTitle || !linkUrl) {
-                alert('❌ Gelombang, Judul, dan URL harus diisi');
+ alert(' Gelombang, Judul, dan URL harus diisi');
                 return;
             }
 
@@ -3478,21 +3478,21 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const data = await response.json();
                 if (response.ok) {
-                    alert('✅ Link ujian berhasil ditambahkan!');
+ alert(' Link ujian berhasil ditambahkan!');
                     document.getElementById('addExamLinkForm').reset();
                     document.getElementById('addExamLinkModal').querySelector('.btn-close').click();
                     loadExamLinks();
                 } else {
-                    alert('❌ Error: ' + (data.message || 'Unknown error'));
+ alert(' Error: ' + (data.message || 'Unknown error'));
                 }
             } catch (error) {
                 console.error('Error adding exam link:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
         function editExamLink(id) {
-            alert('✅ Fitur edit akan diimplementasikan');
+ alert(' Fitur edit akan diimplementasikan');
             // TODO: Implement edit functionality
         }
 
@@ -3507,14 +3507,14 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const data = await response.json();
                 if (response.ok) {
-                    alert('✅ Link ujian berhasil dihapus');
+ alert(' Link ujian berhasil dihapus');
                     loadExamLinks();
                 } else {
-                    alert('❌ Error: ' + data.message);
+ alert(' Error: ' + data.message);
                 }
             } catch (error) {
                 console.error('Error deleting exam link:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -3553,12 +3553,12 @@ const currentEmail = safeGetStorage('userEmail');
             const link = input.value.trim();
 
             if (!link) {
-                alert('❌ Link Google Form tidak boleh kosong');
+ alert(' Link Google Form tidak boleh kosong');
                 return;
             }
 
             if (!link.includes('forms.google.com') && !link.includes('forms.gle') && !link.includes('docs.google.com/forms')) {
-                alert('❌ Link tidak valid. Gunakan link Google Form yang benar');
+ alert(' Link tidak valid. Gunakan link Google Form yang benar');
                 return;
             }
 
@@ -3574,14 +3574,14 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const data = await response.json();
                 if (response.ok) {
-                    alert('✅ Link Google Form berhasil disimpan');
+ alert(' Link Google Form berhasil disimpan');
                     await loadGFormLink();
                 } else {
-                    alert('❌ Error: ' + data.message);
+ alert(' Error: ' + data.message);
                 }
             } catch (error) {
                 console.error('Error saving gform link:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -3589,7 +3589,7 @@ const currentEmail = safeGetStorage('userEmail');
             const codeEl = document.getElementById('gformLinkCode');
             codeEl.select();
             document.execCommand('copy');
-            alert('✅ Link Google Form berhasil dicopy');
+ alert(' Link Google Form berhasil dicopy');
         }
 
         async function deleteGFormLink() {
@@ -3603,14 +3603,14 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const data = await response.json();
                 if (response.ok) {
-                    alert('✅ Link Google Form berhasil dihapus');
+ alert(' Link Google Form berhasil dihapus');
                     await loadGFormLink();
                 } else {
-                    alert('❌ Error: ' + data.message);
+ alert(' Error: ' + data.message);
                 }
             } catch (error) {
                 console.error('Error deleting gform link:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -3769,18 +3769,18 @@ const currentEmail = safeGetStorage('userEmail');
             const linkUjian = document.getElementById('setupUjianLink').value.trim();
 
             if (!periodId) {
-                alert('❌ Pilih gelombang terlebih dahulu');
+ alert(' Pilih gelombang terlebih dahulu');
                 return;
             }
 
             if (!linkUjian) {
-                alert('❌ Link ujian tidak boleh kosong');
+ alert(' Link ujian tidak boleh kosong');
                 return;
             }
 
             // Validate link format
             if (!linkUjian.includes('forms.google.com') && !linkUjian.includes('forms.gle') && !linkUjian.includes('docs.google.com/forms')) {
-                alert('❌ Link tidak valid. Gunakan link Google Form yang benar');
+ alert(' Link tidak valid. Gunakan link Google Form yang benar');
                 return;
             }
 
@@ -3813,22 +3813,22 @@ const currentEmail = safeGetStorage('userEmail');
 
                 if (response.ok) {
                     console.log('✅ [SAVE-UJIAN] POST OK - about to call loadUjianLinks(), authToken:', authToken ? 'EXISTS' : 'MISSING');
-                    alert('✅ Link ujian ONLINE berhasil disimpan');
+ alert(' Link ujian ONLINE berhasil disimpan');
                     document.getElementById('setupUjianWaveSelect').value = '';
                     document.getElementById('setupUjianLink').value = '';
                     await loadUjianLinks();
                     console.log('✅ [SAVE-UJIAN] loadUjianLinks completed');
                 } else {
                     console.log('❌ [SAVE-UJIAN] POST Error:', response.status, data);
-                    alert('❌ Error: ' + (data.message || 'HTTP ' + response.status));
+ alert(' Error: ' + (data.message || 'HTTP ' + response.status));
                 }
             } catch (error) {
                 console.error('❌ [SAVE-UJIAN] Error:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
-        // ✅ NEW: Toggle exam mode between Online and Offline
+        // <i class="fas fa-check-circle text-success"></i> NEW: Toggle exam mode between Online and Offline
         function toggleExamMode(mode) {
             const onlineSection = document.getElementById('onlineModeSection');
             const offlineSection = document.getElementById('offlineModeSection');
@@ -3842,7 +3842,7 @@ const currentEmail = safeGetStorage('userEmail');
             }
         }
 
-        // ✅ NEW: Save offline exam details
+        // <i class="fas fa-check-circle text-success"></i> NEW: Save offline exam details
         async function saveOfflineExam() {
             console.log('🟡 [SAVE-OFFLINE] Starting offline exam setup');
             
@@ -3852,12 +3852,12 @@ const currentEmail = safeGetStorage('userEmail');
             const examTime = document.getElementById('setupExamTime').value.trim();
 
             if (!periodId) {
-                alert('❌ Pilih gelombang terlebih dahulu');
+ alert(' Pilih gelombang terlebih dahulu');
                 return;
             }
 
             if (!examDate || !examPlace || !examTime) {
-                alert('❌ Semua field (Tanggal, Tempat, Jam) harus diisi');
+ alert(' Semua field (Tanggal, Tempat, Jam) harus diisi');
                 return;
             }
 
@@ -3894,7 +3894,7 @@ const currentEmail = safeGetStorage('userEmail');
 
                 if (response.ok) {
                     console.log('✅ [SAVE-OFFLINE] Offline exam saved successfully');
-                    alert('✅ Ujian OFFLINE berhasil disimpan\n\nPeserta akan diminta upload foto bukti ujian');
+ alert(' Ujian OFFLINE berhasil disimpan\n\nPeserta akan diminta upload foto bukti ujian');
                     document.getElementById('setupUjianWaveSelect').value = '';
                     document.getElementById('setupExamDate').value = '';
                     document.getElementById('setupExamPlace').value = '';
@@ -3905,11 +3905,11 @@ const currentEmail = safeGetStorage('userEmail');
                     await loadUjianLinks();
                 } else {
                     console.log('❌ [SAVE-OFFLINE] Error:', response.status, data);
-                    alert('❌ Error: ' + (data.message || 'HTTP ' + response.status));
+ alert(' Error: ' + (data.message || 'HTTP ' + response.status));
                 }
             } catch (error) {
                 console.error('❌ [SAVE-OFFLINE] Error:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -3919,12 +3919,12 @@ const currentEmail = safeGetStorage('userEmail');
 
             const linkUjian = newLink.trim();
             if (!linkUjian) {
-                alert('❌ Link ujian tidak boleh kosong');
+ alert(' Link ujian tidak boleh kosong');
                 return;
             }
 
             if (!linkUjian.includes('forms.google.com') && !linkUjian.includes('forms.gle') && !linkUjian.includes('docs.google.com/forms')) {
-                alert('❌ Link tidak valid. Gunakan link Google Form yang benar');
+ alert(' Link tidak valid. Gunakan link Google Form yang benar');
                 return;
             }
 
@@ -3951,14 +3951,14 @@ const currentEmail = safeGetStorage('userEmail');
                 }
 
                 if (response.ok) {
-                    alert('✅ Link ujian berhasil diubah');
+ alert(' Link ujian berhasil diubah');
                     await loadUjianLinks();
                 } else {
-                    alert('❌ Error: ' + (data.message || 'HTTP ' + response.status));
+ alert(' Error: ' + (data.message || 'HTTP ' + response.status));
                 }
             } catch (error) {
                 console.error('Error editing ujian link:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -3981,14 +3981,14 @@ const currentEmail = safeGetStorage('userEmail');
                 }
 
                 if (response.ok) {
-                    alert('✅ Link ujian berhasil dihapus');
+ alert(' Link ujian berhasil dihapus');
                     await loadUjianLinks();
                 } else {
-                    alert('❌ Error: ' + (data.message || 'HTTP ' + response.status));
+ alert(' Error: ' + (data.message || 'HTTP ' + response.status));
                 }
             } catch (error) {
                 console.error('Error deleting ujian link:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -4050,7 +4050,7 @@ const currentEmail = safeGetStorage('userEmail');
                 }
 
                 tbody.innerHTML = types.map(type => {
-                    const typeLabel = type.formType === 'MEDICAL' ? '💉 Kedokteran' : '🏥 Non-Kedokteran';
+                    const typeLabel = type.formType === 'MEDICAL' ? '<i class="fas fa-syringe"></i> Kedokteran' : '<i class="fas fa-hospital"></i> Non-Kedokteran';
                     const requirements = [];
                     if (type.requireRanking) requirements.push('Ranking');
                     if (type.requireTesting) requirements.push('Testing');
@@ -4111,7 +4111,7 @@ const currentEmail = safeGetStorage('userEmail');
                 displayJenisSeleksiTable();
             } catch (error) {
                 console.error('Error loading jenis seleksi:', error);
-                alert('❌ Error loading jenis seleksi');
+ alert(' Error loading jenis seleksi');
             }
         }
 
@@ -4140,7 +4140,7 @@ const currentEmail = safeGetStorage('userEmail');
                         <tbody>
                             ${jenisSeleksiList.map(js => `
                                 <tr>
-                                    <td><span style="font-size: 24px;">${js.logoUrl || '📋'}</span></td>
+                                    <td><span style="font-size: 24px;">${js.logoUrl || '<i class="fas fa-clipboard-list"></i>'}</span></td>
                                     <td><strong>${js.code}</strong></td>
                                     <td>${js.nama}</td>
                                     <td>Rp ${parseInt(js.harga).toLocaleString('id-ID')}</td>
@@ -4230,13 +4230,13 @@ const currentEmail = safeGetStorage('userEmail');
             console.log('🔍 VALIDATION START');
             if (!code || !nama || !logo || !deskripsi || !harga) {
                 console.error('❌ Required fields missing!');
-                alert('❌ Kode, Nama, Logo, Deskripsi, dan Harga harus diisi');
+ alert(' Kode, Nama, Logo, Deskripsi, dan Harga harus diisi');
                 return;
             }
 
             if (programStudiIds.length === 0) {
                 console.error('❌ No program studi selected!');
-                alert('❌ Pilih minimal satu program studi');
+ alert(' Pilih minimal satu program studi');
                 return;
             }
             console.log('✅ VALIDATION PASSED');
@@ -4277,7 +4277,7 @@ const currentEmail = safeGetStorage('userEmail');
                 console.log('   StatusText:', response.statusText);
                 console.log('   OK flag:', response.ok);
 
-                // ✅ Use response.ok like admin-validasi
+                // <i class="fas fa-check-circle text-success"></i> Use response.ok like admin-validasi
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('❌ [SAVE-JENIS-SELEKSI-ERROR] Request failed!');
@@ -4297,9 +4297,9 @@ const currentEmail = safeGetStorage('userEmail');
                 const action = id ? 'diupdate' : 'ditambahkan';
                 const count = programStudiIds.length;
                 console.log('✅ [SAVE-SUCCESS] Jenis Seleksi saved successfully');
-                alert(`✅ Jenis seleksi berhasil ${action} dengan ${count} program studi!`);
+ alert(` Jenis seleksi berhasil ${action} dengan ${count} program studi!`);
                     
-                    // ✅ Complete modal & form reset
+                    // <i class="fas fa-check-circle text-success"></i> Complete modal & form reset
                     try {
                         const form = document.getElementById('addSelectionTypeForm');
                         if (form) form.reset();
@@ -4331,7 +4331,7 @@ const currentEmail = safeGetStorage('userEmail');
                 console.error('   Error:', error);
                 console.error('   Message:', error.message);
                 console.error('   Stack:', error.stack);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -4342,7 +4342,7 @@ const currentEmail = safeGetStorage('userEmail');
                 });
 
                 if (!response.ok) {
-                    alert('❌ Gagal memuat data');
+ alert(' Gagal memuat data');
                     return;
                 }
 
@@ -4390,7 +4390,7 @@ const currentEmail = safeGetStorage('userEmail');
                 modal.show();
             } catch (error) {
                 console.error('Error viewing programs:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -4401,7 +4401,7 @@ const currentEmail = safeGetStorage('userEmail');
                 });
 
                 if (!response.ok) {
-                    alert('❌ Gagal memuat data gelombang');
+ alert(' Gagal memuat data gelombang');
                     return;
                 }
 
@@ -4423,7 +4423,7 @@ const currentEmail = safeGetStorage('userEmail');
                         <div class="list-group-item mb-3 p-3 border rounded" style="border: 1px solid #dee2e6;">
                             <div class="d-flex w-100 justify-content-between align-items-start">
                                 <div style="flex: 1;">
-                                    <h6 class="mb-2"><strong>${js.logoUrl || '📋'} ${js.nama}</strong></h6>
+                                    <h6 class="mb-2"><strong>${js.logoUrl || '<i class="fas fa-clipboard-list"></i>'} ${js.nama}</strong></h6>
                                     <small class="text-muted d-block mb-1">Kode: ${js.code}</small>
                                     <small class="text-muted d-block mb-1">Harga: Rp ${parseInt(js.harga).toLocaleString('id-ID')}</small>
                                     <small class="text-muted d-block">${js.deskripsi || '(Tidak ada deskripsi)'}</small>
@@ -4452,12 +4452,12 @@ const currentEmail = safeGetStorage('userEmail');
                 modal.show();
             } catch (error) {
                 console.error('Error viewing period jenis seleksi:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
         async function deleteJenisSeleksi(id) {
-            if (!confirm('⚠️ Apakah Anda yakin ingin menghapus jenis seleksi ini?')) {
+            if (!confirm('<i class="fas fa-exclamation-triangle text-warning"></i> Apakah Anda yakin ingin menghapus jenis seleksi ini?')) {
                 console.log('ℹ️ Delete cancelled by user');
                 return;
             }
@@ -4487,7 +4487,7 @@ const currentEmail = safeGetStorage('userEmail');
                 console.log('   StatusText:', response.statusText);
                 console.log('   OK flag:', response.ok);
 
-                // ✅ Use response.ok like admin-validasi
+                // <i class="fas fa-check-circle text-success"></i> Use response.ok like admin-validasi
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('❌ [DELETE-JENIS-SELEKSI-ERROR] Request failed!');
@@ -4505,14 +4505,14 @@ const currentEmail = safeGetStorage('userEmail');
                 }
 
                 console.log('✅ [DELETE-SUCCESS] Jenis Seleksi deleted successfully');
-                alert('✅ Jenis seleksi berhasil dihapus!');
+ alert(' Jenis seleksi berhasil dihapus!');
                 loadJenisSeleksi();
             } catch (error) {
                 console.error('❌ [CATCH-ERROR] Exception thrown:');
                 console.error('   Error:', error);
                 console.error('   Message:', error.message);
                 console.error('   Stack:', error.stack);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -4527,7 +4527,7 @@ const currentEmail = safeGetStorage('userEmail');
             const description = document.getElementById('addSelectionTypeDescription').value.trim();
 
             if (!periodId || !name || !formType || !price) {
-                alert('❌ Gelombang, Nama, Tipe, dan Harga harus diisi');
+ alert(' Gelombang, Nama, Tipe, dan Harga harus diisi');
                 return;
             }
 
@@ -4551,16 +4551,16 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const data = await response.json();
                 if (response.ok) {
-                    alert('✅ Jenis seleksi berhasil ditambahkan!');
+ alert(' Jenis seleksi berhasil ditambahkan!');
                     document.getElementById('addSelectionTypeForm').reset();
                     document.getElementById('addSelectionTypeModal').querySelector('.btn-close').click();
                     loadSelectionTypes();
                 } else {
-                    alert('❌ Error: ' + (data.message || 'Unknown error'));
+ alert(' Error: ' + (data.message || 'Unknown error'));
                 }
             } catch (error) {
                 console.error('Error adding selection type:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -4577,7 +4577,7 @@ const currentEmail = safeGetStorage('userEmail');
                 const type = data.data.find(t => t.id == id);
 
                 if (!type) {
-                    alert('❌ Jenis seleksi tidak ditemukan');
+ alert(' Jenis seleksi tidak ditemukan');
                     return;
                 }
 
@@ -4622,17 +4622,17 @@ const currentEmail = safeGetStorage('userEmail');
 
                         const updateData = await updateResponse.json();
                         if (updateResponse.ok) {
-                            alert('✅ Jenis seleksi berhasil diperbarui!');
+ alert(' Jenis seleksi berhasil diperbarui!');
                             form.onsubmit = oldOnSubmit;
                             form.reset();
                             document.getElementById('addSelectionTypeModal').querySelector('.btn-close').click();
                             loadSelectionTypes();
                         } else {
-                            alert('❌ Error: ' + (updateData.message || 'Unknown error'));
+ alert(' Error: ' + (updateData.message || 'Unknown error'));
                         }
                     } catch (error) {
                         console.error('Error updating selection type:', error);
-                        alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
                     }
                 };
 
@@ -4641,7 +4641,7 @@ const currentEmail = safeGetStorage('userEmail');
                 modal.show();
             } catch (error) {
                 console.error('❌ Error fetching selection type:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -4656,14 +4656,14 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const data = await response.json();
                 if (response.ok) {
-                    alert('✅ Jenis seleksi berhasil dihapus');
+ alert(' Jenis seleksi berhasil dihapus');
                     loadSelectionTypes();
                 } else {
-                    alert('❌ Error: ' + data.message);
+ alert(' Error: ' + data.message);
                 }
             } catch (error) {
                 console.error('Error deleting selection type:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -4741,7 +4741,7 @@ const currentEmail = safeGetStorage('userEmail');
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="programStudi_${ps.id}" value="${ps.id}">
                         <label class="form-check-label" for="programStudi_${ps.id}">
-                            <strong>${ps.kode}</strong> - ${ps.nama} <small class="text-muted">${ps.isMedical ? '💉' : '🎓'}</small>
+                            <strong>${ps.kode}</strong> - ${ps.nama} <small class="text-muted">${ps.isMedical ? '<i class="fas fa-syringe"></i>' : '<i class="fas fa-graduation-cap"></i>'}</small>
                         </label>
                     </div>
                 `).join('');
@@ -4800,7 +4800,7 @@ const currentEmail = safeGetStorage('userEmail');
             const sortOrder = parseInt(document.getElementById('programStudiSortOrder').value) || 0;
 
             if (!kode || !nama || !tipe || !hargaTotalPerTahun) {
-                alert('❌ Kode, Nama, Tipe, dan Harga Total Per Tahun harus diisi');
+ alert(' Kode, Nama, Tipe, dan Harga Total Per Tahun harus diisi');
                 return;
             }
 
@@ -4829,9 +4829,9 @@ const currentEmail = safeGetStorage('userEmail');
                 const data = await response.json();
                 if (response.ok) {
                     const action = programStudiId ? 'diperbarui' : 'ditambahkan';
-                    alert('✅ Program Studi berhasil ' + action + '!');
+ alert(' Program Studi berhasil ' + action + '!');
                     
-                    // ✅ Complete modal & form reset
+                    // <i class="fas fa-check-circle text-success"></i> Complete modal & form reset
                     try {
                         // Reset form
                         const form = document.getElementById('addProgramStudiForm');
@@ -4867,11 +4867,11 @@ const currentEmail = safeGetStorage('userEmail');
                     
                     loadProgramStudiList();
                 } else {
-                    alert('❌ Error: ' + (data.message || 'Unknown error'));
+ alert(' Error: ' + (data.message || 'Unknown error'));
                 }
             } catch (error) {
                 console.error('Error saving program studi:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -4882,7 +4882,7 @@ const currentEmail = safeGetStorage('userEmail');
                 });
 
                 if (!response.ok) {
-                    alert('❌ Gagal memuat data program studi');
+ alert(' Gagal memuat data program studi');
                     return;
                 }
 
@@ -4909,12 +4909,12 @@ const currentEmail = safeGetStorage('userEmail');
                 modal.show();
             } catch (error) {
                 console.error('Error fetching program studi:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
         async function deleteProgramStudi(id) {
-            if (!confirm('⚠️ Apakah Anda yakin ingin menghapus program studi ini?')) return;
+            if (!confirm('<i class="fas fa-exclamation-triangle text-warning"></i> Apakah Anda yakin ingin menghapus program studi ini?')) return;
 
             try {
                 const response = await fetch(`/admin/program-studi/${id}`, {
@@ -4923,20 +4923,20 @@ const currentEmail = safeGetStorage('userEmail');
                 });
 
                 if (response.ok) {
-                    alert('✅ Program Studi berhasil dihapus!');
+ alert(' Program Studi berhasil dihapus!');
                     loadProgramStudiList();
                 } else {
                     const data = await response.json();
-                    alert('❌ Error: ' + (data.message || 'Gagal menghapus program studi'));
+ alert(' Error: ' + (data.message || 'Gagal menghapus program studi'));
                 }
             } catch (error) {
                 console.error('Error deleting program studi:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
         async function autoInitJenisSeleksi() {
-            const confirmed = confirm('⚠️ Ini akan membuat 2 jenis seleksi utama:\n\n' +
+            const confirmed = confirm('<i class="fas fa-exclamation-triangle text-warning"></i> Ini akan membuat 2 jenis seleksi utama:\n\n' +
                 '1️⃣ KEDOKTERAN - Rp 1.500.000\n' +
                 '2️⃣ PROGRAM NON-KEDOKTERAN - Rp 750.000\n\n' +
                 'Lanjutkan?');
@@ -4956,10 +4956,10 @@ const currentEmail = safeGetStorage('userEmail');
                 const endTime = performance.now();
                 
                 if (response.ok) {
-                    const message = `✅ INISIALISASI BERHASIL!\n\n` +
-                        `📝 Dibuat: ${data.inserted} jenis seleksi baru\n` +
-                        `⏭️ Sudah ada: ${data.total - data.inserted} jenis seleksi\n` +
-                        `⏱️ Waktu: ${(endTime - startTime).toFixed(2)}ms\n\n` +
+                    const message = `<i class="fas fa-check-circle text-success"></i> INISIALISASI BERHASIL!\n\n` +
+                        `<i class="fas fa-edit"></i> Dibuat: ${data.inserted} jenis seleksi baru\n` +
+                        `<i class="fas fa-step-forward"></i> Sudah ada: ${data.total - data.inserted} jenis seleksi\n` +
+                        `<i class="fas fa-stopwatch"></i> Waktu: ${(endTime - startTime).toFixed(2)}ms\n\n` +
                         data.message;
                     alert(message);
                     console.log(data.message);
@@ -4968,16 +4968,16 @@ const currentEmail = safeGetStorage('userEmail');
                         loadJenisSeleksiTable();
                     }
                 } else {
-                    alert('❌ Error: ' + (data.message || 'Unknown error'));
+ alert(' Error: ' + (data.message || 'Unknown error'));
                 }
             } catch (error) {
                 console.error('Error auto-initializing jenis seleksi:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
         async function autoInitProgramStudi() {
-            const confirmed = confirm('⚠️ Ini akan mengimport semua 18 program studi dari form pendaftaran ke database.\n\nLanjutkan?');
+            const confirmed = confirm('<i class="fas fa-exclamation-triangle text-warning"></i> Ini akan mengimport semua 18 program studi dari form pendaftaran ke database.\n\nLanjutkan?');
             if (!confirmed) return;
             
             try {
@@ -4994,20 +4994,20 @@ const currentEmail = safeGetStorage('userEmail');
                 const endTime = performance.now();
                 
                 if (response.ok) {
-                    const message = `✅ AUTO-INIT BERHASIL!\n\n` +
-                        `📥 Diimpor: ${data.inserted} program studi baru\n` +
-                        `⏭️ Sudah ada: ${data.total - data.inserted} program studi\n` +
-                        `⏱️ Waktu: ${(endTime - startTime).toFixed(2)}ms\n\n` +
+                    const message = `<i class="fas fa-check-circle text-success"></i> AUTO-INIT BERHASIL!\n\n` +
+                        `<i class="fas fa-download"></i> Diimpor: ${data.inserted} program studi baru\n` +
+                        `<i class="fas fa-step-forward"></i> Sudah ada: ${data.total - data.inserted} program studi\n` +
+                        `<i class="fas fa-stopwatch"></i> Waktu: ${(endTime - startTime).toFixed(2)}ms\n\n` +
                         data.message;
                     alert(message);
                     console.log(data.message);
                     loadProgramStudiList();
                 } else {
-                    alert('❌ Error: ' + (data.message || 'Unknown error'));
+ alert(' Error: ' + (data.message || 'Unknown error'));
                 }
             } catch (error) {
                 console.error('Error auto-initializing program studi:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -5022,14 +5022,14 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const data = await response.json();
                 if (response.ok) {
-                    alert('✅ Program Studi berhasil dihapus');
+ alert(' Program Studi berhasil dihapus');
                     loadProgramStudiList();
                 } else {
-                    alert('❌ Error: ' + (data.message || 'Unknown error'));
+ alert(' Error: ' + (data.message || 'Unknown error'));
                 }
             } catch (error) {
                 console.error('Error deleting program studi:', error);
-                alert('❌ Error: ' + error.message);
+ alert(' Error: ' + error.message);
             }
         }
 
@@ -5087,7 +5087,7 @@ const currentEmail = safeGetStorage('userEmail');
             const operatingHours = document.getElementById('contactHours').value.trim();
 
             if (!address || !phone || !email || !operatingHours) {
-                alert('❌ Semua field kontak harus diisi');
+ alert(' Semua field kontak harus diisi');
                 return;
             }
 
@@ -5108,13 +5108,13 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const result = await response.json();
                 if (result.success) {
-                    alert('✅ Informasi kontak berhasil disimpan');
+ alert(' Informasi kontak berhasil disimpan');
                     console.log('✅ Contact info saved:', result.data);
                 } else {
-                    alert('❌ Error: ' + result.message);
+ alert(' Error: ' + result.message);
                 }
             } catch (error) {
-                alert('❌ Error menyimpan kontak: ' + error.message);
+ alert(' Error menyimpan kontak: ' + error.message);
                 console.error('Error:', error);
             }
         }
@@ -5147,7 +5147,7 @@ const currentEmail = safeGetStorage('userEmail');
                     <td>
                         <strong>${link.linkName}</strong>
                         <button class="btn btn-sm btn-outline-info" style="padding: 2px 6px; font-size: 12px; margin-left: 6px;" onclick="showLinkInfo('${link.linkName}', '${link.description || 'Tidak ada keterangan'}')" title="Info">
-                            ℹ️
+                            <i class="fas fa-info-circle"></i>
                         </button>
                     </td>
                     <td><span class="badge" style="background: ${link.linkType === 'YOUTUBE' ? '#FF0000' : link.linkType === 'GOOGLE_DRIVE' ? '#4285F4' : link.linkType === 'GOOGLE_FORM' ? '#4285F4' : '#6c757d'};">${link.linkType}</span></td>
@@ -5156,10 +5156,10 @@ const currentEmail = safeGetStorage('userEmail');
                     <td><span class="badge ${link.isActive ? 'bg-success' : 'bg-danger'}">${link.isActive ? 'Aktif' : 'Nonaktif'}</span></td>
                     <td>
                         <button class="btn btn-sm btn-warning" onclick="toggleSystemLinkStatus(${link.id}, ${!link.isActive})">
-                            ${link.isActive ? '❌' : '✅'}
+                            ${link.isActive ? '<i class="fas fa-times-circle text-danger"></i>' : '<i class="fas fa-check-circle text-success"></i>'}
                         </button>
                         <button class="btn btn-sm btn-danger" onclick="deleteSystemLink(${link.id})">
-                            🗑️
+                            <i class="fas fa-trash"></i>
                         </button>
                     </td>
                 </tr>
@@ -5210,7 +5210,7 @@ const currentEmail = safeGetStorage('userEmail');
                         padding: 28px;
                         color: white;
                     ">
-                        <div style="font-size: 32px; margin-bottom: 8px;">📝</div>
+                        <div style="font-size: 32px; margin-bottom: 8px;"><i class="fas fa-edit"></i></div>
                         <h4 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: 0.3px;">
                             Format Nama Link
                         </h4>
@@ -5227,26 +5227,26 @@ const currentEmail = safeGetStorage('userEmail');
 
                         <!-- Examples -->
                         <div style="background: #f8fbfa; padding: 16px; border-radius: 8px; border-left: 4px solid #16c784;">
-                            <h6 style="color: #1a5a3a; font-weight: 700; margin-bottom: 12px;">📌 Contoh Nama Link Standar:</h6>
+                            <h6 style="color: #1a5a3a; font-weight: 700; margin-bottom: 12px;"><i class="fas fa-thumbtack"></i> Contoh Nama Link Standar:</h6>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #16c784;">
                                     <code style="color: #d63031; font-weight: 700;">VIDEO_TUTORIAL</code>
-                                    <br><small style="color: #666; margin-top: 4px; display: block;">👉 Untuk link video tutorial panduan mendaftar di alur pendaftaran</small>
+                                    <br><small style="color: #666; margin-top: 4px; display: block;"><i class="fas fa-hand-point-right"></i> Untuk link video tutorial panduan mendaftar di alur pendaftaran</small>
                                 </div>
                             </div>
 
                             <div style="margin-bottom: 12px;">
                                 <div style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #16c784;">
                                     <code style="color: #d63031; font-weight: 700;">DIAGRAM_ALUR</code>
-                                    <br><small style="color: #666; margin-top: 4px; display: block;">👉 Untuk link diagram alur proses pendaftaran di Google Drive</small>
+                                    <br><small style="color: #666; margin-top: 4px; display: block;"><i class="fas fa-hand-point-right"></i> Untuk link diagram alur proses pendaftaran di Google Drive</small>
                                 </div>
                             </div>
 
                             <div>
                                 <div style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #16c784;">
                                     <code style="color: #d63031; font-weight: 700;">UKT</code>
-                                    <br><small style="color: #666; margin-top: 4px; display: block;">👉 Untuk link informasi UKT di Google Drive</small>
+                                    <br><small style="color: #666; margin-top: 4px; display: block;"><i class="fas fa-hand-point-right"></i> Untuk link informasi UKT di Google Drive</small>
                                 </div>
                             </div>
                         </div>
@@ -5254,7 +5254,7 @@ const currentEmail = safeGetStorage('userEmail');
                         <!-- Notes -->
                         <div style="margin-top: 16px; padding: 12px; background: #fff3cd; border-radius: 6px; border-left: 4px solid #ffc107;">
                             <small style="color: #856404; font-weight: 600;">
-                                ⚠️ Catatan: Nama link harus konsisten dan tepat agar info button (ℹ️) di tabel dapat menampilkan deskripsi yang benar.
+                                <i class="fas fa-exclamation-triangle text-warning"></i> Catatan: Nama link harus konsisten dan tepat agar info button (<i class="fas fa-info-circle"></i>) di tabel dapat menampilkan deskripsi yang benar.
                             </small>
                         </div>
                     </div>
@@ -5290,24 +5290,24 @@ const currentEmail = safeGetStorage('userEmail');
         function showLinkInfo(linkName, description) {
             const linkPurposes = {
                 'TUTORIAL_YOUTUBE': {
-                    emoji: '📹',
+                    emoji: '<i class="fas fa-video"></i>',
                     title: 'Link Tutorial Alur Pendaftaran',
                     description: 'Link berisi video tutorial lengkap tentang cara mendaftar bagai calon mahasiswa baru, mulai dari pembuatan akun hingga daftar ulang.'
                 },
                 'DIAGRAM_ALUR': {
-                    emoji: '📊',
+                    emoji: '<i class="fas fa-chart-bar"></i>',
                     title: 'Link Diagram Alur Pendaftaran',
                     description: 'File Google Drive yang memuat diagram lengkap alur dan tahapan proses pendaftaran serta seleksi calon mahasiswa baru.'
                 },
                 'UKT': {
-                    emoji: '💰',
+                    emoji: '<i class="fas fa-coins"></i>',
                     title: 'Link Informasi UKT',
                     description: 'Dokumen Google Drive yang berisi informasi lengkap tentang Uang Kuliah Tunggal (UKT), termasuk besamnya potongan, jadwal, dan cara pembayaran.'
                 }
             };
             
             const linkInfo = linkPurposes[linkName] || {
-                emoji: 'ℹ️',
+                emoji: '<i class="fas fa-info-circle"></i>',
                 title: linkName,
                 description: description || 'Tidak ada deskripsi'
             };
@@ -5389,7 +5389,7 @@ const currentEmail = safeGetStorage('userEmail');
                             border-radius: 6px;
                         ">
                             <small style="color: #1a5a3a; font-weight: 600;">
-                                💡 <strong>Nama Link:</strong> <code style="background: white; padding: 2px 6px; border-radius: 3px; font-family: monospace;">${linkName}</code>
+                                <i class="fas fa-lightbulb"></i> <strong>Nama Link:</strong> <code style="background: white; padding: 2px 6px; border-radius: 3px; font-family: monospace;">${linkName}</code>
                             </small>
                         </div>
                     </div>
@@ -5473,7 +5473,7 @@ const currentEmail = safeGetStorage('userEmail');
             const description = document.getElementById('newLinkDesc').value.trim();
 
             if (!linkName || !linkType || !linkUrl) {
-                alert('❌ Nama Link, Tipe, dan URL harus diisi');
+ alert(' Nama Link, Tipe, dan URL harus diisi');
                 return;
             }
 
@@ -5495,14 +5495,14 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const result = await response.json();
                 if (result.success) {
-                    alert('✅ Link berhasil ditambahkan');
+ alert(' Link berhasil ditambahkan');
                     document.getElementById('addLinkForm').reset();
                     loadSystemLinks();
                 } else {
-                    alert('❌ Error: ' + result.message);
+ alert(' Error: ' + result.message);
                 }
             } catch (error) {
-                alert('❌ Error menambahkan link: ' + error.message);
+ alert(' Error menambahkan link: ' + error.message);
                 console.error('Error:', error);
             }
         }
@@ -5520,13 +5520,13 @@ const currentEmail = safeGetStorage('userEmail');
 
                 const result = await response.json();
                 if (result.success) {
-                    alert('✅ Link berhasil dihapus');
+ alert(' Link berhasil dihapus');
                     loadSystemLinks();
                 } else {
-                    alert('❌ Error: ' + result.message);
+ alert(' Error: ' + result.message);
                 }
             } catch (error) {
-                alert('❌ Error menghapus link: ' + error.message);
+ alert(' Error menghapus link: ' + error.message);
                 console.error('Error:', error);
             }
         }
@@ -5548,7 +5548,7 @@ const currentEmail = safeGetStorage('userEmail');
                 if (result.success) {
                     loadSystemLinks();
                 } else {
-                    alert('❌ Error: ' + result.message);
+ alert(' Error: ' + result.message);
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -5594,7 +5594,7 @@ const currentEmail = safeGetStorage('userEmail');
                 }
             }
 
-            alert(`✅ Tersimpan: ${saved} setting\n❌ Gagal: ${failed} setting`);
+ alert(` Tersimpan: ${saved} setting\n Gagal: ${failed} setting`);
             if (saved > 0) {
                 loadSettings();
             }
@@ -5602,7 +5602,7 @@ const currentEmail = safeGetStorage('userEmail');
 
         // Check authentication
         function checkAuth() {
-            // ✅ Get from sessionStorage first (per-tab), fallback to localStorage
+            // <i class="fas fa-check-circle text-success"></i> Get from sessionStorage first (per-tab), fallback to localStorage
             const token = safeGetStorage('authToken');
             authToken = token;
             const role = safeGetStorage('userRole');
@@ -5647,7 +5647,7 @@ const currentEmail = safeGetStorage('userEmail');
             window.location.href = '/login.html';
         });
 
-        // ✅ Toggle Profile Dropdown Menu
+        // <i class="fas fa-check-circle text-success"></i> Toggle Profile Dropdown Menu
         function toggleProfileMenu() {
             const dropdown = document.getElementById('profileDropdown');
             if (dropdown) {
@@ -5655,7 +5655,7 @@ const currentEmail = safeGetStorage('userEmail');
             }
         }
 
-        // ✅ Close profile dropdown when clicking outside
+        // <i class="fas fa-check-circle text-success"></i> Close profile dropdown when clicking outside
         document.addEventListener('click', function(e) {
             const profileDropdown = document.getElementById('profileDropdown');
             const profileBtn = document.querySelector('.profile-btn');
@@ -5665,7 +5665,7 @@ const currentEmail = safeGetStorage('userEmail');
             }
         });
 
-        // ✅ Function to open profile settings
+        // <i class="fas fa-check-circle text-success"></i> Function to open profile settings
         function openProfileSettings(e) {
             e.preventDefault();
             // You can implement profile settings modal here
@@ -5673,7 +5673,7 @@ const currentEmail = safeGetStorage('userEmail');
             toggleProfileMenu();
         }
 
-        // ✅ Toggle Sidebar for Mobile/Tablet
+        // <i class="fas fa-check-circle text-success"></i> Toggle Sidebar for Mobile/Tablet
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -5684,7 +5684,7 @@ const currentEmail = safeGetStorage('userEmail');
             }
         }
 
-        // ✅ Close sidebar when clicking on nav links (mobile)
+        // <i class="fas fa-check-circle text-success"></i> Close sidebar when clicking on nav links (mobile)
         document.addEventListener('DOMContentLoaded', function() {
             const navLinks = document.querySelectorAll('.sidebar .nav-link');
             navLinks.forEach(link => {
@@ -5753,7 +5753,7 @@ const currentEmail = safeGetStorage('userEmail');
         window.addEventListener('load', function() {
             console.log('📄 Window load event fired');
             
-            // ✅ Refresh authToken from sessionStorage priority
+            // <i class="fas fa-check-circle text-success"></i> Refresh authToken from sessionStorage priority
             try {
                 authToken = safeGetStorage('authToken');
                 userRole = safeGetStorage('userRole');
@@ -5910,7 +5910,7 @@ const currentEmail = safeGetStorage('userEmail');
                 window.URL.revokeObjectURL(url);
 
                 // Show success alert
-                showExportAlert(`✅ Data ${dataType} berhasil diexport sebagai ${format.toUpperCase()}`);
+                showExportAlert(`<i class="fas fa-check-circle text-success"></i> Data ${dataType} berhasil diexport sebagai ${format.toUpperCase()}`);
 
                 // Restore button
                 button.disabled = false;
@@ -5918,7 +5918,7 @@ const currentEmail = safeGetStorage('userEmail');
 
             } catch (error) {
                 console.error('❌ Export error:', error);
-                alert('❌ Gagal export data: ' + error.message);
+ alert(' Gagal export data: ' + error.message);
                 
                 // Restore button
                 const button = event.target;

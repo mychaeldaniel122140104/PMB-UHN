@@ -928,7 +928,7 @@
         let currentGalleryIndex = 0;
         let gallerySlides = [];
         let galleryDots = [];
-        const galleryTexts = ['📍 Gambar Kantor Rektor', '🏢 Gambar Labotarium', '🔬 Gambar Gedung Kedokteran', '🌳 Gambar Kampus'];
+        const galleryTexts = ['<i class="fas fa-map-marker-alt"></i> Gambar Kantor Rektor', '<i class="fas fa-building"></i> Gambar Labotarium', '<i class="fas fa-microscope"></i> Gambar Gedung Kedokteran', '<i class="fas fa-tree"></i> Gambar Kampus'];
         const GALLERY_INTERVAL = 5000; // 5 seconds
         let galleryTimer;
         
@@ -1023,7 +1023,7 @@
                 }
             } catch (e) { 
                 console.error('Error loading gelombang:', e);
-                document.getElementById('gelombangContainer').innerHTML = '<p style="text-align: center; color: #e74c3c;">❌ Gagal memuat data</p>';
+                document.getElementById('gelombangContainer').innerHTML = '<p style="text-align: center; color: #e74c3c;"><i class="fas fa-times-circle text-danger"></i> Gagal memuat data</p>';
             }
         }
 
@@ -1046,7 +1046,7 @@
                 }
             } catch (e) { 
                 console.error('Error loading biaya formulir:', e);
-                document.getElementById('biayaFormulirContainer').innerHTML = '<p style="text-align: center; color: #e74c3c;">❌ Gagal memuat data</p>';
+                document.getElementById('biayaFormulirContainer').innerHTML = '<p style="text-align: center; color: #e74c3c;"><i class="fas fa-times-circle text-danger"></i> Gagal memuat data</p>';
             }
         }
 
@@ -1065,7 +1065,7 @@
                 }
             } catch (e) { 
                 console.error('Error loading program studi:', e);
-                document.getElementById('programList').innerHTML = '<p style="text-align: center; color: #e74c3c; padding: 20px;">❌ Gagal memuat data</p>';
+                document.getElementById('programList').innerHTML = '<p style="text-align: center; color: #e74c3c; padding: 20px;"><i class="fas fa-times-circle text-danger"></i> Gagal memuat data</p>';
             }
         }
 
@@ -1283,7 +1283,7 @@
                     </div>
 
                     <div class="gallery-caption">
-                        <span id="galleryCaption">📍 Gambar Kantor Dekan</span>
+                        <span id="galleryCaption"><i class="fas fa-map-marker-alt"></i> Gambar Kantor Dekan</span>
                     </div>
 
                     <div class="gallery-dots" style="padding: 16px; background: #f8f9fa; border-radius: 0 0 12px 12px; display: flex; gap: 10px; justify-content: center;">
@@ -1452,9 +1452,9 @@
                 if (settings.email_support || settings.whatsapp_admin) {
                     footerHTML += `<div style="margin-bottom: 20px;">
                         <strong>Hubungi Kami</strong><br>
-                        ${settings.email_support ? `📧 <a href="mailto:${settings.email_support}" style="color: white; text-decoration: underline;">${settings.email_support}</a><br>` : ''}
-                        📞 (061) 8201920<br>
-                        ${settings.whatsapp_admin ? `💬 <a href="https://wa.me/${settings.whatsapp_admin}" style="color: white; text-decoration: underline;">WhatsApp</a>` : ''}
+                        ${settings.email_support ? `<i class="fas fa-envelope"></i> <a href="mailto:${settings.email_support}" style="color: white; text-decoration: underline;">${settings.email_support}</a><br>` : ''}
+                        <i class="fas fa-phone"></i> (061) 8201920<br>
+                        ${settings.whatsapp_admin ? `<i class="fas fa-comments"></i> <a href="https://wa.me/${settings.whatsapp_admin}" style="color: white; text-decoration: underline;">WhatsApp</a>` : ''}
                     </div>`;
                 }
 
@@ -1472,9 +1472,9 @@
                 if (settings.facebook_url || settings.instagram_handle || settings.website_url) {
                     footerHTML += `<div style="margin-bottom: 20px;">
                         <strong>Media Sosial & Website</strong><br>
-                        ${settings.website_url ? `🌐 <a href="${settings.website_url}" target="_blank" style="color: white; text-decoration: underline;">Website</a> | ` : ''}
+                        ${settings.website_url ? `<i class="fas fa-globe"></i> <a href="${settings.website_url}" target="_blank" style="color: white; text-decoration: underline;">Website</a> | ` : ''}
                         ${settings.facebook_url ? `f <a href="${settings.facebook_url}" target="_blank" style="color: white; text-decoration: underline;">Facebook</a> | ` : ''}
-                        ${settings.instagram_handle ? `📷 <a href="https://instagram.com/${settings.instagram_handle}" target="_blank" style="color: white; text-decoration: underline;">Instagram</a>` : ''}
+                        ${settings.instagram_handle ? `<i class="fas fa-camera"></i> <a href="https://instagram.com/${settings.instagram_handle}" target="_blank" style="color: white; text-decoration: underline;">Instagram</a>` : ''}
                     </div>`;
                 }
 
@@ -1491,7 +1491,7 @@
         // Load settings on page load
         window.addEventListener('load', loadFooterSettings);
 
-        // ✅ Landing page - NO AUTO REDIRECT
+        // <i class="fas fa-check-circle text-success"></i> Landing page - NO AUTO REDIRECT
         // User harus secara eksplisit mengklik tombol Login/Mulai untuk navigasi
         // Redirect based on role hanya dilakukan di protected pages (dashboard-camaba.html, etc)
         

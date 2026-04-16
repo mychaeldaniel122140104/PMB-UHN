@@ -14,7 +14,7 @@
 <body>
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <h4>🔐 Test Login & Form Access</h4>
+            <h4><i class="fas fa-lock"></i> Test Login & Form Access</h4>
         </div>
         <div class="card-body">
             <h5>1. Login dengan Test Account</h5>
@@ -24,10 +24,10 @@
             <div class="mb-3">
                 <label>Password: <code>student123</code></label>
             </div>
-            <button class="btn btn-primary mb-3" onclick="testLogin()">🔓 Login</button>
+            <button class="btn btn-primary mb-3" onclick="testLogin()"><i class="fas fa-unlock"></i> Login</button>
             
             <h5 class="mt-4">2. Test Form Access</h5>
-            <button class="btn btn-success mb-3" onclick="testFormAccess()">📋 GET /api/camaba/admission-form</button>
+            <button class="btn btn-success mb-3" onclick="testFormAccess()"><i class="fas fa-clipboard-list"></i> GET /api/camaba/admission-form</button>
             
             <h5 class="mt-4">Result:</h5>
             <pre id="result">--- Hasil akan muncul di sini ---</pre>
@@ -37,7 +37,7 @@
     <script>
         async function testLogin() {
             const result = document.getElementById('result');
-            result.textContent = '⏳ Logging in...';
+            result.textContent = '<i class="fas fa-hourglass-half"></i> Logging in...';
             
             try {
                 const response = await fetch('/api/auth/login', {
@@ -53,19 +53,19 @@
                 
                 if (response.ok && data.token) {
                     localStorage.setItem('authToken', data.token);
-                    result.innerHTML = `<span class="success">✅ Login Berhasil!</span>
+                    result.innerHTML = `<span class="success"><i class="fas fa-check-circle text-success"></i> Login Berhasil!</span>
 
 Token di-simpan: ${data.token.substring(0, 50)}...
 
 Response:
 ${JSON.stringify(data, null, 2)}`;
                 } else {
-                    result.innerHTML = `<span class="error">❌ Login Gagal (${response.status})</span>
+                    result.innerHTML = `<span class="error"><i class="fas fa-times-circle text-danger"></i> Login Gagal (${response.status})</span>
 
 ${JSON.stringify(data, null, 2)}`;
                 }
             } catch (error) {
-                result.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+                result.innerHTML = `<span class="error"><i class="fas fa-times-circle text-danger"></i> Error: ${error.message}</span>`;
             }
         }
         
@@ -74,11 +74,11 @@ ${JSON.stringify(data, null, 2)}`;
             const token = localStorage.getItem('authToken');
             
             if (!token) {
-                result.innerHTML = '<span class="error">❌ No token found. Login first!</span>';
+                result.innerHTML = '<span class="error"><i class="fas fa-times-circle text-danger"></i> No token found. Login first!</span>';
                 return;
             }
             
-            result.textContent = '⏳ Mengakses form endpoint...';
+            result.textContent = '<i class="fas fa-hourglass-half"></i> Mengakses form endpoint...';
             
             try {
                 const response = await fetch('/api/camaba/admission-form', {
@@ -91,18 +91,18 @@ ${JSON.stringify(data, null, 2)}`;
                 const data = await response.json();
                 
                 if (response.ok) {
-                    result.innerHTML = `<span class="success">✅ Form Access Berhasil (${response.status})</span>
+                    result.innerHTML = `<span class="success"><i class="fas fa-check-circle text-success"></i> Form Access Berhasil (${response.status})</span>
 
 ${JSON.stringify(data, null, 2)}`;
                 } else {
-                    result.innerHTML = `<span class="error">❌ Form Access Gagal (${response.status})</span>
+                    result.innerHTML = `<span class="error"><i class="fas fa-times-circle text-danger"></i> Form Access Gagal (${response.status})</span>
 
 ${JSON.stringify(data, null, 2)}
 
 Token yang dikirim: ${token.substring(0, 50)}...`;
                 }
             } catch (error) {
-                result.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+                result.innerHTML = `<span class="error"><i class="fas fa-times-circle text-danger"></i> Error: ${error.message}</span>`;
             }
         }
     </script>

@@ -1814,7 +1814,7 @@
                     }, 3000);
                 } else {
                     // Still waiting
-                    statusBadge.textContent = '<i class="fas fa-hourglass-half"></i> Menunggu Pembayaran (' + checkCount + ')';
+                    statusBadge.innerHTML = '<i class="fas fa-hourglass-half"></i> Menunggu Pembayaran (' + checkCount + ')';
                     statusBadge.className = 'status-badge status-waiting';
                     console.log(`⏳ Status: ${result.status} - Akan dicek lagi dalam 5 detik...`);
                 }
@@ -1932,7 +1932,7 @@
                     
                     const autoCheckInfo = document.getElementById('autoCheckInfo');
                     if (autoCheckInfo) {
-                        autoCheckInfo.textContent = 'Pembayaran Anda telah dikonfirmasi! <i class="fas fa-check-circle text-success"></i>';
+                        autoCheckInfo.innerHTML = 'Pembayaran Anda telah dikonfirmasi! <i class="fas fa-check-circle text-success"></i>';
                     }
                 } else {
                     console.warn('⚠️ [BRIVA-SIMULASI] Backend update failed, but continuing:', res.status);

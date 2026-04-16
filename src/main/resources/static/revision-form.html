@@ -870,7 +870,7 @@
                 input.addEventListener('change', function(e) {
                     const file = this.files[0];
                     if (file) {
-                        nameDisplay.textContent = '<i class="fas fa-check-circle text-success"></i> ' + file.name + ' (' + (file.size / 1024).toFixed(2) + ' KB)';
+                        nameDisplay.innerHTML = '<i class="fas fa-check-circle text-success"></i> ' + file.name + ' (' + (file.size / 1024).toFixed(2) + ' KB)';
                         area.style.borderColor = '#27ae60';
                         log('File selected: ' + file.name);
                     }

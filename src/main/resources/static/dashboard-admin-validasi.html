@@ -7102,7 +7102,7 @@
                 ? 'Pilih item yang perlu diperbaiki (bisa lebih dari 1):'
                 : 'Pilih item yang menjadi alasan penolakan (bisa lebih dari 1):';
             
-            document.getElementById('rejectionModalTitle').textContent = (isRevision ? '<i class="fas fa-pencil-alt"></i> ' : '<i class="fas fa-times-circle text-danger"></i> ') + title;
+            document.getElementById('rejectionModalTitle').innerHTML = (isRevision ? '<i class="fas fa-pencil-alt"></i> ' : '<i class="fas fa-times-circle text-danger"></i> ') + title;
             document.getElementById('rejectionModalSubtitle').textContent = subtitle;
             
             // Reset form
@@ -9994,13 +9994,13 @@
                     
                     if (data.status === 'VERIFIED') {
                         btnVerify.disabled = true;
-                        btnVerify.textContent = '<i class="fas fa-check-circle text-success"></i> Sudah Terverifikasi';
+                        btnVerify.innerHTML = '<i class="fas fa-check-circle text-success"></i> Sudah Terverifikasi';
                         btnReject.disabled = true;
                         btnReject.style.display = 'none';
                     } else if (data.status === 'REJECTED') {
                         btnVerify.disabled = true;
                         btnReject.disabled = true;
-                        btnReject.textContent = `<i class="fas fa-times-circle text-danger"></i> Ditolak: ${data.rejectionReason || 'Tanpa alasan'}`;
+                        btnReject.innerHTML = `<i class="fas fa-times-circle text-danger"></i> Ditolak: ${data.rejectionReason || 'Tanpa alasan'}`;
                     } else {
                         btnVerify.disabled = false;
                         btnReject.disabled = false;

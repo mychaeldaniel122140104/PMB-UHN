@@ -37,7 +37,7 @@
     <script>
         async function testLogin() {
             const result = document.getElementById('result');
-            result.textContent = '<i class="fas fa-hourglass-half"></i> Logging in...';
+            result.innerHTML = '<i class="fas fa-hourglass-half"></i> Logging in...';
             
             try {
                 const response = await fetch('/api/auth/login', {
@@ -78,7 +78,7 @@ ${JSON.stringify(data, null, 2)}`;
                 return;
             }
             
-            result.textContent = '<i class="fas fa-hourglass-half"></i> Mengakses form endpoint...';
+            result.innerHTML = '<i class="fas fa-hourglass-half"></i> Mengakses form endpoint...';
             
             try {
                 const response = await fetch('/api/camaba/admission-form', {

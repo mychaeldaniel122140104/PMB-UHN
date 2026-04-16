@@ -1507,9 +1507,9 @@
 
                 // Display final values
                 console.log('\n📍 Step 4: Updating UI with final values...');
-                document.getElementById('selectedGelombang').textContent = gelombangName;
-                document.getElementById('selectedProgram').textContent = programName;
-                document.getElementById('selectedWaveMode').textContent = waveMode;
+                document.getElementById('selectedGelombang').innerHTML = gelombangName;
+                document.getElementById('selectedProgram').innerHTML = programName;
+                document.getElementById('selectedWaveMode').innerHTML = waveMode;
                 
                 // <i class="fas fa-check-circle text-success"></i> NEW: Store IDs in localStorage for later use (especially for payment page)
                 if (admissionForm) {
@@ -4939,7 +4939,7 @@
             if (!content || content.length < 5) {
                 const statusDiv = document.getElementById('messageStatus');
                 const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = '<i class="fas fa-exclamation-triangle text-warning"></i> Pesan minimal 5 karakter (Anda ketik: ' + content.length + ' karakter)';
+                statusMessage.innerHTML = '<i class="fas fa-exclamation-triangle text-warning"></i> Pesan minimal 5 karakter (Anda ketik: ' + content.length + ' karakter)';
                 statusMessage.className = 'alert alert-warning';
                 statusDiv.style.display = 'block';
                 console.log('❌ Validasi gagal: pesan kurang dari 5 karakter');
@@ -4984,7 +4984,7 @@
                     // Show success message
                     const statusDiv = document.getElementById('messageStatus');
                     const statusMessage = document.getElementById('statusMessage');
-                    statusMessage.textContent = '<i class="fas fa-check-circle text-success"></i> Pesan berhasil dikirim! Admin akan merespons dalam waktu singkat.';
+                    statusMessage.innerHTML = '<i class="fas fa-check-circle text-success"></i> Pesan berhasil dikirim! Admin akan merespons dalam waktu singkat.';
                     statusMessage.className = 'alert alert-success';
                     statusDiv.style.display = 'block';
                     
@@ -5006,7 +5006,7 @@
                 } else {
                     const statusDiv = document.getElementById('messageStatus');
                     const statusMessage = document.getElementById('statusMessage');
-                    statusMessage.textContent = '<i class="fas fa-times-circle text-danger"></i> Gagal mengirim pesan: ' + (responseData.message || 'Silahkan coba lagi');
+                    statusMessage.innerHTML = '<i class="fas fa-times-circle text-danger"></i> Gagal mengirim pesan: ' + (responseData.message || 'Silahkan coba lagi');
                     statusMessage.className = 'alert alert-danger';
                     statusDiv.style.display = 'block';
                     console.log('❌ Error response:', responseData);
@@ -5015,7 +5015,7 @@
                 console.error('❌ Error sending message:', error);
                 const statusDiv = document.getElementById('messageStatus');
                 const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = '<i class="fas fa-times-circle text-danger"></i> Error: ' + error.message;
+                statusMessage.innerHTML = '<i class="fas fa-times-circle text-danger"></i> Error: ' + error.message;
                 statusMessage.className = 'alert alert-danger';
                 statusDiv.style.display = 'block';
             } finally {

@@ -133,12 +133,12 @@
             const role = localStorage.getItem('userRole');
             
             if (token) {
-                document.getElementById('tokenStatus').textContent = '<i class="fas fa-check-circle text-success"></i> Token Found';
+                document.getElementById('tokenStatus').innerHTML = '<i class="fas fa-check-circle text-success"></i> Token Found';
                 document.getElementById('tokenStatus').className = 'success';
                 document.getElementById('tokenLength').textContent = token.length;
                 document.getElementById('fullToken').textContent = token;
             } else {
-                document.getElementById('tokenStatus').textContent = '<i class="fas fa-times-circle text-danger"></i> No Token';
+                document.getElementById('tokenStatus').innerHTML = '<i class="fas fa-times-circle text-danger"></i> No Token';
                 document.getElementById('tokenStatus').className = 'error';
             }
 

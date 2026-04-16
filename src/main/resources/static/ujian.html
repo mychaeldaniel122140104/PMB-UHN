@@ -1375,7 +1375,7 @@
                 const photoFileName = document.getElementById('photoFileName');
 
                 previewImage.src = e.target.result;
-                photoFileName.textContent = '<i class="fas fa-paperclip"></i> ' + file.name + ' (' + (file.size / 1024).toFixed(2) + ' KB)';
+                photoFileName.innerHTML = '<i class="fas fa-paperclip"></i> ' + file.name + ' (' + (file.size / 1024).toFixed(2) + ' KB)';
                 preview.style.display = 'block';
 
                 console.log('✅ Photo selected:', file.name);
@@ -1742,7 +1742,7 @@
                     showElement('successSection');
 
                     document.getElementById('finalScore').textContent = scoreNum;
-                    document.getElementById('finalStatus').textContent = (scoreNum >= 70 ? '<i class="fas fa-check-circle text-success"></i> Lulus (Menunggu Verifikasi)' : '<i class="fas fa-times-circle text-danger"></i> Tidak Lulus');
+                    document.getElementById('finalStatus').innerHTML = (scoreNum >= 70 ? '<i class="fas fa-check-circle text-success"></i> Lulus (Menunggu Verifikasi)' : '<i class="fas fa-times-circle text-danger"></i> Tidak Lulus');
                     document.getElementById('finalTime').textContent = new Date().toLocaleString('id-ID');
 
                     sessionStorage.removeItem('current_exam_token');
@@ -1939,7 +1939,7 @@
                         hideElement('submissionSection');
                         showElement('successSection');
                         document.getElementById('finalScore').textContent = score;
-                        document.getElementById('finalStatus').textContent = (score >= 70 ? '<i class="fas fa-check-circle text-success"></i> Lulus (Menunggu Verifikasi)' : '<i class="fas fa-times-circle text-danger"></i> Tidak Lulus');
+                        document.getElementById('finalStatus').innerHTML = (score >= 70 ? '<i class="fas fa-check-circle text-success"></i> Lulus (Menunggu Verifikasi)' : '<i class="fas fa-times-circle text-danger"></i> Tidak Lulus');
                         document.getElementById('finalTime').textContent = new Date().toLocaleString('id-ID');
                         if (timerInterval) clearInterval(timerInterval);
                     }, 2000);

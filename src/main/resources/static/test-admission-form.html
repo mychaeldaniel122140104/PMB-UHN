@@ -52,10 +52,10 @@
                 });
                 const data = await res.json();
                 authToken = data.data.token;
-                document.getElementById('loginResult').textContent = '<i class="fas fa-check-circle text-success"></i> SUCCESS\n' + JSON.stringify(data, null, 2);
+                document.getElementById('loginResult').innerHTML = '<i class="fas fa-check-circle text-success"></i> SUCCESS\n' + JSON.stringify(data, null, 2);
                 document.querySelector('.step:nth-child(1)').classList.add('success');
             } catch (err) {
-                document.getElementById('loginResult').textContent = '<i class="fas fa-times-circle text-danger"></i> ERROR\n' + err.message;
+                document.getElementById('loginResult').innerHTML = '<i class="fas fa-times-circle text-danger"></i> ERROR\n' + err.message;
                 document.querySelector('.step:nth-child(1)').classList.add('error');
             }
         }
@@ -76,16 +76,16 @@
                 const data = await res.json();
                 
                 if (res.ok) {
-                    document.getElementById('formResult').textContent = '<i class="fas fa-check-circle text-success"></i> SUCCESS (HTTP ' + res.status + ')';
+                    document.getElementById('formResult').innerHTML = '<i class="fas fa-check-circle text-success"></i> SUCCESS (HTTP ' + res.status + ')';
                     document.querySelector('.step:nth-child(2)').classList.add('success');
                     
                     document.getElementById('fullResponse').textContent = JSON.stringify(data, null, 2);
                 } else {
-                    document.getElementById('formResult').textContent = '<i class="fas fa-times-circle text-danger"></i> ERROR (HTTP ' + res.status + ')\n' + JSON.stringify(data, null, 2);
+                    document.getElementById('formResult').innerHTML = '<i class="fas fa-times-circle text-danger"></i> ERROR (HTTP ' + res.status + ')\n' + JSON.stringify(data, null, 2);
                     document.querySelector('.step:nth-child(2)').classList.add('error');
                 }
             } catch (err) {
-                document.getElementById('formResult').textContent = '<i class="fas fa-times-circle text-danger"></i> ERROR\n' + err.message;
+                document.getElementById('formResult').innerHTML = '<i class="fas fa-times-circle text-danger"></i> ERROR\n' + err.message;
                 document.querySelector('.step:nth-child(2)').classList.add('error');
             }
         }

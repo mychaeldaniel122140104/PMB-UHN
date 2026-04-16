@@ -52,11 +52,11 @@
               <h5 class="modal-title" id="biayaUktModalLabel">Daftar Biaya / UKT</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="text-align:center;">
-              <iframe src="https://drive.google.com/file/d/1BsgxBsQxOHmQxNKYttBmrfTC4yUlje0Y/preview" width="100%" height="400" style="border:none;"></iframe>
+            <div class="modal-body" style="text-align:center;" id="biayaUktModalBody">
+              <iframe id="biayaUktIframe" src="https://drive.google.com/file/d/1BsgxBsQxOHmQxNKYttBmrfTC4yUlje0Y/preview" width="100%" height="400" style="border:none;"></iframe>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-              <a href="https://drive.google.com/file/d/1BsgxBsQxOHmQxNKYttBmrfTC4yUlje0Y/view" target="_blank" class="btn btn-success">
+              <a href="https://drive.google.com/file/d/1BsgxBsQxOHmQxNKYttBmrfTC4yUlje0Y/view" target="_blank" class="btn btn-success" id="biayaUktViewLink">
                 <i class="bi bi-box-arrow-up-right"></i> Lihat di Google Drive
               </a>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -422,6 +422,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Handle Download Biaya/UKT (Desktop)
   function setupBiayaUktModal() {
+    // Load UKT link from API
+    (async () => {
+      try {
+        const response = await fetch('/api/public/settings/system-links/name/UKT');
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.data && result.data.linkUrl) {
+            const match = result.data.linkUrl.match(/\/d\/([^/]+)/);
+            if (match) {
+              const driveId = match[1];
+              const iframe = document.getElementById('biayaUktIframe');
+              if (iframe) iframe.src = `https://drive.google.com/file/d/${driveId}/preview`;
+              const viewLink = document.getElementById('biayaUktViewLink');
+              if (viewLink) viewLink.href = `https://drive.google.com/file/d/${driveId}/view`;
+            }
+          }
+        }
+      } catch (e) { console.log('Using default UKT URL in header'); }
+    })();
+
     const downloadBiayaDesktop = document.getElementById('downloadBiaya');
     if (downloadBiayaDesktop) {
       // Remove old listener if exists

@@ -32,6 +32,7 @@ public class EmailService {
 
     public void sendSimpleEmail(String to, String subject, String text) {
         try {
+            log.info("📧 [MAIL-SEND] Attempting to send email to: {} | Subject: {}", to, subject);
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(fromEmail);
             message.setTo(to);
@@ -39,14 +40,18 @@ public class EmailService {
             message.setText(text);
             
             mailSender.send(message);
-            log.info("Email sent successfully to: {}", to);
+            log.info("✅ [MAIL-SUCCESS] Email sent successfully to: {}", to);
         } catch (Exception e) {
-            log.error("Error sending email to {}: {}", to, e.getMessage());
+            log.error("❌ [MAIL-ERROR] Error sending email to {}: {} | Exception: {}", 
+                to, e.getMessage(), e.getClass().getSimpleName());
+            log.error("📍 [MAIL-STACK] Stack trace:", e);
+            // TODO: Simpan ke database untuk tracking
         }
     }
 
     public void sendHtmlEmail(String to, String subject, String htmlContent) {
         try {
+            log.info("📧 [MAIL-HTML-SEND] Attempting to send HTML email to: {} | Subject: {}", to, subject);
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             
@@ -56,9 +61,13 @@ public class EmailService {
             helper.setText(htmlContent, true);
             
             mailSender.send(message);
-            log.info("HTML email sent successfully to: {}", to);
+            log.info("✅ [MAIL-HTML-SUCCESS] HTML email sent successfully to: {}", to);
         } catch (MessagingException e) {
-            log.error("Error sending HTML email to {}: {}", to, e.getMessage());
+            log.error("❌ [MAIL-HTML-ERROR] Error sending HTML email to {}: {}", to, e.getMessage());
+            log.error("📍 [MAIL-HTML-STACK] Stack trace:", e);
+        } catch (Exception e) {
+            log.error("❌ [MAIL-HTML-UNEXPECTED] Unexpected error sending email to {}: {}", to, e.getMessage());
+            log.error("📍 [MAIL-HTML-UNEXPECTED-STACK] Stack trace:", e);
         }
     }
 

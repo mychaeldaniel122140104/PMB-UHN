@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Peserta - PMB HKBP Nommensen</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
@@ -21,7 +22,7 @@
             background-attachment: fixed;
             background-repeat: no-repeat;
             min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
         }
 
         .navbar-custom {
@@ -1017,6 +1018,9 @@
                         <p id="verifikasi-info">Menunggu admin memvalidasi data daftar ulang Anda</p>
                     </div>
                 </div>
+                <button class="eye-toggle-btn" onclick="openStatusModal(this, 'verifikasi-item')">
+                    <i class="fas fa-eye"></i>
+                </button>
                 <div class="progress-status" id="validationStatusContainer">
                     <span class="status-badge" id="validationStatusBadge" style="background: #e9ecef; color: #495057;">
                         <i class="fas fa-hourglass-half"></i> Belum Dinilai
@@ -1033,12 +1037,15 @@
                         <p>Virtual Account BRIVA & Nomor Registrasi untuk Pendaftaran Akademik</p>
                     </div>
                 </div>
-                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: nowrap; pointer-events: none;">
-                    <div class="progress-status">
-                        <span class="status-badge badge-pending" id="hasil-akhir-status">
-                            <i class="fas fa-hourglass-half"></i> Menunggu Validasi
-                        </span>
-                    </div>
+                <button class="eye-toggle-btn" onclick="openStatusModal(this, 'hasil-akhir-item')">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <div class="progress-status">
+                    <span class="status-badge badge-pending" id="hasil-akhir-status">
+                        <i class="fas fa-hourglass-half"></i> Menunggu Validasi
+                    </span>
+                </div>
+                <div class="progress-item-actions" id="hasil-akhir-actions" style="display: none;">
                     <button class="btn-view-hasil" id="btn-view-hasil" onclick="viewHasilAkhir()" style="padding: 8px 16px; background: #95a5a6; color: white; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: not-allowed; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; pointer-events: none; opacity: 0.6;">
                         <i class="fas fa-eye"></i> Lihat Hasil
                     </button>
@@ -5112,6 +5119,12 @@
                 viewButton.style.background = '#27ae60';
                 viewButton.disabled = false;
                 console.log('✅ Button "Lihat Hasil" ENABLED');
+            }
+            
+            // Show the actions container
+            const actionsContainer = document.getElementById('hasil-akhir-actions');
+            if (actionsContainer) {
+                actionsContainer.style.display = 'flex';
             }
             
             console.log('✅ Hasil Akhir UNLOCKED - Virtual Account & Nomor Registrasi dapat diakses');

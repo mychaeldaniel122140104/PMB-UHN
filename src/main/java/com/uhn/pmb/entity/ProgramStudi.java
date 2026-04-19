@@ -27,6 +27,9 @@ public class ProgramStudi {
     @Column(nullable = false)
     private String nama; // e.g., "Teknik Informatika", "Sistem Informasi"
 
+    @Column(length = 100)
+    private String fakultas; // e.g., "Teknik", "FKIP", "Ekonomi & Bisnis"
+
     @Column(columnDefinition = "TEXT")
     private String deskripsi; // Detailed description
 
@@ -44,6 +47,21 @@ public class ProgramStudi {
 
     @Column(name = "cicilan_1")
     private Long cicilan1 = 0L; // First installment amount
+
+    @Column(name = "cicilan_2")
+    private Long cicilan2 = 0L;
+
+    @Column(name = "cicilan_3")
+    private Long cicilan3 = 0L;
+
+    @Column(name = "cicilan_4")
+    private Long cicilan4 = 0L;
+
+    @Column(name = "cicilan_5")
+    private Long cicilan5 = 0L;
+
+    @Column(name = "cicilan_6")
+    private Long cicilan6 = 0L;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

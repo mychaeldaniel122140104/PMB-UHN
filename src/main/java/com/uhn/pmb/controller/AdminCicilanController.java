@@ -116,15 +116,11 @@ public class AdminCicilanController {
                     "<table style='width: 100%%; border-collapse: collapse;'>" +
                     "<tr style='border-bottom: 1px solid #ddd;'><td style='padding: 10px; color: #666;'><strong>Program Studi</strong></td><td style='padding: 10px; text-align: right;'><strong>%s</strong></td></tr>" +
                     "<tr style='border-bottom: 1px solid #ddd;'><td style='padding: 10px; color: #666;'><strong>Jumlah Cicilan</strong></td><td style='padding: 10px; text-align: right;'><strong>%d x</strong></td></tr>" +
-                    "<tr style='border-bottom: 1px solid #ddd;'><td style='padding: 10px; color: #666;'><strong>Cicilan 1 (DP)</strong></td><td style='padding: 10px; text-align: right;'><strong>Rp %s</strong></td></tr>" +
-                    "<tr style='border-bottom: 1px solid #ddd;'><td style='padding: 10px; color: #666;'><strong>Harga Per Cicilan (2-x)</strong></td><td style='padding: 10px; text-align: right;'><strong>Rp %s</strong></td></tr>" +
                     "<tr style='border-bottom: 1px solid #ddd;'><td style='padding: 10px; color: #666;'><strong>Total Harga</strong></td><td style='padding: 10px; text-align: right;'><strong style='color: #27ae60; font-size: 18px;'>Rp %s</strong></td></tr>" +
                     "<tr><td style='padding: 10px; color: #666;'><strong>🏦 BRIVA Anda</strong></td><td style='padding: 10px; text-align: right;'><strong style='font-size: 16px; color: #e74c3c;'>%s</strong></td></tr>" +
                     "</table></div>" +
                     "</div></div></body></html>",
                     studentName, programName, saved.getJumlahCicilan(),
-                    formatCurrency(saved.getHargaCicilan1()),
-                    formatCurrency(saved.getHargaPerCicilan()),
                     formatCurrency(saved.getHargaTotal()),
                     saved.getBriva()
                 );
@@ -192,6 +188,10 @@ public class AdminCicilanController {
                     hasilAkhir.setBrivaAmount(new BigDecimal(saved.getHargaTotal()));
                     hasilAkhir.setStatus(HasilAkhir.HasilAkhirStatus.ACTIVE);
                     hasilAkhir.setUpdatedAt(LocalDateTime.now());
+                    // Ensure nomorRegistrasi is not null for new records
+                    if (hasilAkhir.getNomorRegistrasi() == null || hasilAkhir.getNomorRegistrasi().isEmpty()) {
+                        hasilAkhir.setNomorRegistrasi("REG-" + java.time.LocalDate.now().toString().replace("-", "") + "-" + String.format("%06d", student.getId()));
+                    }
                     
                     hasilAkhirRepository.save(hasilAkhir);
                     System.out.println("✅ [BRIVA-COPY] BRIVA '" + saved.getBriva() + "' copied to HASIL_AKHIR for student: " + student.getId());
@@ -385,6 +385,11 @@ public class AdminCicilanController {
                 .admissionFormId(cr.getAdmissionForm() != null ? cr.getAdmissionForm().getId() : null)
                 .jumlahCicilan(cr.getJumlahCicilan())
                 .hargaCicilan1(cr.getHargaCicilan1())
+                .hargaCicilan2(cr.getHargaCicilan2())
+                .hargaCicilan3(cr.getHargaCicilan3())
+                .hargaCicilan4(cr.getHargaCicilan4())
+                .hargaCicilan5(cr.getHargaCicilan5())
+                .hargaCicilan6(cr.getHargaCicilan6())
                 .hargaTotal(cr.getHargaTotal())
                 .hargaPerCicilan(cr.getHargaPerCicilan())
                 .status(cr.getStatus().name())

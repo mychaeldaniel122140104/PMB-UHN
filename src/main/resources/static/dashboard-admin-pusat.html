@@ -865,6 +865,9 @@
                     <a class="nav-link" href="#" onclick="showSection('announcements')">
                         <i class="bi bi-megaphone-fill"></i> Pengumuman
                     </a>
+                    <a class="nav-link" href="#" onclick="showSection('publication-schedule'); loadPublicationSchedules();">
+                        <i class="bi bi-calendar-check"></i> Jadwal Publikasi Hasil
+                    </a>
                 </div>
             </nav>
 
@@ -1059,6 +1062,7 @@
                                             <th>Tipe</th>
                                             <th>Harga Per Tahun</th>
                                             <th>Cicilan 1</th>
+                                            <th>Cicilan Terisi</th>
                                             <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -1677,6 +1681,70 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- Publication Schedule Section (F009) -->
+                <section id="publication-schedule-section" class="content-section d-none">
+                    <h2 class="mb-4"><i class="bi bi-calendar-check"></i> Jadwal Publikasi Hasil Kelulusan</h2>
+
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="card">
+                                <div class="card-header" style="background: #1a472a; color: white;">
+                                    <h5 class="mb-0">Atur Jadwal Publikasi</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="pubScheduleForm" onsubmit="savePublicationSchedule(event)">
+                                        <div class="mb-3">
+                                            <label class="form-label">Pilih Gelombang <span class="text-danger">*</span></label>
+                                            <select id="pubPeriodId" class="form-select" required onchange="loadExistingSchedule()">
+                                                <option value="">-- Pilih Gelombang --</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tanggal & Waktu Publikasi <span class="text-danger">*</span></label>
+                                            <input type="datetime-local" id="pubDateTime" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Catatan</label>
+                                            <textarea id="pubNotes" class="form-control" rows="2" placeholder="Opsional..."></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100 mb-2">
+                                            <i class="bi bi-save"></i> Simpan Jadwal
+                                        </button>
+                                    </form>
+                                    <hr>
+                                    <button class="btn btn-success w-100" onclick="publishNow()">
+                                        <i class="bi bi-broadcast"></i> Publikasikan Sekarang
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="card">
+                                <div class="card-header" style="background: #1a472a; color: white;">
+                                    <h5 class="mb-0">Daftar Jadwal Publikasi</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Gelombang</th>
+                                                    <th>Jadwal Publikasi</th>
+                                                    <th>Status</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="pubScheduleTable">
+                                                <tr><td colspan="4" class="text-center text-muted">Loading...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </main>
         </div>
     </div>
@@ -2017,6 +2085,31 @@
                             <label class="form-label">Cicilan 1 (Rp)</label>
                             <input type="number" id="programStudiCicilan1" class="form-control" placeholder="cth: 1500000" min="0" step="100000">
                             <small class="text-muted">Jumlah pembayaran cicilan pertama</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cicilan 2 (Rp)</label>
+                            <input type="number" id="programStudiCicilan2" class="form-control" placeholder="cth: 1500000" min="0" step="100000">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cicilan 3 (Rp)</label>
+                            <input type="number" id="programStudiCicilan3" class="form-control" placeholder="cth: 1500000" min="0" step="100000">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cicilan 4 (Rp)</label>
+                            <input type="number" id="programStudiCicilan4" class="form-control" placeholder="cth: 1500000" min="0" step="100000">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cicilan 5 (Rp)</label>
+                            <input type="number" id="programStudiCicilan5" class="form-control" placeholder="cth: 1500000" min="0" step="100000">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cicilan 6 (Rp)</label>
+                            <input type="number" id="programStudiCicilan6" class="form-control" placeholder="cth: 1500000" min="0" step="100000">
                         </div>
                         
                         <div class="row">
@@ -4706,6 +4799,7 @@ const currentEmail = safeGetStorage('userEmail');
                             <td>${ps.tipe || '-'}</td>
                             <td><span class="badge bg-info">${formatRupiah(ps.hargaTotalPerTahun || 0)}</span></td>
                             <td><span class="badge bg-warning">${formatRupiah(ps.cicilan1 || 0)}</span></td>
+                            <td><span class="badge bg-secondary">${[ps.cicilan1, ps.cicilan2, ps.cicilan3, ps.cicilan4, ps.cicilan5, ps.cicilan6].filter(c => c > 0).length}/6</span></td>
                             <td><span class="badge ${ps.isActive ? 'bg-success' : 'bg-danger'}">${ps.isActive ? 'Aktif' : 'Tidak Aktif'}</span></td>
                             <td>
                                 <button class="btn btn-sm btn-warning" onclick="editProgramStudi(${ps.id})"><i class="bi bi-pencil"></i> Edit</button>
@@ -4797,6 +4891,11 @@ const currentEmail = safeGetStorage('userEmail');
             const deskripsi = document.getElementById('programStudiDeskripsi').value.trim();
             const hargaTotalPerTahun = parseInt(document.getElementById('programStudiHargaTotalPerTahun').value) || 0;
             const cicilan1 = parseInt(document.getElementById('programStudiCicilan1').value) || 0;
+            const cicilan2 = parseInt(document.getElementById('programStudiCicilan2').value) || 0;
+            const cicilan3 = parseInt(document.getElementById('programStudiCicilan3').value) || 0;
+            const cicilan4 = parseInt(document.getElementById('programStudiCicilan4').value) || 0;
+            const cicilan5 = parseInt(document.getElementById('programStudiCicilan5').value) || 0;
+            const cicilan6 = parseInt(document.getElementById('programStudiCicilan6').value) || 0;
             const isActive = document.getElementById('programStudiActive').checked;
             const sortOrder = parseInt(document.getElementById('programStudiSortOrder').value) || 0;
 
@@ -4822,6 +4921,11 @@ const currentEmail = safeGetStorage('userEmail');
                         deskripsi: deskripsi,
                         hargaTotalPerTahun: hargaTotalPerTahun,
                         cicilan1: cicilan1,
+                        cicilan2: cicilan2,
+                        cicilan3: cicilan3,
+                        cicilan4: cicilan4,
+                        cicilan5: cicilan5,
+                        cicilan6: cicilan6,
                         isActive: isActive,
                         sortOrder: sortOrder
                     })
@@ -4846,6 +4950,11 @@ const currentEmail = safeGetStorage('userEmail');
                         document.getElementById('programStudiDeskripsi').value = '';
                         document.getElementById('programStudiHargaTotalPerTahun').value = '';
                         document.getElementById('programStudiCicilan1').value = '';
+                        document.getElementById('programStudiCicilan2').value = '';
+                        document.getElementById('programStudiCicilan3').value = '';
+                        document.getElementById('programStudiCicilan4').value = '';
+                        document.getElementById('programStudiCicilan5').value = '';
+                        document.getElementById('programStudiCicilan6').value = '';
                         document.getElementById('programStudiSortOrder').value = '0';
                         document.getElementById('programStudiActive').checked = true;
                         
@@ -4896,6 +5005,11 @@ const currentEmail = safeGetStorage('userEmail');
                 document.getElementById('programStudiDeskripsi').value = ps.deskripsi || '';
                 document.getElementById('programStudiHargaTotalPerTahun').value = ps.hargaTotalPerTahun || 0;
                 document.getElementById('programStudiCicilan1').value = ps.cicilan1 || 0;
+                document.getElementById('programStudiCicilan2').value = ps.cicilan2 || 0;
+                document.getElementById('programStudiCicilan3').value = ps.cicilan3 || 0;
+                document.getElementById('programStudiCicilan4').value = ps.cicilan4 || 0;
+                document.getElementById('programStudiCicilan5').value = ps.cicilan5 || 0;
+                document.getElementById('programStudiCicilan6').value = ps.cicilan6 || 0;
                 document.getElementById('programStudiSortOrder').value = ps.sortOrder || 0;
                 document.getElementById('programStudiActive').checked = ps.isActive;
                 
@@ -5976,6 +6090,160 @@ const currentEmail = safeGetStorage('userEmail');
                     alertDiv.classList.remove('alert-success');
                     alertDiv.classList.add('alert-info');
                 }, 5000);
+            }
+        }
+
+        // ===== PUBLICATION SCHEDULE (F009) =====
+
+        async function loadPublicationSchedules() {
+            try {
+                // Load periods into dropdown
+                const periodsRes = await fetch('/admin/periods', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                if (periodsRes.ok) {
+                    const periods = await periodsRes.json();
+                    const select = document.getElementById('pubPeriodId');
+                    select.innerHTML = '<option value="">-- Pilih Gelombang --</option>';
+                    periods.forEach(p => {
+                        select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
+                    });
+                }
+
+                // Load schedule list
+                const res = await fetch('/admin/api/publication-schedule', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                if (res.ok) {
+                    const schedules = await res.json();
+                    const tbody = document.getElementById('pubScheduleTable');
+                    if (schedules.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Belum ada jadwal</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = schedules.map(s => {
+                        const dt = new Date(s.publishDateTime);
+                        const dtStr = dt.toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+                        let badge = '';
+                        if (s.isPublished) {
+                            badge = '<span class="badge bg-success">Sudah Dipublikasi</span>';
+                        } else if (s.resultsVisible) {
+                            badge = '<span class="badge bg-info">Waktu Tercapai</span>';
+                        } else {
+                            badge = '<span class="badge bg-warning text-dark">Terjadwal</span>';
+                        }
+                        return `<tr>
+                            <td>${s.periodName}</td>
+                            <td>${dtStr}</td>
+                            <td>${badge}</td>
+                            <td>
+                                ${!s.isPublished ? `<button class="btn btn-sm btn-success" onclick="publishNowById(${s.periodId})"><i class="bi bi-broadcast"></i></button>` : ''}
+                                <button class="btn btn-sm btn-danger" onclick="deleteSchedule(${s.id})"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>`;
+                    }).join('');
+                }
+            } catch (e) {
+                console.error('Error loading schedules:', e);
+            }
+        }
+
+        async function loadExistingSchedule() {
+            const periodId = document.getElementById('pubPeriodId').value;
+            if (!periodId) return;
+
+            try {
+                const res = await fetch(`/admin/api/publication-schedule/${periodId}`, {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.exists) {
+                        document.getElementById('pubDateTime').value = data.publishDateTime.substring(0, 16);
+                        document.getElementById('pubNotes').value = data.notes || '';
+                    } else {
+                        document.getElementById('pubDateTime').value = '';
+                        document.getElementById('pubNotes').value = '';
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading schedule:', e);
+            }
+        }
+
+        async function savePublicationSchedule(event) {
+            event.preventDefault();
+            const periodId = document.getElementById('pubPeriodId').value;
+            const publishDateTime = document.getElementById('pubDateTime').value;
+            const notes = document.getElementById('pubNotes').value;
+
+            if (!periodId || !publishDateTime) {
+                alert('Pilih gelombang dan tentukan waktu publikasi');
+                return;
+            }
+
+            try {
+                const res = await fetch('/admin/api/publication-schedule', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + authToken
+                    },
+                    body: JSON.stringify({ periodId, publishDateTime, notes })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Jadwal publikasi berhasil disimpan!');
+                    loadPublicationSchedules();
+                } else {
+                    alert('Gagal: ' + (data.message || 'Error'));
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
+        async function publishNow() {
+            const periodId = document.getElementById('pubPeriodId').value;
+            if (!periodId) {
+                alert('Pilih gelombang terlebih dahulu');
+                return;
+            }
+            if (!confirm('Publikasikan hasil kelulusan sekarang?')) return;
+            await publishNowById(periodId);
+        }
+
+        async function publishNowById(periodId) {
+            try {
+                const res = await fetch(`/admin/api/publication-schedule/${periodId}/publish-now`, {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Hasil kelulusan berhasil dipublikasikan!');
+                    loadPublicationSchedules();
+                } else {
+                    alert('Gagal: ' + (data.message || 'Error'));
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
+        async function deleteSchedule(id) {
+            if (!confirm('Hapus jadwal publikasi ini?')) return;
+            try {
+                const res = await fetch(`/admin/api/publication-schedule/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    loadPublicationSchedules();
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
             }
         }
     </script>

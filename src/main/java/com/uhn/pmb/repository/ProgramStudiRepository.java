@@ -34,4 +34,15 @@ public interface ProgramStudiRepository extends JpaRepository<ProgramStudi, Long
      * Check if kode already exists
      */
     boolean existsByKode(String kode);
+
+    /**
+     * Find program studi by fakultas
+     */
+    List<ProgramStudi> findByFakultasAndIsActiveTrueOrderBySortOrder(String fakultas);
+
+    /**
+     * Get distinct fakultas names
+     */
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT p.fakultas FROM ProgramStudi p WHERE p.fakultas IS NOT NULL AND p.isActive = true ORDER BY p.fakultas")
+    List<String> findDistinctFakultasActive();
 }

@@ -528,6 +528,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
                 
+                <div class="alert alert-warning" role="alert" id="verificationAlert" style="display:none;">
+                    <span>Email belum diverifikasi.</span>
+                    <button type="button" class="btn btn-sm btn-outline-dark ms-2" id="resendVerificationBtn" onclick="resendVerification()">Kirim Ulang Email Verifikasi</button>
+                </div>
+                
                 <form id="loginForm">
                     <div class="form-group">
                         <label for="email" class="form-label">Email</label>
@@ -603,14 +608,51 @@
                         window.location.href = '/dashboard-admin-pusat.html';
                     }
                 } else {
-                    errorMessage.textContent = data.message || 'Login gagal. Periksa email dan password Anda.';
+                    const msg = data.message || 'Login gagal. Periksa email dan password Anda.';
+                    errorMessage.textContent = msg;
                     errorAlert.style.display = 'block';
+                    
+                    // Show resend verification button if email not verified
+                    if (msg.includes('belum diverifikasi')) {
+                        document.getElementById('verificationAlert').style.display = 'block';
+                    }
                 }
             } catch (error) {
                 errorMessage.textContent = 'Terjadi kesalahan: ' + error.message;
                 errorAlert.style.display = 'block';
             }
         });
+
+        async function resendVerification() {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert('Masukkan email terlebih dahulu.');
+                return;
+            }
+            const btn = document.getElementById('resendVerificationBtn');
+            btn.disabled = true;
+            btn.textContent = 'Mengirim...';
+            try {
+                const res = await fetch('/api/auth/resend-verification', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    document.getElementById('verificationAlert').innerHTML = 
+                        '<span class="text-success">Email verifikasi telah dikirim ulang! Silakan cek inbox Anda.</span>';
+                } else {
+                    alert(data.message || 'Gagal mengirim email verifikasi.');
+                    btn.disabled = false;
+                    btn.textContent = 'Kirim Ulang Email Verifikasi';
+                }
+            } catch (err) {
+                alert('Terjadi kesalahan: ' + err.message);
+                btn.disabled = false;
+                btn.textContent = 'Kirim Ulang Email Verifikasi';
+            }
+        }
     </script>
 </body>
 </html>

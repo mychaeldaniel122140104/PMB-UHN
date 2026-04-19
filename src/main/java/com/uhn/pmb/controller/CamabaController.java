@@ -72,8 +72,6 @@ public class CamabaController {
     private final ReEnrollmentDocumentRepository reenrollmentDocumentRepository;
     // ✅ NEW: ValidationStatusTrackerService for handling revision submissions
     private final ValidationStatusTrackerService validationStatusTrackerService;
-    // ✅ NEW: Manual Payment Repository for handling manual payment submissions
-    private final ManualPaymentRepository manualPaymentRepository;
     // ✅ NEW: HasilAkhirService for retrieving final results
     private final HasilAkhirService hasilAkhirService;
     // ✅ NEW: FormRepairStatusRepository for separate repair status tracking
@@ -373,6 +371,16 @@ public class CamabaController {
                     conn.getProgramStudi().getHargaTotalPerTahun() : 0);
                 data.put("cicilan1", conn.getProgramStudi().getCicilan1() != null ? 
                     conn.getProgramStudi().getCicilan1() : 0);
+                data.put("cicilan2", conn.getProgramStudi().getCicilan2() != null ? 
+                    conn.getProgramStudi().getCicilan2() : 0);
+                data.put("cicilan3", conn.getProgramStudi().getCicilan3() != null ? 
+                    conn.getProgramStudi().getCicilan3() : 0);
+                data.put("cicilan4", conn.getProgramStudi().getCicilan4() != null ? 
+                    conn.getProgramStudi().getCicilan4() : 0);
+                data.put("cicilan5", conn.getProgramStudi().getCicilan5() != null ? 
+                    conn.getProgramStudi().getCicilan5() : 0);
+                data.put("cicilan6", conn.getProgramStudi().getCicilan6() != null ? 
+                    conn.getProgramStudi().getCicilan6() : 0);
                 
                 result.add(data);
             }
@@ -1820,234 +1828,6 @@ public class CamabaController {
     }
 
     /**
-     * ✅ NEW: Submit manual payment with proof file
-     * POST /api/camaba/manual-payment/submit
-     * 
-     * Request Body (FormData):
-     * - file: MultipartFile (the payment proof image/PDF)
-     * - admissionFormId: Long
-     * - amount: Long
-     */
-    @PostMapping("/manual-payment/submit")
-    public ResponseEntity<Map<String, Object>> submitManualPayment(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("admissionFormId") String admissionFormIdStr,
-            @RequestParam("amount") String amountStr) {
-        try {
-            // ✅ Parse parameters flexibly
-            Long admissionFormId = null;
-            Long amount = null;
-            
-            try {
-                admissionFormId = Long.parseLong(admissionFormIdStr.trim());
-                amount = Long.parseLong(amountStr.trim());
-            } catch (NumberFormatException e) {
-                log.warn("❌ Invalid parameter format: admissionFormId={}, amount={}", admissionFormIdStr, amountStr);
-                return ResponseEntity.badRequest().body(Map.of(
-                        "success", false,
-                        "message", "Parameter admissionFormId dan amount harus berupa angka"
-                ));
-            }
-            
-            log.info("📤 Processing manual payment submission...");
-            log.info("   - File: {}", file.getOriginalFilename());
-            log.info("   - File size: {} bytes", file.getSize());
-            log.info("   - Admission Form ID: {}", admissionFormId);
-            log.info("   - Amount: Rp {}", amount);
-
-            // ✅ Get current student
-            String studentEmail = SecurityContextHolder.getContext()
-                    .getAuthentication().getName();
-            User user = userRepository.findByEmail(studentEmail)
-                    .orElseThrow(() -> new RuntimeException( "User tidak ditemukan"));
-            Student student = studentRepository.findByUser_Id(user.getId())
-                    .orElseThrow(() -> new RuntimeException("Profil student tidak ditemukan"));
-
-            log.info("✓ Student authenticated: {} (ID: {})", studentEmail, student.getId());
-
-            // ✅ Validate admission form exists and belongs to this student
-            AdmissionForm admissionForm = admissionFormRepository.findById(admissionFormId)
-                    .orElseThrow(() -> new RuntimeException("Formulir pendaftaran tidak ditemukan"));
-
-            if (!admissionForm.getStudent().getId().equals(student.getId())) {
-                log.warn("⚠️ Student {} tried to submit payment for different student's form {}", 
-                        student.getId(), admissionFormId);
-                return ResponseEntity.status(403).body(Map.of(
-                        "success", false,
-                        "message", "Anda tidak memiliki akses ke formulir ini"
-                ));
-            }
-
-            log.info("✓ Form authorized for student");
-
-            // ✅ Validate file
-            if (file.isEmpty()) {
-                log.warn("⚠️ Empty file submitted");
-                return ResponseEntity.badRequest().body(Map.of(
-                        "success", false,
-                        "message", "File tidak boleh kosong"
-                ));
-            }
-
-            if (file.getSize() > 10 * 1024 * 1024) { // 10MB max
-                log.warn("⚠️ File too large: {} bytes", file.getSize());
-                return ResponseEntity.badRequest().body(Map.of(
-                        "success", false,
-                        "message", "Ukuran file terlalu besar (max 10MB)"
-                ));
-            }
-
-            String contentType = file.getContentType();
-            if (contentType == null || (!contentType.startsWith("image/") && !contentType.equals("application/pdf"))) {
-                log.warn("⚠️ Invalid file type: {}", contentType);
-                return ResponseEntity.badRequest().body(Map.of(
-                        "success", false,
-                        "message", "Tipe file tidak didukung. Gunakan JPG, PNG, atau PDF"
-                ));
-            }
-
-            log.info("✓ File validation passed"); 
-
-            // ✅ Check if payment already submitted
-            Optional<ManualPayment> existingPayment = manualPaymentRepository.findByAdmissionFormId(admissionFormId);
-            if (existingPayment.isPresent()) {
-                ManualPayment existing = existingPayment.get();
-                if (!existing.getStatus().equals(ManualPayment.PaymentStatus.REJECTED)) {
-                    log.warn("⚠️ Payment already submitted for form {}: status={}", 
-                            admissionFormId, existing.getStatus());
-                    return ResponseEntity.badRequest().body(Map.of(
-                            "success", false,
-                            "message", "Pembayaran manual sudah diajukan sebelumnya untuk formulir ini"
-                    ));
-                }
-                log.info("ℹ️ Previous payment was rejected, allowing resubmission");
-            }
-
-            // ✅ Create upload directory
-            String uploadDir = "uploads/manual-payment";
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-                log.info("✓ Created upload directory: {}", uploadDir);
-            }
-
-            // ✅ Generate unique filename
-            String fileExt = file.getOriginalFilename() != null ? 
-                    file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")) : ".jpg";
-            String fileName = "payment_" + admissionFormId + "_" + System.currentTimeMillis() + fileExt;
-            Path filePath = uploadPath.resolve(fileName);
-
-            // ✅ Save file to disk
-            Files.write(filePath, file.getBytes());
-            log.info("✓ File saved: {}", filePath.toAbsolutePath());
-
-            // ✅ Create or update ManualPayment record
-            ManualPayment payment;
-            if (existingPayment.isPresent()) {
-                payment = existingPayment.get();
-                payment.setStatus(ManualPayment.PaymentStatus.VERIFIED);
-                payment.setRejectionReason(null);
-                log.info("ℹ️ Updating existing payment record ID: {}", payment.getId());
-            } else {
-                payment = new ManualPayment();
-                log.info("✓ Creating new payment record");
-            }
-
-            payment.setAdmissionForm(admissionForm);
-            payment.setAmount(amount);
-            payment.setBankName("BRI"); // Default bank
-            payment.setAccountHolder("HKBP NOMMENSEN"); // Default account holder
-            payment.setPaymentMethod(ManualPayment.PaymentMethod.MANUAL);
-            payment.setProofImagePath(uploadDir + "/" + fileName);
-            payment.setStatus(ManualPayment.PaymentStatus.VERIFIED);
-            payment.setCreatedAt(LocalDateTime.now());
-            payment.setUpdatedAt(LocalDateTime.now());
-            payment.setVerifiedAt(LocalDateTime.now());
-            payment.setVerifiedBy("SYSTEM_MANUAL_UPLOAD");
-
-            ManualPayment savedPayment = manualPaymentRepository.save(payment);
-            log.info("✓ Payment record saved: ID={}, Status=PENDING", savedPayment.getId());
-
-            // ✅ Update AdmissionForm payment method
-            admissionForm.setPaymentMethod(AdmissionForm.PaymentMethod.MANUAL);
-            admissionForm.setUpdatedAt(LocalDateTime.now());
-            admissionFormRepository.save(admissionForm);
-            log.info("✓ Admission form updated with MANUAL payment method");
-
-            // ✅ NEW: Create VIRTUAL_ACCOUNT record with status PAID immediately
-            // This allows the dashboard check-payment-status to recognize payment as complete
-            // without waiting for admin verification (manual payment is just proof submission)
-            VirtualAccount paymentsVA = new VirtualAccount();
-            paymentsVA.setStudent(student);
-            paymentsVA.setAdmissionForm(admissionForm);
-            paymentsVA.setVaNumber("MANUAL-" + savedPayment.getId() + "-" + System.currentTimeMillis());
-            paymentsVA.setAmount(BigDecimal.valueOf(amount));
-            paymentsVA.setPaymentType(VirtualAccount.PaymentType.REGISTRATION_FORM);
-            paymentsVA.setStatus(VirtualAccount.VAStatus.PAID);
-            paymentsVA.setCreatedAt(LocalDateTime.now());
-            paymentsVA.setUpdatedAt(LocalDateTime.now());
-            paymentsVA.setExpiredAt(LocalDateTime.now().plusDays(7));
-            
-            virtualAccountRepository.save(paymentsVA);
-            log.info("✓ Virtual Account record created with PAID status (for manual payment tracking): VA={}", paymentsVA.getVaNumber());
-
-            // ✅ NEW: Update PAYMENT_BRIVA registration status to SELESAI
-            // This tells the dashboard that payment is complete (whether BRIVA or MANUAL)
-            RegistrationStatus paymentStatus = registrationStatusRepository
-                    .findByUserAndStage(user, RegistrationStatus.RegistrationStage.PAYMENT_BRIVA)
-                    .orElse(null);
-            
-            if (paymentStatus != null) {
-                paymentStatus.setStatus(RegistrationStatus.RegistrationStatus_Enum.SELESAI);
-                paymentStatus.setUpdatedAt(LocalDateTime.now());
-                registrationStatusRepository.save(paymentStatus);
-                log.info("✓ Registration status PAYMENT_BRIVA updated to SELESAI for manual payment");
-            } else {
-                // Create new PAYMENT_BRIVA status if doesn't exist (same logic as verifyPayment)
-                paymentStatus = new RegistrationStatus();
-                paymentStatus.setUser(user);
-                paymentStatus.setStage(RegistrationStatus.RegistrationStage.PAYMENT_BRIVA);
-                paymentStatus.setStatus(RegistrationStatus.RegistrationStatus_Enum.SELESAI);
-                paymentStatus.setCreatedAt(LocalDateTime.now());
-                paymentStatus.setUpdatedAt(LocalDateTime.now());
-                registrationStatusRepository.save(paymentStatus);
-                log.info("✓ NEW: Created PAYMENT_BRIVA registration status with SELESAI for manual payment");
-            }
-
-            log.info("✅ Manual payment submitted successfully! ID={}", savedPayment.getId());
-
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "message", "Bukti pembayaran berhasil diunggah. Status pembayaran diperbarui ke SELESAI!",
-                    "paymentId", savedPayment.getId(),
-                    "status", "COMPLETED",
-                    "admissionFormId", admissionFormId,
-                    "amount", amount,
-                    "submittedAt", LocalDateTime.now()
-            ));
-
-        } catch (IOException ioE) {
-            log.error("❌ IO Error saving file: {}", ioE.getMessage(), ioE);
-            return ResponseEntity.status(500).body(Map.of(
-                    "success", false,
-                    "message", "Gagal menyimpan file: " + ioE.getMessage()
-            ));
-        } catch (RuntimeException rE) {
-            log.error("❌ Runtime Error: {}", rE.getMessage(), rE);
-            return ResponseEntity.badRequest().body(Map.of(
-                    "success", false,
-                    "message", rE.getMessage()
-            ));
-        } catch (Exception e) {
-            log.error("❌ Unexpected error: {}", e.getMessage(), e);
-            return ResponseEntity.status(500).body(Map.of(
-                    "success", false,
-                    "message", "Terjadi kesalahan: " + e.getMessage()
-            ));
-        }
-    }
-
-    /**
      * Register for admission
      */
     @PostMapping("/register-admission")
@@ -2216,6 +1996,49 @@ public class CamabaController {
             return ResponseEntity.ok(exam);
         } catch (Exception e) {
             log.error("Error fetching exam: {}", e.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse(false, e.getMessage()));
+        }
+    }
+
+    /**
+     * ✅ NEW: Get exam validation status for current camaba
+     * GET /api/camaba/exam-validation-status
+     */
+    @GetMapping("/exam-validation-status")
+    public ResponseEntity<?> getExamValidationStatus() {
+        try {
+            String email = SecurityContextHolder.getContext()
+                    .getAuthentication().getName();
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            
+            Student student = studentRepository.findByUser_Id(user.getId())
+                    .orElseThrow(() -> new RuntimeException("Student profile not found"));
+            
+            Optional<ExamResult> resultOpt = examResultRepository.findByStudent_Id(student.getId());
+            
+            if (!resultOpt.isPresent()) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", true);
+                response.put("hasExamResult", false);
+                response.put("validationStatus", null);
+                return ResponseEntity.ok(response);
+            }
+            
+            ExamResult result = resultOpt.get();
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("hasExamResult", true);
+            response.put("validationStatus", result.getExamValidationStatus().toString());
+            response.put("adminNotes", result.getAdminNotes());
+            response.put("examValidatedAt", result.getExamValidatedAt());
+            response.put("tokenValidated", result.getTokenValidated());
+            response.put("gformScore", result.getGformScore());
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("❌ Error getting exam validation status: {}", e.getMessage());
             return ResponseEntity.badRequest()
                     .body(new ApiResponse(false, e.getMessage()));
         }
@@ -3923,6 +3746,8 @@ public class CamabaController {
                 put("brivaAmount", hasilAkhir.getBrivaAmount());
                 put("nomorRegistrasi", hasilAkhir.getNomorRegistrasi());
                 put("status", hasilAkhir.getStatus().toString());
+                put("npmSementaraFile", hasilAkhir.getNpmSementaraFile());
+                put("ktmSementaraFile", hasilAkhir.getKtmSementaraFile());
                 put("createdAt", hasilAkhir.getCreatedAt());
                 put("updatedAt", hasilAkhir.getUpdatedAt());
             }});

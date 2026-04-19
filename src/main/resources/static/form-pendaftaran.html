@@ -261,6 +261,79 @@
             display: none;
         }
         
+        /* Autocomplete dropdown styles */
+        .school-autocomplete-wrapper {
+            position: relative;
+        }
+        .school-autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            max-height: 260px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+        }
+        .school-autocomplete-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.15s;
+        }
+        .school-autocomplete-item:hover,
+        .school-autocomplete-item.active {
+            background: #e8f5e9;
+        }
+        .school-autocomplete-item .school-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        .school-autocomplete-item .school-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .school-autocomplete-item .school-type {
+            display: inline-block;
+            font-size: 11px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            margin-left: 6px;
+        }
+        .school-autocomplete-loading {
+            padding: 12px 15px;
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+        }
+        /* Input validation styles */
+        .form-control.is-invalid {
+            border-color: #dc3545;
+            background-image: none;
+        }
+        .form-control.is-valid {
+            border-color: #28a745;
+            background-image: none;
+        }
+        .invalid-feedback {
+            display: none;
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .form-control.is-invalid ~ .invalid-feedback {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .form-container {
                 padding: 20px;
@@ -420,7 +493,9 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="required">Nomor Identitas (KTP/Paspor)</label>
-                            <input type="text" class="form-control" id="nik" placeholder="NIK/Paspor" required>
+                            <input type="text" class="form-control" id="nik" placeholder="16 digit NIK"
+                                inputmode="numeric" pattern="[0-9]{16}" maxlength="16" required>
+                            <div class="invalid-feedback">NIK harus 16 digit angka</div>
                         </div>
                         <div class="form-group">
                             <label>Alamat di Medan</label>
@@ -465,7 +540,12 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="required">Nomor Telepon / HP</label>
-                            <input type="tel" class="form-control" id="phoneNumber" required>
+                            <input type="text" class="form-control" id="phoneNumber"
+                                inputmode="numeric" pattern="08[0-9]{8,13}" maxlength="15"
+                                placeholder="Contoh: 081234567890" required
+                                onkeypress="return /[0-9]/.test(event.key) || event.key==='Backspace' || event.key==='Tab' || event.key==='Delete'"
+                                oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                            <div class="invalid-feedback">Nomor telepon harus diawali 08 dan 10-15 digit</div>
                         </div>
                         <div class="form-group">
                             <label class="required">Email</label>
@@ -532,7 +612,10 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>NIK Ayah</label>
-                                <input type="text" class="form-control" id="fatherNik">
+                                <input type="text" class="form-control" id="fatherNik"
+                                    inputmode="numeric" pattern="[0-9]{16}" maxlength="16"
+                                    placeholder="16 digit angka">
+                                <div class="invalid-feedback">NIK harus 16 digit angka</div>
                             </div>
                             <div class="form-group">
                                 <label class="required">Nama Ayah</label>
@@ -592,7 +675,12 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Nomor Telepon / HP Ayah</label>
-                                <input type="tel" class="form-control" id="fatherPhone">
+                                <input type="text" class="form-control" id="fatherPhone"
+                                    inputmode="numeric" pattern="08[0-9]{8,13}" maxlength="15"
+                                    placeholder="Contoh: 081234567890"
+                                    onkeypress="return /[0-9]/.test(event.key) || event.key==='Backspace' || event.key==='Tab' || event.key==='Delete'"
+                                    oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                <div class="invalid-feedback">Nomor telepon harus diawali 08 dan 10-15 digit</div>
                             </div>
                             <div class="form-group">
                                 <label>Status Ayah</label>
@@ -610,7 +698,10 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>NIK Ibu</label>
-                                <input type="text" class="form-control" id="motherNik">
+                                <input type="text" class="form-control" id="motherNik"
+                                    inputmode="numeric" pattern="[0-9]{16}" maxlength="16"
+                                    placeholder="16 digit angka">
+                                <div class="invalid-feedback">NIK harus 16 digit angka</div>
                             </div>
                             <div class="form-group">
                                 <label class="required">Nama Ibu</label>
@@ -670,7 +761,12 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Nomor Telepon / HP Ibu</label>
-                                <input type="tel" class="form-control" id="motherPhone">
+                                <input type="text" class="form-control" id="motherPhone"
+                                    inputmode="numeric" pattern="08[0-9]{8,13}" maxlength="15"
+                                    placeholder="Contoh: 081234567890"
+                                    onkeypress="return /[0-9]/.test(event.key) || event.key==='Backspace' || event.key==='Tab' || event.key==='Delete'"
+                                    oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                <div class="invalid-feedback">Nomor telepon harus diawali 08 dan 10-15 digit</div>
                             </div>
                             <div class="form-group">
                                 <label>Status Ibu</label>
@@ -718,7 +814,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="required">Asal SMU/SMK</label>
-                            <input type="text" class="form-control" id="schoolOrigin" required>
+                            <div class="school-autocomplete-wrapper">
+                                <input type="text" class="form-control" id="schoolOrigin" required
+                                    placeholder="Ketik nama sekolah (min. 3 huruf)..." autocomplete="off">
+                                <div class="school-autocomplete-list" id="schoolAutocompleteList"></div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="required">Jurusan</label>
@@ -733,18 +833,22 @@
                         </div>
                         <div class="form-group">
                             <label>NISN</label>
-                            <input type="text" class="form-control" id="nisn">
+                            <input type="text" class="form-control" id="nisn" inputmode="numeric"
+                                pattern="[0-9]{10}" maxlength="10" placeholder="10 digit angka">
+                            <div class="invalid-feedback">NISN harus 10 digit angka</div>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label>Kabupaten/Kotamadya Sekolah</label>
-                            <input type="text" class="form-control" id="schoolCity">
+                            <input type="text" class="form-control" id="schoolCity"
+                                placeholder="Otomatis terisi atau ketik manual">
                         </div>
                         <div class="form-group">
                             <label>Provinsi Sekolah</label>
-                            <input type="text" class="form-control" id="schoolProvince">
+                            <input type="text" class="form-control" id="schoolProvince"
+                                placeholder="Otomatis terisi atau ketik manual">
                         </div>
                     </div>
                 </div>
@@ -910,6 +1014,231 @@
         function logError(msg) {
             console.error('%c[AUTO-SAVE ERROR] ' + msg, 'color: #cc0000; font-weight: bold;');
         }
+
+        // ========== SMA AUTOCOMPLETE ==========
+        (function() {
+            let searchTimeout = null;
+            let activeIndex = -1;
+            let schoolResults = [];
+
+            function initSchoolAutocomplete() {
+                const input = document.getElementById('schoolOrigin');
+                const list = document.getElementById('schoolAutocompleteList');
+                if (!input || !list) return;
+
+                input.addEventListener('input', function() {
+                    const query = this.value.trim();
+                    clearTimeout(searchTimeout);
+                    activeIndex = -1;
+
+                    if (query.length < 3) {
+                        list.style.display = 'none';
+                        return;
+                    }
+
+                    list.innerHTML = '<div class="school-autocomplete-loading"><i class="fas fa-spinner fa-spin"></i> Mencari sekolah...</div>';
+                    list.style.display = 'block';
+
+                    searchTimeout = setTimeout(function() {
+                        fetch('https://api-sekolah-indonesia.vercel.app/sekolah/s?sekolah=' + encodeURIComponent(query) + '&perPage=50')
+                            .then(function(r) { return r.json(); })
+                            .then(function(data) {
+                                schoolResults = (data.dataSekolah || []).filter(function(s) {
+                                    return s.bentuk === 'SMA' || s.bentuk === 'SMK' || s.bentuk === 'MA';
+                                });
+                                renderSchoolResults(list, input);
+                            })
+                            .catch(function() {
+                                list.innerHTML = '<div class="school-autocomplete-loading" style="color:#cc0000;">Gagal memuat data. Anda bisa mengetik manual.</div>';
+                            });
+                    }, 400);
+                });
+
+                input.addEventListener('keydown', function(e) {
+                    var items = list.querySelectorAll('.school-autocomplete-item');
+                    if (!items.length) return;
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        activeIndex = Math.min(activeIndex + 1, items.length - 1);
+                        updateActive(items);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        activeIndex = Math.max(activeIndex - 1, 0);
+                        updateActive(items);
+                    } else if (e.key === 'Enter' && activeIndex >= 0) {
+                        e.preventDefault();
+                        items[activeIndex].click();
+                    } else if (e.key === 'Escape') {
+                        list.style.display = 'none';
+                    }
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.school-autocomplete-wrapper')) {
+                        list.style.display = 'none';
+                    }
+                });
+            }
+
+            function renderSchoolResults(list, input) {
+                list.innerHTML = '';
+
+                // Sort by Provinsi -> Kabupaten -> Nama Sekolah
+                var sorted = schoolResults.slice().sort(function(a, b) {
+                    var pA = (a.propinsi || '').trim().toLowerCase();
+                    var pB = (b.propinsi || '').trim().toLowerCase();
+                    if (pA !== pB) return pA.localeCompare(pB);
+                    var kA = (a.kabupaten_kota || '').trim().toLowerCase();
+                    var kB = (b.kabupaten_kota || '').trim().toLowerCase();
+                    if (kA !== kB) return kA.localeCompare(kB);
+                    return (a.sekolah || '').localeCompare(b.sekolah || '');
+                });
+
+                if (!sorted.length) {
+                    list.innerHTML = '<div class="school-autocomplete-loading">Tidak ditemukan dari database.</div>';
+                } else {
+                    var lastGroup = '';
+                    sorted.forEach(function(school) {
+                        var prov = (school.propinsi || '').trim();
+                        var kab = (school.kabupaten_kota || '').trim();
+                        var groupKey = prov + ' - ' + kab;
+                        if (groupKey !== lastGroup) {
+                            lastGroup = groupKey;
+                            var header = document.createElement('div');
+                            header.style.cssText = 'padding:6px 12px;font-size:11px;font-weight:700;color:#1a472a;background:#e8f5e9;border-bottom:1px solid #c8e6c9;position:sticky;top:0;';
+                            header.textContent = prov + ' \u2022 ' + kab;
+                            list.appendChild(header);
+                        }
+                        var item = document.createElement('div');
+                        item.className = 'school-autocomplete-item';
+                        item.innerHTML =
+                            '<div class="school-name">' + escHtml(school.sekolah) +
+                            '<span class="school-type">' + escHtml(school.bentuk) + '</span></div>' +
+                            '<div class="school-info">' + escHtml(kab) +
+                            ', ' + escHtml(prov) +
+                            ' &bull; NPSN: ' + escHtml(school.npsn || '-') + '</div>';
+
+                        item.addEventListener('click', (function(s) {
+                            return function() {
+                                input.value = s.sekolah;
+                                document.getElementById('schoolCity').value = (s.kabupaten_kota || '').trim();
+                                document.getElementById('schoolProvince').value = (s.propinsi || '').trim();
+                                list.style.display = 'none';
+                            };
+                        })(school));
+                        list.appendChild(item);
+                    });
+                }
+
+                // "Lainnya" option — manual entry
+                var lainnya = document.createElement('div');
+                lainnya.className = 'school-autocomplete-item';
+                lainnya.style.cssText = 'border-top:2px solid #ddd;background:#fff8e1;';
+                lainnya.innerHTML = '<div class="school-name" style="color:#e65100;"><i class="fas fa-edit"></i> Lainnya (Ketik Manual)</div>' +
+                    '<div class="school-info">Pilih ini jika sekolah Anda tidak ada dalam daftar</div>';
+                lainnya.addEventListener('click', function() {
+                    list.style.display = 'none';
+                    document.getElementById('schoolCity').value = '';
+                    document.getElementById('schoolProvince').value = '';
+                    document.getElementById('schoolCity').focus();
+                });
+                list.appendChild(lainnya);
+            }
+
+            function updateActive(items) {
+                items.forEach(function(el, i) {
+                    el.classList.toggle('active', i === activeIndex);
+                });
+                if (items[activeIndex]) items[activeIndex].scrollIntoView({ block: 'nearest' });
+            }
+
+            function escHtml(str) {
+                var d = document.createElement('div');
+                d.textContent = str || '';
+                return d.innerHTML;
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initSchoolAutocomplete);
+            } else {
+                initSchoolAutocomplete();
+            }
+        })();
+
+        // ========== INPUT VALIDATION (numbers-only) ==========
+        (function() {
+            function enforceDigitsOnly(inputId, expectedLen) {
+                var el = document.getElementById(inputId);
+                if (!el) return;
+
+                el.addEventListener('input', function() {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    validateField(this, expectedLen);
+                });
+                el.addEventListener('blur', function() {
+                    validateField(this, expectedLen);
+                });
+            }
+
+            function validateField(el, expectedLen) {
+                var val = el.value.trim();
+                if (!val) {
+                    el.classList.remove('is-invalid', 'is-valid');
+                    return;
+                }
+                if (expectedLen && val.length !== expectedLen) {
+                    el.classList.add('is-invalid');
+                    el.classList.remove('is-valid');
+                } else if (!/^\d+$/.test(val)) {
+                    el.classList.add('is-invalid');
+                    el.classList.remove('is-valid');
+                } else {
+                    el.classList.remove('is-invalid');
+                    el.classList.add('is-valid');
+                }
+            }
+
+            function enforcePhoneDigits(inputId) {
+                var el = document.getElementById(inputId);
+                if (!el) return;
+                function validatePhone(el) {
+                    var val = el.value.trim();
+                    if (!val) {
+                        el.classList.remove('is-invalid', 'is-valid');
+                    } else if (val.length < 10 || val.length > 15 || !/^08/.test(val)) {
+                        el.classList.add('is-invalid');
+                        el.classList.remove('is-valid');
+                    } else {
+                        el.classList.remove('is-invalid');
+                        el.classList.add('is-valid');
+                    }
+                }
+                el.addEventListener('input', function() {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    validatePhone(this);
+                });
+                el.addEventListener('blur', function() {
+                    validatePhone(this);
+                });
+            }
+
+            function init() {
+                enforceDigitsOnly('nik', 16);
+                enforceDigitsOnly('nisn', 10);
+                enforceDigitsOnly('fatherNik', 16);
+                enforceDigitsOnly('motherNik', 16);
+                enforcePhoneDigits('phoneNumber');
+                enforcePhoneDigits('fatherPhone');
+                enforcePhoneDigits('motherPhone');
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
 
         // ========== SELECTION TYPE VALIDATION ==========
         

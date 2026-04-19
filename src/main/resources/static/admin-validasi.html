@@ -149,8 +149,14 @@
             <!-- Sidebar -->
             <div class="col-md-2">
                 <div class="sidebar">
-                    <a href="/admin-validasi.html" class="nav-link active">
+                    <a href="/admin-validasi.html" class="nav-link active" id="nav-dokumen" onclick="showSection('dokumen')">
                         <i class="fas fa-check-circle"></i> Validasi Dokumen
+                    </a>
+                    <a href="#" class="nav-link" id="nav-ujian" onclick="showSection('ujian'); return false;">
+                        <i class="fas fa-pen-fancy"></i> Periksa Ujian
+                    </a>
+                    <a href="#" class="nav-link" id="nav-dokumen-sementara" onclick="showSection('dokumen-sementara'); return false;">
+                        <i class="fas fa-file-pdf"></i> Dokumen Sementara
                     </a>
                     <a href="/admin-reenroll.html" class="nav-link">
                         <i class="fas fa-clipboard-list"></i> Daftar Ulang
@@ -161,6 +167,8 @@
             <!-- Main Content -->
             <div class="col-md-10">
                 <div class="main-content">
+                    <!-- ====== SECTION: VALIDASI DOKUMEN ====== -->
+                    <div id="section-dokumen">
                     <div class="section-title">
                         <h3><i class="fas fa-check-circle"></i> Dashboard Validasi Dokumen</h3>
                         <p class="text-muted">Verifikasi dokumen mahasiswa dan berikan feedback</p>
@@ -213,12 +221,122 @@
                             </table>
                         </div>
                     </div>
+                    </div><!-- END section-dokumen -->
+
+                    <!-- ====== SECTION: PERIKSA UJIAN ====== -->
+                    <div id="section-ujian" style="display: none;">
+                    <div class="section-title">
+                        <h3><i class="fas fa-pen-fancy"></i> Periksa Ujian Mahasiswa</h3>
+                        <p class="text-muted">Validasi hasil ujian, periksa bukti foto dan token ujian</p>
+                    </div>
+
+                    <!-- Filter Section Ujian -->
+                    <div class="filter-section">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Filter Status Validasi</label>
+                                <select class="form-select" id="filterExamStatus" onchange="loadExamSubmissions()">
+                                    <option value="ALL">Semua Status</option>
+                                    <option value="PENDING" selected>Menunggu Validasi</option>
+                                    <option value="APPROVED">Diterima</option>
+                                    <option value="REJECTED">Ditolak</option>
+                                    <option value="REVISI">Diminta Revisi</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Cari Nama/Email</label>
+                                <input type="text" class="form-control" id="searchExamInput" placeholder="Nama atau Email" onkeyup="filterExamTable()">
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button class="btn btn-outline-primary" onclick="loadExamSubmissions()">
+                                    <i class="fas fa-sync-alt"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exam Table -->
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="examDataTable">
+                                <thead style="background: #f0f9ff;">
+                                    <tr>
+                                        <th width="5%">No</th>
+                                        <th width="18%">Nama Mahasiswa</th>
+                                        <th width="18%">Email</th>
+                                        <th width="10%">Skor GForm</th>
+                                        <th width="10%">Token Valid</th>
+                                        <th width="12%">Bukti Foto</th>
+                                        <th width="12%">Status</th>
+                                        <th width="15%">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="examTableBody">
+                                    <tr>
+                                        <td colspan="8" style="text-align: center; padding: 30px; color: #999;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i><br>
+                                            Memuat data ujian...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div><!-- END section-ujian -->
+
+                    <!-- ====== SECTION: DOKUMEN SEMENTARA (NPM & KTM) ====== -->
+                    <div id="section-dokumen-sementara" style="display: none;">
+                    <div class="section-title">
+                        <h3><i class="fas fa-file-pdf"></i> Upload Dokumen Sementara</h3>
+                        <p class="text-muted">Upload NPM Sementara dan KTM Sementara untuk mahasiswa yang sudah divalidasi daftar ulang</p>
+                    </div>
+
+                    <!-- Filter -->
+                    <div class="filter-section">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Cari Nama / No. Registrasi</label>
+                                <input type="text" class="form-control" id="searchDokSementara" placeholder="Nama atau Nomor Registrasi" onkeyup="filterDokSementaraTable()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Filter Status Dokumen</label>
+                                <select class="form-select" id="filterDokStatus" onchange="filterDokSementaraTable()">
+                                    <option value="">Semua</option>
+                                    <option value="belum">Belum Upload</option>
+                                    <option value="sudah">Sudah Upload</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="dokSementaraTable">
+                                <thead style="background: #f0f9ff;">
+                                    <tr>
+                                        <th width="20%">Nama Mahasiswa</th>
+                                        <th width="15%">No. Registrasi</th>
+                                        <th width="15%">Program Studi</th>
+                                        <th width="15%">NPM Sementara</th>
+                                        <th width="15%">KTM Sementara</th>
+                                        <th width="20%">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dokSementaraBody">
+                                    <tr><td colspan="6" style="text-align:center;padding:30px;"><i class="fas fa-spinner fa-spin"></i> Memuat...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div><!-- END section-dokumen-sementara -->
+
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Detail Modal -->
+    <!-- Detail Modal (Dokumen) -->
     <div class="modal fade" id="detailModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -260,6 +378,124 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-primary" onclick="submitVerification()">
                         <i class="fas fa-check"></i> Simpan Verifikasi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Detail Modal -->
+    <div class="modal fade" id="examDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #2c3e50; color: white;">
+                    <h5 class="modal-title"><i class="fas fa-pen-fancy"></i> Detail Ujian Mahasiswa</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" style="max-height: 600px; overflow-y: auto;">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="fw-bold">Nama Mahasiswa</label>
+                            <p id="examDetailName">-</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-bold">Email</label>
+                            <p id="examDetailEmail">-</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="fw-bold">Skor GForm</label>
+                            <p id="examDetailScore" style="font-size: 24px; font-weight: 700;">-</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="fw-bold">Token Mahasiswa</label>
+                            <p id="examDetailStudentToken" style="font-family: monospace; font-size: 16px;">-</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="fw-bold">Token Sistem</label>
+                            <p id="examDetailGeneratedToken" style="font-family: monospace; font-size: 16px;">-</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Status Token</label>
+                        <p id="examDetailTokenStatus">-</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Bukti Foto Ujian</label>
+                        <div id="examDetailPhoto" style="text-align: center; padding: 10px; background: #f9f9f9; border-radius: 8px;">
+                            <p style="color: #999;">Tidak ada foto</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Status Validasi Saat Ini</label>
+                        <p id="examDetailCurrentStatus">-</p>
+                    </div>
+                    <div class="mb-3" id="examDetailExistingNotes" style="display: none;">
+                        <label class="fw-bold">Catatan Admin Sebelumnya</label>
+                        <p id="examDetailPreviousNotes" style="background: #f0f0f0; padding: 10px; border-radius: 6px;">-</p>
+                    </div>
+                    <hr>
+                    <h6 class="fw-bold mb-3"><i class="fas fa-gavel"></i> Tindakan Validasi</h6>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Pilih Tindakan</label>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button class="btn btn-success" onclick="setExamAction('APPROVE')" id="btnExamApprove">
+                                <i class="fas fa-check-circle"></i> Terima
+                            </button>
+                            <button class="btn btn-danger" onclick="setExamAction('REJECT')" id="btnExamReject">
+                                <i class="fas fa-times-circle"></i> Tolak
+                            </button>
+                            <button class="btn btn-warning" onclick="setExamAction('REVISI')" id="btnExamRevisi">
+                                <i class="fas fa-redo"></i> Minta Revisi
+                            </button>
+                        </div>
+                        <input type="hidden" id="examActionValue" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Catatan Admin</label>
+                        <textarea class="form-control" id="examAdminNotes" rows="3" placeholder="Masukkan catatan atau alasan..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="btnSubmitExamValidation" onclick="submitExamValidation()" disabled>
+                        <i class="fas fa-save"></i> Simpan Validasi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Dokumen Sementara Modal -->
+    <div class="modal fade" id="uploadDokumenModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: var(--primary); color: white;">
+                    <h5 class="modal-title"><i class="fas fa-file-pdf"></i> Upload Dokumen Sementara</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="fw-bold">Mahasiswa</label>
+                        <p id="uploadStudentName" style="font-size: 16px; font-weight: 600;">-</p>
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold"><i class="fas fa-id-badge"></i> NPM Sementara (PDF)</label>
+                        <input type="file" class="form-control" id="npmFileInput" accept=".pdf">
+                        <small class="text-muted">File PDF dokumen NPM Sementara</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold"><i class="fas fa-address-card"></i> KTM Sementara (PDF)</label>
+                        <input type="file" class="form-control" id="ktmFileInput" accept=".pdf">
+                        <small class="text-muted">File PDF dokumen KTM Sementara</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="btnSubmitUpload" onclick="submitUploadDokumen()">
+                        <i class="fas fa-upload"></i> Upload Dokumen
                     </button>
                 </div>
             </div>
@@ -560,6 +796,363 @@
         // Load data on page load
         console.log('🚀 [ADMIN-VALIDASI] Dashboard initialization - loading forms...');
         loadFormsFromAPI();
+
+        // ====== SECTION SWITCHING ======
+        function showSection(section) {
+            // Hide all sections
+            document.getElementById('section-dokumen').style.display = 'none';
+            document.getElementById('section-ujian').style.display = 'none';
+            document.getElementById('section-dokumen-sementara').style.display = 'none';
+            
+            // Deactivate all nav links
+            document.getElementById('nav-dokumen').classList.remove('active');
+            document.getElementById('nav-ujian').classList.remove('active');
+            document.getElementById('nav-dokumen-sementara').classList.remove('active');
+            
+            if (section === 'ujian') {
+                document.getElementById('section-ujian').style.display = 'block';
+                document.getElementById('nav-ujian').classList.add('active');
+                loadExamSubmissions();
+            } else if (section === 'dokumen-sementara') {
+                document.getElementById('section-dokumen-sementara').style.display = 'block';
+                document.getElementById('nav-dokumen-sementara').classList.add('active');
+                loadDokumenSementara();
+            } else {
+                document.getElementById('section-dokumen').style.display = 'block';
+                document.getElementById('nav-dokumen').classList.add('active');
+            }
+        }
+
+        // ====== EXAM SUBMISSIONS ======
+        let allExamSubmissions = [];
+        let currentExamId = null;
+
+        async function loadExamSubmissions() {
+            const status = document.getElementById('filterExamStatus').value;
+            const tbody = document.getElementById('examTableBody');
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:30px;"><i class="fas fa-spinner fa-spin"></i> Memuat...</td></tr>';
+            
+            try {
+                const url = status === 'ALL' ? '/admin/exam-submissions?status=ALL' : '/admin/exam-submissions?status=' + status;
+                const res = await fetch(url, {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                
+                if (!res.ok) throw new Error('Status: ' + res.status);
+                
+                allExamSubmissions = await res.json();
+                renderExamTable();
+            } catch (e) {
+                console.error('Error loading exam submissions:', e);
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:30px;color:#e74c3c;"><i class="fas fa-exclamation-circle"></i> Gagal memuat data ujian</td></tr>';
+            }
+        }
+
+        function renderExamTable() {
+            const tbody = document.getElementById('examTableBody');
+            
+            if (allExamSubmissions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:30px;color:#999;"><i class="fas fa-inbox" style="font-size:48px;margin-bottom:10px;"></i><br>Tidak ada data ujian</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = allExamSubmissions.map((exam, idx) => {
+                const statusClass = exam.validationStatus === 'PENDING' ? 'status-pending' :
+                                   exam.validationStatus === 'APPROVED' ? 'status-verified' :
+                                   exam.validationStatus === 'REJECTED' ? 'status-rejected' : 'status-pending';
+                const statusIcon = exam.validationStatus === 'PENDING' ? '<i class="fas fa-hourglass-half"></i>' :
+                                  exam.validationStatus === 'APPROVED' ? '<i class="fas fa-check-circle"></i>' :
+                                  exam.validationStatus === 'REJECTED' ? '<i class="fas fa-times-circle"></i>' : '<i class="fas fa-redo"></i>';
+                const statusText = exam.validationStatus === 'PENDING' ? 'Menunggu' :
+                                  exam.validationStatus === 'APPROVED' ? 'Diterima' :
+                                  exam.validationStatus === 'REJECTED' ? 'Ditolak' : 'Revisi';
+                const tokenBadge = exam.tokenValidated ? 
+                    '<span style="color:#27ae60;font-weight:600;"><i class="fas fa-check"></i> Valid</span>' :
+                    '<span style="color:#e74c3c;font-weight:600;"><i class="fas fa-times"></i> Invalid</span>';
+                const photoBadge = exam.hasProofPhoto ?
+                    '<span style="color:#27ae60;"><i class="fas fa-image"></i> Ada</span>' :
+                    '<span style="color:#999;"><i class="fas fa-image"></i> Tidak ada</span>';
+                
+                return `
+                    <tr data-name="${exam.studentName || ''}" data-email="${exam.studentEmail || ''}">
+                        <td>${idx + 1}</td>
+                        <td>${exam.studentName || '-'}</td>
+                        <td style="font-size:12px;">${exam.studentEmail || '-'}</td>
+                        <td style="font-weight:700;font-size:16px;">${exam.gformScore != null ? exam.gformScore : '-'}</td>
+                        <td>${tokenBadge}</td>
+                        <td>${photoBadge}</td>
+                        <td><span class="status-badge ${statusClass}">${statusIcon} ${statusText}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary btn-action" onclick="viewExamDetail(${exam.id})">
+                                <i class="fas fa-eye"></i> Detail
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterExamTable() {
+            const search = document.getElementById('searchExamInput').value.toLowerCase();
+            document.querySelectorAll('#examDataTable tbody tr').forEach(row => {
+                const name = row.getAttribute('data-name')?.toLowerCase() || '';
+                const email = row.getAttribute('data-email')?.toLowerCase() || '';
+                row.style.display = (!search || name.includes(search) || email.includes(search)) ? '' : 'none';
+            });
+        }
+
+        async function viewExamDetail(examId) {
+            currentExamId = examId;
+            
+            try {
+                const res = await fetch('/admin/exam-submissions/' + examId, {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                
+                if (!res.ok) throw new Error('Status: ' + res.status);
+                const data = await res.json();
+                
+                document.getElementById('examDetailName').textContent = data.studentName || '-';
+                document.getElementById('examDetailEmail').textContent = data.studentEmail || '-';
+                document.getElementById('examDetailScore').textContent = data.gformScore != null ? data.gformScore : '-';
+                document.getElementById('examDetailScore').style.color = (data.gformScore >= 70) ? '#27ae60' : '#e74c3c';
+                document.getElementById('examDetailStudentToken').textContent = data.studentInputToken || '-';
+                document.getElementById('examDetailGeneratedToken').textContent = data.generatedToken || '-';
+                
+                // Token status
+                const tokenEl = document.getElementById('examDetailTokenStatus');
+                if (data.tokenValidated) {
+                    tokenEl.innerHTML = '<span style="background:#d4edda;color:#155724;padding:6px 12px;border-radius:20px;font-weight:600;"><i class="fas fa-check-circle"></i> Token Cocok</span>';
+                } else {
+                    tokenEl.innerHTML = '<span style="background:#f8d7da;color:#721c24;padding:6px 12px;border-radius:20px;font-weight:600;"><i class="fas fa-exclamation-triangle"></i> Token TIDAK Cocok (Kemungkinan Fraud)</span>';
+                }
+                
+                // Proof photo
+                const photoDiv = document.getElementById('examDetailPhoto');
+                if (data.proofPhotoPath) {
+                    photoDiv.innerHTML = '<img src="' + data.proofPhotoPath + '" style="max-width:100%;max-height:400px;border-radius:8px;border:2px solid #ddd;" alt="Bukti Foto Ujian" onerror="this.src=\'\';this.alt=\'Gagal memuat foto\';this.style.display=\'none\';this.parentElement.innerHTML=\'<p style=color:#e74c3c>Gagal memuat foto: \' + this.src + \'</p>\'">';
+                } else {
+                    photoDiv.innerHTML = '<p style="color:#999;"><i class="fas fa-image" style="font-size:48px;"></i><br>Tidak ada bukti foto</p>';
+                }
+                
+                // Current validation status
+                const statusEl = document.getElementById('examDetailCurrentStatus');
+                const vs = data.validationStatus;
+                if (vs === 'PENDING') {
+                    statusEl.innerHTML = '<span class="status-badge status-pending"><i class="fas fa-hourglass-half"></i> Menunggu Validasi</span>';
+                } else if (vs === 'APPROVED') {
+                    statusEl.innerHTML = '<span class="status-badge status-verified"><i class="fas fa-check-circle"></i> Diterima</span>';
+                } else if (vs === 'REJECTED') {
+                    statusEl.innerHTML = '<span class="status-badge status-rejected"><i class="fas fa-times-circle"></i> Ditolak</span>';
+                } else if (vs === 'REVISI') {
+                    statusEl.innerHTML = '<span class="status-badge status-pending" style="background:#fff3cd;color:#856404;"><i class="fas fa-redo"></i> Diminta Revisi</span>';
+                }
+                
+                // Previous admin notes
+                if (data.adminNotes) {
+                    document.getElementById('examDetailExistingNotes').style.display = 'block';
+                    document.getElementById('examDetailPreviousNotes').textContent = data.adminNotes;
+                } else {
+                    document.getElementById('examDetailExistingNotes').style.display = 'none';
+                }
+                
+                // Reset action buttons
+                document.getElementById('examActionValue').value = '';
+                document.getElementById('examAdminNotes').value = '';
+                document.getElementById('btnSubmitExamValidation').disabled = true;
+                document.querySelectorAll('#btnExamApprove,#btnExamReject,#btnExamRevisi').forEach(b => {
+                    b.classList.remove('active');
+                    b.style.opacity = '1';
+                });
+                
+                const modal = new bootstrap.Modal(document.getElementById('examDetailModal'));
+                modal.show();
+            } catch (e) {
+                console.error('Error loading exam detail:', e);
+                alert('Gagal memuat detail ujian');
+            }
+        }
+
+        function setExamAction(action) {
+            document.getElementById('examActionValue').value = action;
+            document.getElementById('btnSubmitExamValidation').disabled = false;
+            
+            // Highlight selected button
+            document.querySelectorAll('#btnExamApprove,#btnExamReject,#btnExamRevisi').forEach(b => {
+                b.style.opacity = '0.5';
+                b.classList.remove('active');
+            });
+            
+            if (action === 'APPROVE') {
+                document.getElementById('btnExamApprove').style.opacity = '1';
+            } else if (action === 'REJECT') {
+                document.getElementById('btnExamReject').style.opacity = '1';
+            } else if (action === 'REVISI') {
+                document.getElementById('btnExamRevisi').style.opacity = '1';
+            }
+        }
+
+        async function submitExamValidation() {
+            const action = document.getElementById('examActionValue').value;
+            const notes = document.getElementById('examAdminNotes').value;
+            
+            if (!action) {
+                alert('Pilih tindakan terlebih dahulu');
+                return;
+            }
+            
+            const actionText = action === 'APPROVE' ? 'MENERIMA' : action === 'REJECT' ? 'MENOLAK' : 'MEMINTA REVISI';
+            if (!confirm('Apakah Anda yakin ingin ' + actionText + ' ujian ini?')) return;
+            
+            try {
+                const res = await fetch('/admin/exam-submissions/' + currentExamId + '/validate', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action: action, adminNotes: notes })
+                });
+                
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.message || 'Gagal validasi');
+                }
+                
+                const result = await res.json();
+                alert('Validasi berhasil! Status: ' + result.newStatus);
+                
+                bootstrap.Modal.getInstance(document.getElementById('examDetailModal')).hide();
+                loadExamSubmissions();
+            } catch (e) {
+                console.error('Error submitting exam validation:', e);
+                alert('Gagal menyimpan validasi: ' + e.message);
+            }
+        }
+
+        // ====== DOKUMEN SEMENTARA (NPM & KTM) ======
+        let allDokSementara = [];
+
+        async function loadDokumenSementara() {
+            const tbody = document.getElementById('dokSementaraBody');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;"><i class="fas fa-spinner fa-spin"></i> Memuat data...</td></tr>';
+
+            try {
+                const res = await fetch('/admin/api/hasil-akhir/all', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                if (!res.ok) throw new Error('Status: ' + res.status);
+                allDokSementara = await res.json();
+                renderDokSementaraTable();
+            } catch (e) {
+                console.error('Error loading dokumen sementara:', e);
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:#e74c3c;"><i class="fas fa-exclamation-circle"></i> Gagal memuat data</td></tr>';
+            }
+        }
+
+        function renderDokSementaraTable() {
+            const tbody = document.getElementById('dokSementaraBody');
+            if (allDokSementara.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:#999;"><i class="fas fa-inbox"></i> Belum ada data hasil akhir</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = allDokSementara.map(item => {
+                const npmStatus = item.npmSementaraFile
+                    ? `<span class="status-badge" style="background:#eafaf1;color:#1e8449;border:1px solid #a9dfbf;"><i class="fas fa-check"></i> Sudah</span>
+                       <br><a href="/api/files/view/${item.npmSementaraFile}" target="_blank" style="font-size:11px;"><i class="fas fa-eye"></i> Lihat</a>`
+                    : '<span class="status-badge" style="background:#fef9e7;color:#9a7d0a;border:1px solid #f9e79f;"><i class="fas fa-times"></i> Belum</span>';
+                const ktmStatus = item.ktmSementaraFile
+                    ? `<span class="status-badge" style="background:#eafaf1;color:#1e8449;border:1px solid #a9dfbf;"><i class="fas fa-check"></i> Sudah</span>
+                       <br><a href="/api/files/view/${item.ktmSementaraFile}" target="_blank" style="font-size:11px;"><i class="fas fa-eye"></i> Lihat</a>`
+                    : '<span class="status-badge" style="background:#fef9e7;color:#9a7d0a;border:1px solid #f9e79f;"><i class="fas fa-times"></i> Belum</span>';
+
+                return `
+                    <tr data-name="${item.studentName || ''}" data-noreg="${item.nomorRegistrasi || ''}" data-dok="${item.npmSementaraFile || item.ktmSementaraFile ? 'sudah' : 'belum'}">
+                        <td><strong>${item.studentName || '-'}</strong></td>
+                        <td><code>${item.nomorRegistrasi || '-'}</code></td>
+                        <td>${item.programStudi || '-'}</td>
+                        <td>${npmStatus}</td>
+                        <td>${ktmStatus}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary btn-action" onclick="openUploadDokumen(${item.id}, '${(item.studentName || '').replace(/'/g, "\\'")}')">
+                                <i class="fas fa-upload"></i> Upload
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterDokSementaraTable() {
+            const search = document.getElementById('searchDokSementara').value.toLowerCase();
+            const statusFilter = document.getElementById('filterDokStatus').value;
+
+            document.querySelectorAll('#dokSementaraTable tbody tr').forEach(row => {
+                if (!row.dataset.name) return;
+                const name = (row.dataset.name || '').toLowerCase();
+                const noreg = (row.dataset.noreg || '').toLowerCase();
+                const dok = row.dataset.dok || '';
+
+                const matchSearch = !search || name.includes(search) || noreg.includes(search);
+                const matchStatus = !statusFilter || dok === statusFilter;
+                row.style.display = (matchSearch && matchStatus) ? '' : 'none';
+            });
+        }
+
+        let uploadTargetId = null;
+
+        function openUploadDokumen(hasilAkhirId, studentName) {
+            uploadTargetId = hasilAkhirId;
+            document.getElementById('uploadStudentName').textContent = studentName;
+            document.getElementById('npmFileInput').value = '';
+            document.getElementById('ktmFileInput').value = '';
+            const modal = new bootstrap.Modal(document.getElementById('uploadDokumenModal'));
+            modal.show();
+        }
+
+        async function submitUploadDokumen() {
+            if (!uploadTargetId) return;
+
+            const npmFile = document.getElementById('npmFileInput').files[0];
+            const ktmFile = document.getElementById('ktmFileInput').files[0];
+
+            if (!npmFile && !ktmFile) {
+                alert('Pilih minimal satu file PDF untuk diupload.');
+                return;
+            }
+
+            const formData = new FormData();
+            if (npmFile) formData.append('npmSementara', npmFile);
+            if (ktmFile) formData.append('ktmSementara', ktmFile);
+
+            try {
+                document.getElementById('btnSubmitUpload').disabled = true;
+                document.getElementById('btnSubmitUpload').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengupload...';
+
+                const res = await fetch('/admin/api/hasil-akhir/' + uploadTargetId + '/upload-dokumen', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + authToken },
+                    body: formData
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.message || 'Gagal upload');
+                }
+
+                const result = await res.json();
+                alert('Dokumen berhasil diupload!');
+                bootstrap.Modal.getInstance(document.getElementById('uploadDokumenModal')).hide();
+                loadDokumenSementara();
+            } catch (e) {
+                console.error('Error uploading dokumen:', e);
+                alert('Gagal upload dokumen: ' + e.message);
+            } finally {
+                document.getElementById('btnSubmitUpload').disabled = false;
+                document.getElementById('btnSubmitUpload').innerHTML = '<i class="fas fa-upload"></i> Upload Dokumen';
+            }
+        }
     </script>
 </body>
 </html>

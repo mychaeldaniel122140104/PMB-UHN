@@ -102,6 +102,7 @@ public class ExamResult {
     public enum ExamValidationStatus {
         PENDING,       // Belum divalidasi admin
         APPROVED,      // Disetujui admin
-        REJECTED       // Ditolak admin (token tidak cocok/fraud)
+        REJECTED,      // Ditolak admin (token tidak cocok/fraud)
+        REVISI         // Admin minta revisi (upload ulang bukti/token)
     }
 }

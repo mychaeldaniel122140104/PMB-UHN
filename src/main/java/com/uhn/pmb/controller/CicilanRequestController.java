@@ -141,10 +141,25 @@ public class CicilanRequestController {
             Student student = studentRepository.findByUser_Id(user.getId())
                     .orElseThrow(() -> new RuntimeException("Student not found"));
 
-            // Validate request
-            if (request.getJumlahCicilan() < 1 || request.getJumlahCicilan() > 6) {
-                return ResponseEntity.badRequest().body(new ErrorResponse("Jumlah cicilan harus 1-6"));
+            // Validate request - use selectedCicilans if provided, fallback to jumlahCicilan
+            java.util.List<Integer> selectedCicilans = request.getSelectedCicilans();
+            if (selectedCicilans == null || selectedCicilans.isEmpty()) {
+                // Legacy fallback: treat jumlahCicilan as "first N cicilans"
+                int jml = request.getJumlahCicilan() != null ? request.getJumlahCicilan() : 1;
+                if (jml < 1 || jml > 6) {
+                    return ResponseEntity.badRequest().body(new ErrorResponse("Jumlah cicilan harus 1-6"));
+                }
+                selectedCicilans = new java.util.ArrayList<>();
+                for (int i = 1; i <= jml; i++) selectedCicilans.add(i);
+            } else {
+                // Validate selectedCicilans values
+                for (Integer c : selectedCicilans) {
+                    if (c == null || c < 1 || c > 6) {
+                        return ResponseEntity.badRequest().body(new ErrorResponse("Cicilan harus bernilai 1-6"));
+                    }
+                }
             }
+            int jumlahCicilan = selectedCicilans.size();
 
             // ✅ Validate programStudiId is not null
             if (request.getProgramStudiId() == null || request.getProgramStudiId() <= 0) {
@@ -187,17 +202,22 @@ public class CicilanRequestController {
                     .student(student)
                     .programStudi(programStudi)
                     .admissionForm(admissionForm)
-                    .jumlahCicilan(request.getJumlahCicilan())
-                    .hargaCicilan1(programStudi.getCicilan1() != null ? programStudi.getCicilan1() : 0L)
+                    .jumlahCicilan(jumlahCicilan)
+                    .hargaCicilan1(selectedCicilans.contains(1) && programStudi.getCicilan1() != null ? programStudi.getCicilan1() : 0L)
+                    .hargaCicilan2(selectedCicilans.contains(2) && programStudi.getCicilan2() != null ? programStudi.getCicilan2() : 0L)
+                    .hargaCicilan3(selectedCicilans.contains(3) && programStudi.getCicilan3() != null ? programStudi.getCicilan3() : 0L)
+                    .hargaCicilan4(selectedCicilans.contains(4) && programStudi.getCicilan4() != null ? programStudi.getCicilan4() : 0L)
+                    .hargaCicilan5(selectedCicilans.contains(5) && programStudi.getCicilan5() != null ? programStudi.getCicilan5() : 0L)
+                    .hargaCicilan6(selectedCicilans.contains(6) && programStudi.getCicilan6() != null ? programStudi.getCicilan6() : 0L)
                     .hargaTotal(programStudi.getHargaTotalPerTahun() != null ? programStudi.getHargaTotalPerTahun() : 0L)
                     .status(CicilanRequest.CicilanRequestStatus.PENDING)
                     .paymentMethod(paymentMethod)
                     .build();
 
-            // Calculate hargaPerCicilan (auto-calculated via trigger, but also in code)
-            if (cicilan.getJumlahCicilan() > 0) {
-                cicilan.setHargaPerCicilan(cicilan.getHargaTotal() / cicilan.getJumlahCicilan());
-            }
+            // Calculate hargaPerCicilan as total of selected cicilans
+            long selectedTotal = cicilan.getHargaCicilan1() + cicilan.getHargaCicilan2() + cicilan.getHargaCicilan3()
+                    + cicilan.getHargaCicilan4() + cicilan.getHargaCicilan5() + cicilan.getHargaCicilan6();
+            cicilan.setHargaPerCicilan(selectedTotal);
 
             CicilanRequest saved = cicilanRequestRepository.save(cicilan);
             CicilanRequestDTO dto = convertToDTO(saved);
@@ -299,6 +319,11 @@ public class CicilanRequestController {
                 .admissionFormId(cr.getAdmissionForm().getId())
                 .jumlahCicilan(cr.getJumlahCicilan())
                 .hargaCicilan1(cr.getHargaCicilan1())
+                .hargaCicilan2(cr.getHargaCicilan2())
+                .hargaCicilan3(cr.getHargaCicilan3())
+                .hargaCicilan4(cr.getHargaCicilan4())
+                .hargaCicilan5(cr.getHargaCicilan5())
+                .hargaCicilan6(cr.getHargaCicilan6())
                 .hargaTotal(cr.getHargaTotal())
                 .hargaPerCicilan(cr.getHargaPerCicilan())
                 .status(cr.getStatus().name())

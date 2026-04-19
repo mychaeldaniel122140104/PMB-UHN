@@ -59,6 +59,13 @@ public class HasilAkhir {
     @JoinColumn(name = "selection_period_id")
     private RegistrationPeriod selectionPeriod; // Reference to registration period
 
+    // ===== Dokumen Sementara (NPM & KTM) =====
+    @Column(name = "npm_sementara_file", length = 500)
+    private String npmSementaraFile; // Path to uploaded NPM Sementara PDF
+
+    @Column(name = "ktm_sementara_file", length = 500)
+    private String ktmSementaraFile; // Path to uploaded KTM Sementara PDF
+
     // ===== Status =====
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

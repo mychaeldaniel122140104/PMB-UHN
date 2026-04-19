@@ -20,10 +20,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,8 +70,6 @@ public class AdminController {
     private final AnnouncementRepository announcementRepository;
     private final SystemConfigurationRepository systemConfigRepository;
     private final RegistrationStatusRepository registrationStatusRepository;
-    private final ManualPaymentRepository manualPaymentRepository;
-    private final ManualCicilanPaymentRepository manualCicilanPaymentRepository;
     private final CicilanRequestRepository cicilanRequestRepository;
     private final RegistrationStatusService registrationStatusService;
     private final ValidationStatusTrackerService validationStatusTrackerService;
@@ -493,6 +497,11 @@ public class AdminController {
                     .sortOrder(request.getSortOrder() != null ? request.getSortOrder() : 0)
                     .hargaTotalPerTahun(request.getHargaTotalPerTahun() != null ? request.getHargaTotalPerTahun() : 0L)
                     .cicilan1(request.getCicilan1() != null ? request.getCicilan1() : 0L)
+                    .cicilan2(request.getCicilan2() != null ? request.getCicilan2() : 0L)
+                    .cicilan3(request.getCicilan3() != null ? request.getCicilan3() : 0L)
+                    .cicilan4(request.getCicilan4() != null ? request.getCicilan4() : 0L)
+                    .cicilan5(request.getCicilan5() != null ? request.getCicilan5() : 0L)
+                    .cicilan6(request.getCicilan6() != null ? request.getCicilan6() : 0L)
                     .build();
 
             programStudiRepository.save(programStudi);
@@ -526,6 +535,11 @@ public class AdminController {
                         map.put("sortOrder", ps.getSortOrder());
                         map.put("hargaTotalPerTahun", ps.getHargaTotalPerTahun() != null ? ps.getHargaTotalPerTahun() : 0L);
                         map.put("cicilan1", ps.getCicilan1() != null ? ps.getCicilan1() : 0L);
+                        map.put("cicilan2", ps.getCicilan2() != null ? ps.getCicilan2() : 0L);
+                        map.put("cicilan3", ps.getCicilan3() != null ? ps.getCicilan3() : 0L);
+                        map.put("cicilan4", ps.getCicilan4() != null ? ps.getCicilan4() : 0L);
+                        map.put("cicilan5", ps.getCicilan5() != null ? ps.getCicilan5() : 0L);
+                        map.put("cicilan6", ps.getCicilan6() != null ? ps.getCicilan6() : 0L);
                         return map;
                     })
                     .collect(Collectors.toList());
@@ -607,6 +621,11 @@ public class AdminController {
             programStudi.setSortOrder(request.getSortOrder() != null ? request.getSortOrder() : 0);
             programStudi.setHargaTotalPerTahun(request.getHargaTotalPerTahun() != null ? request.getHargaTotalPerTahun() : 0L);
             programStudi.setCicilan1(request.getCicilan1() != null ? request.getCicilan1() : 0L);
+            programStudi.setCicilan2(request.getCicilan2() != null ? request.getCicilan2() : 0L);
+            programStudi.setCicilan3(request.getCicilan3() != null ? request.getCicilan3() : 0L);
+            programStudi.setCicilan4(request.getCicilan4() != null ? request.getCicilan4() : 0L);
+            programStudi.setCicilan5(request.getCicilan5() != null ? request.getCicilan5() : 0L);
+            programStudi.setCicilan6(request.getCicilan6() != null ? request.getCicilan6() : 0L);
             programStudi.setUpdatedAt(LocalDateTime.now());
 
             programStudiRepository.save(programStudi);
@@ -1055,22 +1074,6 @@ public class AdminController {
                 }
                 data.put("repairStatus", repairStatusStr);
                 
-                // ✅ Check if has manual payment record
-                boolean hasManualPayment = false;
-                if (form != null) {
-                    java.util.Optional<ManualPayment> manualPaymentOpt = manualPaymentRepository.findByAdmissionFormId(form.getId());
-                    hasManualPayment = manualPaymentOpt.isPresent();
-                }
-                data.put("hasManualPayment", hasManualPayment);
-                
-                // ✅ Check if has manual cicilan payment record
-                boolean hasManualCicilan = false;
-                if (student != null) {
-                    java.util.List<ManualCicilanPayment> manualCicilanList = manualCicilanPaymentRepository.findByStudent_Id(student.getId());
-                    hasManualCicilan = !manualCicilanList.isEmpty();
-                }
-                data.put("hasManualCicilan", hasManualCicilan);
-                
                 data.put("revisionReason", fv.getRejectionReason() != null ? fv.getRejectionReason() : "");
                 data.put("rejectionReason", fv.getRejectionReason() != null ? fv.getRejectionReason() : "");
                 
@@ -1478,6 +1481,11 @@ public class AdminController {
             if (request.getNomorRegistrasi() != null && !request.getNomorRegistrasi().isEmpty()) {
                 hasilAkhir.setNomorRegistrasi(request.getNomorRegistrasi());
                 log.info("✅ [HASIL-AKHIR] Updated nomor registrasi: {}", request.getNomorRegistrasi());
+            } else if (hasilAkhir.getNomorRegistrasi() == null || hasilAkhir.getNomorRegistrasi().isEmpty()) {
+                // Auto-generate registration number to satisfy NOT NULL constraint
+                String autoReg = "REG-" + java.time.LocalDate.now().toString().replace("-", "") + "-" + String.format("%06d", formValidationId);
+                hasilAkhir.setNomorRegistrasi(autoReg);
+                log.info("✅ [HASIL-AKHIR] Auto-generated nomor registrasi: {}", autoReg);
             }
 
             // ✅ DIRECT BRIVA SAVE: No complex logic, just save what frontend sends
@@ -2173,6 +2181,109 @@ public class AdminController {
             log.info("✏️ Revision-needed email sent to: {} (Revisi ke-{})", studentEmail, revisionNumber);
         } catch (Exception e) {
             log.error("❌ Error sending revision-needed email to {}: {}", studentEmail, e.getMessage());
+        }
+    }
+
+    // ========== EXAM VALIDATION EMAIL NOTIFICATIONS ==========
+
+    /**
+     * Send email when exam is APPROVED
+     */
+    private void sendExamApprovalEmail(String studentEmail, String studentName) {
+        try {
+            String subject = "✅ Ujian Anda Telah Diterima - PMB HKBP Nommensen";
+            String htmlContent = String.format("""
+                <html>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
+                            <div style="text-align: center; padding: 20px; background-color: #28a745; border-radius: 8px 8px 0 0; color: white;">
+                                <h1 style="margin: 0; font-size: 28px;">✅ UJIAN DITERIMA</h1>
+                                <p style="margin: 10px 0 0 0; font-size: 16px;">Selamat! Hasil Ujian Anda Telah Divalidasi</p>
+                            </div>
+                            
+                            <div style="padding: 30px; background-color: white;">
+                                <p>Dear <strong>%s</strong>,</p>
+                                
+                                <p>Kami dengan senang hati memberitahukan bahwa hasil ujian Anda telah <strong>DITERIMA ✅</strong> oleh tim verifikasi kami.</p>
+                                
+                                <div style="background-color: #e8f5e9; border-left: 4px solid #28a745; padding: 15px; margin: 20px 0; border-radius: 4px;">
+                                    <h3 style="margin-top: 0; color: #28a745;">🎉 Status Ujian: DITERIMA</h3>
+                                    <p style="margin: 0; color: #1b5e20;">Token dan bukti ujian Anda telah diverifikasi dan dinyatakan valid.</p>
+                                </div>
+                                
+                                <h3 style="color: #1976d2;">📋 Langkah Selanjutnya:</h3>
+                                <ol style="color: #555;">
+                                    <li><strong>Login ke Dashboard PMB</strong> - Cek status terbaru di dashboard Anda</li>
+                                    <li><strong>Lakukan Pembayaran Cicilan 1</strong> - Bayar cicilan pertama untuk melanjutkan ke tahap daftar ulang</li>
+                                    <li><strong>Lengkapi Daftar Ulang</strong> - Setelah pembayaran, isi formulir daftar ulang</li>
+                                </ol>
+                                
+                                <div style="background-color: #fff3cd; border-left: 4px solid #ff9800; padding: 15px; margin: 20px 0; border-radius: 4px;">
+                                    <p style="margin: 0; color: #e65100;"><strong>⚠️ PENTING:</strong> Segera lakukan pembayaran cicilan 1 agar proses pendaftaran Anda tidak terhambat.</p>
+                                </div>
+                                
+                                <p style="color: #666; margin-top: 30px;">Terima kasih dan selamat! Kami menantikan Anda sebagai bagian dari mahasiswa HKBP Nommensen.</p>
+                                
+                                <p style="margin-top: 30px; color: #999; font-size: 12px;">---<br/>Tim PMB<br/>HKBP Nommensen<br/>Universitas HKBP Nommensen</p>
+                            </div>
+                        </div>
+                    </body>
+                </html>
+                """, studentName);
+
+            emailService.sendHtmlEmail(studentEmail, subject, htmlContent);
+            log.info("✅ Exam approval email sent to: {}", studentEmail);
+        } catch (Exception e) {
+            log.error("❌ Error sending exam approval email to {}: {}", studentEmail, e.getMessage());
+        }
+    }
+
+    /**
+     * Send email when exam is REJECTED
+     */
+    private void sendExamRejectionEmail(String studentEmail, String studentName, String rejectionReason) {
+        try {
+            String subject = "❌ Ujian Anda Ditolak - PMB HKBP Nommensen";
+            String htmlContent = String.format("""
+                <html>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
+                            <div style="text-align: center; padding: 20px; background-color: #dc3545; border-radius: 8px 8px 0 0; color: white;">
+                                <h1 style="margin: 0; font-size: 28px;">❌ UJIAN DITOLAK</h1>
+                                <p style="margin: 10px 0 0 0; font-size: 14px;">Hasil Ujian Tidak Dapat Diterima</p>
+                            </div>
+                            
+                            <div style="padding: 30px; background-color: white;">
+                                <p>Dear <strong>%s</strong>,</p>
+                                
+                                <p>Setelah melakukan review terhadap hasil ujian Anda, kami memberitahukan bahwa <strong>hasil ujian Anda TIDAK DAPAT DITERIMA</strong>.</p>
+                                
+                                <div style="background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 15px; margin: 20px 0; border-radius: 4px;">
+                                    <h3 style="margin-top: 0; color: #721c24;">📝 Alasan Penolakan:</h3>
+                                    <p style="margin: 0; color: #721c24;">%s</p>
+                                </div>
+                                
+                                <div style="background-color: #e3f2fd; border-left: 4px solid #1976d2; padding: 15px; margin: 20px 0; border-radius: 4px;">
+                                    <h4 style="margin-top: 0; color: #0d47a1;">💡 Apa yang bisa dilakukan?</h4>
+                                    <ul style="margin: 10px 0; padding-left: 20px; color: #1565c0;">
+                                        <li>Hubungi tim PMB untuk informasi lebih lanjut</li>
+                                        <li>Periksa kembali dashboard Anda untuk detail lengkap</li>
+                                    </ul>
+                                </div>
+                                
+                                <p style="color: #666; margin-top: 30px;">Jika Anda merasa ada kesalahan atau memiliki pertanyaan, silakan hubungi tim PMB kami.</p>
+                                
+                                <p style="margin-top: 30px; color: #999; font-size: 12px;">---<br/>Tim PMB<br/>HKBP Nommensen<br/>Universitas HKBP Nommensen</p>
+                            </div>
+                        </div>
+                    </body>
+                </html>
+                """, studentName, rejectionReason.isEmpty() ? "Tidak memenuhi kriteria validasi" : rejectionReason);
+
+            emailService.sendHtmlEmail(studentEmail, subject, htmlContent);
+            log.info("❌ Exam rejection email sent to: {}", studentEmail);
+        } catch (Exception e) {
+            log.error("❌ Error sending exam rejection email to {}: {}", studentEmail, e.getMessage());
         }
     }
 
@@ -3781,6 +3892,11 @@ public class AdminController {
         private Integer sortOrder;    // Display order
         private Long hargaTotalPerTahun;  // Total program fee per year (for installments)
         private Long cicilan1;             // First installment amount
+        private Long cicilan2;
+        private Long cicilan3;
+        private Long cicilan4;
+        private Long cicilan5;
+        private Long cicilan6;
     }
 
     // ========== PAYMENT & EXAM VERIFICATION ==========
@@ -4011,17 +4127,13 @@ public class AdminController {
             List<ExamResult> results;
             
             if ("PENDING".equals(status)) {
-                results = examResultRepository.findAll().stream()
-                        .filter(r -> r.getExamValidationStatus() == ExamResult.ExamValidationStatus.PENDING)
-                        .collect(Collectors.toList());
+                results = examResultRepository.findByExamValidationStatus(ExamResult.ExamValidationStatus.PENDING);
             } else if ("APPROVED".equals(status)) {
-                results = examResultRepository.findAll().stream()
-                        .filter(r -> r.getExamValidationStatus() == ExamResult.ExamValidationStatus.APPROVED)
-                        .collect(Collectors.toList());
+                results = examResultRepository.findByExamValidationStatus(ExamResult.ExamValidationStatus.APPROVED);
             } else if ("REJECTED".equals(status)) {
-                results = examResultRepository.findAll().stream()
-                        .filter(r -> r.getExamValidationStatus() == ExamResult.ExamValidationStatus.REJECTED)
-                        .collect(Collectors.toList());
+                results = examResultRepository.findByExamValidationStatus(ExamResult.ExamValidationStatus.REJECTED);
+            } else if ("REVISI".equals(status)) {
+                results = examResultRepository.findByExamValidationStatus(ExamResult.ExamValidationStatus.REVISI);
             } else {
                 results = examResultRepository.findAll();
             }
@@ -4036,9 +4148,13 @@ public class AdminController {
                     map.put("studentEmail", result.getExam().getStudent().getUser().getEmail());
                     map.put("gformScore", result.getGformScore());
                     map.put("tokenValidated", result.getTokenValidated());
+                    map.put("generatedToken", result.getGeneratedToken());
+                    map.put("studentInputToken", result.getStudentInputToken());
                     map.put("validationStatus", result.getExamValidationStatus().toString());
                     map.put("submissionDate", result.getSubmissionDate());
                     map.put("hasProofPhoto", result.getProofPhotoPath() != null);
+                    map.put("proofPhotoPath", result.getProofPhotoPath());
+                    map.put("adminNotes", result.getAdminNotes());
                     response.add(map);
                 }
             }
@@ -4192,14 +4308,34 @@ public class AdminController {
                         (request.getAdminNotes() != null ? request.getAdminNotes() : 
                          (!result.getTokenValidated() ? "Token tidak cocok" : "Nilai tidak valid")));
                 log.info("❌ [EXAM-REJECTED] Exam result {} rejected by admin {}", id, email);
+            } else if ("REVISI".equals(request.getAction())) {
+                result.setExamValidationStatus(ExamResult.ExamValidationStatus.REVISI);
+                result.setAdminNotes("🔄 Diminta revisi oleh " + admin.getEmail() + " - " + 
+                        (request.getAdminNotes() != null ? request.getAdminNotes() : "Silahkan perbaiki dan upload ulang"));
+                log.info("🔄 [EXAM-REVISI] Exam result {} needs revision per admin {}", id, email);
             } else {
                 return ResponseEntity.badRequest()
-                        .body(new ApiResponse(false, "Action harus APPROVE atau REJECT"));
+                        .body(new ApiResponse(false, "Action harus APPROVE, REJECT, atau REVISI"));
             }
 
             result.setExamValidatedAt(LocalDateTime.now());
             result.setValidatedByAdmin(admin);
             examResultRepository.save(result);
+
+            // ✅ Send email notification to student
+            try {
+                String studentEmail = result.getStudent().getUser().getEmail();
+                String studentName = result.getStudent().getFullName();
+                String adminNotes = request.getAdminNotes() != null ? request.getAdminNotes() : "";
+
+                if ("APPROVE".equals(request.getAction())) {
+                    sendExamApprovalEmail(studentEmail, studentName);
+                } else if ("REJECT".equals(request.getAction())) {
+                    sendExamRejectionEmail(studentEmail, studentName, adminNotes);
+                }
+            } catch (Exception emailEx) {
+                log.error("⚠️ Email notification failed (exam validation still saved): {}", emailEx.getMessage());
+            }
 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
@@ -4494,7 +4630,7 @@ public class AdminController {
     @lombok.AllArgsConstructor
     @lombok.NoArgsConstructor
     public static class ExamValidationRequest {
-        private String action; // APPROVE or REJECT
+        private String action; // APPROVE, REJECT, or REVISI
         private String adminNotes; // optional notes
     }
 
@@ -4642,6 +4778,106 @@ public class AdminController {
         } catch (Exception e) {
             log.error("❌ Error bulk initializing program studi: {}", e.getMessage());
             return ResponseEntity.badRequest()
+                    .body(new ApiResponse(false, "Error: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * ✅ Upload Dokumen Sementara (NPM / KTM) untuk mahasiswa
+     * POST /admin/api/hasil-akhir/{id}/upload-dokumen
+     * Admin validasi upload PDF setelah daftar ulang selesai
+     */
+    @PostMapping("/api/hasil-akhir/{id}/upload-dokumen")
+    @PreAuthorize("hasRole('ADMIN_VALIDASI')")
+    public ResponseEntity<?> uploadDokumenSementara(
+            @PathVariable Long id,
+            @RequestParam(value = "npmSementara", required = false) MultipartFile npmFile,
+            @RequestParam(value = "ktmSementara", required = false) MultipartFile ktmFile) {
+        try {
+            String email = SecurityContextHolder.getContext().getAuthentication().getName();
+            log.info("📄 Admin {} uploading dokumen sementara for HasilAkhir #{}", email, id);
+
+            HasilAkhir hasilAkhir = hasilAkhirRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Hasil Akhir tidak ditemukan"));
+
+            if (npmFile == null && ktmFile == null) {
+                return ResponseEntity.badRequest()
+                        .body(new ApiResponse(false, "Minimal satu file harus diupload (NPM atau KTM Sementara)"));
+            }
+
+            String uploadDir = "uploads/hasil-akhir/" + hasilAkhir.getStudent().getId();
+            Path uploadPath = Paths.get(uploadDir);
+            Files.createDirectories(uploadPath);
+
+            if (npmFile != null && !npmFile.isEmpty()) {
+                String originalName = npmFile.getOriginalFilename();
+                if (originalName == null || !originalName.toLowerCase().endsWith(".pdf")) {
+                    return ResponseEntity.badRequest()
+                            .body(new ApiResponse(false, "File NPM Sementara harus berformat PDF"));
+                }
+                String npmFileName = "npm_sementara_" + System.currentTimeMillis() + ".pdf";
+                Path npmPath = uploadPath.resolve(npmFileName);
+                Files.copy(npmFile.getInputStream(), npmPath, StandardCopyOption.REPLACE_EXISTING);
+                hasilAkhir.setNpmSementaraFile(uploadDir + "/" + npmFileName);
+                log.info("✅ NPM Sementara uploaded: {}", npmPath);
+            }
+
+            if (ktmFile != null && !ktmFile.isEmpty()) {
+                String originalName = ktmFile.getOriginalFilename();
+                if (originalName == null || !originalName.toLowerCase().endsWith(".pdf")) {
+                    return ResponseEntity.badRequest()
+                            .body(new ApiResponse(false, "File KTM Sementara harus berformat PDF"));
+                }
+                String ktmFileName = "ktm_sementara_" + System.currentTimeMillis() + ".pdf";
+                Path ktmPath = uploadPath.resolve(ktmFileName);
+                Files.copy(ktmFile.getInputStream(), ktmPath, StandardCopyOption.REPLACE_EXISTING);
+                hasilAkhir.setKtmSementaraFile(uploadDir + "/" + ktmFileName);
+                log.info("✅ KTM Sementara uploaded: {}", ktmPath);
+            }
+
+            hasilAkhirRepository.save(hasilAkhir);
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", true);
+            result.put("message", "Dokumen sementara berhasil diupload");
+            result.put("npmSementaraFile", hasilAkhir.getNpmSementaraFile());
+            result.put("ktmSementaraFile", hasilAkhir.getKtmSementaraFile());
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+            log.error("❌ Error uploading dokumen sementara: {}", e.getMessage());
+            return ResponseEntity.internalServerError()
+                    .body(new ApiResponse(false, "Error: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * ✅ Get all HasilAkhir with student info for admin dokumen upload
+     * GET /admin/api/hasil-akhir/all
+     */
+    @GetMapping("/api/hasil-akhir/all")
+    @PreAuthorize("hasRole('ADMIN_VALIDASI')")
+    public ResponseEntity<?> getAllHasilAkhir() {
+        try {
+            List<HasilAkhir> allHasilAkhir = hasilAkhirRepository.findAll();
+            List<Map<String, Object>> results = new ArrayList<>();
+
+            for (HasilAkhir ha : allHasilAkhir) {
+                Map<String, Object> item = new HashMap<>();
+                item.put("id", ha.getId());
+                item.put("studentName", ha.getStudent().getFullName());
+                item.put("nomorRegistrasi", ha.getNomorRegistrasi());
+                item.put("programStudi", ha.getProgramStudiName());
+                item.put("status", ha.getStatus().toString());
+                item.put("npmSementaraFile", ha.getNpmSementaraFile());
+                item.put("ktmSementaraFile", ha.getKtmSementaraFile());
+                results.add(item);
+            }
+
+            return ResponseEntity.ok(results);
+        } catch (Exception e) {
+            log.error("❌ Error getting all hasil akhir: {}", e.getMessage());
+            return ResponseEntity.internalServerError()
                     .body(new ApiResponse(false, "Error: " + e.getMessage()));
         }
     }

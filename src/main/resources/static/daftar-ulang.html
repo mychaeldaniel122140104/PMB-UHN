@@ -463,6 +463,25 @@
         .progress-bar {
             background: linear-gradient(90deg, var(--success), var(--primary));
         }
+
+        /* Input validation styles */
+        .form-control.is-invalid {
+            border-color: #dc3545 !important;
+            background-image: none;
+        }
+        .form-control.is-valid {
+            border-color: #28a745 !important;
+            background-image: none;
+        }
+        .invalid-feedback {
+            display: none;
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .form-control.is-invalid ~ .invalid-feedback {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -517,8 +536,10 @@
 
                     <div class="form-group">
                         <label for="parentPhone">Nomor Telepon/WA Orangtua *</label>
-                        <input type="tel" id="parentPhone" name="parentPhone" class="form-control" required 
+                        <input type="tel" id="parentPhone" name="parentPhone" class="form-control" required
+                               inputmode="numeric" pattern="[0-9]{10,15}" maxlength="15"
                                placeholder="Contoh: 082123456789">
+                        <div class="invalid-feedback">Nomor telepon harus 10-15 digit angka</div>
                     </div>
 
                     <div class="form-group">
@@ -595,6 +616,34 @@
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="common-auth.js"></script>
+
+    <!-- Input Validation -->
+    <script>
+    (function() {
+        function enforcePhoneDigits(inputId) {
+            var el = document.getElementById(inputId);
+            if (!el) return;
+            el.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                validatePhone(this);
+            });
+            el.addEventListener('blur', function() { validatePhone(this); });
+        }
+        function validatePhone(el) {
+            var val = el.value.trim();
+            if (!val) { el.classList.remove('is-invalid', 'is-valid'); return; }
+            if (val.length < 10 || val.length > 15) {
+                el.classList.add('is-invalid'); el.classList.remove('is-valid');
+            } else {
+                el.classList.remove('is-invalid'); el.classList.add('is-valid');
+            }
+        }
+        function init() { enforcePhoneDigits('parentPhone'); }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else { init(); }
+    })();
+    </script>
 
     <script>
         // Document types

@@ -72,6 +72,8 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(role)
                 .isActive(true)
+                .emailVerified(false)
+                .emailVerificationToken(UUID.randomUUID().toString())
                 .build();
 
         userRepository.save(user);
@@ -91,8 +93,59 @@ public class AuthService {
             log.info("Student profile created for: {}", request.getEmail());
         }
 
+        // Send verification email
+        sendVerificationEmail(user.getEmail(), user.getEmailVerificationToken());
+
         return AuthResponse.builder()
-                .message("Registrasi berhasil sebagai " + role)
+                .message("Registrasi berhasil! Silakan cek email Anda untuk verifikasi sebelum login.")
+                .success(true)
+                .build();
+    }
+
+    public AuthResponse verifyEmail(String token) {
+        User user = userRepository.findByEmailVerificationToken(token)
+                .orElseThrow(() -> new RuntimeException("Token verifikasi tidak valid"));
+
+        if (Boolean.TRUE.equals(user.getEmailVerified())) {
+            return AuthResponse.builder()
+                    .message("Email sudah diverifikasi sebelumnya. Silakan login.")
+                    .success(true)
+                    .build();
+        }
+
+        user.setEmailVerified(true);
+        user.setEmailVerificationToken(null);
+        userRepository.save(user);
+
+        log.info("✅ Email verified successfully for: {}", user.getEmail());
+
+        return AuthResponse.builder()
+                .message("Email berhasil diverifikasi! Silakan login.")
+                .success(true)
+                .build();
+    }
+
+    public AuthResponse resendVerificationEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Email tidak ditemukan"));
+
+        if (Boolean.TRUE.equals(user.getEmailVerified())) {
+            return AuthResponse.builder()
+                    .message("Email sudah diverifikasi. Silakan login.")
+                    .success(true)
+                    .build();
+        }
+
+        // Generate new token
+        String newToken = UUID.randomUUID().toString();
+        user.setEmailVerificationToken(newToken);
+        userRepository.save(user);
+
+        sendVerificationEmail(user.getEmail(), newToken);
+        log.info("📧 Verification email resent to: {}", email);
+
+        return AuthResponse.builder()
+                .message("Email verifikasi telah dikirim ulang. Silakan cek email Anda.")
                 .success(true)
                 .build();
     }
@@ -121,6 +174,10 @@ public class AuthService {
 
             if (!user.getIsActive()) {
                 throw new RuntimeException("Akun telah dinonaktifkan");
+            }
+
+            if (user.getRole() == User.UserRole.CAMABA && !Boolean.TRUE.equals(user.getEmailVerified())) {
+                throw new RuntimeException("Email belum diverifikasi. Silakan cek email Anda untuk link verifikasi.");
             }
 
             String token = jwtTokenProvider.generateToken(authentication);
@@ -211,6 +268,25 @@ public class AuthService {
             log.error("Token validation error: {}", e.getMessage());
             return false;
         }
+    }
+
+    private void sendVerificationEmail(String email, String token) {
+        String verifyLink = frontendUrl + "/verify-email.html?token=" + token;
+        String subject = "Verifikasi Email - PMB HKBP Nommensen";
+        String text = "Halo,\n\n" +
+                "Terima kasih telah mendaftar di PMB HKBP Nommensen.\n\n" +
+                "Silakan klik link berikut untuk memverifikasi email Anda:\n\n" +
+                verifyLink + "\n\n" +
+                "Jika Anda tidak mendaftar, abaikan email ini.\n\n" +
+                "Terima kasih,\nTim PMB HKBP Nommensen";
+
+        if (resendApiKey != null && !resendApiKey.isEmpty()) {
+            sendViaResend(email, subject, text);
+        } else {
+            sendViaSmtp(email, subject, text);
+        }
+        log.info("📧 Verification email sent to: {}", email);
+        log.info("🔗 Verify Link: {}", verifyLink);
     }
 
     private void sendResetPasswordEmail(String email, String token) {

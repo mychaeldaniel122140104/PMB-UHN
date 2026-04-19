@@ -36,11 +36,26 @@ public class CicilanRequest {
     @Column(name = "harga_cicilan_1", nullable = false)
     private Long hargaCicilan1; // Harga cicilan pertama (dari ProgramStudi)
 
+    @Column(name = "harga_cicilan_2")
+    private Long hargaCicilan2 = 0L;
+
+    @Column(name = "harga_cicilan_3")
+    private Long hargaCicilan3 = 0L;
+
+    @Column(name = "harga_cicilan_4")
+    private Long hargaCicilan4 = 0L;
+
+    @Column(name = "harga_cicilan_5")
+    private Long hargaCicilan5 = 0L;
+
+    @Column(name = "harga_cicilan_6")
+    private Long hargaCicilan6 = 0L;
+
     @Column(name = "harga_total", nullable = false)
     private Long hargaTotal; // Total harga (dari ProgramStudi)
 
     @Column(name = "harga_per_cicilan")
-    private Long hargaPerCicilan; // hargaTotal / jumlahCicilan
+    private Long hargaPerCicilan; // hargaTotal / jumlahCicilan (legacy, kept for compat)
 
     // ===== PAYMENT INFO =====
     @Column(name = "briva", length = 50)

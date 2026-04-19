@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Email - PMB HKBP Nommensen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a472a;
+            --secondary: #e74c3c;
+        }
+        body {
+            background-image: linear-gradient(rgba(178, 245, 162, 0.9), rgba(68, 124, 36, 0.9)), url('/gambar/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .verify-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 50px;
+            text-align: center;
+        }
+        .verify-container h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            color: var(--primary);
+        }
+        .icon-success { font-size: 64px; color: #28a745; }
+        .icon-error { font-size: 64px; color: var(--secondary); }
+        .btn-login {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .btn-login:hover { background: #145522; color: white; }
+    </style>
+</head>
+<body>
+    <div class="verify-container">
+        <div class="text-center mb-3">
+            <img src="/logo/logokampus.png" alt="UHN Logo" style="height: 60px;">
+        </div>
+        <h2>Verifikasi Email</h2>
+
+        <!-- Loading state -->
+        <div id="loadingState">
+            <div class="spinner-border mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Memverifikasi email Anda...</p>
+        </div>
+
+        <!-- Success state -->
+        <div id="successState" style="display: none;">
+            <div class="icon-success mb-3">&#10004;</div>
+            <h4 class="text-success">Email Berhasil Diverifikasi!</h4>
+            <p>Akun Anda sudah aktif. Silakan login untuk melanjutkan pendaftaran.</p>
+            <a href="/login.html" class="btn btn-login">Login Sekarang</a>
+        </div>
+
+        <!-- Error state -->
+        <div id="errorState" style="display: none;">
+            <div class="icon-error mb-3">&#10008;</div>
+            <h4 class="text-danger">Verifikasi Gagal</h4>
+            <p id="errorMessage">Token verifikasi tidak valid atau sudah kadaluarsa.</p>
+            <a href="/register.html" class="btn btn-login">Daftar Ulang</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const token = params.get('token');
+
+            if (!token) {
+                showError('Token verifikasi tidak ditemukan.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth/verify-email?token=' + encodeURIComponent(token));
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    document.getElementById('loadingState').style.display = 'none';
+                    document.getElementById('successState').style.display = 'block';
+                } else {
+                    showError(data.message || 'Token verifikasi tidak valid.');
+                }
+            } catch (error) {
+                showError('Terjadi kesalahan saat memverifikasi email.');
+            }
+        });
+
+        function showError(message) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorState').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

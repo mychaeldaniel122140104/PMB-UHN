@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -48,6 +49,31 @@ public class AuthController {
         } catch (Exception e) {
             log.error("Login error: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ApiResponse(false, e.getMessage()));
+        }
+    }
+
+    @GetMapping("/verify-email")
+    public ResponseEntity<?> verifyEmail(@RequestParam String token) {
+        try {
+            AuthResponse response = authService.verifyEmail(token);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Email verification error: {}", e.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse(false, e.getMessage()));
+        }
+    }
+
+    @PostMapping("/resend-verification")
+    public ResponseEntity<?> resendVerification(@RequestBody Map<String, String> request) {
+        try {
+            String email = request.get("email");
+            AuthResponse response = authService.resendVerificationEmail(email);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Resend verification error: {}", e.getMessage());
+            return ResponseEntity.badRequest()
                     .body(new ApiResponse(false, e.getMessage()));
         }
     }

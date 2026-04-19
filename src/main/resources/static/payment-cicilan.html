@@ -57,10 +57,10 @@
         .payment-container {
             background: white;
             border-radius: 12px;
-            padding: 45px;
+            padding: 40px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             width: 100%;
-            max-width: 1000px;
+            max-width: 700px;
         }
 
         .header-section {
@@ -125,8 +125,8 @@
         }
 
         .cicilan-methods {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            justify-content: center;
             gap: 15px;
             margin-bottom: 30px;
         }
@@ -134,11 +134,13 @@
         .method-card {
             background: #f5f5f5;
             border: 3px solid #ddd;
-            padding: 30px;
+            padding: 35px 45px;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.35s;
             text-align: center;
+            max-width: 420px;
+            width: 100%;
         }
 
         .method-card:hover {
@@ -410,18 +412,18 @@
             background: linear-gradient(135deg, var(--success) 0%, #229954 100%);
             color: white;
             border: none;
-            padding: 18px 40px;
+            padding: 14px 36px;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            width: 100%;
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             letter-spacing: 0.5px;
             box-shadow: 0 4px 15px rgba(39, 174, 96, 0.25);
             position: relative;
             overflow: hidden;
+            display: inline-block;
         }
 
         .pay-button::before {
@@ -461,17 +463,17 @@
             background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
             color: white;
             border: none;
-            padding: 16px 32px;
+            padding: 12px 32px;
             border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-            font-size: 15px;
+            font-size: 14px;
             letter-spacing: 0.5px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
             position: relative;
             overflow: hidden;
+            display: inline-block;
         }
 
         .back-btn::before {
@@ -968,62 +970,46 @@
                             <small class="text-muted d-block mt-2">Pastikan memilih program studi yang sesuai dengan pendaftaran Anda</small>
                         </div>
 
-                        <!-- Cicilan Count Selection -->
-                        <div class="mb-4">
-                            <label class="form-label"><strong><i class="fas fa-chart-bar"></i> Tentukan Jumlah Cicilan (Maksimum 6 Kali)</strong></label>
-                            <div class="row g-3">
-                                <div class="col-md-5">
-                                    <div class="input-group" style="height: 45px;">
-                                        <button class="btn btn-outline-success" type="button" onclick="decrementCicilan()" style="font-weight: 700; font-size: 18px;">−</button>
-                                        <input type="number" class="form-control text-center" id="jumlahCicilan" value="1" min="1" max="6" readonly style="font-weight: 700; font-size: 18px;">
-                                        <button class="btn btn-outline-success" type="button" onclick="incrementCicilan()" style="font-weight: 700; font-size: 18px;">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- HARGA YANG HARUS DIBAYAR - Besar dan Prominent -->
+                        <!-- Cicilan Selection - Checkbox Based -->
                         <div class="mb-5" style="border-top: 3px solid #e5e5e5; padding-top: 30px;">
-                            <h3 style="color: var(--success); font-weight: 700; font-size: 22px; margin-bottom: 25px; text-align: center;">
-                                <i class="fas fa-coins"></i> Harga yang Harus Dibayar
+                            <h3 style="color: var(--success); font-weight: 700; font-size: 22px; margin-bottom: 10px; text-align: center;">
+                                <i class="fas fa-coins"></i> Rincian Cicilan Biaya Pendidikan
                             </h3>
+                            <p style="text-align: center; color: #666; font-size: 14px; margin-bottom: 20px;">
+                                Centang cicilan yang ingin Anda bayar sekarang
+                            </p>
 
                             <!-- Harga Total -->
                             <div class="payment-info-box mb-3">
                                 <div class="info-row" style="font-size: 16px;">
-                                    <span class="info-label">Harga Total Program Studi</span>
+                                    <span class="info-label">Harga Total Program Studi (1 Tahun)</span>
                                     <span class="info-value" id="displayHargaTotal" style="font-size: 18px;">Rp 0</span>
                                 </div>
                             </div>
 
-                            <!-- Cicilan Pertama -->
-                            <div class="payment-info-box mb-3">
-                                <div class="info-row" style="font-size: 16px;">
-                                    <span class="info-label">Cicilan Pertama Program Studi</span>
-                                    <span class="info-value" id="displayCicilan1" style="font-size: 18px;">Rp 0</span>
+                            <!-- Cicilan Checkboxes -->
+                            <div id="cicilanCheckboxContainer" style="margin-top: 15px;">
+                                <!-- Will be populated by JS -->
+                            </div>
+
+                            <!-- Total Selected -->
+                            <div class="payment-info-box mt-3" style="background: #fff3e0; border-left-color: var(--cicilan);">
+                                <div class="info-row" style="font-size: 16px; margin-bottom: 0;">
+                                    <span class="info-label" style="color: #e65100;">
+                                        <i class="fas fa-calculator"></i> Total yang Harus Dibayar
+                                        <span id="displaySelectedCount" style="font-size: 13px; color: #888; font-weight: 500;"> (0 cicilan dipilih)</span>
+                                    </span>
+                                    <span class="info-value" id="displaySelectedTotal" style="font-size: 20px; color: var(--cicilan);">Rp 0</span>
                                 </div>
                             </div>
 
-                            <!-- Keterangan Cicilan Selanjutnya -->
-                            <div class="payment-info-box mb-0">
-                                <div style="font-size: 15px; color: #333; line-height: 1.8;">
-                                    <div style="margin-bottom: 15px; font-weight: 700; color: var(--success); font-size: 16px;"><i class="fas fa-clipboard-list"></i> Keterangan Cicilan Selanjutnya</div>
-                                    
-                                    <div style="margin-bottom: 10px;">
-                                        <strong>Jumlah cicilan:</strong> <span id="displayJumlahCicilan">1</span>
-                                    </div>
-                                    
-                                    <div style="margin-bottom: 10px;">
-                                        <strong>Cicilan berikutnya:</strong>
-                                        <div style="margin-top: 5px; padding: 10px; background: #f5f5f5; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 13px;">
-                                            cicilan lainnya = (Rp <span id="formulaTotal">0</span> - Rp <span id="formulaCicilan1">0</span>) ÷ <span id="formulaSisaCicilan">0</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;">
-                                        <strong>Setiap cicilan lainnya bayar:</strong> 
-                                        <span id="displayHargaPerCicilan" style="font-size: 18px; color: var(--success); font-weight: 700; display: block; margin-top: 5px;">Rp 0</span>
-                                    </div>
+                            <!-- Sisa Cicilan Info -->
+                            <div id="sisaCicilanInfo" class="payment-info-box mt-2" style="background: #f5f5f5; border-left-color: #999; display: none;">
+                                <div class="info-row" style="font-size: 14px; margin-bottom: 0;">
+                                    <span class="info-label" style="color: #666;">
+                                        <i class="fas fa-hourglass-half"></i> Sisa Cicilan Belum Dibayar
+                                    </span>
+                                    <span class="info-value" id="displaySisaTotal" style="font-size: 16px; color: #999;">Rp 0</span>
                                 </div>
                             </div>
                         </div>
@@ -1032,23 +1018,18 @@
                         <div class="mb-4">
                             <label class="form-label"><strong><i class="fas fa-tools"></i> Pilih Metode Pembayaran yang Anda Inginkan</strong></label>
                             <div class="cicilan-methods">
-                                <div class="method-card" onclick="selectPaymentMethod('SIMULATION')">
+                                <div class="method-card selected" onclick="selectPaymentMethod('SIMULATION')">
                                     <i class="fas fa-university"></i>
                                     <h5>Virtual Account</h5>
                                     <p style="margin-bottom: 8px;">Pembayaran otomatis melalui Virtual Account</p>
                                     <span class="badge-simulation">✓ SIMULASI</span>
                                 </div>
-                                <div class="method-card" onclick="selectPaymentMethod('MANUAL')">
-                                    <i class="fas fa-file-upload"></i>
-                                    <h5>Transfer Manual</h5>
-                                    <p style="margin-bottom: 8px;">Upload bukti pembayaran transfer bank</p>
-                                </div>
                             </div>
-                            <input type="hidden" id="selectedPaymentMethod" value="">
+                            <input type="hidden" id="selectedPaymentMethod" value="SIMULATION">
                         </div>
 
                         <!-- Submit Cicilan Request -->
-                        <div class="d-grid gap-2">
+                        <div class="text-center mt-4">
                             <button class="pay-button" onclick="submitCicilanRequest()">
                                 <i class="fas fa-check-circle" style="margin-right: 8px;"></i> Konfirmasi & Lanjutkan ke Pembayaran
                             </button>
@@ -1196,64 +1177,21 @@
                     </div>
 
                     <!-- Simulate Payment Button -->
-                    <button class="pay-button" onclick="simulateVAPayment()">
-                        <i class="fas fa-check"></i> Simulasi Pembayaran (Klik untuk Demo)
-                    </button>
-                </div>
-
-                <!-- MANUAL: Upload Payment Proof -->
-                <div id="manualPaymentSection" class="section">
-                    <div class="alert alert-info mb-4">
-                        <i class="fas fa-info-circle"></i> <strong>Transfer Manual</strong> - Lakukan transfer ke rekening universitas, lalu upload bukti pembayaran untuk verifikasi admin.
-                    </div>
-
-                    <!-- Bank Account Info -->
-                    <div class="payment-info-box">
-                        <h5 style="margin-bottom: 15px; margin-top: 0; color: var(--cicilan);"><i class="fas fa-building"></i> Rekening Tujuan</h5>
-                        <div class="info-row">
-                            <span class="info-label">Bank</span>
-                            <span class="info-value">BRI (Bank Rakyat Indonesia)</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Nomor Rekening</span>
-                            <span class="info-value" id="bankAccountNumber" style="font-family: 'Courier New', monospace;">000 1 234567 8 (untuk cicilan 1)</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Atas Nama</span>
-                            <span class="info-value">Yayasan HKBP Nommensen</span>
-                        </div>
-                        <button class="copy-btn mt-3" onclick="copyBankAccount()">
-                            <i class="fas fa-copy"></i> Salin Nomor Rekening
+                    <div class="text-center">
+                        <button class="pay-button" onclick="simulateVAPayment()">
+                            <i class="fas fa-check"></i> Simulasi Pembayaran (Klik untuk Demo)
                         </button>
                     </div>
-
-                    <!-- Payment Proof Upload -->
-                    <div class="upload-section">
-                        <h3><i class="fas fa-image"></i> Upload Bukti Transfer</h3>
-                        <p>Upload screenshot atau foto bukti transfer bank Anda (PNG, JPG, max 5MB)</p>
-                        <input class="file-upload-input" type="file" id="paymentProofFile" accept="image/*" onchange="previewPaymentProof()">
-                        <button class="upload-btn" onclick="document.getElementById('paymentProofFile').click()">
-                            <i class="fas fa-cloud-upload-alt"></i> Pilih File Bukti Pembayaran
-                        </button>
-                        
-                        <!-- Preview Section -->
-                        <div class="preview-section" id="previewSection">
-                            <p style="margin-bottom: 10px; color: #666;"><strong>Pratinjau Bukti:</strong></p>
-                            <img id="previewImage" class="preview-img" alt="Preview">
-                        </div>
-                    </div>
-
-                    <!-- Submit Manual Payment -->
-                    <button class="pay-button" onclick="submitManualPayment()">
-                        <i class="fas fa-upload"></i> Kirim Bukti Pembayaran
-                    </button>
                 </div>
+
             </div>
 
             <!-- Back Button -->
-            <button class="back-btn mt-3" onclick="window.location.href='/dashboard-camaba.html'">
-                <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
-            </button>
+            <div class="text-center mt-3">
+                <button class="back-btn" onclick="window.location.href='/dashboard-camaba.html'">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1467,11 +1405,9 @@
                     try {
                         let prodi = null;
                         
-                        // First try: Direct endpoint
-                        console.log(`       Trying endpoint: /api/program-studi/${prodiId}`);
-                        let prodiResponse = await fetch('/api/program-studi/' + prodiId, {
-                            headers: { 'Authorization': 'Bearer ' + authToken }
-                        });
+                        // First try: Public endpoint (has all cicilan fields)
+                        console.log(`       Trying endpoint: /api/public/program-studi/${prodiId}`);
+                        let prodiResponse = await fetch('/api/public/program-studi/' + prodiId);
 
                         console.log(`       Status: ${prodiResponse.status}`);
 
@@ -1560,10 +1496,9 @@
             if (!prodi) {
                 console.warn(`   ⚠️ No program data found for ID: ${prodiId}`);
                 document.getElementById('displayHargaTotal').textContent = 'Rp 0';
-                document.getElementById('displayCicilan1').textContent = 'Rp 0';
-                document.getElementById('displayCicilan1Info').textContent = 'Rp 0';
-                document.getElementById('displayHargaPerCicilan').textContent = 'Rp 0';
-                document.getElementById('displayJumlahCicilan').textContent = '1';
+                document.getElementById('cicilanCheckboxContainer').innerHTML = '';
+                document.getElementById('displaySelectedTotal').textContent = 'Rp 0';
+                document.getElementById('displaySelectedCount').textContent = ' (0 cicilan dipilih)';
                 return;
             }
 
@@ -1588,108 +1523,103 @@
                 hargaTotalFieldName = 'HARGA_TOTAL_PER_TAHUN';
             }
 
-            // Try multiple field name patterns for cicilan1
-            let hargaCicilan1 = 0;
-            let cicilanFieldName = '';
-            
-            if (prodi.cicilan1) {
-                hargaCicilan1 = prodi.cicilan1;
-                cicilanFieldName = 'cicilan1';
-            } else if (prodi.cicilan_1) {
-                hargaCicilan1 = prodi.cicilan_1;
-                cicilanFieldName = 'cicilan_1';
-            } else if (prodi.CICILAN_1) {
-                hargaCicilan1 = prodi.CICILAN_1;
-                cicilanFieldName = 'CICILAN_1';
-            }
-
             console.log(`   ✅ Harga Total: ${hargaTotal} (from field: "${hargaTotalFieldName}")`);
-            console.log(`   ✅ Cicilan 1: ${hargaCicilan1} (from field: "${cicilanFieldName}")`);
-            console.log(`   📊 Type check - hargaTotal: ${typeof hargaTotal}, cicilan1: ${typeof hargaCicilan1}`);
             
             document.getElementById('displayHargaTotal').textContent = 'Rp ' + formatCurrency(hargaTotal);
-            document.getElementById('displayCicilan1').textContent = 'Rp ' + formatCurrency(hargaCicilan1);
-            document.getElementById('displayCicilan1Info').textContent = 'Rp ' + formatCurrency(hargaCicilan1);
             
-            // Initialize formula display
-            document.getElementById('formulaTotal').textContent = formatCurrency(hargaTotal);
-            document.getElementById('formulaCicilan1').textContent = formatCurrency(hargaCicilan1);
-            
-            updatePerCicilanPrice();
+            renderCicilanCheckboxes(prodi);
         }
 
-        function incrementCicilan() {
-            const input = document.getElementById('jumlahCicilan');
-            if (parseInt(input.value) < 6) {
-                input.value = parseInt(input.value) + 1;
-                updatePerCicilanPrice();
+        function renderCicilanCheckboxes(prodi) {
+            const prices = getCicilanPrices(prodi);
+            const container = document.getElementById('cicilanCheckboxContainer');
+            
+            let html = '';
+            for (let i = 0; i < 6; i++) {
+                const amount = prices[i] || 0;
+                const num = i + 1;
+                const hasValue = amount > 0;
+                html += `
+                    <div class="cicilan-item" style="cursor: ${hasValue ? 'pointer' : 'default'}; opacity: ${hasValue ? '1' : '0.5'};" onclick="${hasValue ? 'toggleCicilanCheckbox(' + num + ')' : ''}">
+                        <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                            <input type="checkbox" id="cicilanCheck${num}" class="cicilan-checkbox" 
+                                value="${num}" ${!hasValue ? 'disabled' : ''}
+                                onchange="updateSelectedTotal()" 
+                                style="width: 20px; height: 20px; accent-color: var(--success); cursor: ${hasValue ? 'pointer' : 'default'};">
+                            <label for="cicilanCheck${num}" style="margin: 0; cursor: ${hasValue ? 'pointer' : 'default'};">Cicilan ${num}</label>
+                        </div>
+                        <span class="amount">${hasValue ? 'Rp ' + formatCurrency(amount) : '-'}</span>
+                    </div>`;
+            }
+            container.innerHTML = html;
+            
+            updateSelectedTotal();
+        }
+
+        function toggleCicilanCheckbox(num) {
+            const checkbox = document.getElementById('cicilanCheck' + num);
+            if (checkbox && !checkbox.disabled) {
+                checkbox.checked = !checkbox.checked;
+                updateSelectedTotal();
             }
         }
 
-        function decrementCicilan() {
-            const input = document.getElementById('jumlahCicilan');
-            if (parseInt(input.value) > 1) {
-                input.value = parseInt(input.value) - 1;
-                updatePerCicilanPrice();
+        function getSelectedCicilans() {
+            const selected = [];
+            for (let i = 1; i <= 6; i++) {
+                const cb = document.getElementById('cicilanCheck' + i);
+                if (cb && cb.checked) {
+                    selected.push(i);
+                }
             }
+            return selected;
         }
 
-        function updatePerCicilanPrice() {
+        function updateSelectedTotal() {
             const select = document.getElementById('programStudiSelect');
             const prodiId = select.value;
             const prodi = programStudiData[prodiId];
-            const jumlahCicilan = parseInt(document.getElementById('jumlahCicilan').value);
-
-            console.log(`\n💰 updatePerCicilanPrice: ID=${prodiId}, Cicilan=${jumlahCicilan}`);
-
-            if (!prodi || jumlahCicilan < 1) {
-                console.warn(`   ⚠️ Missing data: prodi=${!!prodi}, jumlahCicilan=${jumlahCicilan}`);
-                document.getElementById('displayHargaPerCicilan').textContent = 'Rp 0';
-                document.getElementById('displayJumlahCicilan').textContent = '1';
-                return;
+            
+            if (!prodi) return;
+            
+            const prices = getCicilanPrices(prodi);
+            const selected = getSelectedCicilans();
+            
+            let selectedTotal = 0;
+            let allTotal = 0;
+            for (let i = 0; i < 6; i++) {
+                allTotal += (prices[i] || 0);
+                if (selected.includes(i + 1)) {
+                    selectedTotal += (prices[i] || 0);
+                }
             }
-
-            // Update jumlah cicilan display
-            document.getElementById('displayJumlahCicilan').textContent = jumlahCicilan;
-
-            // Try multiple field name patterns for hargaTotal
-            let hargaTotal = prodi.hargaTotalPerTahun || 
-                            prodi.harga_total_per_tahun || 
-                            prodi.hargaTotal || 
-                            prodi.harga ||
-                            prodi.HARGA_TOTAL_PER_TAHUN ||
-                            0;
-
-            // Try multiple field name patterns for cicilan1
-            let hargaCicilan1 = prodi.cicilan1 || 
-                               prodi.cicilan_1 || 
-                               prodi.CICILAN_1 || 
-                               0;
-
-            // Update formula display
-            document.getElementById('formulaTotal').textContent = formatCurrency(hargaTotal);
-            document.getElementById('formulaCicilan1').textContent = formatCurrency(hargaCicilan1);
-
-            // <i class="fas fa-check-circle text-success"></i> NEW LOGIC: Cicilan pertama fixed, sisa cicilan dibagi rata
-            if (jumlahCicilan === 1) {
-                // Jika hanya 1 cicilan, semuanya dibayar di cicilan pertama
-                document.getElementById('formulaSisaCicilan').textContent = '1';
-                document.getElementById('displayHargaPerCicilan').textContent = 'Rp ' + formatCurrency(hargaTotal);
-                console.log(`   Single cicilan: Rp ${hargaTotal}`);
+            
+            const sisaTotal = allTotal - selectedTotal;
+            
+            document.getElementById('displaySelectedTotal').textContent = 'Rp ' + formatCurrency(selectedTotal);
+            document.getElementById('displaySelectedCount').textContent = ` (${selected.length} cicilan dipilih)`;
+            
+            const sisaInfo = document.getElementById('sisaCicilanInfo');
+            if (selected.length > 0 && selected.length < 6) {
+                sisaInfo.style.display = 'block';
+                document.getElementById('displaySisaTotal').textContent = 'Rp ' + formatCurrency(sisaTotal);
             } else {
-                // Harga cicilan pertama = fixed dari DB
-                const hargaSisa = hargaTotal - hargaCicilan1;
-                const sisaCicilan = jumlahCicilan - 1;
-                const hargaPerCicilanSelanjutnya = Math.ceil(hargaSisa / sisaCicilan);
-                
-                // Update formula parts
-                document.getElementById('formulaSisaCicilan').textContent = sisaCicilan;
-                document.getElementById('displayHargaPerCicilan').textContent = 'Rp ' + formatCurrency(hargaPerCicilanSelanjutnya);
-                
-                console.log(`   Total: ${hargaTotal}, Cicilan1: ${hargaCicilan1}, Sisa: ${hargaSisa}`);
-                console.log(`   ${sisaCicilan} cicilan selanjutnya @ Rp ${hargaPerCicilanSelanjutnya}`);
+                sisaInfo.style.display = 'none';
             }
         }
+
+        function getCicilanPrices(prodi) {
+            return [
+                prodi.cicilan1 || prodi.cicilan_1 || 0,
+                prodi.cicilan2 || prodi.cicilan_2 || 0,
+                prodi.cicilan3 || prodi.cicilan_3 || 0,
+                prodi.cicilan4 || prodi.cicilan_4 || 0,
+                prodi.cicilan5 || prodi.cicilan_5 || 0,
+                prodi.cicilan6 || prodi.cicilan_6 || 0
+            ];
+        }
+
+        // updatePerCicilanPrice is now replaced by updateSelectedTotal (checkbox-based)
 
         function selectPaymentMethod(method) {
             selectedPaymentMethod = method;
@@ -1705,11 +1635,16 @@
         async function submitCicilanRequest() {
             try {
                 const prodiSelect = document.getElementById('programStudiSelect');
-                const jumlahCicilan = parseInt(document.getElementById('jumlahCicilan').value);
+                const selectedCicilans = getSelectedCicilans();
                 const paymentMethod = selectedPaymentMethod;
 
                 if (!prodiSelect.value || prodiSelect.value <= 0) {
  alert(' Pilih program studi yang valid terlebih dahulu');
+                    return;
+                }
+
+                if (selectedCicilans.length === 0) {
+ alert(' Pilih minimal 1 cicilan yang ingin dibayar');
                     return;
                 }
 
@@ -1720,10 +1655,9 @@
 
                 const programStudiId = parseInt(prodiSelect.value);
                 
-                // <i class="fas fa-check-circle text-success"></i> Validate program studi ID
                 console.log('📤 Submitting cicilan with:');
                 console.log('   programStudiId:', programStudiId);
-                console.log('   jumlahCicilan:', jumlahCicilan);
+                console.log('   selectedCicilans:', selectedCicilans);
                 console.log('   paymentMethod:', paymentMethod);
 
                 if (!Number.isInteger(programStudiId) || programStudiId <= 0) {
@@ -1731,10 +1665,10 @@
                     return;
                 }
 
-                // <i class="fas fa-check-circle text-success"></i> Use studentId from authenticated user (no need for admissionFormId)
                 const payload = {
                     programStudiId: programStudiId,
-                    jumlahCicilan: jumlahCicilan,
+                    jumlahCicilan: selectedCicilans.length,
+                    selectedCicilans: selectedCicilans,
                     paymentMethod: paymentMethod
                 };
 
@@ -1747,7 +1681,6 @@
                     body: JSON.stringify(payload)
                 });
 
-                // <i class="fas fa-check-circle text-success"></i> Check for authentication errors
                 if (response.status === 401 || response.status === 403) {
                     console.error(`❌ Authentication failed: ${response.status}`);
                     showAuthenticationPopup();
@@ -1758,15 +1691,12 @@
                     const result = await response.json();
                     console.log('✅ Cicilan request submitted:', result);
                     
-                    // <i class="fas fa-check-circle text-success"></i> Store cicilan data for later use
                     cicilanData = result.data || result;
                     
-                    // <i class="fas fa-check-circle text-success"></i> Hide form, show waiting validation section
                     showSection('waitingApprovalSection');
                     
  alert(' Request cicilan berhasil disubmit!\n\nHalaman akan menampilkan status "Menunggu Validasi Admin".\nSilakan tunggu validasi dari admin, biasanya memakan waktu beberapa jam.');
                     
-                    // Check status if admissionFormId available
                     if (admissionFormId) {
                         checkCicilanStatus();
                     }
@@ -1823,16 +1753,9 @@
                         displayCicilanBreakdown();
                         displayVAPaymentSection();
                         
-                        // Show appropriate payment method section based on paymentMethod
-                        if (status.paymentMethod === 'SIMULATION') {
-                            console.log('💳 [CICILAN-CHECK] Payment method: SIMULATION');
-                            document.getElementById('simulationPaymentSection').classList.add('active');
-                            document.getElementById('manualPaymentSection').classList.remove('active');
-                        } else {
-                            console.log('📤 [CICILAN-CHECK] Payment method: MANUAL');
-                            document.getElementById('manualPaymentSection').classList.add('active');
-                            document.getElementById('simulationPaymentSection').classList.remove('active');
-                        }
+                        // Show appropriate payment method section - always SIMULATION
+                        console.log('💳 [CICILAN-CHECK] Payment method: SIMULATION');
+                        document.getElementById('simulationPaymentSection').classList.add('active');
                     } else if (status.status === 'REJECTED') {
                         console.log('❌ [CICILAN-CHECK] Status REJECTED → Show request form again');
                         showSection('cicilanSelectionSection');
@@ -1856,16 +1779,31 @@
             container.innerHTML = '';
 
             const hargaTotal = cicilanData.hargaTotal || 0;
-            const jumlahCicilan = cicilanData.jumlahCicilan || 1;
-            const hargaCicilan1 = cicilanData.hargaCicilan1 || cicilanData.harga_cicilan_1 || 0;
             const briva = cicilanData.briva || cicilanData.brivaNumber || '';
             
-            console.log('💰 [CICILAN-BREAKDOWN] Loading from backend data:');
-            console.log('   - BRIVA:', briva);
-            console.log('   - hargaTotal:', hargaTotal);
-            console.log('   - hargaCicilan1:', hargaCicilan1);
+            // Build list of selected cicilans (non-zero prices only)
+            const allCicilanPrices = {
+                1: cicilanData.hargaCicilan1 || cicilanData.harga_cicilan_1 || 0,
+                2: cicilanData.hargaCicilan2 || 0,
+                3: cicilanData.hargaCicilan3 || 0,
+                4: cicilanData.hargaCicilan4 || 0,
+                5: cicilanData.hargaCicilan5 || 0,
+                6: cicilanData.hargaCicilan6 || 0
+            };
             
-            // <i class="fas fa-check-circle text-success"></i> Update VA Number in simulasi section
+            const selectedCicilans = [];
+            let totalDipilih = 0;
+            for (let n = 1; n <= 6; n++) {
+                if (allCicilanPrices[n] > 0) {
+                    selectedCicilans.push({ num: n, amount: allCicilanPrices[n] });
+                    totalDipilih += allCicilanPrices[n];
+                }
+            }
+            
+            const selectedNums = selectedCicilans.map(c => c.num);
+            console.log('💰 [CICILAN-BREAKDOWN] Selected cicilans:', selectedNums, 'Total:', totalDipilih);
+            
+            // Update VA Number in simulasi section
             if (briva) {
                 const vaNumberEl = document.getElementById('vaNumber');
                 if (vaNumberEl) {
@@ -1874,33 +1812,34 @@
                 }
             }
             
-            // <i class="fas fa-check-circle text-success"></i> ADD: Payment note - currently only need to pay cicilan 1
+            // Payment note showing selected cicilans and total
             const noteDiv = document.createElement('div');
             noteDiv.style.cssText = 'background: #e8f4f8; border-left: 4px solid #0288d1; padding: 12px 15px; margin-bottom: 15px; border-radius: 4px; font-size: 24px; color: #01579b;';
-            noteDiv.innerHTML = `<strong><i class="fas fa-info-circle"></i> Catatan:</strong> Saat ini cukup membayar <strong>Cicilan ke-1</strong> dengan nominal <strong>Rp ${formatCurrency(hargaCicilan1)}</strong>. Cicilan berikutnya akan Dilaksanakan pada Website Berbeda.`;
+            const cicilanLabel = selectedNums.map(n => 'Cicilan ' + n).join(' + ');
+            noteDiv.innerHTML = `<strong><i class="fas fa-info-circle"></i> Catatan:</strong> Anda memilih <strong>${cicilanLabel}</strong> dengan total <strong>Rp ${formatCurrency(totalDipilih)}</strong>. Cicilan berikutnya akan Dilaksanakan pada Website Berbeda.`;
             container.appendChild(noteDiv);
-            
-            // Calculate remaining after cicilan 1
-            const remaining = hargaTotal - hargaCicilan1;
-            const hargaPerCicilanOthers = Math.ceil(remaining / (jumlahCicilan - 1));
 
-            for (let i = 1; i <= jumlahCicilan; i++) {
-                let amount;
-                if (i === 1) {
-                    amount = hargaCicilan1;
-                } else {
-                    amount = hargaPerCicilanOthers;
-                }
-
+            // Only show the cicilans the student actually selected
+            selectedCicilans.forEach(c => {
                 const item = document.createElement('div');
                 item.className = 'cicilan-item';
                 item.innerHTML = `
-                    <label>Cicilan ${i}</label>
-                    <span class="amount">Rp ${formatCurrency(amount)}</span>
+                    <label>Cicilan ${c.num}</label>
+                    <span class="amount">Rp ${formatCurrency(c.amount)}</span>
                     <span class="payment-status pending">Menunggu</span>
                 `;
                 container.appendChild(item);
-            }
+            });
+            
+            // Total row
+            const totalRow = document.createElement('div');
+            totalRow.className = 'cicilan-item';
+            totalRow.style.cssText = 'background: #f0f7ff; border: 2px solid #0288d1; font-weight: bold;';
+            totalRow.innerHTML = `
+                <label style="font-weight: 700; color: #01579b;">Total yang harus dibayar</label>
+                <span class="amount" style="color: #d63031; font-size: 18px;">Rp ${formatCurrency(totalDipilih)}</span>
+            `;
+            container.appendChild(totalRow);
         }
 
         // ===== SIMULATION PAYMENT =====
@@ -1939,14 +1878,53 @@
                 }
                 
                 // Show simulation payment section
-                if (cicilanData.paymentMethod === 'SIMULATION') {
-                    document.getElementById('simulationPaymentSection').classList.add('active');
-                    document.getElementById('manualPaymentSection').classList.remove('active');
-                    console.log('📺 [VA-SECTION] Switched to SIMULATION method');
-                }
+                document.getElementById('simulationPaymentSection').classList.add('active');
+                console.log('📺 [VA-SECTION] Switched to SIMULATION method');
             } catch (error) {
                 console.error('❌ [VA-SECTION] Error displaying VA section:', error);
                 alert('Error: ' + error.message);
+            }
+        }
+
+        // <i class="fas fa-check-circle text-success"></i> Show success UI after payment simulation
+        function showCicilanPaymentSuccess() {
+            const container = document.querySelector('.payment-container');
+            if (container) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <div style="font-size: 60px; color: var(--success); margin-bottom: 20px;"><i class="fas fa-check-circle"></i></div>
+                        <h2 style="color: var(--success); margin-bottom: 15px;">Pembayaran Berhasil!</h2>
+                        <p style="color: #666; font-size: 16px;">Pembayaran cicilan Anda telah berhasil diproses.</p>
+                        <p style="color: #999; font-size: 14px; margin-top: 10px;">Mengalihkan ke dashboard dalam beberapa detik...</p>
+                        <div style="margin-top: 20px;">
+                            <a href="/dashboard-camaba.html" class="btn btn-success btn-lg"><i class="fas fa-home"></i> Kembali ke Dashboard</a>
+                        </div>
+                    </div>`;
+            }
+        }
+
+        // <i class="fas fa-check-circle text-success"></i> Update cicilan payment status in backend
+        async function updateCicilanPaymentStatusInBackend() {
+            try {
+                if (!cicilanData || !cicilanData.id) {
+                    console.warn('⚠️ No cicilan data to update');
+                    return;
+                }
+                const response = await fetch(`/api/cicilan/${cicilanData.id}/payment-submitted`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + authToken
+                    },
+                    body: JSON.stringify({ paymentMethod: 'SIMULATION' })
+                });
+                if (response.ok) {
+                    console.log('✅ [VA-SIMULASI] Backend status updated successfully');
+                } else {
+                    console.warn('⚠️ [VA-SIMULASI] Backend update failed:', response.status);
+                }
+            } catch (error) {
+                console.error('❌ [VA-SIMULASI] Backend update error:', error);
             }
         }
 
@@ -1975,185 +1953,6 @@
                 console.error('❌ Error in simulateVAPayment:', error);
  alert(' Error: ' + error.message);
             }
-        }
-
-        // ===== MANUAL PAYMENT =====
-        function copyBankAccount() {
-            const bankAccount = document.getElementById('bankAccountNumber').textContent.split(' (')[0];
-            navigator.clipboard.writeText(bankAccount).then(() => {
-                alert('Nomor rekening berhasil disalin: ' + bankAccount);
-            }).catch(() => {
-                alert('Gagal menyalin nomor rekening');
-            });
-        }
-
-        function previewPaymentProof() {
-            const file = document.getElementById('paymentProofFile').files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('previewImage').src = e.target.result;
-                    document.getElementById('previewSection').style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        async function submitManualPayment() {
-            try {
-                const fileInput = document.getElementById('paymentProofFile');
-                const file = fileInput.files[0];
-
-                if (!file) {
-                    alert('Pilih file bukti pembayaran terlebih dahulu');
-                    return;
-                }
-
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('File terlalu besar (max 5MB)');
-                    return;
-                }
-
-                console.log('📤 [CICILAN-MANUAL] Submitting manual payment proof...');
-                const fileInput2 = document.getElementById('paymentProofFile');
-                fileInput2.disabled = true;
-
-                const formData = new FormData();
-                formData.append('cicilanRequestId', cicilanData.id);
-                formData.append('cicilanKe', 1); // Always upload for cicilan 1 first
-                formData.append('nominal', cicilanData.hargaCicilan1);
-                formData.append('paymentProof', file);
-
-                console.log('📋 [CICILAN-MANUAL] Payload:');
-                console.log('   - cicilanRequestId:', cicilanData.id);
-                console.log('   - cicilanKe: 1');
-                console.log('   - nominal:', cicilanData.hargaCicilan1);
-                console.log('   - file:', file.name);
-
-                const response = await fetch('/api/manual-cicilan/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + authToken
-                    },
-                    body: formData
-                });
-
-                console.log('📊 [CICILAN-MANUAL] Response status:', response.status);
-
-                // <i class="fas fa-check-circle text-success"></i> Check for authentication errors
-                if (response.status === 401 || response.status === 403) {
-                    console.error(`❌ [CICILAN-MANUAL] Authentication failed: ${response.status}`);
-                    showAuthenticationPopup();
-                    fileInput2.disabled = false;
-                    return;
-                }
-
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log('✅ [CICILAN-MANUAL] Manual payment submitted successfully:', result);
-                    
-                    // <i class="fas fa-check-circle text-success"></i> MATCH PAYMENT-BRIVA PATTERN: 
-                    // Show success message first
-                    showCicilanPaymentSuccess();
-                    
-                    // Then update cicilan status in backend (like verify-payment in BRIVA)
-                    console.log('🔄 [CICILAN-MANUAL] Updating cicilan status in backend...');
-                    await updateCicilanPaymentStatusInBackend();
-                    
-                    // Finally redirect to dashboard
-                    console.log('⏳ [CICILAN-MANUAL] Redirecting to dashboard in 3 seconds...');
-                    setTimeout(() => {
-                        console.log('🚀 [CICILAN-MANUAL] Redirecting to /dashboard-camaba.html');
-                        window.location.href = '/dashboard-camaba.html';
-                    }, 3000);
-                } else {
-                    const error = await response.json();
-                    console.error('❌ [CICILAN-MANUAL] Submission failed:', error);
-                    alert('Gagal submit bukti pembayaran: ' + (error.message || response.statusText));
-                    fileInput2.disabled = false;
-                }
-            } catch (error) {
-                console.error('❌ [CICILAN-MANUAL] Error submitting manual payment:', error);
-                alert('Error: ' + error.message);
-                const fileInput2 = document.getElementById('paymentProofFile');
-                fileInput2.disabled = false;
-            }
-        }
-
-        // <i class="fas fa-check-circle text-success"></i> NEW: Match payment-briva.html pattern - update cicilan status in backend
-        async function updateCicilanPaymentStatusInBackend() {
-            try {
-                if (!cicilanData || !cicilanData.id) {
-                    console.warn('⚠️ [CICILAN-MANUAL] No cicilan data found');
-                    return;
-                }
-                
-                console.log('📤 [CICILAN-MANUAL] Calling update cicilan status API for cicilan ID:', cicilanData.id);
-                
-                // Call endpoint to mark cicilan as payment-submitted/pending-verification
-                // (Same concept as verify-payment in BRIVA)
-                const res = await fetch(`/api/cicilan/${cicilanData.id}/payment-submitted`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        paymentMethod: 'MANUAL'
-                    })
-                });
-                
-                if (res.ok) {
-                    const data = await res.json();
-                    console.log('✅ [CICILAN-MANUAL] Cicilan status updated in backend:', data);
-                } else {
-                    // If endpoint doesn't exist, it's ok - backend might handle it automatically
-                    console.warn('⚠️ [CICILAN-MANUAL] Could not update cicilan status (endpoint may not exist yet):', res.status);
-                }
-            } catch (e) {
-                console.warn('⚠️ [CICILAN-MANUAL] Error updating cicilan status:', e);
-                // Don't throw - continue with redirect even if this fails
-            }
-        }
-
-        // <i class="fas fa-check-circle text-success"></i> NEW: Show success message like payment-briva.html
-        function showCicilanPaymentSuccess() {
-            // Create/show success message
-            const successDiv = document.createElement('div');
-            successDiv.style.cssText = `
-                position: fixed;
-                top: 80px;
-                left: 20px;
-                right: 20px;
-                background: #d4edda;
-                border: 2px solid #28a745;
-                border-radius: 8px;
-                padding: 20px;
-                z-index: 3000;
-                animation: slideIn 0.3s ease-out;
-                max-width: 500px;
-                margin: 0 auto;
-            `;
-            successDiv.innerHTML = `
-                <div style="display: flex; gap: 15px; align-items: center;">
-                    <i class="fas fa-check-circle" style="font-size: 28px; color: #28a745; flex-shrink: 0;"></i>
-                    <div>
-                        <strong style="color: #155724; font-size: 16px;"><i class="fas fa-check-circle text-success"></i> Bukti Pembayaran Berhasil Dikirim!</strong>
-                        <p style="margin-bottom: 5px; font-size: 14px; color: #155724;">Bukti pembayaran Anda sedang menunggu verifikasi admin. Silakan tunggu notifikasi selanjutnya.</p>
-                        <p style="margin: 0; font-size: 12px; color: #0c5460;">Anda akan diarahkan ke dashboard dalam beberapa detik...</p>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(successDiv);
-            console.log('✅ [CICILAN-MANUAL] Success message displayed');
-            
-            // Auto remove after 5 seconds
-            setTimeout(() => {
-                if (successDiv.parentNode) {
-                    successDiv.remove();
-                }
-            }, 5000);
         }
 
         // ===== AUTHENTICATION VALIDATION =====
@@ -2245,7 +2044,17 @@
     <script src="/components/page-header-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setPageHeader('Pembayaran Cicilan', 'Selesaikan pembayaran cicilan untuk melanjutkan daftar ulang');
+            if (typeof setPageHeader === 'function') {
+                setPageHeader('Pembayaran Cicilan', 'Selesaikan pembayaran cicilan untuk melanjutkan daftar ulang');
+            } else {
+                window.addEventListener('load', function() {
+                    setTimeout(function() {
+                        if (typeof setPageHeader === 'function') {
+                            setPageHeader('Pembayaran Cicilan', 'Selesaikan pembayaran cicilan untuk melanjutkan daftar ulang');
+                        }
+                    }, 300);
+                });
+            }
         });
     </script>
 

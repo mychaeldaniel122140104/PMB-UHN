@@ -35,6 +35,12 @@ public class User implements UserDetails {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
+    @Column(name = "email_verified")
+    private Boolean emailVerified = false;
+
+    @Column(name = "email_verification_token")
+    private String emailVerificationToken;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

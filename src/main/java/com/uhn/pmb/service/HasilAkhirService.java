@@ -20,7 +20,6 @@ public class HasilAkhirService {
     private final HasilAkhirRepository hasilAkhirRepository;
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
-    private final ManualCicilanPaymentRepository manualCicilanPaymentRepository;
     private final ReEnrollmentRepository reenrollmentRepository;
     private final AdmissionFormRepository admissionFormRepository;
     private final FormValidationRepository formValidationRepository;
@@ -137,35 +136,11 @@ public class HasilAkhirService {
                 // Don't overwrite existing valid BRIVA
             }
 
-            // Get BRIVA from manual cicilan payment → cicilan request
-            Optional<ManualCicilanPayment> cicilanOpt = manualCicilanPaymentRepository
-                    .findAll()
-                    .stream()
-                    .filter(cp -> cp.getStudent().getId().equals(studentId))
-                    .findFirst();
-
             String brivaNumber = "N/A";
             BigDecimal brivaAmount = BigDecimal.ZERO;
             Integer jumlahCicilan = 1; // Default to 1 installment
 
-            if (cicilanOpt.isPresent()) {
-                ManualCicilanPayment cicilan = cicilanOpt.get();
-                // Get BRIVA from related CicilanRequest
-                if (cicilan.getCicilanRequest() != null) {
-                    brivaNumber = cicilan.getCicilanRequest().getBriva();
-                    // NEW: Get jumlah cicilan from CICILAN_REQUEST
-                    if (cicilan.getCicilanRequest().getJumlahCicilan() != null) {
-                        jumlahCicilan = cicilan.getCicilanRequest().getJumlahCicilan();
-                        log.info("📝 [HASIL-AKHIR-AUTO] Found jumlah cicilan: {}", jumlahCicilan);
-                    }
-                }
-                // Get amount from nominal field
-                if (cicilan.getNominal() != null) {
-                    brivaAmount = new BigDecimal(cicilan.getNominal());
-                }
-            }
-
-            // CRITICAL FIX: If still no BRIVA found but HASIL_AKHIR already has valid one, preserve it
+            // CRITICAL FIX: If HASIL_AKHIR already has valid BRIVA, preserve it
             if (brivaNumber.equals("N/A") && existingHasilAkhir.isPresent() 
                     && existingHasilAkhir.get().getBrivaNumber() != null
                     && !existingHasilAkhir.get().getBrivaNumber().equals("N/A")) {

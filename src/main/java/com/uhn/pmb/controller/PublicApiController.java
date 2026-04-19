@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.uhn.pmb.entity.RegistrationPeriod;
 import com.uhn.pmb.entity.JenisSeleksi;
 import com.uhn.pmb.entity.ProgramStudi;
+import com.uhn.pmb.entity.PublicationSchedule;
 import com.uhn.pmb.repository.*;
 import com.uhn.pmb.dto.ApiResponse;
 import java.util.*;
@@ -24,6 +25,9 @@ public class PublicApiController {
 
     @Autowired
     private ProgramStudiRepository programStudiRepository;
+
+    @Autowired
+    private PublicationScheduleRepository publicationScheduleRepository;
 
     @GetMapping("/gelombang")
     public ResponseEntity<?> getAllGelombang() {
@@ -87,6 +91,71 @@ public class PublicApiController {
             return ResponseEntity.ok(settings);
         } catch (Exception e) {
             return ResponseEntity.ok(new ApiResponse(false, "Error loading settings: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * F013: Check if results are published for a specific period (time-gated)
+     */
+    @GetMapping("/publication-status/{periodId}")
+    public ResponseEntity<?> getPublicationStatus(@PathVariable Long periodId) {
+        try {
+            Optional<PublicationSchedule> schedule = publicationScheduleRepository.findByPeriodId(periodId);
+            Map<String, Object> result = new HashMap<>();
+
+            if (schedule.isPresent()) {
+                PublicationSchedule s = schedule.get();
+                result.put("hasSchedule", true);
+                result.put("publishDateTime", s.getPublishDateTime().toString());
+                result.put("isPublished", s.getIsPublished());
+                result.put("resultsVisible", s.isResultsVisible());
+            } else {
+                result.put("hasSchedule", false);
+                result.put("resultsVisible", false);
+            }
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ApiResponse(false, "Error: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * F031: Get distinct fakultas list
+     */
+    @GetMapping("/fakultas")
+    public ResponseEntity<?> getAllFakultas() {
+        try {
+            List<String> fakultasList = programStudiRepository.findDistinctFakultasActive();
+            return ResponseEntity.ok(fakultasList);
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ApiResponse(false, "Error: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * F031: Get program studi grouped by fakultas
+     */
+    @GetMapping("/program-studi/by-fakultas")
+    public ResponseEntity<?> getProgramStudiByFakultas() {
+        try {
+            List<ProgramStudi> allActive = programStudiRepository.findByIsActiveTrueOrderBySortOrder();
+            Map<String, List<Map<String, Object>>> grouped = new LinkedHashMap<>();
+
+            for (ProgramStudi ps : allActive) {
+                String fak = ps.getFakultas() != null ? ps.getFakultas() : "Lainnya";
+                grouped.computeIfAbsent(fak, k -> new ArrayList<>());
+
+                Map<String, Object> item = new LinkedHashMap<>();
+                item.put("id", ps.getId());
+                item.put("kode", ps.getKode());
+                item.put("nama", ps.getNama());
+                item.put("fakultas", fak);
+                item.put("hargaTotalPerTahun", ps.getHargaTotalPerTahun());
+                grouped.get(fak).add(item);
+            }
+            return ResponseEntity.ok(grouped);
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ApiResponse(false, "Error: " + e.getMessage()));
         }
     }
 }

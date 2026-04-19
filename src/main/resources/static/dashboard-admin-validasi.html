@@ -1018,6 +1018,16 @@
                         </a>
                     </div>
 
+                    <!-- SECTION: VALIDASI UJIAN -->
+                    <div style="border-top: 2px solid #e74c3c; padding-top: 10px; margin-top: 10px;">
+                        <small style="padding: 10px 15px; display: block; font-weight: 700; color: #e74c3c; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px;">
+                            <i class="bi bi-pencil-square"></i> Validasi Ujian
+                        </small>
+                        <a class="nav-link" data-bs-toggle="pill" href="#tab-validasi-ujian" role="tab" onclick="loadAllExamSubmissions()">
+                            <i class="bi bi-clipboard-check"></i> Validasi Hasil Ujian
+                        </a>
+                    </div>
+
                      <div style="border-top: 2px solid #0bf5bb; padding-top: 10px; margin-top: 10px;">
                         <small style="padding: 10px 15px; display: block; font-weight: 700; color: #0bf5bb; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px;">
                             <i class="bi bi-list-check"></i> Lainnya
@@ -1931,8 +1941,8 @@
                                                 <th>Nama Mahasiswa</th>
                                                 <th>Email</th>
                                                 <th>Program Studi</th>
-                                                <th style="text-align: center;">Jumlah Cicilan</th>
-                                                <th style="text-align: right;">Harga Per Cicilan</th>
+                                                <th style="text-align: center;">Cicilan Dipilih</th>
+                                                <th style="text-align: right;">Total Cicilan Dipilih</th>
                                                 <th style="text-align: right;">Harga Total</th>
                                                 <th style="text-align: center; background: #fff3cd;"><i class="fas fa-credit-card"></i> BRIVA</th>
                                                 <th style="text-align: center;">Status</th>
@@ -2000,8 +2010,8 @@
                                                 <th>Nama Mahasiswa</th>
                                                 <th>Email</th>
                                                 <th>Program Studi</th>
-                                                <th style="text-align: center;">Jumlah Cicilan</th>
-                                                <th style="text-align: right;">Harga Per Cicilan</th>
+                                                <th style="text-align: center;">Cicilan Dipilih</th>
+                                                <th style="text-align: right;">Total Cicilan Dipilih</th>
                                                 <th style="text-align: right;">Harga Total</th>
                                                 <th style="text-align: center;"><i class="fas fa-credit-card"></i> BRIVA</th>
                                                 <th style="text-align: center;">Status</th>
@@ -2028,6 +2038,115 @@
                                     <i class="bi bi-inbox"></i>
                                     <h5>Tidak Ada Data</h5>
                                     <p>Belum ada cicilan yang divalidasi (approved/rejected)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab: Validasi Ujian -->
+                    <div class="tab-pane fade" id="tab-validasi-ujian" role="tabpanel">
+                        <div class="section-header">
+                            <div class="section-title"><i class="bi bi-clipboard-check"></i> Validasi Hasil Ujian</div>
+                            <p class="text-muted">Validasi hasil ujian calon mahasiswa (terima / tolak)</p>
+                        </div>
+
+                        <!-- TABEL 1: MENUNGGU VALIDASI (PENDING) -->
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #fff3cd; border-color: #ffc107;">
+                                <span style="color: #856404;"><i class="bi bi-hourglass-split"></i> Ujian Menunggu Validasi (PENDING)</span>
+                                <div>
+                                    <span class="badge bg-warning text-dark me-2" id="examPendingCount">0</span>
+                                    <button class="btn btn-sm btn-warning" onclick="loadPendingExamSubmissions()">
+                                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-sm">
+                                        <thead style="background: rgba(255,193,7,0.15);">
+                                            <tr>
+                                                <th style="width:5%;">No</th>
+                                                <th style="width:18%;">Nama</th>
+                                                <th style="width:18%;">Email</th>
+                                                <th style="width:10%;">Nilai</th>
+                                                <th style="width:10%;">Token</th>
+                                                <th style="width:10%;">Foto</th>
+                                                <th style="width:14%;">Tanggal Submit</th>
+                                                <th style="width:15%;">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="examPendingBody">
+                                            <tr><td colspan="8" class="text-center text-muted py-4"><i class="bi bi-inbox"></i> Tidak ada ujian yang menunggu validasi</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TABEL 2: DITOLAK (REJECTED) -->
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #f8d7da; border-color: #f5c6cb;">
+                                <span style="color: #721c24;"><i class="bi bi-x-circle"></i> Ujian Ditolak (REJECTED)</span>
+                                <div>
+                                    <span class="badge bg-danger me-2" id="examRejectedCount">0</span>
+                                    <button class="btn btn-sm btn-danger" onclick="loadRejectedExamSubmissions()">
+                                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-sm">
+                                        <thead style="background: rgba(220,53,69,0.1);">
+                                            <tr>
+                                                <th style="width:5%;">No</th>
+                                                <th style="width:18%;">Nama</th>
+                                                <th style="width:18%;">Email</th>
+                                                <th style="width:10%;">Nilai</th>
+                                                <th style="width:10%;">Token</th>
+                                                <th style="width:14%;">Tanggal</th>
+                                                <th style="width:25%;">Alasan Tolak</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="examRejectedBody">
+                                            <tr><td colspan="7" class="text-center text-muted py-4"><i class="bi bi-inbox"></i> Tidak ada ujian yang ditolak</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TABEL 3: DITERIMA / HASIL (APPROVED) -->
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #d4edda; border-color: #c3e6cb;">
+                                <span style="color: #155724;"><i class="bi bi-check-circle"></i> Ujian Divalidasi / Diterima (APPROVED)</span>
+                                <div>
+                                    <span class="badge bg-success me-2" id="examApprovedCount">0</span>
+                                    <button class="btn btn-sm btn-success" onclick="loadApprovedExamSubmissions()">
+                                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-sm">
+                                        <thead style="background: rgba(40,167,69,0.1);">
+                                            <tr>
+                                                <th style="width:5%;">No</th>
+                                                <th style="width:18%;">Nama</th>
+                                                <th style="width:18%;">Email</th>
+                                                <th style="width:10%;">Nilai</th>
+                                                <th style="width:10%;">Token</th>
+                                                <th style="width:10%;">Foto</th>
+                                                <th style="width:14%;">Tanggal Validasi</th>
+                                                <th style="width:15%;">Detail</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="examApprovedBody">
+                                            <tr><td colspan="8" class="text-center text-muted py-4"><i class="bi bi-inbox"></i> Belum ada ujian yang divalidasi</td></tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -2706,72 +2825,23 @@
             <div class="modal-content">
                 <div class="modal-header" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; border: none;">
                     <h5 class="modal-title" style="color: white;">
-                        <i class="fas fa-id-card"></i> Nomor BRIVA & Registrasi
+                        <i class="fas fa-file-upload"></i> Upload Dokumen & Setujui
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="padding: 25px;">
-                    <p style="color: #666; margin-bottom: 20px;"><i class="fas fa-edit"></i> Verifikasi nomor BRIVA dan nomor registrasi sebelum menyetujui:</p>
+                    <div id="approvalStudentInfoBox" style="padding: 12px; background: #f0f8f0; border-radius: 8px; margin-bottom: 20px; font-size: 14px; border-left: 4px solid #2ecc71;"></div>
                     
-                    <div class="mb-3">
-                        <label class="form-label" style="font-weight: 600; color: #333;">
-                            <i class="fas fa-barcode"></i> Nomor BRIVA (Dari Cicilan)
-                        </label>
-                        <input type="text" id="brivaNumberInput" class="form-control" placeholder="Masukkan nomor BRIVA atau akan dimuat otomatis..." style="font-size: 14px; padding: 10px; border: 2px solid #2ecc71; background-color: #fffacd;">
-                        <small class="text-muted d-block mt-2"><i class="fas fa-credit-card"></i> Nomor ini diambil dari cicilan pembayaran yang sudah diverifikasi</small>
-                        <div id="brivaWarning" style="background: #ffe5e5; border-left: 4px solid #e74c3c; padding: 10px; border-radius: 4px; margin-top: 8px; display: none;">
-                            <small style="color: #c0392b;"><i class="fas fa-exclamation-triangle text-warning"></i> <strong>BRIVA belum ditemukan!</strong> Pastikan mahasiswa sudah menyelesaikan pembayaran cicilan.</small>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" style="font-weight: 600; color: #333;">
-                            <i class="fas fa-coins"></i> Jumlah Cicilan
-                        </label>
-                        <input type="text" id="jumlahCicilanInput" class="form-control" placeholder="Jumlah cicilan akan dimuat..." style="font-size: 14px; padding: 10px; border: 2px solid #8b5cf6; background-color: #faf5ff;" readonly>
-                        <small class="text-muted d-block mt-2"><i class="fas fa-coins"></i> Jumlah cicilan dari CICILAN_REQUEST</small>
+                    <div style="background: #e8f4f8; border-left: 4px solid #0288d1; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; font-size: 13px; color: #01579b;">
+                        <i class="fas fa-info-circle"></i> Upload <strong>1 file dokumen (PDF)</strong> yang akan dibawa mahasiswa ke kampus untuk Menjadi Mahasiswa Tetap.
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label" style="font-weight: 600; color: #333;">
-                            <i class="fas fa-receipt"></i> Nomor Registrasi (Auto-Generate)
+                            <i class="fas fa-folder-open"></i> Dokumen Daftar Ulang (PDF)
                         </label>
-                        <input type="text" id="registrationNumberInput" class="form-control" placeholder="Nomor registrasi akan dibuat otomatis..." style="font-size: 14px; padding: 10px; border: 2px solid #2ecc71; background-color: #f0f8f0;" >
-                        <small class="text-muted d-block mt-2"><i class="fas fa-check-circle text-success"></i> Nomor ini otomatis generate & unik - tidak perlu diisi mahasiswa</small>
-                    </div>
-
-                    <hr style="margin: 20px 0; border: none; border-top: 2px solid #e0e0e0;">
-                    
-                    <p style="color: #666; margin-bottom: 15px; font-weight: 600;"><i class="fas fa-clipboard-list"></i> Data Gelombang, Seleksi & Program (Read-Only)</p>
-                    
-                    <div class="mb-3">
-                        <label class="form-label" style="font-weight: 600; color: #333;">
-                            <i class="fas fa-wave-square"></i> Tipe Gelombang (Wave Type)
-                        </label>
-                        <input type="text" id="waveTypeInput" class="form-control" placeholder="Tipe gelombang akan dimuat..." style="font-size: 14px; padding: 10px; border: 2px solid #3b82f6; background-color: #f0f8ff;" readonly>
-                        <small class="text-muted d-block mt-2"><i class="fas fa-chart-bar"></i> Diambil dari periode registrasi</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" style="font-weight: 600; color: #333;">
-                            <i class="fas fa-filter"></i> Tipe Seleksi (Jenis Seleksi)
-                        </label>
-                        <input type="text" id="selectionTypeInput" class="form-control" placeholder="Tipe seleksi akan dimuat..." style="font-size: 14px; padding: 10px; border: 2px solid #f59e0b; background-color: #fffbf0;" readonly>
-                        <small class="text-muted d-block mt-2"><i class="fas fa-bullseye"></i> Pilihan seleksi dari formulir pendaftaran</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" style="font-weight: 600; color: #333;">
-                            <i class="fas fa-book"></i> Program Studi
-                        </label>
-                        <input type="text" id="programStudiInput" class="form-control" placeholder="Program studi akan dimuat..." style="font-size: 14px; padding: 10px; border: 2px solid #ef4444; background-color: #fef2f2;" readonly>
-                        <small class="text-muted d-block mt-2"><i class="fas fa-school"></i> Program studi pilihan pertama dari cicilan</small>
-                    </div>
-                    
-                    <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 12px; border-radius: 4px; margin-top: 15px;">
-                        <p style="margin: 0; color: #2e7d32; font-size: 13px;">
-                            <i class="fas fa-check-circle"></i> <strong>Nomor BRIVA, Registrasi, dan data gelombang/seleksi/program akan disimpan di tabel HASIL_AKHIR.</strong>
-                        </p>
+                        <input type="file" id="dokumenDaftarUlangFile" accept=".pdf" class="form-control" style="font-size: 14px; padding: 10px; border: 2px solid #2ecc71;">
+                        <small class="text-muted d-block mt-2"><i class="fas fa-file-pdf"></i> File PDF berisi dokumen yang harus dibawa mahasiswa ke kampus</small>
                     </div>
                 </div>
                 <div class="modal-footer" style="border-top: 2px solid #f0f0f0; padding-top: 15px;">
@@ -2779,7 +2849,43 @@
                         <i class="fas fa-times"></i> Batal
                     </button>
                     <button type="button" class="btn btn-success" id="registrationModalSubmitBtn" onclick="proceedWithApprovalAfterRegistration()">
-                        <i class="fas fa-check-circle"></i> Setujui & Simpan
+                        <i class="fas fa-check-circle"></i> Setujui & Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Upload Dokumen Sementara (NPM & KTM) -->
+    <div class="modal fade" id="uploadDokumenModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, #0288d1 0%, #01579b 100%); color: white; border: none; padding: 18px 24px;">
+                    <h5 class="modal-title" style="font-weight: 700;">
+                        <i class="fas fa-file-upload"></i> Upload Dokumen Sementara
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" style="padding: 25px;">
+                    <div style="background: #e8f4f8; border-left: 4px solid #0288d1; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; font-size: 13px; color: #01579b;">
+                        <i class="fas fa-info-circle"></i> Upload file <strong>NPM Sementara</strong> dan <strong>KTM Sementara</strong> (format PDF) untuk mahasiswa yang baru divalidasi.
+                    </div>
+                    <div id="uploadStudentInfo" style="margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 6px; font-size: 13px;"></div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="font-weight: 600; color: #333; margin-bottom: 5px; display: block;"><i class="fas fa-id-badge"></i> NPM Sementara (PDF)</label>
+                        <input type="file" id="npmSementaraFile" accept=".pdf" class="form-control" style="font-size: 14px;">
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label style="font-weight: 600; color: #333; margin-bottom: 5px; display: block;"><i class="fas fa-address-card"></i> KTM Sementara (PDF)</label>
+                        <input type="file" id="ktmSementaraFile" accept=".pdf" class="form-control" style="font-size: 14px;">
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid #eee; padding: 15px 24px;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-clock"></i> Nanti Saja
+                    </button>
+                    <button type="button" class="btn btn-primary" id="uploadDokumenSubmitBtn" onclick="submitUploadDokumen()">
+                        <i class="fas fa-upload"></i> Upload Dokumen
                     </button>
                 </div>
             </div>
@@ -3440,9 +3546,11 @@
             if (typeof updateUnreadCount === 'function') updateUnreadCount();
             if (typeof loadValidatedStudents === 'function') loadValidatedStudents();
             if (typeof loadGFormLinkFromStorage === 'function') loadGFormLinkFromStorage();
-            // <i class="fas fa-check-circle text-success"></i> Load cicilan tables
+            // ✅ Load cicilan tables
             loadPendingCicilanRequests();
             loadApprovedCicilanRequests();
+            // ✅ Load exam validation tables
+            loadAllExamSubmissions();
             // <i class="fas fa-check-circle text-success"></i> Initialize ujian link section at page load (same as admin-pusat showSection)
             if (typeof initUjianLinkSection === 'function') {
                 console.log('🟪 [INIT-PAGE-LOAD] Calling initUjianLinkSection at DOMContentLoaded...');
@@ -6671,7 +6779,7 @@
             try {
                 console.log('🟩 [APPROVE-FORM] Button clicked for formId:', formValidationId);
                 
-                // <i class="fas fa-check-circle text-success"></i> FIX: Search for form in ALL possible data sources (multiple tables)
+                // Search for form in ALL possible data sources
                 const allDataSources = [
                     window.validationNoTestFilteredData || [],
                     window.tab1bTable2FilteredData || [],
@@ -6687,318 +6795,51 @@
                 for (const dataSource of allDataSources) {
                     if (Array.isArray(dataSource)) {
                         formItem = dataSource.find(item => item.id === formValidationId);
-                        if (formItem) {
-                            console.log('✅ [APPROVE-FORM] Form found in data source:', formItem.studentName);
-                            break;
-                        }
+                        if (formItem) break;
                     }
                 }
                 
                 if (!formItem) {
-                    console.error('❌ Form not found in any data source:', formValidationId);
- alert(' Error: Data tidak ditemukan. Silakan refresh halaman dan coba lagi.');
+                    alert('Error: Data tidak ditemukan. Silakan refresh halaman.');
                     return;
                 }
                 
-                // <i class="fas fa-check-circle text-success"></i> CHECK DAFTAR ULANG STATUS: Use data from formItem itself (already loaded from API)
+                // Check daftar ulang status
                 const reEnrollmentStatus = formItem.reEnrollmentStatus || 'NOT_STARTED';
-                console.log('🔍 [VALIDATE] Re-enrollment status from form data:', reEnrollmentStatus, 'for student:', formItem.studentId);
-                
-                // <i class="fas fa-check-circle text-success"></i> If DAFTAR_ULANG is NOT complete, warn but STILL allow (admin can decide)
                 if (reEnrollmentStatus !== 'COMPLETED') {
-                    console.warn('⚠️ [VALIDATE] Daftar ulang not completed. Current status:', reEnrollmentStatus);
-                    const proceed = confirm('<i class="fas fa-exclamation-triangle text-warning"></i> PERINGATAN!\n\nStatus daftar ulang saat ini: ' + reEnrollmentStatus + '\n\n' + 
-                        (reEnrollmentStatus === 'NOT_STARTED' ? 'Mahasiswa belum memulai daftar ulang.' : 
-                         reEnrollmentStatus === 'IN_PROGRESS' ? 'Daftar ulang masih dalam proses.' : 
-                         'Status daftar ulang tidak diketahui') + 
-                        '\n\nApakah Anda yakin ingin melanjutkan validasi?\n\nKlik OK untuk melanjutkan, atau BATAL untuk membatalkan.');
-                    if (!proceed) {
-                        console.log('❌ [VALIDATE] Admin cancelled approval due to incomplete daftar ulang');
-                        return;
-                    }
-                } else {
-                    console.log('✅ [VALIDATE] Daftar ulang sudah COMPLETED - proceeding with approval');
+                    const proceed = confirm('⚠️ PERINGATAN!\n\nStatus daftar ulang: ' + reEnrollmentStatus + '\n\nLanjutkan validasi?');
+                    if (!proceed) return;
                 }
                 
-                // <i class="fas fa-check-circle text-success"></i> OPEN MODAL: Open registration modal instead of direct approval
-                console.log('📋 [MODAL-OPEN] Opening registration modal for formId:', formValidationId);
+                // Set approval data
                 window.currentApprovalFormId = formValidationId;
                 window.currentApprovalFormType = 'no-test';
+                window.approvalData = { studentName: formItem?.studentName || 'Mahasiswa' };
                 
-                // <i class="fas fa-check-circle text-success"></i> FETCH BRIVA FROM CICILAN (Multiple strategies)
-                console.log('💳 [FETCH-BRIVA] Attempting to fetch BRIVA for student:', formItem.studentId);
-                let brivaNumber = '';
-                
-                // <i class="fas fa-check-circle text-success"></i> ALWAYS FETCH CICILAN DATA FOR JUMLAH CICILAN (regardless of BRIVA source)
-                console.log('💳 [FETCH-CICILAN] ALWAYS fetching cicilan data to get jumlahCicilan');
-                try {
-                    console.log('💳 [FETCH-CICILAN-START] About to fetch: /admin/payment/cicilan/student/' + formItem.studentId);
-                    const cicilanRes = await fetch(`/admin/payment/cicilan/student/${formItem.studentId}`, {
-                        headers: { 'Authorization': 'Bearer ' + authToken }
-                    });
-                    
-                    console.log('💳 [FETCH-CICILAN-RESPONSE] Response received: status=' + cicilanRes.status + ', ok=' + cicilanRes.ok);
-                    
-                    if (cicilanRes.ok) {
-                        console.log('✅ [FETCH-CICILAN] Response OK, parsing JSON...');
-                        const cicilanData = await cicilanRes.json();
-                        console.log('💳 [FETCH-CICILAN-JSON] Full response:', JSON.stringify(cicilanData, null, 2));
-                        console.log('💳 [CICILAN-TYPEOF]', typeof cicilanData);
-                        console.log('💳 [CICILAN-HAS-DATA]', 'data' in cicilanData);
-                        
-                        let cicilan = null;
-                        if (cicilanData && cicilanData.data) {
-                            cicilan = cicilanData.data;
-                            console.log('✅ [CICILAN-FOUND] Extracted from .data property');
-                        } else if (cicilanData && typeof cicilanData === 'object') {
-                            cicilan = cicilanData;
-                            console.log('✅ [CICILAN-FOUND] Using response object directly');
-                        }
-                        
-                        if (cicilan) {
-                            console.log('🔍 [CICILAN-STRUCTURE]', JSON.stringify(cicilan, null, 2));
-                            console.log('🔍 [CICILAN-KEYS]', Object.keys(cicilan));
-                            
-                            // Check all object keys for jumlahCicilan variations
-                            let found = false;
-                            for (const key of Object.keys(cicilan)) {
-                                const lowerKey = key.toLowerCase();
-                                console.log(`🔍 [KEY-CHECK] "${key}" -> lowercase: "${lowerKey}"`);
-                                if (lowerKey === 'jumlahcicilan' || lowerKey === 'jumlah_cicilan') {
-                                    window.approvalData = window.approvalData || {};
-                                    window.approvalData.jumlahCicilan = cicilan[key];
-                                    console.log('✅ [FOUND-JUMLAH-CICILAN] Key "' + key + '" = ' + cicilan[key]);
-                                    found = true;
-                                    break;
-                                }
-                            }
-                            
-                            if (!found) {
-                                console.warn('⚠️ [JUMLAH-CICILAN-NOT-FOUND] Checked all keys, not found');
-                            }
-                            
-                            // Also extract BRIVA if found in cicilan
-                            if (!brivaNumber) {
-                                const allKeys = Object.keys(cicilan);
-                                const brivaField = allKeys.find(key => 
-                                    key.toLowerCase() === 'briva' || 
-                                    key.toLowerCase() === 'brivanumber' || 
-                                    key.toLowerCase() === 'nomorbriva'
-                                );
-                                
-                                if (brivaField) {
-                                    brivaNumber = cicilan[brivaField];
-                                    console.log('✅ [FOUND-BRIVA] Field: "' + brivaField + '" | Value: ' + brivaNumber);
-                                }
-                            }
-                        } else {
-                            console.warn('⚠️ [CICILAN-NULL] Could not extract cicilan object from response');
-                        }
-                    } else {
-                        console.warn('⚠️ [FETCH-CICILAN-ERROR] API returned status:', cicilanRes.status);
-                        const errorText = await cicilanRes.text().catch(() => '');
-                        console.log('💾 [ERROR-BODY]', errorText.substring(0, 500));
-                    }
-                } catch (e) {
-                    console.error('❌ [FETCH-CICILAN-EXCEPTION]', e.message, e.stack);
+                // Show student info in modal
+                const infoBox = document.getElementById('approvalStudentInfoBox');
+                if (infoBox) {
+                    infoBox.innerHTML = '<strong><i class="fas fa-user"></i> ' + (formItem.studentName || 'Mahasiswa') + '</strong><br>' +
+                        '<small><i class="fas fa-envelope"></i> ' + (formItem.studentEmail || '-') + '</small>';
                 }
                 
-                // Strategy 1: If BRIVA still not found, try from formItem direct property
-                if (!brivaNumber && (formItem.brivaNumber || formItem.briva || formItem.BRIVA)) {
-                    brivaNumber = formItem.brivaNumber || formItem.briva || formItem.BRIVA;
-                    console.log('✅ [FETCH-BRIVA-DIRECT] Found BRIVA in formItem:', brivaNumber);
-                }
+                // Reset file input
+                const fileInput = document.getElementById('dokumenDaftarUlangFile');
+                if (fileInput) fileInput.value = '';
                 
-                // Final fallback
-                if (!brivaNumber) {
-                    console.warn('⚠️ [FETCH-BRIVA] BRIVA not found from any source. Will show placeholder.');
-                    brivaNumber = '(Belum ada BRIVA)';
-                } else {
-                    console.log('✅ [FETCH-BRIVA] SUCCESS - BRIVA value:', brivaNumber);
-                }
-                
-                // <i class="fas fa-check-circle text-success"></i> AUTO-GENERATE REGISTRATION NUMBER (incremental)
-                console.log('🔢 [AUTO-GEN] Generating unique registration number...');
-                let registrationNumber = '';
-                try {
-                    const genRes = await fetch(`/admin/api/hasil-akhir/next-registration-number`, {
-                        headers: { 'Authorization': 'Bearer ' + authToken }
-                    });
-                    
-                    if (genRes.ok) {
-                        const genData = await genRes.json();
-                        registrationNumber = genData.nextNumber || genData.nomorRegistrasi || '';
-                        console.log('✅ [AUTO-GEN] Registration number generated:', registrationNumber);
-                    } else {
-                        // Fallback: generate format
-                        const now = new Date();
-                        const year = now.getFullYear();
-                        const random = Math.floor(Math.random() * 10000);
-                        registrationNumber = `REG-${year}-${String(random).padStart(5, '0')}`;
-                        console.log('⚠️ [AUTO-GEN] Using fallback format:', registrationNumber);
-                    }
-                } catch (e) {
-                    console.warn('⚠️ [AUTO-GEN] Error generating registration number:', e.message);
-                    const now = new Date();
-                    const year = now.getFullYear();
-                    const random = Math.floor(Math.random() * 10000);
-                    registrationNumber = `REG-${year}-${String(random).padStart(5, '0')}`;
-                }
-                
-                // <i class="fas fa-check-circle text-success"></i> FETCH WAVE TYPE, SELECTION TYPE, AND PROGRAM STUDI
-                console.log('📊 [FETCH-EXTRA-DATA] Fetching Wave Type, Selection Type, Program Studi for studentId:', formItem.studentId);
-                let waveType = 'N/A';
-                let selectionType = 'N/A';
-                let programStudi = 'N/A';
-                
-                try {
-                    const extraDataRes = await fetch(`/admin/api/admission-form/student/${formItem.studentId}/details`, {
-                        headers: { 'Authorization': 'Bearer ' + authToken }
-                    });
-                    
-                    if (extraDataRes.ok) {
-                        const extraData = await extraDataRes.json();
-                        console.log('📊 [FETCH-EXTRA-DATA] Response:', extraData);
-                        
-                        // Extract wave type from registration period
-                        if (extraData.registrationPeriodWaveType) {
-                            waveType = extraData.registrationPeriodWaveType;
-                            console.log('✅ [FETCH-EXTRA-DATA] Wave Type:', waveType);
-                        }
-                        
-                        // Extract selection type name (jenis seleksi)
-                        if (extraData.jenisSeleksiName) {
-                            selectionType = extraData.jenisSeleksiName;
-                            console.log('✅ [FETCH-EXTRA-DATA] Selection Type:', selectionType);
-                        }
-                        
-                        // Extract program studi (from cicilan or admission form)
-                        if (extraData.programStudiName) {
-                            programStudi = extraData.programStudiName;
-                            console.log('✅ [FETCH-EXTRA-DATA] Program Studi:', programStudi);
-                        }
-                    } else {
-                        console.warn('⚠️ [FETCH-EXTRA-DATA] API returned status:', extraDataRes.status);
-                    }
-                } catch (e) {
-                    console.warn('⚠️ [FETCH-EXTRA-DATA] Error fetching extra data:', e.message);
-                }
-                
-                // Load values into modal fields
-                const brivaInput = document.getElementById('brivaNumberInput');
-                const regInput = document.getElementById('registrationNumberInput');
-                const brivaWarning = document.getElementById('brivaWarning');
-                const waveTypeInput = document.getElementById('waveTypeInput');
-                const selectionTypeInput = document.getElementById('selectionTypeInput');
-                const programStudiInput = document.getElementById('programStudiInput');
-                
-                if (brivaInput) {
-                    if (brivaNumber && brivaNumber !== '(Belum ada BRIVA)') {
-                        brivaInput.value = brivaNumber;
-                        brivaInput.style.backgroundColor = '#e8f5e9';  // <i class="fas fa-check-circle text-success"></i> Hijau terang = auto-loaded
-                        brivaInput.style.color = '#2e7d32';
-                        brivaInput.setAttribute('data-auto-loaded', 'true');
-                        if (brivaWarning) brivaWarning.style.display = 'none';
-                        console.log('✅ [MODAL-LOAD] BRIVA loaded successfully:', brivaNumber);
-                    } else {
-                        // <i class="fas fa-check-circle text-success"></i> NEW: Field masih bisa diisi manual oleh admin
-                        brivaInput.value = '';
-                        brivaInput.style.backgroundColor = '#fff3cd';  // <i class="fas fa-circle text-warning" style="font-size:0.6em"></i> Kuning = perlu diisi manual
-                        brivaInput.style.color = '#856404';
-                        brivaInput.style.borderColor = '#ffc107';
-                        brivaInput.style.borderWidth = '2px';
-                        brivaInput.placeholder = ' BRIVA tidak ditemukan - silakan input manual atau hubungi admin pembayaran';
-                        brivaInput.focus();  // Focus field agar admin langsung bisa ketik
-                        brivaInput.setAttribute('data-auto-loaded', 'false');
-                        if (brivaWarning) {
-                            brivaWarning.style.display = 'block';
-                            if (typeof brivaWarning.innerHTML !== 'undefined') {
-                                brivaWarning.innerHTML = '<i class="fas fa-exclamation-triangle text-warning"></i> <b>BRIVA tidak terdeteksi</b>: Silakan verifikasi pembayaran cicilan atau input nomor BRIVA secara manual';
-                            }
-                        }
-                        console.warn('⚠️ [MODAL-LOAD] BRIVA is EMPTY - admin can input manually or verify payment!');
-                    }
-                } else {
-                    console.error('❌ [MODAL-LOAD] BRIVA input field not found!');
-                }
-                
-                // Load Wave Type
-                if (waveTypeInput) {
-                    waveTypeInput.value = waveType;
-                    console.log('✅ [MODAL-LOAD] Wave Type loaded:', waveType);
-                }
-                
-                // Load Selection Type
-                if (selectionTypeInput) {
-                    selectionTypeInput.value = selectionType;
-                    console.log('✅ [MODAL-LOAD] Selection Type loaded:', selectionType);
-                }
-                
-                // Load Program Studi
-                if (programStudiInput) {
-                    programStudiInput.value = programStudi;
-                    console.log('✅ [MODAL-LOAD] Program Studi loaded:', programStudi);
-                }
-                
-                // Load Jumlah Cicilan
-                const jumlahCicilanInput = document.getElementById('jumlahCicilanInput');
-                if (jumlahCicilanInput) {
-                    const jumlahCicilanFromData = window.approvalData?.jumlahCicilan;
-                    const jumlahCicilan = jumlahCicilanFromData || 1;
-                    
-                    console.log('🔍 [MODAL-LOAD-JC] window.approvalData?.jumlahCicilan =', jumlahCicilanFromData);
-                    console.log('🔍 [MODAL-LOAD-JC] Final value to use:', jumlahCicilan);
-                    console.log('🔍 [MODAL-LOAD-JC] window.approvalData object:', window.approvalData);
-                    
-                    jumlahCicilanInput.value = jumlahCicilan;
-                    jumlahCicilanInput.style.backgroundColor = '#faf5ff';  // Light purple for readonly
-                    console.log('✅ [MODAL-LOAD] Jumlah Cicilan loaded:', jumlahCicilan);
-                    console.log('✅ [MODAL-LOAD] Input field value is now:', document.getElementById('jumlahCicilanInput').value);
-                } else {
-                    console.warn('⚠️ [MODAL-LOAD] Jumlah Cicilan input field not found!');
-                }
-                
-                // Load registration number
-                if (regInput) {
-                    regInput.value = registrationNumber;
-                    regInput.style.backgroundColor = '#fffacd';
-                    console.log('✅ [MODAL-LOAD] Registration number auto-generated and loaded:', registrationNumber);
-                } else {
-                    console.error('❌ [MODAL-LOAD] Registration input field not found!');
- alert(' Error: Modal input tidak ditemukan. Hubungi admin.');
-                    return;
-                }
-                
-                // Get modal element
+                // Show modal
                 const modalElement = document.getElementById('registrationNumberModal');
                 if (!modalElement) {
-                    console.error('❌ [MODAL-OPEN] Modal element not found!');
- alert(' Error: Modal tidak ditemukan. Hubungi admin.');
+                    alert('Error: Modal tidak ditemukan.');
                     return;
                 }
                 
-                // Show modal using Bootstrap
-                try {
-                    // Check if modal instance already exists
-                    let modal = bootstrap.Modal.getInstance(modalElement);
-                    if (!modal) {
-                        modal = new bootstrap.Modal(modalElement);
-                        console.log('✅ [MODAL-OPEN] New Bootstrap Modal instance created');
-                    } else {
-                        console.log('✅ [MODAL-OPEN] Reusing existing Bootstrap Modal instance');
-                    }
-                    
-                    modal.show();
-                    console.log('✅ [MODAL-OPEN] Registration number modal successfully shown!');
-                    console.log('🆔 Student:', formItem.studentName, '| Form ID:', formValidationId);
-                } catch (modalError) {
-                    console.error('❌ [MODAL-OPEN] Error showing modal:', modalError);
- alert(' Error membuka modal: ' + modalError.message);
-                    return;
-                }
+                let modal = bootstrap.Modal.getInstance(modalElement);
+                if (!modal) modal = new bootstrap.Modal(modalElement);
+                modal.show();
             } catch (error) {
                 console.error('❌ Error approving form:', error);
- alert(' Error: ' + error.message);
+                alert('Error: ' + error.message);
             }
         }
         
@@ -7410,7 +7251,7 @@
             try {
                 console.log('🟩 [APPROVE-REGULAR] Button clicked for formId:', formValidationId);
                 
-                // <i class="fas fa-check-circle text-success"></i> FIX: Try to find form in all possible data sources
+                // Find form in all possible data sources
                 const allDataSources = [
                     window.tab1bTable1ExamReminderFilteredData || [],
                     window.examReminderData || [],
@@ -7421,173 +7262,95 @@
                 for (const dataSource of allDataSources) {
                     if (Array.isArray(dataSource)) {
                         formItem = dataSource.find(item => item.id === formValidationId);
-                        if (formItem) {
-                            console.log('✅ [APPROVE-REGULAR] Form found:', formItem.studentName);
-                            break;
-                        }
+                        if (formItem) break;
                     }
                 }
                 
-                if (!formItem) {
-                    console.warn('⚠️ [APPROVE-REGULAR] Form item not found, but continuing with approval');
-                }
-                
-                // <i class="fas fa-check-circle text-success"></i> OPEN MODAL: Open registration modal instead of direct approval
-                console.log('📋 [MODAL-OPEN] Opening registration modal for REGULAR form, formId:', formValidationId);
+                // Set approval data
                 window.currentApprovalFormId = formValidationId;
                 window.currentApprovalFormType = 'regular';
+                window.approvalData = { studentName: formItem?.studentName || 'Mahasiswa' };
                 
-                // Clear previous input
-                const inputField = document.getElementById('registrationNumberInput');
-                if (inputField) {
-                    inputField.value = '';
-                    console.log('✅ [MODAL-OPEN] Input field cleared');
-                } else {
-                    console.error('❌ [MODAL-OPEN] Input field not found!');
- alert(' Error: Modal input tidak ditemukan. Hubungi admin.');
-                    return;
+                // Show student info in modal
+                const infoBox = document.getElementById('approvalStudentInfoBox');
+                if (infoBox) {
+                    infoBox.innerHTML = '<strong><i class="fas fa-user"></i> ' + (formItem?.studentName || 'Mahasiswa') + '</strong><br>' +
+                        '<small><i class="fas fa-envelope"></i> ' + (formItem?.studentEmail || '-') + '</small>';
                 }
                 
-                // Get modal element
+                // Reset file input
+                const fileInput = document.getElementById('dokumenDaftarUlangFile');
+                if (fileInput) fileInput.value = '';
+                
+                // Show modal
                 const modalElement = document.getElementById('registrationNumberModal');
                 if (!modalElement) {
-                    console.error('❌ [MODAL-OPEN] Modal element not found!');
- alert(' Error: Modal tidak ditemukan. Hubungi admin.');
+                    alert('Error: Modal tidak ditemukan.');
                     return;
                 }
                 
-                // Show modal using Bootstrap
-                try {
-                    let modal = bootstrap.Modal.getInstance(modalElement);
-                    if (!modal) {
-                        modal = new bootstrap.Modal(modalElement);
-                        console.log('✅ [MODAL-OPEN] New Bootstrap Modal instance created');
-                    } else {
-                        console.log('✅ [MODAL-OPEN] Reusing existing Bootstrap Modal instance');
-                    }
-                    
-                    modal.show();
-                    console.log('✅ [MODAL-OPEN] Registration number modal successfully shown!');
-                    if (formItem) {
-                        console.log('🆔 Student:', formItem.studentName, '| Form ID:', formValidationId);
-                    }
-                } catch (modalError) {
-                    console.error('❌ [MODAL-OPEN] Error showing modal:', modalError);
- alert(' Error membuka modal: ' + modalError.message);
-                    return;
-                }
+                let modal = bootstrap.Modal.getInstance(modalElement);
+                if (!modal) modal = new bootstrap.Modal(modalElement);
+                modal.show();
             } catch (error) {
                 console.error('❌ [ERROR] Error in approveFormRegular:', error);
- alert(' Error: ' + error.message);
+                alert('Error: ' + error.message);
             }
         }
 
-        // <i class="fas fa-check-circle text-success"></i> PROCEED WITH APPROVAL: After getting registration number
+        // PROCEED WITH APPROVAL: Upload dokumen + approve
         async function proceedWithApprovalAfterRegistration() {
             try {
-                console.log('🟩 [MODAL-SUBMIT] Registration modal submit button clicked');
+                console.log('🟩 [MODAL-SUBMIT] Submit button clicked');
                 
                 const formValidationId = window.currentApprovalFormId;
                 const formType = window.currentApprovalFormType;
-                const registrationNumber = document.getElementById('registrationNumberInput').value.trim();
-                const brivaNumber = document.getElementById('brivaNumberInput').value.trim();
-                const jumlahCicilanInput = document.getElementById('jumlahCicilanInput');
-                let jumlahCicilan = 1;
-                
-                console.log('🔍 [SUBMIT-DEBUG] jumlahCicilanInput element exists:', jumlahCicilanInput !== null);
-                console.log('🔍 [SUBMIT-DEBUG] jumlahCicilanInput.value:', jumlahCicilanInput?.value);
-                console.log('🔍 [SUBMIT-DEBUG] window.approvalData?.jumlahCicilan:', window.approvalData?.jumlahCicilan);
-                
-                if (jumlahCicilanInput) {
-                    const jumlahCicilanValue = jumlahCicilanInput.value.trim();
-                    console.log('🔍 [SUBMIT-DEBUG] Extracted jumlahCicilanValue from input:', jumlahCicilanValue, '| Type:', typeof jumlahCicilanValue);
-                    
-                    if (jumlahCicilanValue && !isNaN(jumlahCicilanValue)) {
-                        jumlahCicilan = parseInt(jumlahCicilanValue);
-                        console.log('💰 [MODAL-SUBMIT] Jumlah Cicilan:', jumlahCicilan);
-                    }
-                }
-                
                 const submitBtn = document.querySelector('#registrationNumberModal .btn-success');
                 
-                console.log('📝 [MODAL-SUBMIT] Form ID:', formValidationId);
-                console.log('📝 [MODAL-SUBMIT] Form Type:', formType);
-                console.log('💳 [MODAL-SUBMIT] BRIVA (raw):', brivaNumber);
-                console.log('💳 [MODAL-SUBMIT] BRIVA length:', brivaNumber ? brivaNumber.length : 0);
-                console.log('🔢 [MODAL-SUBMIT] Registration Number:', registrationNumber);
+                // Validate file
+                const fileInput = document.getElementById('dokumenDaftarUlangFile');
+                const file = fileInput ? fileInput.files[0] : null;
                 
-                if (!registrationNumber) {
-                    console.warn('⚠️ [MODAL-SUBMIT] Registration number is empty');
- alert(' Nomor registrasi tidak valid!');
+                if (!file) {
+                    alert('⚠️ Upload dokumen daftar ulang (PDF) wajib diisi!');
                     return;
                 }
-                
-                // <i class="fas fa-check-circle text-success"></i> STRICT VALIDATION: BRIVA harus ada dan valid
-                if (!brivaNumber || brivaNumber.trim() === '' || brivaNumber === '(Tidak ada BRIVA)' || brivaNumber === '(Belum ada BRIVA)') {
-                    console.error('❌ [MODAL-SUBMIT] BRIVA number is EMPTY or INVALID');
-                    console.warn('⚠️ [DEBUG] brivaNumber value:', JSON.stringify(brivaNumber));
-                    
-                    // Show detailed error
-                    const errorMsg = `<i class="fas fa-times-circle text-danger"></i> BRIVA Tidak Ditemukan!\n\nAlasan:\n- Mahasiswa mungkin belum selesai membayar cicilan\n- Atau nomor BRIVA belum terintegrasi dengan sistem\n\nSilakan:\n1. Refresh halaman\n2. Pastikan mahasiswa sudah membayar cicilan\n3. Hubungi admin jika masalah berlanjut`;
-                    alert(errorMsg);
+                if (!file.name.toLowerCase().endsWith('.pdf')) {
+                    alert('⚠️ File harus berformat PDF!');
                     return;
                 }
-                
                 if (!formValidationId) {
-                    console.error('❌ [MODAL-SUBMIT] Form ID is invalid');
- alert(' Form ID tidak valid');
+                    alert('⚠️ Form ID tidak valid');
                     return;
                 }
                 
-                // <i class="fas fa-check-circle text-success"></i> SHOW LOADING STATE
+                // Show loading
                 const originalHTML = submitBtn.innerHTML;
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
-                console.log('⏳ [MODAL-SUBMIT] Loading state activated');
                 
-                console.log('📝 [MODAL-SUBMIT] Saving registration number & BRIVA:', registrationNumber, brivaNumber, 'for form:', formValidationId);
-                
-                // <i class="fas fa-check-circle text-success"></i> STEP 1: Save BOTH registration number and BRIVA to hasil_akhir table
-                console.log('📡 [API-CALL] PUT /admin/api/hasil-akhir/nomor-registrasi/' + formValidationId);
-                
-                const requestBody = { 
-                    nomorRegistrasi: registrationNumber,
-                    brivaNumber: brivaNumber,
-                    jumlahCicilan: jumlahCicilan
-                };
-                
-                console.log('💾 [REQUEST-BODY-DEBUG] About to send JSON:', JSON.stringify(requestBody));
-                console.log('💾 [REQUEST-BODY-DEBUG] jumlahCicilan value in request:', requestBody.jumlahCicilan);
-                console.log('💾 [REQUEST-BODY-DEBUG] jumlahCicilan type:', typeof requestBody.jumlahCicilan);
-                
-                const saveRes = await fetch(`/admin/api/hasil-akhir/nomor-registrasi/${formValidationId}`, {
+                // STEP 1: Save registration number & BRIVA to hasil_akhir (auto-generate)
+                console.log('📡 [API] PUT /admin/api/hasil-akhir/nomor-registrasi/' + formValidationId);
+                const saveRes = await fetch('/admin/api/hasil-akhir/nomor-registrasi/' + formValidationId, {
                     method: 'PUT',
                     headers: { 
                         'Authorization': 'Bearer ' + authToken,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestBody)
+                    body: JSON.stringify({ nomorRegistrasi: '', brivaNumber: '', jumlahCicilan: 1 })
                 });
                 
-                console.log('📡 [API-RESPONSE] Save registration & BRIVA:', saveRes.status, saveRes.statusText);
-                
-                if (!saveRes.ok) {
-                    const errorData = await saveRes.json().catch(() => ({}));
-                    console.error('❌ [API-ERROR] BRIVA save failed with status:', saveRes.status);
-                    console.error('❌ [API-ERROR] Response:', errorData);
-                    console.warn('⚠️ [API-ERROR] Could not save registration number & BRIVA, but proceeding with approval');
- alert(' PERINGATAN: Nomor BRIVA mungkin gagal disimpan.\nStatus: ' + saveRes.status + '\nPesan: ' + (errorData.message || errorData.exceptionType || 'Unknown error'));
-                } else {
+                if (saveRes.ok) {
                     const responseData = await saveRes.json().catch(() => ({}));
-                    console.log('✅ [API-SUCCESS] BRIVA saved successfully');
-                    console.log('✅ [API-SUCCESS] Response:', responseData);
+                    window.currentHasilAkhirId = responseData.hasilAkhirId;
+                    console.log('✅ HasilAkhir saved, id:', responseData.hasilAkhirId);
+                } else {
+                    console.warn('⚠️ HasilAkhir save failed, continuing with approval');
                 }
                 
-                console.log('✅ [MODAL-SUBMIT] Now approving form:', formValidationId);
-                
-                // <i class="fas fa-check-circle text-success"></i> STEP 2: Approve the form
-                console.log('📡 [API-CALL] PUT /admin/api/validasi/formulir/' + formValidationId + '/approve');
-                const approveRes = await fetch(`/admin/api/validasi/formulir/${formValidationId}/approve`, {
+                // STEP 2: Approve the form
+                console.log('📡 [API] PUT /admin/api/validasi/formulir/' + formValidationId + '/approve');
+                const approveRes = await fetch('/admin/api/validasi/formulir/' + formValidationId + '/approve', {
                     method: 'PUT',
                     headers: { 
                         'Authorization': 'Bearer ' + authToken,
@@ -7595,75 +7358,133 @@
                     }
                 });
                 
-                console.log('📡 [API-RESPONSE] Approve form:', approveRes.status, approveRes.statusText);
-                
                 if (!approveRes.ok) {
-                    console.error('❌ [API-ERROR] Gagal menyetujui formulir');
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalHTML;
- alert(' Gagal menyetujui formulir');
+                    alert('❌ Gagal menyetujui formulir');
                     return;
                 }
+                console.log('✅ Form approved');
                 
-                console.log('✅ [API-SUCCESS] Form approved successfully');
+                // STEP 3: Upload dokumen
+                if (window.currentHasilAkhirId) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengupload dokumen...';
+                    const uploadFormData = new FormData();
+                    uploadFormData.append('npmSementara', file);
+                    
+                    try {
+                        const uploadRes = await fetch('/admin/api/hasil-akhir/' + window.currentHasilAkhirId + '/upload-dokumen', {
+                            method: 'POST',
+                            headers: { 'Authorization': 'Bearer ' + authToken },
+                            body: uploadFormData
+                        });
+                        if (uploadRes.ok) {
+                            console.log('✅ Dokumen uploaded');
+                        } else {
+                            console.warn('⚠️ Upload gagal, tapi approval berhasil');
+                        }
+                    } catch (uploadErr) {
+                        console.warn('⚠️ Upload error:', uploadErr);
+                    }
+                }
                 
-                // <i class="fas fa-check-circle text-success"></i> STEP 3: Show success message
-                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> <i class="fas fa-check-circle text-success"></i> Berhasil!';
+                // STEP 4: Done - close modal & refresh
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Berhasil!';
                 submitBtn.style.background = '#28a745';
-                console.log('📢 [MODAL-SUBMIT] Showing success alert');
                 
-                // Show alert
- alert(' Formulir berhasil disetujui!\n\n Nomor BRIVA: ' + brivaNumber + '\n Nomor Registrasi: ' + registrationNumber + '\n Jumlah Cicilan: ' + jumlahCicilan + '\n\nMahasiswa akan menerima notifikasi dengan informasi ini.');
-                
-                // <i class="fas fa-check-circle text-success"></i> STEP 4: Close modal after a brief delay and refresh
-                console.log('🔄 [MODAL-SUBMIT] Preparing to close modal and refresh...');
                 setTimeout(() => {
                     try {
-                        const modal = bootstrap.Modal.getInstance(document.getElementById('registrationNumberModal'));
-                        if (modal) {
-                            modal.hide();
-                            console.log('✅ [MODAL-CLOSE] Modal closed successfully');
-                        }
-                    } catch (e) {
-                        console.error('⚠️ [MODAL-CLOSE] Error closing modal:', e);
-                    }
+                        const regModal = bootstrap.Modal.getInstance(document.getElementById('registrationNumberModal'));
+                        if (regModal) regModal.hide();
+                    } catch (e) { }
                     
-                    // Reset button state
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalHTML;
                     submitBtn.style.background = '';
+                    if (fileInput) fileInput.value = '';
                     
-                    // Refresh table based on form type
-                    console.log('🔄 [REFRESH] Refreshing tables for form type:', formType);
+                    alert('✅ Formulir berhasil disetujui & dokumen diupload!');
+                    
                     if (formType === 'no-test') {
-                        if (typeof refreshSection2Tables === 'function') {
-                            refreshSection2Tables();
-                            console.log('✅ [REFRESH] refreshSection2Tables called');
-                        } else {
-                            console.warn('⚠️ [REFRESH] refreshSection2Tables not found, calling individual tables');
+                        if (typeof refreshSection2Tables === 'function') refreshSection2Tables();
+                        else {
                             if (typeof refreshTab1BTable2EarlyNoTest === 'function') refreshTab1BTable2EarlyNoTest();
                             if (typeof refreshTab1BTable3RankingNoTest === 'function') refreshTab1BTable3RankingNoTest();
                             if (typeof refreshTab1BTable4Revision === 'function') refreshTab1BTable4Revision();
                         }
                     } else if (formType === 'regular') {
-                        if (typeof refreshTab1BTable1ExamReminders === 'function') {
-                            refreshTab1BTable1ExamReminders();
-                            console.log('✅ [REFRESH] refreshTab1BTable1ExamReminders called');
-                        } else {
-                            console.warn('⚠️ [REFRESH] refreshTab1BTable1ExamReminders not found');
-                        }
+                        if (typeof refreshTab1BTable1ExamReminders === 'function') refreshTab1BTable1ExamReminders();
                     }
-                }, 1000);
-                
-                console.log('✅ [MODAL-SUBMIT] Form approval process complete!');
+                }, 800);
             } catch (error) {
-                console.error('❌ [ERROR] Error in approval process:', error);
+                console.error('❌ Error in approval:', error);
                 const submitBtn = document.querySelector('#registrationNumberModal .btn-success');
                 if (submitBtn) {
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Setujui & Simpan';
+                    submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Setujui & Upload';
                 }
- alert(' Error: ' + error.message);
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        // Upload Dokumen Sementara (NPM & KTM) after approval
+        async function submitUploadDokumen() {
+            const hasilAkhirId = window.currentHasilAkhirId;
+            if (!hasilAkhirId) {
+                alert('Error: Hasil Akhir ID tidak ditemukan. Dokumen bisa diupload nanti dari menu Ekspor Data.');
+                return;
+            }
+            
+            const npmFile = document.getElementById('npmSementaraFile').files[0];
+            const ktmFile = document.getElementById('ktmSementaraFile').files[0];
+            
+            if (!npmFile && !ktmFile) {
+                alert('Pilih minimal satu file untuk diupload.');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('uploadDokumenSubmitBtn');
+            const originalHTML = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengupload...';
+            
+            try {
+                const formData = new FormData();
+                if (npmFile) formData.append('npmSementara', npmFile);
+                if (ktmFile) formData.append('ktmSementara', ktmFile);
+                
+                const response = await fetch(`/admin/api/hasil-akhir/${hasilAkhirId}/upload-dokumen`, {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + authToken },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Berhasil!';
+                    submitBtn.style.background = '#28a745';
+                    submitBtn.style.borderColor = '#28a745';
+                    
+                    setTimeout(() => {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('uploadDokumenModal'));
+                        if (modal) modal.hide();
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalHTML;
+                        submitBtn.style.background = '';
+                        submitBtn.style.borderColor = '';
+                        alert('Dokumen berhasil diupload!\n\n' + 
+                            (result.npmSementaraFile ? '✅ NPM Sementara\n' : '') +
+                            (result.ktmSementaraFile ? '✅ KTM Sementara' : ''));
+                    }, 800);
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.message || 'Upload gagal');
+                }
+            } catch (error) {
+                console.error('❌ Upload error:', error);
+                alert('Error upload: ' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalHTML;
             }
         }
 
@@ -8390,11 +8211,7 @@
         window.saveUjianLink = saveUjianLink;
         window.editUjianLink = editUjianLink;
         window.deleteUjianLink = deleteUjianLink;
-        // ===== MANUAL PAYMENT FUNCTIONS REGISTRATION =====
-        window.showManualPaymentDetail = showManualPaymentDetail;
-        window.verifyManualPayment = verifyManualPayment;
-        window.showRejectPaymentReasonModal = showRejectPaymentReasonModal;
-        window.submitRejectPayment = submitRejectPayment;
+        // ===== REFRESH PENDING FORM DATA =====
         console.log('✅ [REGISTERED] All table functions registered to window');
         console.log('✅ [REGISTERED] UJIAN functions also registered:', {
             initUjianLinkSection: typeof window.initUjianLinkSection === 'function',
@@ -9209,59 +9026,6 @@
                 const examStatus = details.examStatus || 'PENDING';
                 const hasExam = waveType === 'REGULAR_TEST' && examStatus !== 'PENDING';
                 
-                // <i class="fas fa-check-circle text-success"></i> IMPROVED: Check for manual payment more reliably
-                // First try paymentMethod param, then check API
-                let hasManualPayment = paymentMethod === 'MANUAL' || (details.manualPaymentStatus && details.manualPaymentStatus !== 'NONE');
-                
-                // <i class="fas fa-check-circle text-success"></i> NEW: If paymentMethod is empty, try to fetch from API directly
-                if (!hasManualPayment) {
-                    try {
-                        console.log('📡 [ALL-DETAILS] Checking manual payment via API...');
-                        const manualPaymentRes = await fetch(`/admin/payment/manual/admission-form/${formulirId}`, {
-                            headers: { 'Authorization': 'Bearer ' + authToken }
-                        });
-                        console.log('📡 [ALL-DETAILS] Manual payment response:', manualPaymentRes.status, manualPaymentRes.statusText);
-                        
-                        if (manualPaymentRes.ok) {
-                            const manualPaymentData = await manualPaymentRes.json();
-                            const manualPayment = manualPaymentData.data || manualPaymentData;
-                            // If data exists and has a status (VERIFIED, PENDING, REJECTED), show button
-                            if (manualPayment && manualPayment.status) {
-                                hasManualPayment = true;
-                                console.log('✅ Manual payment found via API check');
-                            }
-                        }
-                    } catch (err) {
-                        console.log('⚠️ Manual payment check skipped:', err.message);
-                    }
-                }
-                
-                // <i class="fas fa-check-circle text-success"></i> Check for installment
-                let hasInstallment = details.installmentStatus && details.installmentStatus !== 'PENDING' && details.installmentStatus !== 'NONE';
-                
-                // <i class="fas fa-check-circle text-success"></i> NEW: If no installment from details, try to fetch from API
-                if (!hasInstallment) {
-                    try {
-                        console.log('📡 [ALL-DETAILS] Checking installment via API...');
-                        const installmentRes = await fetch(`/admin/payment/cicilan/student/${studentId}`, {
-                            headers: { 'Authorization': 'Bearer ' + authToken }
-                        });
-                        console.log('📡 [ALL-DETAILS] Installment response:', installmentRes.status, installmentRes.statusText);
-                        
-                        if (installmentRes.ok) {
-                            const installmentData = await installmentRes.json();
-                            const installment = Array.isArray(installmentData) ? installmentData[0] : installmentData.data || installmentData;
-                            // If data exists with valid fields, show button
-                            if (installment && installment.status) {
-                                hasInstallment = true;
-                                console.log('✅ Installment payment found via API check');
-                            }
-                        }
-                    } catch (err) {
-                        console.log('⚠️ Installment check skipped:', err.message);
-                    }
-                }
-
                 // Build options HTML
                 let optionsHtml = `
                     <div style="padding: 20px; max-width: 500px;">
@@ -9290,24 +9054,6 @@
                         <i class="bi bi-pencil-square"></i> Detail Ujian/Test <i class="fas fa-edit"></i>
                     </button>
                 `;
-
-                // <i class="fas fa-check-circle text-success"></i> Conditional: Detail Manual Bayar Formulir (improved check)
-                if (hasManualPayment) {
-                    optionsHtml += `
-                        <button class="btn btn-outline-info" onclick="openManualPaymentDetailModal(${formulirId}); closeAllDetailsModal();" style="text-align: left; padding: 12px 15px; border-radius: 6px; border: 2px solid #17a2b8; color: #17a2b8; font-weight: 500; cursor: pointer; transition: all 0.2s;">
-                            <i class="bi bi-credit-card"></i> Detail Bayar Formulir (Manual) <i class="fas fa-credit-card"></i>
-                        </button>
-                    `;
-                }
-
-                // <i class="fas fa-check-circle text-success"></i> Conditional: Detail Manual Cicilan (improved check)
-                if (hasInstallment) {
-                    optionsHtml += `
-                        <button class="btn btn-outline-danger" onclick="openInstallmentDetailModal(${formulirId}); closeAllDetailsModal();" style="text-align: left; padding: 12px 15px; border-radius: 6px; border: 2px solid #dc3545; color: #dc3545; font-weight: 500; cursor: pointer; transition: all 0.2s;">
-                            <i class="bi bi-receipt"></i> Detail Cicilan (Manual) <i class="fas fa-coins"></i>
-                        </button>
-                    `;
-                }
 
                 optionsHtml += `
                         </div>
@@ -9496,90 +9242,6 @@
             } catch (error) {
                 console.error('❌ Error opening exam results detail:', error);
  alert(' Gagal membuka detail ujian: ' + error.message);
-            }
-        }
-
-        // ===== OPEN MANUAL PAYMENT DETAIL MODAL (BRIVA) =====
-        async function openManualPaymentDetailModal(admissionFormId) {
-            try {
-                // Fetch manual payment data
-                const res = await fetch(`/admin/payment/manual/admission-form/${admissionFormId}`, {
-                    headers: { 'Authorization': 'Bearer ' + authToken }
-                });
-
-                if (!res.ok) {
-                    if (res.status === 404) {
- alert(' Tidak ada data pembayaran manual untuk formulir ini');
-                        return;
-                    }
-                    throw new Error(`Gagal mengambil data pembayaran: ${res.status}`);
-                }
-
-                const data = await res.json();
-                const payment = data.data || data;
-
-                // Build detail HTML
-                let detailHtml = `
-                    <div style="padding: 20px;">
-                        <h5 style="margin-bottom: 20px; border-bottom: 2px solid #17a2b8; padding-bottom: 10px; color: #17a2b8;">
-                            <i class="bi bi-credit-card"></i> Detail Pembayaran Manual (BRIVA)
-                        </h5>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                            <div>
-                                <strong>Status Pembayaran:</strong><br>
-                                <span class="badge" style="background: ${payment.status === 'VERIFIED' ? '#28a745' : payment.status === 'REJECTED' ? '#dc3545' : '#ffc107'}; padding: 5px 10px;">
-                                    ${payment.status === 'VERIFIED' ? '<i class="fas fa-check-circle text-success"></i> TERVERIFIKASI' : payment.status === 'REJECTED' ? '<i class="fas fa-times-circle text-danger"></i> DITOLAK' : '<i class="fas fa-hourglass-half"></i> MENUNGGU'}
-                                </span>
-                            </div>
-                            <div>
-                                <strong>Jumlah Pembayaran:</strong><br>
-                                <strong style="font-size: 18px; color: #17a2b8;">Rp ${new Intl.NumberFormat('id-ID').format(payment.amount || 0)}</strong>
-                            </div>
-                            <div>
-                                <strong>Nama Bank:</strong><br>
-                                ${payment.bankName || '-'}
-                            </div>
-                            <div>
-                                <strong>Nama Pemilik Rekening:</strong><br>
-                                ${payment.accountHolder || '-'}
-                            </div>
-                            <div>
-                                <strong>Tanggal Transaksi:</strong><br>
-                                ${payment.transactionDate ? new Date(payment.transactionDate).toLocaleDateString('id-ID') : '-'}
-                            </div>
-                            <div>
-                                <strong>Metode Pembayaran:</strong><br>
-                                ${payment.paymentMethod || 'BRIVA'}
-                            </div>
-                        </div>
-
-                        ${payment.status === 'REJECTED' && payment.rejectionReason ? `
-                            <div style="margin: 15px 0; padding: 12px; background: #f8d7da; border-left: 4px solid #dc3545; border-radius: 4px;">
-                                <strong>Alasan Penolakan:</strong><br>
-                                ${payment.rejectionReason}
-                            </div>
-                        ` : ''}
-
-                        ${payment.proofImagePath ? `
-                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
-                                <strong>Bukti Transfer:</strong><br>
-                                <img src="/api/files/show?path=${encodeURIComponent(payment.proofImagePath?.replace(/^\//, '') || payment.proofImagePath)}" 
-                                     style="max-width: 100%; max-height: 400px; border-radius: 6px; margin-top: 10px; cursor: pointer; border: 1px solid #ddd;"
-                                     onclick="window.open(this.src, '_blank')"
-                                     alt="Bukti Transfer" />
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-
-                // Show in modal
-                const modal = new bootstrap.Modal(document.getElementById('detailsModal') || document.createElement('div'));
-                document.getElementById('detailsModalBody').innerHTML = detailHtml;
-                modal.show();
-
-            } catch (error) {
-                console.error('❌ Error opening manual payment detail:', error);
- alert(' Gagal membuka detail pembayaran: ' + error.message);
             }
         }
 
@@ -9885,297 +9547,11 @@
         window.safeSetText = safeSetText;
         window.safeSetHtml = safeSetHtml;
         
-        // ===== MANUAL PAYMENT VERIFICATION FUNCTIONS =====
-        window.currentManualPaymentId = null;
-        window.currentStudentId = null;
-        
-        // Show manual payment detail modal
-        async function showManualPaymentDetail(paymentId, admissionFormId, studentName) {
-            try {
-                window.currentManualPaymentId = paymentId;
-                
-                // Fetch manual payment details
-                const response = await fetch(`/api/payment/manual/${paymentId}`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const paymentData = response.json();
-                
-                // Display proof image
-                const proofContainer = document.getElementById('proofImageContainer');
-                if (paymentData.proofImagePath) {
-                    const imagePath = paymentData.proofImagePath.startsWith('/') ? paymentData.proofImagePath : `/uploads/payment-proof/${paymentData.proofImagePath}`;
-                    proofContainer.innerHTML = `<img src="${imagePath}" style="max-width: 100%; max-height: 400px; border-radius: 8px;" alt="Bukti Transfer">`;
-                } else {
-                    proofContainer.innerHTML = '<div class="text-center text-muted"><i class="bi bi-image-slash" style="font-size: 48px;"></i><p>Tidak ada gambar</p></div>';
-                }
-                
-                // Display payment info
-                document.getElementById('paymentStudentName').textContent = studentName || '-';
-                document.getElementById('paymentAmount').textContent = `Rp ${(paymentData.amount || 0).toLocaleString('id-ID')}`;
-                document.getElementById('paymentBankName').textContent = paymentData.bankName || '-';
-                document.getElementById('paymentAccountHolder').textContent = paymentData.accountHolder || '-';
-                document.getElementById('paymentTransactionDate').textContent = paymentData.transactionDate ? new Date(paymentData.transactionDate).toLocaleDateString('id-ID') : '-';
-                
-                // Display status badge
-                const statusDisplay = document.getElementById('paymentStatus');
-                const statusBadge = paymentData.status === 'VERIFIED' ? 
-                    '<span class="badge bg-success"><i class="fas fa-check-circle text-success"></i> Terverifikasi</span>' :
-                    paymentData.status === 'REJECTED' ?
-                    '<span class="badge bg-danger"><i class="fas fa-times-circle text-danger"></i> Ditolak</span>' :
-                    '<span class="badge bg-warning"><i class="fas fa-hourglass-half"></i> Menunggu Verifikasi</span>';
-                statusDisplay.innerHTML = statusBadge;
-                
-                // Show modal
-                const modal = new bootstrap.Modal(document.getElementById('manualPaymentDetailsModal'));
-                modal.show();
-                
-            } catch (error) {
-                console.error('❌ Error loading manual payment details:', error);
- alert(' Gagal memuat detail pembayaran:\n\n' + error.message);
-            }
-        }
-        
-        // Verify manual payment
-        // <i class="fas fa-check-circle text-success"></i> NEW: View Payment Proof (Manual or BRIVA)
-        async function viewPaymentProof(admissionFormId, studentId) {
-            try {
-                // Fetch manual payment data
-                const manualRes = await fetch(`/admin/payment/manual/admission-form/${admissionFormId}`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
-                if (manualRes.ok) {
-                    // Manual payment exists - show details
-                    const manualPayment = await manualRes.json();
-                    const data = manualPayment.data || manualPayment;
-                    
-                    // Store current payment ID for actions
-                    window.currentManualPaymentId = data.id;
-                    window.currentAdmissionFormId = admissionFormId;
-                    
-                    // Populate modal
-                    document.getElementById('paymentStudentName').textContent = data.student?.fullName || data.admissionForm?.student?.fullName || 'N/A';
-                    document.getElementById('paymentAmount').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.amount || 0)}`;
-                    document.getElementById('paymentBankName').textContent = data.bankName || 'BRI';
-                    document.getElementById('paymentAccountHolder').textContent = data.accountHolder || 'HKBP NOMMENSEN';
-                    document.getElementById('paymentTransactionDate').textContent = data.transactionDate ? new Date(data.transactionDate).toLocaleDateString('id-ID') : 'Belum diisi';
-                    
-                    // Status badge
-                    const statusBadge = data.status === 'VERIFIED' ? 
-                        '<span class="badge bg-success"><i class="fas fa-check-circle text-success"></i> TERVERIFIKASI</span>' :
-                        data.status === 'REJECTED' ?
-                        '<span class="badge bg-danger"><i class="fas fa-times-circle text-danger"></i> DITOLAK</span>' :
-                        '<span class="badge bg-warning"><i class="fas fa-hourglass-half"></i> PENDING</span>';
-                    document.getElementById('paymentStatus').innerHTML = statusBadge;
-                    
-                    // Display proof image
-                    if (data.proofImagePath) {
-                        const imagePath = data.proofImagePath.startsWith('http') ? 
-                            data.proofImagePath : 
-                            '/' + data.proofImagePath;
-                        document.getElementById('proofImageContainer').innerHTML = `
-                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                                <div style="text-align: center;">
-                                    <img src="${imagePath}" style="max-width: 100%; max-height: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" alt="Bukti Transfer" onerror="this.src='/images/placeholder.png'">
-                                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
-                                        <i class="fas fa-paperclip"></i> ${data.proofImagePath.split('/').pop() || 'payment-proof'}
-                                    </p>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    
-                    // Update button states
-                    const btnVerify = document.getElementById('btnVerifyPayment');
-                    const btnReject = document.getElementById('btnRejectPayment');
-                    
-                    if (data.status === 'VERIFIED') {
-                        btnVerify.disabled = true;
-                        btnVerify.innerHTML = '<i class="fas fa-check-circle text-success"></i> Sudah Terverifikasi';
-                        btnReject.disabled = true;
-                        btnReject.style.display = 'none';
-                    } else if (data.status === 'REJECTED') {
-                        btnVerify.disabled = true;
-                        btnReject.disabled = true;
-                        btnReject.innerHTML = `<i class="fas fa-times-circle text-danger"></i> Ditolak: ${data.rejectionReason || 'Tanpa alasan'}`;
-                    } else {
-                        btnVerify.disabled = false;
-                        btnReject.disabled = false;
-                        btnReject.style.display = 'inline-block';
-                    }
-                    
-                    // Show modal
-                    const modal = new bootstrap.Modal(document.getElementById('manualPaymentDetailsModal'));
-                    modal.show();
-                } else if (manualRes.status === 404) {
-                    // No manual payment - show BRIVA confirmation
- alert(' Pembayaran dilakukan melalui BRIVA, bukan manual upload.\n\nSistem secara otomatis verifikasi BRIVA pembayaran.');
-                } else {
- alert(' Gagal mengambil data pembayaran: ' + manualRes.status);
-                }
-            } catch (error) {
-                console.error('❌ Error fetching payment proof:', error);
- alert(' Error: ' + error.message);
-            }
-        }
-
-        // <i class="fas fa-check-circle text-success"></i> NEW: View Installment Proof (Cicilan)
-        async function viewInstallmentProof(studentId) {
-            try {
-                // Fetch cicilan payment data
-                const cicilanRes = await fetch(`/admin/payment/cicilan/student/${studentId}`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
-                if (cicilanRes.ok) {
-                    const cicilanData = await cicilanRes.json();
-                    const data = cicilanData.data || cicilanData;
-                    
-                    if (!data) {
- alert(' Belum ada data pembayaran cicilan untuk mahasiswa ini.');
-                        return;
-                    }
-
-                    // Store current cicilan ID
-                    window.currentCicilanPaymentId = data.id;
-                    window.currentStudentId = studentId;
-                    
-                    // Show modal with cicilan details
-                    const modal = new bootstrap.Modal(document.getElementById('manualPaymentDetailsModal'));
-                    document.querySelectorAll('#manualPaymentDetailsModal .modal-title')[0].textContent = 
-                        `<i class="fas fa-credit-card"></i> Detail Pembayaran Cicilan (Cicilan Ke-${data.cicilanKe || '1'})`;
-                    
-                    // Populate cicilan details
-                    document.getElementById('paymentStudentName').textContent = data.student?.fullName || 'N/A';
-                    document.getElementById('paymentAmount').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.nominal || 0)}`;
-                    document.getElementById('paymentBankName').textContent = 'BRI (Cicilan)';
-                    document.getElementById('paymentAccountHolder').textContent = 'HKBP NOMMENSEN';
-                    document.getElementById('paymentTransactionDate').textContent = new Date(data.createdAt).toLocaleDateString('id-ID');
-                    
-                    // Status badge
-                    const statusBadge = data.status === 'VERIFIED' ? 
-                        '<span class="badge bg-success"><i class="fas fa-check-circle text-success"></i> TERVERIFIKASI</span>' :
-                        data.status === 'REJECTED' ?
-                        '<span class="badge bg-danger"><i class="fas fa-times-circle text-danger"></i> DITOLAK</span>' :
-                        '<span class="badge bg-warning"><i class="fas fa-hourglass-half"></i> PENDING</span>';
-                    document.getElementById('paymentStatus').innerHTML = statusBadge;
-                    
-                    // Display proof image
-                    if (data.paymentProofPath) {
-                        const imagePath = data.paymentProofPath.startsWith('http') ? 
-                            data.paymentProofPath : 
-                            '/' + data.paymentProofPath;
-                        document.getElementById('proofImageContainer').innerHTML = `
-                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                                <div style="text-align: center;">
-                                    <img src="${imagePath}" style="max-width: 100%; max-height: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" alt="Bukti Transfer Cicilan" onerror="this.src='/images/placeholder.png'">
-                                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
-                                        <i class="fas fa-paperclip"></i> ${data.paymentProofPath.split('/').pop() || 'cicilan-proof'}
-                                    </p>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    
-                    modal.show();
-                } else if (cicilanRes.status === 404) {
-                    // No cicilan payment
- alert(' Belum ada data pembayaran cicilan untuk mahasiswa ini.');
-                } else {
- alert(' Gagal mengambil data cicilan: ' + cicilanRes.status);
-                }
-            } catch (error) {
-                console.error('❌ Error fetching cicilan proof:', error);
- alert(' Error: ' + error.message);
-            }
-        }
-
-        async function verifyManualPayment() {
-            if (!window.currentManualPaymentId) {
- alert(' ID pembayaran tidak ditemukan');
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/admin/payment/manual/${window.currentManualPaymentId}/verify`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({})
-                });
-                
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
- alert(' Pembayaran telah diverifikasi dan disetujui!');
-                
-                // Close current modal
-                bootstrap.Modal.getInstance(document.getElementById('manualPaymentDetailsModal')).hide();
-                
-                // Refresh tables
-                if (typeof refreshTab1BTable2EarlyNoTest === 'function') refreshTab1BTable2EarlyNoTest();
-                if (typeof refreshTab1BTable3RankingNoTest === 'function') refreshTab1BTable3RankingNoTest();
-                
-            } catch (error) {
-                console.error('❌ Error verifying payment:', error);
- alert(' Gagal memverifikasi pembayaran:\n\n' + error.message);
-            }
-        }
-        
-        // Show reject reason modal
-        function showRejectPaymentReasonModal() {
-            document.getElementById('rejectPaymentReason').value = '';
-            const modal = new bootstrap.Modal(document.getElementById('rejectPaymentReasonModal'));
-            modal.show();
-        }
-        
-        // Submit reject payment
-        async function submitRejectPayment() {
-            if (!window.currentManualPaymentId) {
- alert(' ID pembayaran tidak ditemukan');
-                return;
-            }
-            
-            const reason = document.getElementById('rejectPaymentReason').value.trim();
-            if (!reason) {
- alert(' Silakan isi alasan penolakan');
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/admin/payment/manual/${window.currentManualPaymentId}/reject`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ rejectionReason: reason })
-                });
-                
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
- alert(' Pembayaran telah ditolak!');
-                
-                // Close both modals
-                bootstrap.Modal.getInstance(document.getElementById('rejectPaymentReasonModal')).hide();
-                bootstrap.Modal.getInstance(document.getElementById('manualPaymentDetailsModal')).hide();
-                
-                // Refresh tables
-                if (typeof refreshTab1BTable2EarlyNoTest === 'function') refreshTab1BTable2EarlyNoTest();
-                if (typeof refreshTab1BTable3RankingNoTest === 'function') refreshTab1BTable3RankingNoTest();
-                
-            } catch (error) {
-                console.error('❌ Error rejecting payment:', error);
- alert(' Gagal menolak pembayaran:\n\n' + error.message);
-            }
-        }
-        
         // Verify registration worked
         console.log('✅ [CRITICAL] Functions registered to window object immediately after definition');
         console.log('   - openDetailModal:', typeof window.openDetailModal === 'function' ? '✅' : '❌');
         console.log('   - safeSetText:', typeof window.safeSetText === 'function' ? '✅' : '❌');
         console.log('   - safeSetHtml:', typeof window.safeSetHtml === 'function' ? '✅' : '❌');
-        console.log('   - showManualPaymentDetail:', typeof window.showManualPaymentDetail === 'function' ? '✅' : '❌');
 
         // ===== REFRESH PENDING FORM DATA =====
         // ===== REFRESH PENDING FORM DATA (SUDAH BAYAR, TUNGGU VALIDASI) =====
@@ -12312,103 +11688,6 @@
     </script>
 
     <!-- Register global functions AFTER all DOM content is loaded -->
-    <!-- Modal: Manual Payment Details (Proof Image & Info) -->
-    <div class="modal fade" id="manualPaymentDetailsModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
-                    <h5 class="modal-title" style="color: white;"><i class="bi bi-credit-card"></i> Detail Pembayaran Manual</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <!-- Proof Image -->
-                        <div class="col-md-6">
-                            <h6 style="font-weight: 600; margin-bottom: 12px;"><i class="fas fa-camera"></i> Bukti Transfer</h6>
-                            <div id="proofImageContainer" class="card" style="background: #f8f9fa; border: 2px dashed #ccc; min-height: 300px; display: flex; align-items: center; justify-content: center;">
-                                <div class="text-center text-muted">
-                                    <i class="bi bi-image" style="font-size: 48px;"></i>
-                                    <p>Loading...</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Payment Details Info -->
-                        <div class="col-md-6">
-                            <h6 style="font-weight: 600; margin-bottom: 12px;"><i class="fas fa-credit-card"></i> Informasi Pembayaran</h6>
-                            <div class="card p-3" style="background: #f8f9fa;">
-                                <div class="mb-3">
-                                    <small class="text-muted d-block">Nama Calon Mahasiswa</small>
-                                    <strong id="paymentStudentName">-</strong>
-                                </div>
-                                <div class="mb-3">
-                                    <small class="text-muted d-block">Jumlah Pembayaran</small>
-                                    <strong id="paymentAmount" style="color: #27ae60; font-size: 1.2rem;">-</strong>
-                                </div>
-                                <div class="mb-3">
-                                    <small class="text-muted d-block">Nama Bank</small>
-                                    <strong id="paymentBankName">-</strong>
-                                </div>
-                                <div class="mb-3">
-                                    <small class="text-muted d-block">Atas Nama</small>
-                                    <strong id="paymentAccountHolder">-</strong>
-                                </div>
-                                <div class="mb-3">
-                                    <small class="text-muted d-block">Tanggal Transfer</small>
-                                    <strong id="paymentTransactionDate">-</strong>
-                                </div>
-                                <div class="mb-3">
-                                    <small class="text-muted d-block">Status</small>
-                                    <div id="paymentStatus" style="margin-top: 6px;">-</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Admin Action Buttons -->
-                    <div class="mt-4" style="border-top: 1px solid #ddd; padding-top: 15px;">
-                        <h6 style="font-weight: 600; margin-bottom: 12px;"><i class="fas fa-bolt"></i> Tindakan Admin</h6>
-                        <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-success btn-sm" id="btnVerifyPayment" onclick="verifyManualPayment()">
-                                <i class="bi bi-check-circle"></i> Verifikasi (APPROVE)
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm" id="btnRejectPayment" onclick="showRejectPaymentReasonModal()">
-                                <i class="bi bi-x-circle"></i> Tolak (REJECT)
-                            </button>
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
-                                Tutup
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal: Reject Manual Payment (with Reason) -->
-    <div class="modal fade" id="rejectPaymentReasonModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header" style="background: #e74c3c; color: white; border: none;">
-                    <h5 class="modal-title" style="color: white;"><i class="bi bi-x-circle"></i> Tolak Pembayaran</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label" style="font-weight: 600;">Alasan Penolakan:</label>
-                        <textarea class="form-control" id="rejectPaymentReason" rows="4" placeholder="Jelaskan mengapa pembayaran ini ditolak..." style="border-radius: 6px; border: 2px solid #ddd;"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border-top: 1px solid #ddd;">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-danger" onclick="submitRejectPayment()">
-                        <i class="bi bi-check"></i> Tolak Pembayaran
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- <i class="fas fa-check-circle text-success"></i> MERGED INTO FIRST DOMCONTENTLOADED - NO DUPLICATE LISTENERS -->
     <script>
         // ===== CICILAN REQUEST MANAGEMENT FUNCTIONS =====
@@ -12463,12 +11742,27 @@
             allCicilanRequests.forEach(item => {
                 const row = document.createElement('tr');
                 const brivaDisplay = item.briva ? `<strong style="color: #27ae60;">${item.briva}</strong>` : '<span style="color: #e74c3c;"><i class="fas fa-times-circle text-danger"></i> Kosong</span>';
+                
+                // Derive which cicilans were selected from non-zero hargaCicilan values
+                const selectedNums = [];
+                if (item.hargaCicilan1 > 0) selectedNums.push(1);
+                if (item.hargaCicilan2 > 0) selectedNums.push(2);
+                if (item.hargaCicilan3 > 0) selectedNums.push(3);
+                if (item.hargaCicilan4 > 0) selectedNums.push(4);
+                if (item.hargaCicilan5 > 0) selectedNums.push(5);
+                if (item.hargaCicilan6 > 0) selectedNums.push(6);
+                const jumlahDisplay = selectedNums.length > 0 ? selectedNums.join(', ') : `${item.jumlahCicilan}x`;
+                
+                // Total of selected cicilans
+                const selectedTotal = (item.hargaCicilan1 || 0) + (item.hargaCicilan2 || 0) + (item.hargaCicilan3 || 0) + (item.hargaCicilan4 || 0) + (item.hargaCicilan5 || 0) + (item.hargaCicilan6 || 0);
+                const totalCicilanDisplay = selectedTotal > 0 ? selectedTotal : item.hargaPerCicilan;
+                
                 row.innerHTML = `
                     <td><strong>${item.studentName || '-'}</strong></td>
                     <td>${item.studentEmail || '-'}</td>
                     <td>${item.programStudiName || '-'}</td>
-                    <td style="text-align: center;"><strong>${item.jumlahCicilan}</strong>x</td>
-                    <td style="text-align: right;">Rp ${formatCurrencyInline(item.hargaPerCicilan)}</td>
+                    <td style="text-align: center;"><strong>${jumlahDisplay}</strong></td>
+                    <td style="text-align: right;">Rp ${formatCurrencyInline(totalCicilanDisplay)}</td>
                     <td style="text-align: right;">Rp ${formatCurrencyInline(item.hargaTotal)}</td>
                     <td style="text-align: center; background: #fff9e6;">${brivaDisplay}</td>
                     <td style="text-align: center;"><span class="badge bg-warning text-dark">${item.statusLabel || item.status}</span></td>
@@ -12892,12 +12186,26 @@
                 // Keterangan display
                 const keterangan = item.catatan ? `<small>${item.catatan.substring(0, 30)}${item.catatan.length > 30 ? '...' : ''}</small>` : '<span style="color: #999;">-</span>';
 
+                // Derive which cicilans were selected from non-zero hargaCicilan values
+                const selectedNums = [];
+                if (item.hargaCicilan1 > 0) selectedNums.push(1);
+                if (item.hargaCicilan2 > 0) selectedNums.push(2);
+                if (item.hargaCicilan3 > 0) selectedNums.push(3);
+                if (item.hargaCicilan4 > 0) selectedNums.push(4);
+                if (item.hargaCicilan5 > 0) selectedNums.push(5);
+                if (item.hargaCicilan6 > 0) selectedNums.push(6);
+                const jumlahDisplay = selectedNums.length > 0 ? selectedNums.join(', ') : `${item.jumlahCicilan}x`;
+                
+                // Total of selected cicilans
+                const selectedTotal = (item.hargaCicilan1 || 0) + (item.hargaCicilan2 || 0) + (item.hargaCicilan3 || 0) + (item.hargaCicilan4 || 0) + (item.hargaCicilan5 || 0) + (item.hargaCicilan6 || 0);
+                const totalCicilanDisplay = selectedTotal > 0 ? selectedTotal : item.hargaPerCicilan;
+
                 row.innerHTML = `
                     <td><strong>${item.studentName || '-'}</strong></td>
                     <td>${item.studentEmail || '-'}</td>
                     <td>${item.programStudiName || '-'}</td>
-                    <td style="text-align: center;"><strong>${item.jumlahCicilan}</strong>x</td>
-                    <td style="text-align: right;">Rp ${formatCurrencyInline(item.hargaPerCicilan)}</td>
+                    <td style="text-align: center;"><strong>${jumlahDisplay}</strong></td>
+                    <td style="text-align: right;">Rp ${formatCurrencyInline(totalCicilanDisplay)}</td>
                     <td style="text-align: right;">Rp ${formatCurrencyInline(item.hargaTotal)}</td>
                     <td style="text-align: center;">${brivaDisplay}</td>
                     <td style="text-align: center;"><span class="badge ${statusBadgeClass}">${statusText}</span></td>
@@ -12953,6 +12261,297 @@
         }
 
         console.log('✅ [HASIL VALIDASI CICILAN] Functions loaded: loadApprovedCicilanRequests');
+
+        // ===== VALIDASI UJIAN TAB FUNCTIONS =====
+        
+        function getExamAuthToken() {
+            if (authToken && authToken !== 'undefined' && authToken !== 'null') return authToken;
+            authToken = sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
+            return authToken;
+        }
+
+        function loadAllExamSubmissions() {
+            console.log('📋 [EXAM-VAL] Loading ALL exam submission tables...');
+            loadPendingExamSubmissions();
+            loadRejectedExamSubmissions();
+            loadApprovedExamSubmissions();
+        }
+
+        async function loadPendingExamSubmissions() {
+            const tbody = document.getElementById('examPendingBody');
+            try {
+                const token = getExamAuthToken();
+                console.log('📋 [EXAM-VAL] Loading PENDING... authToken:', token ? 'OK' : 'MISSING');
+                if (!token) {
+                    tbody.innerHTML = '<tr><td colspan="8" class="text-center text-danger py-4"><i class="bi bi-exclamation-triangle"></i> Token autentikasi tidak ditemukan. Silakan login ulang.</td></tr>';
+                    return;
+                }
+                const res = await fetch('/admin/exam-submissions?status=PENDING', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                console.log('📋 [EXAM-VAL] PENDING response:', res.status, res.ok);
+                if (!res.ok) {
+                    const errText = await res.text();
+                    console.error('❌ [EXAM-VAL] PENDING error body:', errText);
+                    throw new Error('HTTP ' + res.status);
+                }
+                const data = await res.json();
+                console.log('📋 [EXAM-VAL] PENDING data:', data.length, 'items');
+                
+                document.getElementById('examPendingCount').textContent = data.length;
+                
+                if (!data.length) {
+                    tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4"><i class="bi bi-inbox"></i> Tidak ada ujian yang menunggu validasi</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = data.map((item, i) => {
+                    const photoUrl = item.proofPhotoPath ? '/api/files/show?path=' + encodeURIComponent(item.proofPhotoPath.replace(/^\//, '')) : '';
+                    return `
+                    <tr>
+                        <td class="text-center">${i + 1}</td>
+                        <td><strong>${item.studentName || '-'}</strong></td>
+                        <td><small>${item.studentEmail || '-'}</small></td>
+                        <td class="text-center"><span class="badge bg-primary">${item.gformScore != null ? item.gformScore : '-'}</span></td>
+                        <td class="text-center">
+                            <code style="font-size:11px;">${item.generatedToken || '-'}</code>
+                        </td>
+                        <td class="text-center">
+                            ${photoUrl 
+                                ? '<img src="' + photoUrl + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid #27ae60;" onclick="viewExamDetail(' + item.id + ', ' + item.studentId + ')" />' 
+                                : '<span class="badge bg-secondary">-</span>'}
+                        </td>
+                        <td><small>${item.submissionDate ? new Date(item.submissionDate).toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '-'}</small></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-sm btn-success" onclick="approveExamSubmission(${item.id}, '${(item.studentName||'').replace(/'/g,"\\'")}')">
+                                    <i class="bi bi-check-lg"></i> Terima
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="rejectExamSubmission(${item.id}, '${(item.studentName||'').replace(/'/g,"\\'")}')">
+                                    <i class="bi bi-x-lg"></i> Tolak
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="viewExamDetail(${item.id}, ${item.studentId})">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `}).join('');
+                
+                console.log('✅ [EXAM-VAL] Loaded', data.length, 'pending exam submissions');
+            } catch (error) {
+                console.error('❌ [EXAM-VAL] Error loading pending:', error);
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-danger py-4"><i class="bi bi-exclamation-triangle"></i> Gagal memuat data: ' + error.message + '</td></tr>';
+            }
+        }
+
+        async function loadRejectedExamSubmissions() {
+            const tbody = document.getElementById('examRejectedBody');
+            try {
+                const token = getExamAuthToken();
+                console.log('📋 [EXAM-VAL] Loading REJECTED... authToken:', token ? 'OK' : 'MISSING');
+                if (!token) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-danger py-4"><i class="bi bi-exclamation-triangle"></i> Token autentikasi tidak ditemukan.</td></tr>';
+                    return;
+                }
+                const res = await fetch('/admin/exam-submissions?status=REJECTED', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                
+                document.getElementById('examRejectedCount').textContent = data.length;
+                
+                if (!data.length) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4"><i class="bi bi-inbox"></i> Tidak ada ujian yang ditolak</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = data.map((item, i) => `
+                    <tr>
+                        <td class="text-center">${i + 1}</td>
+                        <td><strong>${item.studentName || '-'}</strong></td>
+                        <td><small>${item.studentEmail || '-'}</small></td>
+                        <td class="text-center"><span class="badge bg-primary">${item.gformScore != null ? item.gformScore : '-'}</span></td>
+                        <td class="text-center">
+                            <code style="font-size:11px;">${item.generatedToken || '-'}</code>
+                        </td>
+                        <td><small>${item.submissionDate ? new Date(item.submissionDate).toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric'}) : '-'}</small></td>
+                        <td><small class="text-danger">${item.adminNotes || '-'}</small></td>
+                    </tr>
+                `).join('');
+                
+                console.log('✅ [EXAM-VAL] Loaded', data.length, 'rejected exam submissions');
+            } catch (error) {
+                console.error('❌ [EXAM-VAL] Error loading rejected:', error);
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-danger py-4"><i class="bi bi-exclamation-triangle"></i> Gagal memuat data: ' + error.message + '</td></tr>';
+            }
+        }
+
+        async function loadApprovedExamSubmissions() {
+            const tbody = document.getElementById('examApprovedBody');
+            try {
+                const token = getExamAuthToken();
+                console.log('📋 [EXAM-VAL] Loading APPROVED... authToken:', token ? 'OK' : 'MISSING');
+                if (!token) {
+                    tbody.innerHTML = '<tr><td colspan="8" class="text-center text-danger py-4"><i class="bi bi-exclamation-triangle"></i> Token autentikasi tidak ditemukan.</td></tr>';
+                    return;
+                }
+                const res = await fetch('/admin/exam-submissions?status=APPROVED', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                
+                document.getElementById('examApprovedCount').textContent = data.length;
+                
+                if (!data.length) {
+                    tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4"><i class="bi bi-inbox"></i> Belum ada ujian yang divalidasi</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = data.map((item, i) => {
+                    const photoUrl = item.proofPhotoPath ? '/api/files/show?path=' + encodeURIComponent(item.proofPhotoPath.replace(/^\//, '')) : '';
+                    return `
+                    <tr>
+                        <td class="text-center">${i + 1}</td>
+                        <td><strong>${item.studentName || '-'}</strong></td>
+                        <td><small>${item.studentEmail || '-'}</small></td>
+                        <td class="text-center"><span class="badge bg-success">${item.gformScore != null ? item.gformScore : '-'}</span></td>
+                        <td class="text-center">
+                            <code style="font-size:11px;">${item.generatedToken || '-'}</code>
+                        </td>
+                        <td class="text-center">
+                            ${photoUrl 
+                                ? '<img src="' + photoUrl + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid #27ae60;" onclick="viewExamDetail(' + item.id + ', ' + item.studentId + ')" />' 
+                                : '<span class="badge bg-secondary">-</span>'}
+                        </td>
+                        <td><small>${item.submissionDate ? new Date(item.submissionDate).toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric'}) : '-'}</small></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewExamDetail(${item.id}, ${item.studentId})">
+                                <i class="bi bi-eye"></i> Detail
+                            </button>
+                        </td>
+                    </tr>
+                `}).join('');
+                
+                console.log('✅ [EXAM-VAL] Loaded', data.length, 'approved exam submissions');
+            } catch (error) {
+                console.error('❌ [EXAM-VAL] Error loading approved:', error);
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-danger py-4"><i class="bi bi-exclamation-triangle"></i> Gagal memuat data: ' + error.message + '</td></tr>';
+            }
+        }
+
+        async function approveExamSubmission(examId, studentName) {
+            const notes = prompt(`Terima ujian dari "${studentName}"?\n\nCatatan admin (opsional):`);
+            if (notes === null) return; // cancelled
+            
+            try {
+                const res = await fetch(`/admin/exam-submissions/${examId}/validate`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': 'Bearer ' + getExamAuthToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action: 'APPROVE', adminNotes: notes || '' })
+                });
+                
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Gagal menerima ujian');
+                
+                alert('✅ Ujian dari "' + studentName + '" berhasil diterima!');
+                loadPendingExamSubmissions();
+                loadApprovedExamSubmissions();
+            } catch (error) {
+                alert('❌ Gagal: ' + error.message);
+            }
+        }
+
+        async function rejectExamSubmission(examId, studentName) {
+            const notes = prompt(`Tolak ujian dari "${studentName}"?\n\nAlasan penolakan (wajib):`);
+            if (notes === null) return; // cancelled
+            if (!notes.trim()) {
+                alert('⚠️ Alasan penolakan wajib diisi!');
+                return;
+            }
+            
+            try {
+                const res = await fetch(`/admin/exam-submissions/${examId}/validate`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': 'Bearer ' + getExamAuthToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action: 'REJECT', adminNotes: notes })
+                });
+                
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Gagal menolak ujian');
+                
+                alert('✅ Ujian dari "' + studentName + '" ditolak.');
+                loadPendingExamSubmissions();
+                loadRejectedExamSubmissions();
+            } catch (error) {
+                alert('❌ Gagal: ' + error.message);
+            }
+        }
+
+        async function viewExamDetail(examId, studentId) {
+            try {
+                const res = await fetch(`/admin/exam-submissions/${examId}`, {
+                    headers: { 'Authorization': 'Bearer ' + getExamAuthToken() }
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const d = await res.json();
+                
+                let photoHtml = '';
+                if (d.proofPhotoPath) {
+                    const cleanPath = encodeURIComponent(d.proofPhotoPath.replace(/^\//, ''));
+                    photoHtml = `
+                        <div style="margin-top:15px;">
+                            <strong>Bukti Foto Ujian:</strong><br>
+                            <img src="/api/files/show?path=${cleanPath}" 
+                                 style="width:100%; max-height:500px; border-radius:8px; cursor:pointer; border:2px solid #27ae60; object-fit:contain; margin-top:8px;"
+                                 onclick="window.open(this.src, '_blank')" alt="Bukti Ujian" />
+                        </div>`;
+                } else {
+                    photoHtml = '<div style="margin-top:15px;"><strong>Bukti Foto:</strong> <span class="text-muted">(tidak ada)</span></div>';
+                }
+                
+                const detailHtml = `
+                    <div style="padding:20px;">
+                        <h5 style="border-bottom:2px solid #27ae60; padding-bottom:10px; color:#1a472a;">
+                            <i class="bi bi-file-earmark-check"></i> Detail Ujian - ${d.studentName || '-'}
+                        </h5>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <p><strong>Email:</strong> ${d.studentEmail || '-'}</p>
+                                <p><strong>Nilai GForm:</strong> <span class="badge bg-primary">${d.gformScore != null ? d.gformScore : '-'}</span></p>
+                                <p><strong>Token Input:</strong> <code>${d.studentInputToken || '-'}</code></p>
+                                <p><strong>Token Generated:</strong> <code>${d.generatedToken || '-'}</code></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Token Valid:</strong> ${d.tokenValidated ? '<span class="badge bg-success">Valid</span>' : '<span class="badge bg-danger">Invalid</span>'}</p>
+                                <p><strong>Status:</strong> <span class="badge ${d.validationStatus === 'APPROVED' ? 'bg-success' : d.validationStatus === 'REJECTED' ? 'bg-danger' : 'bg-warning text-dark'}">${d.validationStatus || 'PENDING'}</span></p>
+                                <p><strong>Tanggal Submit:</strong> ${d.submissionDate ? new Date(d.submissionDate).toLocaleDateString('id-ID', {day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '-'}</p>
+                                <p><strong>Catatan Admin:</strong> ${d.adminNotes || '-'}</p>
+                            </div>
+                        </div>
+                        ${photoHtml}
+                    </div>`;
+                
+                // Ensure modal exists (created dynamically by other code)
+                if (typeof createDetailsModal === 'function') createDetailsModal();
+                document.getElementById('detailsModalBody').innerHTML = detailHtml;
+                const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                modal.show();
+            } catch (error) {
+                console.error('❌ [EXAM-DETAIL] Error:', error);
+                alert('Gagal membuka detail ujian: ' + error.message);
+            }
+        }
+
+        console.log('✅ [VALIDASI UJIAN] Functions loaded');
 
         console.log('✅ [FINAL] All scripts loaded. Functions should be available on window.');
         console.log('📊 [SUMMARY] Functions registered:');
@@ -13016,7 +12615,7 @@
                                 <div style="padding: 10px; background: #f8f9fa; border-radius: 5px; margin-top: 5px;" id="installmentDetailCount">-</div>
                             </div>
                             <div>
-                                <label style="font-weight: 600; color: #333;"><i class="fas fa-coins"></i> Harga Per Cicilan</label>
+                                <label style="font-weight: 600; color: #333;"><i class="fas fa-coins"></i> Total Cicilan Dipilih</label>
                                 <div style="padding: 10px; background: #f8f9fa; border-radius: 5px; margin-top: 5px; font-weight: 600; color: #d63031;" id="installmentDetailPrice">-</div>
                             </div>
                             <div>

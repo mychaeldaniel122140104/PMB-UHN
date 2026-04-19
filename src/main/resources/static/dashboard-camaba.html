@@ -1728,14 +1728,28 @@
                     console.warn('⚠️ Could not fetch admission form for wave type:', e.message);
                 }
 
-                updateUIFromRegistrationStatus(statusMap, waveTypeFromForm);
+                // ✅ NEW: Fetch exam validation status before updating UI
+                let examValidationData = null;
+                try {
+                    const examValRes = await fetch('/api/camaba/exam-validation-status', {
+                        headers: { 'Authorization': 'Bearer ' + currentAuthToken }
+                    });
+                    if (examValRes.ok) {
+                        examValidationData = await examValRes.json();
+                        console.log('✅ Exam validation status:', examValidationData);
+                    }
+                } catch (evErr) {
+                    console.warn('⚠️ Could not fetch exam validation status:', evErr.message);
+                }
+
+                updateUIFromRegistrationStatus(statusMap, waveTypeFromForm, examValidationData);
             } catch (error) {
                 console.error('❌ Error loading registration status:', error);
                 updateUIForNoForm();
             }
         }
 
-        function updateUIFromRegistrationStatus(statusMap, waveTypeFromForm) {
+        function updateUIFromRegistrationStatus(statusMap, waveTypeFromForm, examValidationData) {
             // Update gelombang & formula selection status
             const gelombangStatus = statusMap['GELOMBANG_SELECTION'];
             const formulaStatus = statusMap['FORMULA_SELECTION'];
@@ -1882,11 +1896,28 @@
                 cicilanCanAccess = false;
                 cicilanLockReason = 'Menunggu Pembayaran BRIVA';
             } else if (displayWaveType === 'REGULAR_TEST') {
-                // REGULAR_TEST mode: Check if exam is completed
+                // REGULAR_TEST mode: Check if exam is completed AND validated by admin
                 if (psychoStatus && psychoStatus.status === 'SELESAI') {
-                    // Ujian sudah selesai - cicilan dapat diakses
-                    cicilanCanAccess = true;
-                    console.log('✅ REGULAR_TEST: Ujian selesai → Cicilan UNLOCK');
+                    // Ujian sudah selesai - check exam validation status
+                    const evStatus = examValidationData?.validationStatus;
+                    if (evStatus === 'APPROVED') {
+                        // Ujian selesai dan diterima admin → cicilan unlock
+                        cicilanCanAccess = true;
+                        console.log('✅ REGULAR_TEST: Ujian selesai + APPROVED → Cicilan UNLOCK');
+                    } else if (evStatus === 'REJECTED') {
+                        cicilanCanAccess = false;
+                        cicilanLockReason = 'Ujian Ditolak oleh Admin';
+                        console.log('❌ REGULAR_TEST: Ujian REJECTED → Cicilan LOCK');
+                    } else if (evStatus === 'REVISI') {
+                        cicilanCanAccess = false;
+                        cicilanLockReason = 'Ujian Perlu Revisi';
+                        console.log('🔄 REGULAR_TEST: Ujian REVISI → Cicilan LOCK');
+                    } else {
+                        // PENDING or no data - waiting admin validation
+                        cicilanCanAccess = false;
+                        cicilanLockReason = 'Menunggu Validasi Ujian oleh Admin';
+                        console.log('⏳ REGULAR_TEST: Ujian menunggu validasi → Cicilan LOCK');
+                    }
                 } else {
                     // Ujian belum selesai - lock cicilan
                     cicilanCanAccess = false;
@@ -2109,10 +2140,26 @@
                 // <i class="fas fa-check-circle text-success"></i> NEW: Update ujian-item status based on psychoStatus
                 if (ujianBadge) {
                     if (psychoStatus && psychoStatus.status === 'SELESAI') {
-                        console.log('✅ Exam COMPLETED - updating ujian-item to completed state');
-                        ujianItem.className = 'progress-item completed';
-                        ujianBadge.className = 'status-badge badge-completed';
-                        ujianBadge.innerHTML = '<i class="fas fa-check-circle"></i> Ujian Selesai';
+                        const evStatus = examValidationData?.validationStatus;
+                        if (evStatus === 'APPROVED') {
+                            ujianItem.className = 'progress-item completed';
+                            ujianBadge.className = 'status-badge badge-completed';
+                            ujianBadge.innerHTML = '<i class="fas fa-check-circle"></i> Ujian Diterima';
+                        } else if (evStatus === 'REJECTED') {
+                            ujianItem.className = 'progress-item warning';
+                            ujianBadge.className = 'status-badge';
+                            ujianBadge.style.cssText = 'background:#f8d7da;color:#721c24;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:600;';
+                            ujianBadge.innerHTML = '<i class="fas fa-times-circle"></i> Ujian Ditolak';
+                        } else if (evStatus === 'REVISI') {
+                            ujianItem.className = 'progress-item pending';
+                            ujianBadge.className = 'status-badge';
+                            ujianBadge.style.cssText = 'background:#fff3cd;color:#856404;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:600;';
+                            ujianBadge.innerHTML = '<i class="fas fa-redo"></i> Perlu Revisi';
+                        } else {
+                            ujianItem.className = 'progress-item pending';
+                            ujianBadge.className = 'status-badge badge-pending';
+                            ujianBadge.innerHTML = '<i class="fas fa-hourglass-half"></i> Menunggu Validasi Admin';
+                        }
                     } else {
                         console.log('⏳ Exam NOT COMPLETED - keeping ujian-item as pending');
                         ujianItem.className = 'progress-item pending';
@@ -2146,17 +2193,26 @@
                         let actionHTML = '';
                         
                         if (displayWaveType === 'REGULAR_TEST') {
-                            // <i class="fas fa-check-circle text-success"></i> REGULAR_TEST MODE: Check if ujian is selesai
                             if (psychoStatus && psychoStatus.status === 'SELESAI') {
-                                // Ujian sudah selesai - show cicilan button
-                                statusMessage = 'Bayar Cicilan 1 untuk Daftar Ulang';
-                                actionHTML = '<button class="action-btn btn-primary-action" onclick="proceedToCicilanPayment()" style="background: #e67e22;"><i class="fas fa-credit-card"></i> Bayar Cicilan 1</button>';
-                                console.log('✅ REGULAR_TEST: Ujian selesai → Show cicilan button');
+                                const evStatus = examValidationData?.validationStatus;
+                                if (evStatus === 'APPROVED') {
+                                    statusMessage = 'Bayar Cicilan 1 untuk Daftar Ulang';
+                                    actionHTML = '<button class="action-btn btn-primary-action" onclick="proceedToCicilanPayment()" style="background: #e67e22;"><i class="fas fa-credit-card"></i> Bayar Cicilan 1</button>';
+                                } else if (evStatus === 'REJECTED') {
+                                    const notes = examValidationData?.adminNotes || 'Ujian ditolak oleh admin';
+                                    statusMessage = 'Ujian Ditolak';
+                                    actionHTML = '<div style="background:#f8d7da;color:#721c24;padding:15px;border-radius:8px;text-align:left;"><i class="fas fa-times-circle"></i> <strong>Ujian Ditolak</strong><br><small>' + notes + '</small></div>';
+                                } else if (evStatus === 'REVISI') {
+                                    const notes = examValidationData?.adminNotes || 'Silahkan perbaiki ujian';
+                                    statusMessage = 'Ujian Perlu Revisi';
+                                    actionHTML = '<div style="background:#fff3cd;color:#856404;padding:15px;border-radius:8px;text-align:left;"><i class="fas fa-redo"></i> <strong>Perlu Revisi</strong><br><small>' + notes + '</small></div><button class="action-btn btn-primary-action" onclick="window.location.href=\'/ujian.html\'" style="background:#e67e22;margin-top:10px;"><i class="fas fa-redo"></i> Revisi Ujian</button>';
+                                } else {
+                                    statusMessage = 'Menunggu Validasi Ujian oleh Admin';
+                                    actionHTML = '<button class="action-btn btn-primary-action" style="background: #3498db; cursor: default;"><i class="fas fa-hourglass-half"></i> Menunggu Validasi</button>';
+                                }
                             } else {
-                                // Ujian belum selesai - show ujian button
                                 statusMessage = 'Persiapkan Ujian Psikologi';
                                 actionHTML = '<button class="action-btn btn-primary-action" onclick="window.location.href=\'/ujian.html\'"><i class="fas fa-pen-fancy"></i> Mulai Ujian Psikologi</button>';
-                                console.log('⏳ REGULAR_TEST: Ujian belum selesai → Show ujian button');
                             }
                         } else {
                             // <i class="fas fa-check-circle text-success"></i> NON-TEST MODE (EARLY_NO_TEST, RANKING_NO_TEST): Show cicilan button directly
@@ -2535,7 +2591,7 @@
                     validationStatusSection.style.backgroundColor = sectionBg;
                     validationStatusSection.style.borderLeftColor = sectionBorder;
                     validationStatusIcon.innerHTML = statusIcon;
-                    validationStatusMessage.textContent = statusMsg;
+                    validationStatusMessage.innerHTML = statusMsg;
                 }
             }
             
@@ -5096,7 +5152,7 @@
         });
 
         // <i class="fas fa-check-circle text-success"></i> NEW: Unlock dan tampilkan Hasil Akhir (Virtual Account & Nomor Registrasi) - Enable saat DIVALIDASI
-        function unlockHasilAkhir() {
+        async function unlockHasilAkhir() {
             const hasilAkhirItem = document.getElementById('hasil-akhir-item');
             const viewButton = document.getElementById('btn-view-hasil');
             const hasilAkhirStatus = document.getElementById('hasil-akhir-status');
@@ -5104,6 +5160,39 @@
             if (!hasilAkhirItem) {
                 console.error('❌ hasil-akhir-item element not found!');
                 return;
+            }
+
+            // Check publication schedule first
+            const periodId = localStorage.getItem('selectedPeriodId') || '1';
+            try {
+                const pubRes = await fetch(`/api/public/publication-status/${periodId}`);
+                if (pubRes.ok) {
+                    const pubData = await pubRes.json();
+                    if (pubData.hasSchedule && !pubData.resultsVisible) {
+                        // Results not yet published — show scheduled time
+                        hasilAkhirItem.style.opacity = '1';
+                        hasilAkhirItem.style.pointerEvents = 'auto';
+                        if (hasilAkhirStatus) {
+                            const dt = new Date(pubData.publishDateTime);
+                            const dtStr = dt.toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' });
+                            hasilAkhirStatus.className = 'status-badge badge-pending';
+                            hasilAkhirStatus.innerHTML = '<i class="fas fa-clock"></i> Diumumkan: ' + dtStr;
+                        }
+                        if (viewButton) {
+                            viewButton.style.pointerEvents = 'none';
+                            viewButton.style.cursor = 'not-allowed';
+                            viewButton.style.opacity = '0.6';
+                            viewButton.style.background = '#95a5a6';
+                            viewButton.disabled = true;
+                        }
+                        const actionsContainer = document.getElementById('hasil-akhir-actions');
+                        if (actionsContainer) actionsContainer.style.display = 'flex';
+                        console.log('⏳ Hasil belum dipublikasikan, dijadwalkan:', pubData.publishDateTime);
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not check publication status:', e);
             }
             
             // Enable item: remove opacity and pointer-events restriction
@@ -5158,6 +5247,8 @@
                 let nomorRegistrasi = 'Tidak ditemukan';
                 let cicilanStatus = '<i class="fas fa-exclamation-triangle text-warning"></i> Tidak ada data cicilan';
                 let reenrollmentStatus = '<i class="fas fa-exclamation-triangle text-warning"></i> Tidak ada data daftar ulang';
+                let npmSementaraFile = null;
+                let ktmSementaraFile = null;
                 
                 // <i class="fas fa-thumbtack"></i> STEP 1: Fetch dari HASIL_AKHIR table via /api/camaba/hasil-akhir
                 try {
@@ -5180,6 +5271,12 @@
                         }
                         if (hasilAkhirData.nomorRegistrasi && hasilAkhirData.nomorRegistrasi !== 'N/A') {
                             nomorRegistrasi = hasilAkhirData.nomorRegistrasi;
+                        }
+                        if (hasilAkhirData.npmSementaraFile) {
+                            npmSementaraFile = hasilAkhirData.npmSementaraFile;
+                        }
+                        if (hasilAkhirData.ktmSementaraFile) {
+                            ktmSementaraFile = hasilAkhirData.ktmSementaraFile;
                         }
                         if (hasilAkhirData.status) {
                             reenrollmentStatus = '<i class="fas fa-check-circle text-success"></i> ' + hasilAkhirData.status;
@@ -5225,7 +5322,7 @@
                 console.log('  - Nomor Registrasi:', nomorRegistrasi);
                 
                 // <i class="fas fa-thumbtack"></i> STEP 3: Display modal dengan hasil akhir
-                showHasilAkhirModal(virtualAccount, nomorRegistrasi, cicilanStatus, reenrollmentStatus);
+                showHasilAkhirModal(virtualAccount, nomorRegistrasi, cicilanStatus, reenrollmentStatus, npmSementaraFile, ktmSementaraFile);
                 
             } catch (error) {
                 console.error('❌ Error in viewHasilAkhir():', error);
@@ -5234,7 +5331,7 @@
         }
 
         // <i class="fas fa-check-circle text-success"></i> NEW: Show modal dengan hasil akhir (Virtual Account & Nomor Registrasi)
-        function showHasilAkhirModal(virtualAccount, nomorRegistrasi, cicilanStatus, reenrollmentStatus) {
+        function showHasilAkhirModal(virtualAccount, nomorRegistrasi, cicilanStatus, reenrollmentStatus, npmSementaraFile, ktmSementaraFile) {
             try {
                 console.log('🎬 Creating modal for hasil akhir...');
                 
@@ -5275,25 +5372,50 @@
                                 </button>
                             </div>
                             
-                            <!-- Nomor Registrasi -->
-                            <div style="margin-bottom: 25px; padding: 15px; background: #f0fff0; border-left: 4px solid #27ae60; border-radius: 4px;">
-                                <label style="display: block; font-size: 12px; font-weight: 700; color: #555; margin-bottom: 8px; text-transform: uppercase;">
-                                    <i class="fas fa-id-card" style="margin-right: 5px;"></i> Nomor Registrasi Akademik
+                            <!-- Dokumen Daftar Ulang -->
+                            ${(npmSementaraFile || ktmSementaraFile) ? `
+                            <div style="margin-bottom: 25px; padding: 15px; background: #fef9e6; border-left: 4px solid #f39c12; border-radius: 4px;">
+                                <label style="display: block; font-size: 12px; font-weight: 700; color: #555; margin-bottom: 12px; text-transform: uppercase;">
+                                    <i class="fas fa-file-pdf" style="margin-right: 5px; color: #e74c3c;"></i> Dokumen Daftar Ulang
                                 </label>
-                                <div style="font-size: 20px; font-weight: 700; color: #27ae60; font-family: 'Courier New', monospace; letter-spacing: 2px; margin-bottom: 10px; word-break: break-all;">
-                                    ${nomorRegistrasi}
-                                </div>
-                                <small style="color: #666;">${reenrollmentStatus}</small>
-                                <button onclick="copyToClipboard('${nomorRegistrasi}')" style="display: block; margin-top: 10px; padding: 6px 12px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; pointer-events: auto;">
-                                    <i class="fas fa-copy"></i> Salin No. Registrasi
-                                </button>
+                                ${npmSementaraFile ? `
+                                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                                    <a href="/api/files/view/${npmSementaraFile}" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: #3498db; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px;">
+                                        <i class="fas fa-eye"></i> Lihat Dokumen
+                                    </a>
+                                    <a href="/api/files/view/${npmSementaraFile}?download=true" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: #27ae60; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px;">
+                                        <i class="fas fa-download"></i> Download PDF
+                                    </a>
+                                </div>` : ''}
+                                ${ktmSementaraFile ? `
+                                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                                    <a href="/api/files/view/${ktmSementaraFile}" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: #3498db; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px;">
+                                        <i class="fas fa-eye"></i> Lihat KTM Sementara
+                                    </a>
+                                    <a href="/api/files/view/${ktmSementaraFile}?download=true" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: #27ae60; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px;">
+                                        <i class="fas fa-download"></i> Download PDF
+                                    </a>
+                                </div>` : ''}
+                                <p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">
+                                    <i class="fas fa-info-circle"></i> Klik "Lihat" untuk membuka di tab baru, atau "Download" untuk mengunduh file
+                                </p>
                             </div>
+                            ` : `
+                            <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-left: 4px solid #ccc; border-radius: 4px;">
+                                <label style="display: block; font-size: 12px; font-weight: 700; color: #999; margin-bottom: 8px; text-transform: uppercase;">
+                                    <i class="fas fa-file-pdf" style="margin-right: 5px;"></i> Dokumen Daftar Ulang
+                                </label>
+                                <p style="margin: 0; font-size: 13px; color: #999;">
+                                    <i class="fas fa-info-circle"></i> Belum ada dokumen yang diupload
+                                </p>
+                            </div>
+                            `}
                             
                             <!-- Info -->
                             <div style="padding: 15px; background: #fff9e6; border-left: 4px solid #f39c12; border-radius: 4px; margin-bottom: 20px;">
                                 <p style="margin: 0; font-size: 13px; color: #666; line-height: 1.6;">
                                     <i class="fas fa-info-circle" style="color: #f39c12; margin-right: 5px;"></i>
-                                    <strong>Gunakan nomor registrasi ini</strong> untuk mendapatkan NPM di bagian akademik. 
+                                    <strong>Gunakan Dokumen ini</strong> untuk mendapatkan NPM di bagian akademik. 
                                     Virtual Account BRIVA dapat digunakan untuk pembayaran cicilan berikutnya.
                                 </p>
                             </div>

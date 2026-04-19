@@ -20,6 +20,11 @@ public class CicilanRequestDTO {
     private Long admissionFormId;
     private Integer jumlahCicilan;
     private Long hargaCicilan1;
+    private Long hargaCicilan2;
+    private Long hargaCicilan3;
+    private Long hargaCicilan4;
+    private Long hargaCicilan5;
+    private Long hargaCicilan6;
     private Long hargaTotal;
     private Long hargaPerCicilan;
     private String briva;

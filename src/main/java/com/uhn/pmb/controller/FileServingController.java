@@ -28,7 +28,8 @@ public class FileServingController {
      * Example: GET /api/files/view/uploads/admission-forms/1/photo.jpg
      */
     @GetMapping("/view/**")
-    public ResponseEntity<?> viewFile(HttpServletRequest request) {
+    public ResponseEntity<?> viewFile(HttpServletRequest request,
+            @RequestParam(value = "download", required = false) boolean download) {
         try {
             // Extract the actual file path from URL
             // /api/files/view/uploads/admission-forms/1/photo.jpg -> uploads/admission-forms/1/photo.jpg
@@ -86,9 +87,10 @@ public class FileServingController {
             log.info("✅ Serving file: {} ({})", fileName, mediaType);
             
             Resource resource = new FileSystemResource(file);
+            String disposition = download ? "attachment" : "inline";
             return ResponseEntity.ok()
                     .contentType(mediaType)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, disposition + "; filename=\"" + fileName + "\"")
                     .body(resource);
                     
         } catch (Exception e) {

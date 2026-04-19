@@ -448,24 +448,6 @@
             font-weight: 500;
         }
 
-        .manual-upload-section {
-            background: linear-gradient(135deg, #fafbfc 0%, #f8f9fa 100%);
-            border: 2px solid rgba(39, 174, 96, 0.15);
-            border-radius: 16px;
-            padding: 35px;
-            margin-bottom: 30px;
-            display: none;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-        }
-
-        .manual-upload-section h3 {
-            color: var(--primary);
-            margin-bottom: 25px;
-            font-weight: 800;
-            font-size: 20px;
-            letter-spacing: -0.5px;
-        }
-
         .bank-info-box {
             background: linear-gradient(135deg, white 0%, #f9fafb 100%);
             border: 2px solid rgba(39, 174, 96, 0.15);
@@ -863,11 +845,6 @@
                     <h4>Virtual Account (BRIVA)</h4>
                     <p>Transfer via rekening virtual<br>Konfirmasi otomatis instan</p>
                 </div>
-                <div class="method-card" id="methodManual" onclick="openManualModal()" style="cursor: pointer;">
-                    <div class="method-card-icon"><i class="fas fa-camera"></i></div>
-                    <h4>Manual Upload</h4>
-                    <p>Transfer ke rekening kami<br>Upload bukti pembayaran</p>
-                </div>
             </div>
 
             <!-- MODAL: Virtual Account (BRIVA) -->
@@ -925,76 +902,6 @@
                             </button>
                             <button class="btn-action btn-secondary-custom" onclick="closeBrivaModal()" style="flex: 1;">
                                 <i class="fas fa-arrow-left"></i> Kembali Pilih Metode
-                            </button>
-                        </div>
-                        <div style="text-align: center; margin-top: 15px;">
-                            <a href="/dashboard-camaba.html" class="btn-action btn-secondary-custom" style="text-decoration: none; background: #f3f4f6;">
-                                <i class="fas fa-home"></i> Kembali ke Dashboard
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- MODAL: Manual Upload -->
-            <div class="modal-overlay" id="manualModal" onclick="closeManualModal(event)">
-                <div class="modal-content" onclick="event.stopPropagation()">
-                    <div class="modal-header">
-                        <h2><i class="fas fa-file-upload"></i> Unggah Bukti Pembayaran</h2>
-                        <button class="modal-close" onclick="closeManualModal()">✕</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="bank-info-box">
-                            <h4 style="color: var(--primary); margin-bottom: 15px; font-weight: 700;">Rekening Penerima</h4>
-                            <div class="bank-info-row">
-                                <span class="bank-info-label">Bank</span>
-                                <span class="bank-info-value" id="bankName">BRI (Bank Rakyat Indonesia)</span>
-                            </div>
-                            <div class="bank-info-row">
-                                <span class="bank-info-label">Nomor Rekening</span>
-                                <span class="bank-info-value" id="bankAccount">8860303528126699</span>
-                            </div>
-                            <div class="bank-info-row">
-                                <span class="bank-info-label">Atas Nama</span>
-                                <span class="bank-info-value" id="bankHolder">HKBP NOMMENSEN</span>
-                            </div>
-                            <div class="bank-info-row">
-                                <span class="bank-info-label">Jumlah Transfer</span>
-                                <span class="bank-info-value">Rp <span id="manualPaymentAmount">0</span></span>
-                            </div>
-                        </div>
-
-                        <div class="instructions">
-                            <h4><i class="fas fa-info-circle"></i> Langkah-Langkah</h4>
-                            <ol>
-                                <li><strong>Buka aplikasi perbankan</strong> Anda (BRI Mobile, m-BRI, atau ATM)</li>
-                                <li><strong>Transfer uang</strong> ke rekening penerima di atas</li>
-                                <li><strong>Catat nomor referensi</strong> atau simpan bukti transfer</li>
-                                <li><strong>Unggah bukti pembayaran</strong> (screenshot atau foto struk) di bawah ini</li>
-                                <li><strong>Tunggu verifikasi</strong> dari admin (biasanya dalam 1-2 jam)</li>
-                            </ol>
-                        </div>
-
-                        <div class="file-upload-area" id="fileUploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" onclick="document.getElementById('fileInput').click()">
-                            <div class="file-upload-icon"><i class="fas fa-upload"></i></div>
-                            <p><strong>Klik untuk pilih file</strong> atau drag & drop di sini</p>
-                            <p class="small">Format: JPG, PNG, PDF • Maksimal 10 MB</p>
-                        </div>
-                        <input type="file" id="fileInput" style="display: none;" accept="image/jpeg,image/png,application/pdf" onchange="handleFileSelect(event)">
-
-                        <div class="image-preview" id="imagePreview" style="display: none;">
-                            <img id="previewImg" src="" alt="Preview">
-                            <div class="image-preview-remove">
-                                <button onclick="removeFilePreview()"><i class="fas fa-trash"></i> Hapus Gambar</button>
-                            </div>
-                        </div>
-
-                        <div style="display: flex; gap: 10px; margin-top: 25px;">
-                            <button class="btn-action btn-primary-custom" id="submitManualBtn" onclick="submitManualPayment()" disabled style="opacity: 0.6; flex: 1;">
-                                <i class="fas fa-check"></i> Kirim Bukti Pembayaran
-                            </button>
-                            <button class="btn-action btn-secondary-custom" onclick="closeManualModal()">
-                                <i class="fas fa-arrow-left"></i> Kembali
                             </button>
                         </div>
                         <div style="text-align: center; margin-top: 15px;">
@@ -1174,7 +1081,6 @@
         let checkCount = 0;
         const MAX_CHECKS = 120; // 10 menit dengan interval 5 detik
         let selectedPaymentMethod = 'BRIVA'; // Default method
-        let selectedFile = null;
 
         // <i class="fas fa-check-circle text-success"></i> MODAL FUNCTIONS
         function openBrivaModal() {
@@ -1194,198 +1100,6 @@
             checkCount = 0; // Reset check counter
             if (checkPaymentInterval) clearInterval(checkPaymentInterval);
             console.log('🏦 BRIVA modal closed');
-        }
-
-        function openManualModal() {
-            selectedPaymentMethod = 'MANUAL';
-            document.getElementById('manualModal').classList.add('show');
-            console.log('📸 Manual modal opened');
-        }
-
-        function closeManualModal(event) {
-            // Jika klik di luar modal, tutup
-            if (event && event.target !== document.getElementById('manualModal')) return;
-            document.getElementById('manualModal').classList.remove('show');
-            selectedFile = null;
-            document.getElementById('fileInput').value = '';
-            document.getElementById('imagePreview').style.display = 'none';
-            console.log('📸 Manual modal closed');
-        }
-
-        // <i class="fas fa-check-circle text-success"></i> FILE UPLOAD HANDLING
-        function handleDragOver(e) {
-            e.preventDefault();
-            document.getElementById('fileUploadArea').classList.add('drag-over');
-        }
-
-        function handleDragLeave(e) {
-            e.preventDefault();
-            document.getElementById('fileUploadArea').classList.remove('drag-over');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            document.getElementById('fileUploadArea').classList.remove('drag-over');
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFileSelect({ target: { files: files } });
-            }
-        }
-
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            // Validate file size (10 MB max - match backend)
-            if (file.size > 10 * 1024 * 1024) {
- alert(' File terlalu besar! Maksimal 10 MB');
-                return;
-            }
-
-            // Validate file type (match backend)
-            const contentType = file.type;
-            if (!contentType || (!contentType.startsWith('image/') && contentType !== 'application/pdf')) {
- alert(' Tipe file tidak didukung! Gunakan JPG, PNG, atau PDF');
-                return;
-            }
-
-            selectedFile = file;
-            console.log('✅ File selected:', file.name, '(' + (file.size / 1024).toFixed(2) + ' KB)');
-
-            // Show preview for images
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    document.getElementById('previewImg').src = e.target.result;
-                    document.getElementById('imagePreview').style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                // For PDF, show file name
-                document.getElementById('imagePreview').innerHTML = `
-                    <div style="text-align: center; padding: 20px; background: #f0fdf4; border-radius: 8px; border: 2px solid var(--success);">
-                        <i class="fas fa-file-pdf" style="font-size: 40px; color: var(--success); margin-bottom: 10px;"></i>
-                        <p style="color: var(--primary); font-weight: 700; margin: 0;">${file.name}</p>
-                        <p style="color: #666; font-size: 12px; margin-top: 5px;">PDF • ${(file.size / 1024).toFixed(2)} KB</p>
-                    </div>
-                    <div class="image-preview-remove">
-                        <button onclick="removeFilePreview()"><i class="fas fa-trash"></i> Hapus File</button>
-                    </div>
-                `;
-                document.getElementById('imagePreview').style.display = 'block';
-            }
-
-            // Enable submit button
-            const submitBtn = document.getElementById('submitManualBtn');
-            submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
-        }
-
-        function removeFilePreview() {
-            selectedFile = null;
-            document.getElementById('fileInput').value = '';
-            document.getElementById('imagePreview').style.display = 'none';
-
-            // Disable submit button
-            const submitBtn = document.getElementById('submitManualBtn');
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.6';
-            
-            console.log('🗑️ File preview removed');
-        }
-
-        // <i class="fas fa-check-circle text-success"></i> SUBMIT MANUAL PAYMENT
-        async function submitManualPayment() {
-            if (!selectedFile) {
- alert(' Silahkan pilih file bukti pembayaran terlebih dahulu');
-                return;
-            }
-
-            try {
-                console.log('📤 Submitting manual payment...');
-                const submitBtn = document.getElementById('submitManualBtn');
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengunggah...';
-
-                // Get fresh token
-                const freshToken = getAuthToken();
-                if (!freshToken) {
-                    throw new Error('Token tidak ditemukan. Silahkan login kembali.');
-                }
-                
-                console.log('🔐 Token validation: YES (length: ' + freshToken.length + ')');
-
-                // Create FormData dengan parameter yang sesuai
-                const formData = new FormData();
-                formData.append('file', selectedFile);
-                formData.append('admissionFormId', vaData.admissionFormId);
-                formData.append('amount', vaData.amount);
-
-                console.log('📋 Payload:');
-                console.log('   - file:', selectedFile.name);
-                console.log('   - admissionFormId:', vaData.admissionFormId);
-                console.log('   - amount:', vaData.amount);
-
-                // Send request ke backend
-                const res = await fetch('/api/camaba/manual-payment/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${freshToken}`
-                    },
-                    body: formData
-                });
-
-                console.log('📊 Response status:', res.status);
-
-                if (!res.ok) {
-                    const errorText = await res.text();
-                    console.error('❌ Error response:', errorText);
-                    throw new Error(`Server error (${res.status}): ${errorText}`);
-                }
-
-                const result = await res.json();
-                console.log('✅ Response:', result);
-
-                if (result.success) {
-                    // Show success message
-                    const successMsg = document.getElementById('successMessage');
-                    if (successMsg) {
-                        successMsg.classList.add('show');
-                        successMsg.innerHTML = `
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <i class="fas fa-check-circle" style="font-size: 24px; color: #28a745;"></i>
-                                <div>
-                                    <strong><i class="fas fa-check-circle text-success"></i> Pembayaran Selesai!</strong>
-                                    <p style="margin-bottom: 0; font-size: 14px;">Bukti pembayaran Anda telah diterima. Silakan lanjutkan ke tahap berikutnya.</p>
-                                </div>
-                            </div>
-                        `;
-                    }
-
-                    // Hide modal
-                    const manualModal = document.getElementById('manualModal');
-                    if (manualModal) {
-                        manualModal.classList.remove('show');
-                    }
-
-                    // Redirect after delay
-                    setTimeout(() => {
-                        console.log('🚀 Redirecting to /dashboard-camaba.html');
-                        window.location.href = '/dashboard-camaba.html';
-                    }, 2000);
-                } else {
-                    throw new Error(result.message || 'Gagal mengirim bukti pembayaran');
-                }
-
-            } catch (error) {
-                console.error('❌ Error:', error.message);
- alert(' ' + error.message);
-
-                const submitBtn = document.getElementById('submitManualBtn');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-check"></i> Kirim Bukti Pembayaran';
-            }
         }
 
 
@@ -1549,7 +1263,6 @@
                 
                 document.getElementById('paymentAmount').textContent = new Intl.NumberFormat('id-ID').format(price);
                 document.getElementById('amountForPayment').textContent = new Intl.NumberFormat('id-ID').format(price);
-                document.getElementById('manualPaymentAmount').textContent = new Intl.NumberFormat('id-ID').format(price);
 
                 // ===== CHECK: Fetch existing CICILAN for this student =====
                 console.log('\n🔍 Step 4a: Checking existing CICILAN for this student...');
@@ -1644,7 +1357,7 @@
                     vaData = vaResponse.data;
                     console.log('✅ VA Created:', vaData);
 
-                    // Store admission form ID for manual payment
+                    // Store admission form ID for payment
                     vaData.admissionFormId = admissionForm.id;
                     vaData.amount = price;
                 } else {

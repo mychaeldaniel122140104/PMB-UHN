@@ -1266,10 +1266,12 @@
     <!-- Initialize Page Header -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setPageHeader(
-                'Daftar Ulang & Penerimaan',
-                'Lengkapi formulir daftar ulang Anda dan upload dokumen yang diperlukan untuk menjadi mahasiswa resmi'
-            );
+            if (typeof setPageHeader === 'function') {
+                setPageHeader(
+                    'Daftar Ulang & Penerimaan',
+                    'Lengkapi formulir daftar ulang Anda dan upload dokumen yang diperlukan untuk menjadi mahasiswa resmi'
+                );
+            }
         });
     </script>
 

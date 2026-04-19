@@ -25,12 +25,12 @@ public class ValidationStatusTracker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "admission_form_id", nullable = false, unique = true)
     @JsonIgnore
     private AdmissionForm admissionForm;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id", nullable = false)
     @JsonIgnore
     private Student student;
@@ -42,7 +42,7 @@ public class ValidationStatusTracker {
     @Column(columnDefinition = "TEXT")
     private String lastReason;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "last_updated_by")
     @JsonIgnore
     private User lastUpdatedBy;

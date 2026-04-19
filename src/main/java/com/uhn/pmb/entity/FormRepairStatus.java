@@ -20,7 +20,7 @@ public class FormRepairStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "form_validation_id", nullable = false)
     private FormValidation formValidation;
     

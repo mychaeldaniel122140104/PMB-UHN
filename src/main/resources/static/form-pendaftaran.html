@@ -3076,7 +3076,9 @@
     <script src="/components/page-header-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setPageHeader('Formulir Pendaftaran', 'Lengkapi semua data di bawah ini untuk melanjutkan proses pendaftaran');
+            if (typeof setPageHeader === 'function') {
+                setPageHeader('Formulir Pendaftaran', 'Lengkapi semua data di bawah ini untuk melanjutkan proses pendaftaran');
+            }
         });
     </script>
 

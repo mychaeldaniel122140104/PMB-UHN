@@ -201,6 +201,7 @@ public class CamabaController {
      * Get open registration periods
      */
     @GetMapping("/registration-periods")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<?> getOpenRegistrationPeriods() {
         try {
             List<RegistrationPeriod> periods = registrationPeriodRepository
@@ -210,6 +211,23 @@ public class CamabaController {
             log.error("Error fetching periods: {}", e.getMessage());
             return ResponseEntity.badRequest()
                     .body(new ApiResponse(false, e.getMessage()));
+        }
+    }
+
+    /**
+     * Get single registration period by ID
+     * GET /api/camaba/registration-periods/{id}
+     */
+    @GetMapping("/registration-periods/{id}")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<?> getRegistrationPeriodById(@PathVariable Long id) {
+        try {
+            return registrationPeriodRepository.findById(id)
+                    .map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            log.error("Error fetching period {}: {}", id, e.getMessage());
+            return ResponseEntity.badRequest().body(new ApiResponse(false, e.getMessage()));
         }
     }
 
@@ -485,6 +503,33 @@ public class CamabaController {
             log.error("❌ Error fetching jenis seleksi detail: {}", e.getMessage(), e);
             return ResponseEntity.status(404)
                     .body(new ApiResponse(false, "Jenis seleksi not found: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * Get JenisSeleksi by ID (alias for jenis-seleksi-detail, used by dashboard-camaba)
+     * GET /api/camaba/jenis-seleksi/{id}
+     */
+    @GetMapping("/jenis-seleksi/{id}")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<?> getJenisSeleksiById(@PathVariable Long id) {
+        try {
+            JenisSeleksi jenisSeleksi = jenisSeleksiRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Jenis seleksi " + id + " not found"));
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", jenisSeleksi.getId());
+            response.put("code", jenisSeleksi.getCode());
+            response.put("nama", jenisSeleksi.getNama());
+            response.put("title", jenisSeleksi.getNama());
+            response.put("deskripsi", jenisSeleksi.getDeskripsi());
+            response.put("harga", jenisSeleksi.getHarga());
+            response.put("price", jenisSeleksi.getHarga());
+            response.put("logoUrl", jenisSeleksi.getLogoUrl());
+            response.put("isActive", jenisSeleksi.getIsActive());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("❌ Error fetching jenis seleksi {}: {}", id, e.getMessage());
+            return ResponseEntity.status(404).body(new ApiResponse(false, e.getMessage()));
         }
     }
 
@@ -2984,12 +3029,19 @@ public class CamabaController {
      * GET /api/camaba/messages/unread-count
      */
     @GetMapping("/messages/unread-count")
+    @PreAuthorize("permitAll()")  // Header component polls this even from public pages
     public ResponseEntity<?> getStudentUnreadCount() {
         try {
-            String userEmail = SecurityContextHolder.getContext()
-                    .getAuthentication().getName();
-            User student = userRepository.findByEmail(userEmail)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+            var auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getName())) {
+                return ResponseEntity.ok(new HashMap<String, Object>() {{ put("unreadCount", 0); }});
+            }
+            String userEmail = auth.getName();
+            var userOpt = userRepository.findByEmail(userEmail);
+            if (userOpt.isEmpty()) {
+                return ResponseEntity.ok(new HashMap<String, Object>() {{ put("unreadCount", 0); }});
+            }
+            User student = userOpt.get();
 
             // Count unread messages where student is recipient
             long unreadCount = adminMessageRepository.findAll().stream()
@@ -3004,11 +3056,7 @@ public class CamabaController {
             }});
         } catch (Exception e) {
             log.error("❌ Error getting unread count: {}", e.getMessage());
-            return ResponseEntity.badRequest()
-                    .body(new HashMap<String, Object>() {{
-                        put("success", false);
-                        put("message", e.getMessage());
-                    }});
+            return ResponseEntity.ok(new HashMap<String, Object>() {{ put("unreadCount", 0); }});
         }
     }
 

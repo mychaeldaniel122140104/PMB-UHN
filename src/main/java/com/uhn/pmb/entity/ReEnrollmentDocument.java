@@ -17,7 +17,7 @@ public class ReEnrollmentDocument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reenrollment_id", nullable = false)
     private ReEnrollment reenrollment;
 
@@ -62,7 +62,7 @@ public class ReEnrollmentDocument {
     @Column(name = "validated_at")
     private LocalDateTime validatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "validated_by_admin_id")
     private User validatedByAdmin;
 

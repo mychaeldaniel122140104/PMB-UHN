@@ -27,7 +27,7 @@ public class StudentNPM {
     @Column(unique = true, nullable = false)
     private String npm;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "program_id", nullable = false)
     private SelectionType program;
     

@@ -20,12 +20,12 @@ public class AdminMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sender_id", nullable = false)
     @JsonIgnore
     private User sender;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipient_id", nullable = false)
     @JsonIgnore
     private User recipient;
@@ -49,7 +49,7 @@ public class AdminMessage {
     @Column(name = "replied_at")
     private LocalDateTime repliedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_message_id")
     @JsonIgnore
     private AdminMessage parentMessage; // Untuk reply thread

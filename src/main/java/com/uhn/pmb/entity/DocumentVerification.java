@@ -39,7 +39,7 @@ public class DocumentVerification {
     
     private String rejectionReason;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "verified_by_admin_id")
     private User verifiedByAdmin;
     

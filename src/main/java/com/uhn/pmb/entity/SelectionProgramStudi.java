@@ -22,11 +22,11 @@ public class SelectionProgramStudi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "jenis_seleksi_id", nullable = false)
     private JenisSeleksi jenisSeleksi;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "program_studi_id", nullable = false)
     private ProgramStudi programStudi;
 

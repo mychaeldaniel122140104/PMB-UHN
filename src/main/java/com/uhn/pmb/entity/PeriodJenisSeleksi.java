@@ -22,11 +22,11 @@ public class PeriodJenisSeleksi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "period_id", nullable = false)
     private RegistrationPeriod period;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "jenis_seleksi_id", nullable = false)
     private JenisSeleksi jenisSeleksi;
 

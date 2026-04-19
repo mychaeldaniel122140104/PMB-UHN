@@ -55,7 +55,7 @@ public class HasilAkhir {
     @Column(name = "program_studi_name", length = 255)
     private String programStudiName; // Program studi yang dipilih/diterima
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "selection_period_id")
     private RegistrationPeriod selectionPeriod; // Reference to registration period
 

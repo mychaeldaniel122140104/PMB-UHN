@@ -17,11 +17,11 @@ public class ExamLink {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "period_id", nullable = false)
     private RegistrationPeriod period;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "selection_type_id", nullable = true) // null = general exam link
     private SelectionType selectionType;
 

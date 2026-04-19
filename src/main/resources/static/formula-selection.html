@@ -820,7 +820,9 @@
     <script src="/components/page-header-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setPageHeader('Pilih Program Studi', 'Tentukan program studi yang ingin Anda daftarkan');
+            if (typeof setPageHeader === 'function') {
+                setPageHeader('Pilih Program Studi', 'Tentukan program studi yang ingin Anda daftarkan');
+            }
         });
     </script>
 

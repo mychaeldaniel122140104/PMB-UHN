@@ -2517,10 +2517,12 @@
     <!-- Initialize Page Header -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setPageHeader(
-                'Ujian Online PMB UHN',
-                'Selamat datang di sesi ujian. Silakan masukkan kode akses Anda untuk memulai'
-            );
+            if (typeof setPageHeader === 'function') {
+                setPageHeader(
+                    'Ujian Online PMB UHN',
+                    'Selamat datang di sesi ujian. Silakan masukkan kode akses Anda untuk memulai'
+                );
+            }
         });
     </script>
 

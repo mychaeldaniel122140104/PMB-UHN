@@ -669,7 +669,9 @@
     <script src="/components/page-header-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setPageHeader('Pilih Gelombang Pendaftaran', 'Silahkan pilih salah satu gelombang pendaftaran yang tersedia');
+            if (typeof setPageHeader === 'function') {
+                setPageHeader('Pilih Gelombang Pendaftaran', 'Silahkan pilih salah satu gelombang pendaftaran yang tersedia');
+            }
         });
     </script>
 

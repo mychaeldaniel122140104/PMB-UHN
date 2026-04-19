@@ -17,7 +17,7 @@ public class ExamResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exam_id", nullable = false, unique = true)
     private Exam exam;
 
@@ -65,7 +65,7 @@ public class ExamResult {
     @Column(name = "admin_notes", columnDefinition = "TEXT")
     private String adminNotes;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "validated_by_admin_id")
     private User validatedByAdmin;
 

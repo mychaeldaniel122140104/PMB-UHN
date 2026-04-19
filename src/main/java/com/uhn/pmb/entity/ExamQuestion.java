@@ -63,7 +63,7 @@ public class ExamQuestion {
     @Column(name = "rejection_reason", columnDefinition = "TEXT")
     private String rejectionReason;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "created_by_id", nullable = false)
     @JsonIgnore
     private User createdBy;
@@ -74,7 +74,7 @@ public class ExamQuestion {
     @Column(name = "approved_at")
     private LocalDateTime approvedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "approved_by_id")
     @JsonIgnore
     private User approvedBy;

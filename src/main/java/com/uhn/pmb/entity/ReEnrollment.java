@@ -19,7 +19,7 @@ public class ReEnrollment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exam_result_id", nullable = true)  // ✅ CHANGED: Made nullable for non-exam students
     private ExamResult examResult;
 

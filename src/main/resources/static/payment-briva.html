@@ -1682,7 +1682,9 @@
     <script src="/components/page-header-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setPageHeader('Pembayaran Formulir Pendaftaran', 'Silahkan lakukan pembayaran untuk melanjutkan pendaftaran');
+            if (typeof setPageHeader === 'function') {
+                setPageHeader('Pembayaran Formulir Pendaftaran', 'Silahkan lakukan pembayaran untuk melanjutkan pendaftaran');
+            }
         });
     </script>
 

@@ -175,6 +175,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/camaba/**").permitAll()        // ✅ PUBLIC: Gelombang selection, profile, etc (optional JWT)
                 .requestMatchers("/api/students/all").permitAll()
                 .requestMatchers("/api/files/**").permitAll()
+                .requestMatchers("/api/cicilan/**").permitAll()      // ✅ Cicilan endpoints (auth checked in controller)
                 .requestMatchers("/jenis-seleksi/**").permitAll()     // ✅ PUBLIC: JENIS_SELEKSI data (needed for formula mapping)
                 
                 // ========== ADMIN ENDPOINTS: AUTHENTICATION REQUIRED (role checks done via @PreAuthorize) ==========

@@ -73,6 +73,7 @@ public class AdminController {
     private final CicilanRequestRepository cicilanRequestRepository;
     private final RegistrationStatusService registrationStatusService;
     private final ValidationStatusTrackerService validationStatusTrackerService;
+    private final ValidationStatusTrackerRepository validationStatusTrackerRepository;
     private final HasilAkhirService hasilAkhirService;
     private final HasilAkhirRepository hasilAkhirRepository;
     private final EntityManager entityManager;
@@ -1873,6 +1874,38 @@ public class AdminController {
             log.error("❌ Error fetching ValidationStatusTracker: {}", e.getMessage());
             return ResponseEntity.badRequest()
                     .body(new ApiResponse(false, e.getMessage()));
+        }
+    }
+
+    /**
+     * Get ALL ValidationStatusTracker records
+     * GET /admin/api/validation-status-tracker/all
+     */
+    @GetMapping("/api/validation-status-tracker/all")
+    @PreAuthorize("hasAnyRole('ADMIN_PUSAT', 'ADMIN_VALIDASI')")
+    public ResponseEntity<?> getAllValidationStatusTrackers() {
+        try {
+            List<ValidationStatusTracker> trackers = validationStatusTrackerRepository.findAll();
+            List<Map<String, Object>> response = trackers.stream().map(tracker -> {
+                Map<String, Object> data = new HashMap<>();
+                data.put("id", tracker.getId());
+                data.put("formId", tracker.getAdmissionForm() != null ? tracker.getAdmissionForm().getId() : null);
+                data.put("studentId", tracker.getStudent() != null ? tracker.getStudent().getId() : null);
+                data.put("studentName", tracker.getStudent() != null ? tracker.getStudent().getFullName() : "-");
+                data.put("studentEmail", tracker.getStudent() != null && tracker.getStudent().getUser() != null ? tracker.getStudent().getUser().getEmail() : "-");
+                data.put("status", tracker.getStatus() != null ? tracker.getStatus().toString() : "NOT_STARTED");
+                data.put("lastReason", tracker.getLastReason());
+                data.put("lastAction", tracker.getLastAction());
+                data.put("lastUpdatedBy", tracker.getLastUpdatedBy() != null ? tracker.getLastUpdatedBy().getEmail() : null);
+                data.put("createdAt", tracker.getCreatedAt());
+                data.put("updatedAt", tracker.getUpdatedAt());
+                return data;
+            }).collect(java.util.stream.Collectors.toList());
+            log.info("✅ Returning {} validation status tracker records", response.size());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("❌ Error fetching all ValidationStatusTrackers: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(new ApiResponse(false, e.getMessage()));
         }
     }
 

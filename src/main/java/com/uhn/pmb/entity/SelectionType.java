@@ -18,7 +18,7 @@ public class SelectionType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "period_id", nullable = false)
     private RegistrationPeriod period;
 

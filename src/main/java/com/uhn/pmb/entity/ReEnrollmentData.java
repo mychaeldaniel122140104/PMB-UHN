@@ -24,7 +24,7 @@ public class ReEnrollmentData {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "program_id", nullable = false)
     private SelectionType program;
     
@@ -32,7 +32,7 @@ public class ReEnrollmentData {
     @Column(nullable = false)
     private CicilanType cicilationType;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "approved_by_admin_id")
     private User approvedByAdmin;
     

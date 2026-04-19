@@ -22,7 +22,7 @@ public class VirtualAccount {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "form_id")
     private AdmissionForm admissionForm;
 

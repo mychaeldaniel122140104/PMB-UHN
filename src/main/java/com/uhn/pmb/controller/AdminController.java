@@ -1943,27 +1943,62 @@ public class AdminController {
 
     /**
      * Approve re-enrollment validation
+     * NOTE: frontend passes ReEnrollment.id (not ReEnrollmentValidation.id)
      */
-    @PutMapping("/api/validasi/daftar-ulang/{validationId}/approve")
+    @PutMapping("/api/validasi/daftar-ulang/{reEnrollmentId}/approve")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> approveReEnrollmentValidation(@PathVariable Long validationId) {
+    public ResponseEntity<?> approveReEnrollmentValidation(@PathVariable Long reEnrollmentId) {
         try {
-            ReEnrollmentValidation validation = reEnrollmentValidationRepository.findById(validationId)
-                    .orElseThrow(() -> new RuntimeException("Validasi tidak ditemukan"));
+            // Lookup by reEnrollmentId, NOT by validation own ID
+            ReEnrollment reenrollment = reenrollmentRepository.findById(reEnrollmentId)
+                    .orElseThrow(() -> new RuntimeException("Daftar ulang tidak ditemukan (ID: " + reEnrollmentId + ")"));
 
             // Get current admin
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User admin = userRepository.findByEmail(auth.getName())
                     .orElseThrow(() -> new RuntimeException("Admin tidak ditemukan"));
 
+            // Find or create ReEnrollmentValidation
+            ReEnrollmentValidation validation = reEnrollmentValidationRepository
+                    .findByReEnrollmentId(reEnrollmentId)
+                    .orElseGet(() -> {
+                        ReEnrollmentValidation v = new ReEnrollmentValidation();
+                        v.setReEnrollment(reenrollment);
+                        v.setStudent(reenrollment.getStudent());
+                        v.setCreatedAt(LocalDateTime.now());
+                        v.setValidationStatus(ReEnrollmentValidation.ValidationStatus.PENDING);
+                        return v;
+                    });
+
             validation.setValidationStatus(ReEnrollmentValidation.ValidationStatus.APPROVED);
             validation.setValidatedBy(admin);
             validation.setValidatedAt(LocalDateTime.now());
             reEnrollmentValidationRepository.save(validation);
 
+            // Update ReEnrollment status to VALIDATED
+            reenrollment.setStatus(ReEnrollment.ReEnrollmentStatus.VALIDATED);
+            reenrollment.setValidatedAt(LocalDateTime.now());
+            reenrollmentRepository.save(reenrollment);
+
+            // Update RegistrationStatus.DAFTAR_ULANG → adminVerified=true
+            try {
+                User studentUser = reenrollment.getStudent().getUser();
+                if (studentUser != null) {
+                    registrationStatusService.approveByAdmin(
+                            studentUser,
+                            RegistrationStatus.RegistrationStage.DAFTAR_ULANG,
+                            admin.getEmail(),
+                            "Daftar ulang disetujui oleh admin"
+                    );
+                    log.info("✅ RegistrationStatus DAFTAR_ULANG adminVerified=true for student {}", studentUser.getEmail());
+                }
+            } catch (Exception re) {
+                log.warn("⚠️ Could not update RegistrationStatus for DAFTAR_ULANG: {}", re.getMessage());
+            }
+
             return ResponseEntity.ok(new ApiResponse(true, "Daftar ulang disetujui"));
         } catch (Exception e) {
-            log.error("Error approving reenrollment validation: {}", e.getMessage());
+            log.error("Error approving reenrollment validation: {}", e.getMessage(), e);
             return ResponseEntity.badRequest()
                     .body(new ApiResponse(false, e.getMessage()));
         }
@@ -1971,19 +2006,32 @@ public class AdminController {
 
     /**
      * Reject re-enrollment validation
+     * NOTE: frontend passes ReEnrollment.id (not ReEnrollmentValidation.id)
      */
-    @PutMapping("/api/validasi/daftar-ulang/{validationId}/reject")
+    @PutMapping("/api/validasi/daftar-ulang/{reEnrollmentId}/reject")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> rejectReEnrollmentValidation(@PathVariable Long validationId,
+    public ResponseEntity<?> rejectReEnrollmentValidation(@PathVariable Long reEnrollmentId,
                                                           @RequestBody(required = false) FormValidationRejectRequest request) {
         try {
-            ReEnrollmentValidation validation = reEnrollmentValidationRepository.findById(validationId)
-                    .orElseThrow(() -> new RuntimeException("Validasi tidak ditemukan"));
+            ReEnrollment reenrollment = reenrollmentRepository.findById(reEnrollmentId)
+                    .orElseThrow(() -> new RuntimeException("Daftar ulang tidak ditemukan (ID: " + reEnrollmentId + ")"));
 
             // Get current admin
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User admin = userRepository.findByEmail(auth.getName())
                     .orElseThrow(() -> new RuntimeException("Admin tidak ditemukan"));
+
+            // Find or create ReEnrollmentValidation
+            ReEnrollmentValidation validation = reEnrollmentValidationRepository
+                    .findByReEnrollmentId(reEnrollmentId)
+                    .orElseGet(() -> {
+                        ReEnrollmentValidation v = new ReEnrollmentValidation();
+                        v.setReEnrollment(reenrollment);
+                        v.setStudent(reenrollment.getStudent());
+                        v.setCreatedAt(LocalDateTime.now());
+                        v.setValidationStatus(ReEnrollmentValidation.ValidationStatus.PENDING);
+                        return v;
+                    });
 
             validation.setValidationStatus(ReEnrollmentValidation.ValidationStatus.REJECTED);
             
@@ -2000,9 +2048,30 @@ public class AdminController {
             validation.setRejectedAt(LocalDateTime.now());
             reEnrollmentValidationRepository.save(validation);
 
+            // Update ReEnrollment status to REJECTED
+            reenrollment.setStatus(ReEnrollment.ReEnrollmentStatus.REJECTED);
+            reenrollmentRepository.save(reenrollment);
+
+            // Update RegistrationStatus.DAFTAR_ULANG → REJECTED + adminVerified=true
+            try {
+                User studentUser = reenrollment.getStudent().getUser();
+                if (studentUser != null) {
+                    String reason = request != null && request.getReason() != null ? request.getReason() : "Daftar ulang ditolak";
+                    registrationStatusService.rejectByAdmin(
+                            studentUser,
+                            RegistrationStatus.RegistrationStage.DAFTAR_ULANG,
+                            admin.getEmail(),
+                            reason
+                    );
+                    log.info("✅ RegistrationStatus DAFTAR_ULANG REJECTED for student {}", studentUser.getEmail());
+                }
+            } catch (Exception re) {
+                log.warn("⚠️ Could not update RegistrationStatus for DAFTAR_ULANG reject: {}", re.getMessage());
+            }
+
             return ResponseEntity.ok(new ApiResponse(true, "Daftar ulang ditolak"));
         } catch (Exception e) {
-            log.error("Error rejecting reenrollment validation: {}", e.getMessage());
+            log.error("Error rejecting reenrollment validation: {}", e.getMessage(), e);
             return ResponseEntity.badRequest()
                     .body(new ApiResponse(false, e.getMessage()));
         }

@@ -1949,8 +1949,9 @@
                     cicilanBadge.className = 'status-badge badge-completed';
                     cicilanBadge.innerHTML = '<i class="fas fa-check-circle"></i> Cicilan Dibayar';
                     
-                    // <i class="fas fa-check-circle text-success"></i> NEW: Check if daftar ulang already submitted
-                    const isSubmitted = daftarUlangStatus && (daftarUlangStatus.status === 'SELESAI' || daftarUlangStatus.status === 'MENUNGGU_VERIFIKASI');
+                    // Check daftar ulang status: adminVerified=true means DITERIMA
+                    const isDaftarUlangApproved = daftarUlangStatus && daftarUlangStatus.adminVerified === true;
+                    const isSubmitted = daftarUlangStatus && (daftarUlangStatus.status === 'SELESAI' || daftarUlangStatus.status === 'MENUNGGU_VERIFIKASI' || daftarUlangStatus.status === 'REJECTED');
                     
                     // <i class="fas fa-check-circle text-success"></i> UPDATED: Show "Akses Daftar Ulang" button - disabled if already submitted
                     if (cicilanActionsBtn) {
@@ -1978,45 +1979,73 @@
                     // <i class="fas fa-check-circle text-success"></i> UNLOCK DAFTAR ULANG when cicilan payment completed
                     const daftarUlangItem = document.getElementById('daftar-ulang-item');
                     if (daftarUlangItem) {
-                        // <i class="fas fa-check-circle text-success"></i> NEW: Check if daftar ulang already submitted
                         console.log('📋 DAFTAR ULANG STATUS CHECK:');
                         console.log('   - daftarUlangStatus:', daftarUlangStatus);
                         if (daftarUlangStatus) {
                             console.log('   - daftarUlangStatus.status:', daftarUlangStatus.status);
-                            console.log('   - daftarUlangStatus.id:', daftarUlangStatus.id);
-                            console.log('   - daftarUlangStatus.stage:', daftarUlangStatus.stage);
+                            console.log('   - daftarUlangStatus.adminVerified:', daftarUlangStatus.adminVerified);
                         }
                         
-                        const isSubmitted = daftarUlangStatus && (daftarUlangStatus.status === 'SELESAI' || daftarUlangStatus.status === 'MENUNGGU_VERIFIKASI');
-                        console.log('   - isSubmitted:', isSubmitted);
+                        const isSubmitted = daftarUlangStatus && (daftarUlangStatus.status === 'SELESAI' || daftarUlangStatus.status === 'MENUNGGU_VERIFIKASI' || daftarUlangStatus.status === 'REJECTED');
+                        console.log('   - isDaftarUlangApproved:', isDaftarUlangApproved, '- isSubmitted:', isSubmitted);
                         
                         daftarUlangItem.style.display = 'block';
                         daftarUlangItem.style.opacity = '1';
                         daftarUlangItem.style.pointerEvents = 'auto';
                         
                         const daftarUlangBadge = daftarUlangItem.querySelector('.status-badge');
+                        const daftarUlangActionsBtn = document.getElementById('daftar-ulang-actions');
                         
-                        if (isSubmitted) {
-                            // Sudah submit dan menunggu validasi
+                        if (isDaftarUlangApproved) {
+                            // Admin sudah approve daftar ulang → DITERIMA
+                            console.log('   ✅ BRANCH: APPROVED - Showing Diterima');
+                            daftarUlangItem.className = 'progress-item completed';
+                            if (daftarUlangBadge) {
+                                daftarUlangBadge.className = 'status-badge badge-completed';
+                                daftarUlangBadge.innerHTML = '<i class="fas fa-check-circle"></i> Diterima';
+                            }
+                            if (daftarUlangActionsBtn) daftarUlangActionsBtn.style.display = 'flex';
+
+                            // Update main action button - SELESAI → arahkan ke hasil akhir
+                            document.getElementById('current-status-title').textContent = 'Selamat!';
+                            document.getElementById('current-status-value').textContent = 'Daftar Ulang Telah Disetujui';
+                            const actionButtons = document.getElementById('action-buttons-container');
+                            actionButtons.innerHTML = '<button class="action-btn btn-primary-action" onclick="document.getElementById(\'hasil-akhir-item\').scrollIntoView({behavior:\'smooth\'})" style="background: #27ae60;"><i class="fas fa-trophy"></i> Lihat Hasil Akhir</button>';
+                            console.log('   → Main action updated to: Daftar Ulang Diterima');
+
+                            // Unlock Hasil Akhir automatically
+                            unlockHasilAkhir();
+
+                        } else if (daftarUlangStatus && daftarUlangStatus.status === 'REJECTED') {
+                            // Daftar ulang ditolak
+                            console.log('   ✅ BRANCH: REJECTED - Showing Ditolak');
+                            daftarUlangItem.className = 'progress-item warning';
+                            if (daftarUlangBadge) {
+                                daftarUlangBadge.className = 'status-badge';
+                                daftarUlangBadge.style.cssText = 'background:#f8d7da;color:#721c24;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:600;';
+                                daftarUlangBadge.innerHTML = '<i class="fas fa-times-circle"></i> Ditolak';
+                            }
+                            if (daftarUlangActionsBtn) daftarUlangActionsBtn.style.display = 'flex';
+
+                            document.getElementById('current-status-title').textContent = 'Perhatian';
+                            document.getElementById('current-status-value').textContent = 'Daftar Ulang Ditolak - Hubungi Admin';
+                            const actionButtons = document.getElementById('action-buttons-container');
+                            actionButtons.innerHTML = '<button class="action-btn btn-primary-action" onclick="window.location.href=\'/daftar-ulang.html\'" style="background: #e74c3c;"><i class="fas fa-redo"></i> Ulangi Daftar Ulang</button>';
+
+                        } else if (isSubmitted) {
+                            // Sudah submit dan menunggu validasi admin
                             console.log('   ✅ BRANCH: SUBMITTED - Showing Menunggu Validasi');
                             daftarUlangItem.className = 'progress-item pending';
                             if (daftarUlangBadge) {
                                 daftarUlangBadge.innerHTML = '<i class="fas fa-hourglass-half"></i> Menunggu Validasi';
                             }
+                            if (daftarUlangActionsBtn) daftarUlangActionsBtn.style.display = 'flex';
                             
-                            // Update buttons: VIEW only (no EDIT, no access button)
-                            const daftarUlangActionsBtn = document.getElementById('daftar-ulang-actions');
-                            if (daftarUlangActionsBtn) {
-                                daftarUlangActionsBtn.style.display = 'flex';
-                                // Keep VIEW and EDIT buttons visible for viewing
-                            }
-                            
-                            // Update main action button - MENUNGGU VALIDASI
                             document.getElementById('current-status-title').textContent = 'Langkah Berikutnya';
                             document.getElementById('current-status-value').textContent = 'Menunggu Hasil Daftar Ulang';
                             const actionButtons = document.getElementById('action-buttons-container');
                             actionButtons.innerHTML = '<button class="action-btn btn-primary-action" style="background: #3498db; cursor: default;"><i class="fas fa-hourglass-half"></i> Menunggu Hasil</button>';
-                            console.log('   → Main action updated to: Menunggu Validasi (blue, disabled)');
+                            console.log('   → Main action updated to: Menunggu Validasi');
                         } else {
                             // Belum submit, siap untuk daftar ulang
                             console.log('   ✅ BRANCH: NOT SUBMITTED - Showing Siap untuk Daftar Ulang');
@@ -2024,22 +2053,16 @@
                             if (daftarUlangBadge) {
                                 daftarUlangBadge.innerHTML = '<i class="fas fa-hourglass-half"></i> Siap untuk Daftar Ulang';
                             }
+                            if (daftarUlangActionsBtn) daftarUlangActionsBtn.style.display = 'flex';
                             
-                            // Show VIEW and EDIT action buttons
-                            const daftarUlangActionsBtn = document.getElementById('daftar-ulang-actions');
-                            if (daftarUlangActionsBtn) {
-                                daftarUlangActionsBtn.style.display = 'flex';
-                            }
-                            
-                            // Update main action button to show daftar ulang
                             document.getElementById('current-status-title').textContent = 'Langkah Berikutnya';
                             document.getElementById('current-status-value').textContent = 'Lanjut ke Daftar Ulang';
                             const actionButtons = document.getElementById('action-buttons-container');
                             actionButtons.innerHTML = '<button class="action-btn btn-primary-action" onclick="window.location.href=\'/daftar-ulang.html\'" style="background: #27ae60;"><i class="fas fa-user-check"></i> Daftar Ulang</button>';
-                            console.log('   → Main action updated to: Lanjut ke Daftar Ulang (green, clickable)');
+                            console.log('   → Main action updated to: Lanjut ke Daftar Ulang');
                         }
                         
-                        console.log('✅ Daftar Ulang', isSubmitted ? 'SUBMITTED - Waiting Validation' : 'UNLOCKED after cicilan payment');
+                        console.log('✅ Daftar Ulang status:', isDaftarUlangApproved ? 'APPROVED' : isSubmitted ? 'SUBMITTED' : 'NOT SUBMITTED');
                     }
                 } else {
                     // Cicilan belum dibayar - show tombol bayar

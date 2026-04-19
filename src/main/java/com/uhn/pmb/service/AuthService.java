@@ -10,6 +10,7 @@ import com.uhn.pmb.repository.UserRepository;
 import com.uhn.pmb.repository.StudentRepository;
 import com.uhn.pmb.repository.PasswordResetTokenRepository;
 import com.uhn.pmb.security.JwtTokenProvider;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +51,18 @@ public class AuthService {
 
     @Value("${resend.api-key:}")
     private String resendApiKey;
+
+    @PostConstruct
+    public void init() {
+        // Auto-detect Railway deployment: RAILWAY_PUBLIC_DOMAIN is injected automatically by Railway
+        String railwayDomain = System.getenv("RAILWAY_PUBLIC_DOMAIN");
+        if (railwayDomain != null && !railwayDomain.isBlank()) {
+            frontendUrl = "https://" + railwayDomain;
+            log.info("🚀 Railway detected — frontendUrl set to: {}", frontendUrl);
+        } else {
+            log.info("💻 Local mode — frontendUrl: {}", frontendUrl);
+        }
+    }
 
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {

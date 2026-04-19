@@ -4357,7 +4357,7 @@ public class AdminController {
      * GET /admin/api/reenrollments/pending
      */
     @GetMapping("/api/reenrollments/pending")
-    @PreAuthorize("hasRole('ADMIN_VALIDASI')")
+    @PreAuthorize("hasAnyRole('ADMIN_PUSAT', 'ADMIN_VALIDASI')")
     public ResponseEntity<?> getPendingReenrollments() {
         try {
             List<ReEnrollment> reenrollments = reenrollmentRepository.findAll().stream()
@@ -4402,7 +4402,7 @@ public class AdminController {
      * GET /admin/api/reenrollments/{id}/details
      */
     @GetMapping("/api/reenrollments/{id}/details")
-    @PreAuthorize("hasRole('ADMIN_VALIDASI')")
+    @PreAuthorize("hasAnyRole('ADMIN_PUSAT', 'ADMIN_VALIDASI')")
     public ResponseEntity<?> getReerollmentDetails(@PathVariable Long id) {
         try {
             ReEnrollment reenrollment = reenrollmentRepository.findById(id)
@@ -4856,7 +4856,7 @@ public class AdminController {
      * GET /admin/api/hasil-akhir/all
      */
     @GetMapping("/api/hasil-akhir/all")
-    @PreAuthorize("hasRole('ADMIN_VALIDASI')")
+    @PreAuthorize("hasAnyRole('ADMIN_PUSAT', 'ADMIN_VALIDASI')")
     public ResponseEntity<?> getAllHasilAkhir() {
         try {
             List<HasilAkhir> allHasilAkhir = hasilAkhirRepository.findAll();

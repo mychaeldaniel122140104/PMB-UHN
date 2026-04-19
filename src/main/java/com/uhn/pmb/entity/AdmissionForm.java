@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "admission_forms")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class AdmissionForm {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

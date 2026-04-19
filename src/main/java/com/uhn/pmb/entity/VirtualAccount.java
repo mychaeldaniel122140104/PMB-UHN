@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "virtual_accounts")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class VirtualAccount {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

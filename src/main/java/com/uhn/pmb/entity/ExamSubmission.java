@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "exam_submissions")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ExamSubmission {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

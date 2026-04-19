@@ -11,11 +11,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "form_repair_status")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class FormRepairStatus {
     
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

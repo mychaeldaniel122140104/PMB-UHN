@@ -7,11 +7,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "university_bank_account")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UniversityBankAccount {
     
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -13,11 +13,13 @@ import java.time.LocalDateTime;
 @Table(name = "selection_program_studi", 
        uniqueConstraints = @UniqueConstraint(columnNames = {"jenis_seleksi_id", "program_studi_id"}))
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class SelectionProgramStudi {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

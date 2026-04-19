@@ -13,11 +13,13 @@ import java.time.LocalDateTime;
     @Index(name = "idx_announcement_active", columnList = "is_active DESC")
 })
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Announcement {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

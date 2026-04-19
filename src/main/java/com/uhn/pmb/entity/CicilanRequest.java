@@ -7,11 +7,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "cicilan_request")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class CicilanRequest {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -8,11 +8,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "system_configurations")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class SystemConfiguration {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -8,11 +8,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "gelombang_link_ujian")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class GelombangLinkUjian {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

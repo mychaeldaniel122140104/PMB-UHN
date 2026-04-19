@@ -10,11 +10,13 @@ import java.time.LocalDateTime;
         @UniqueConstraint(columnNames = "period_id", name = "uk_pub_schedule_period")
 })
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class PublicationSchedule {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

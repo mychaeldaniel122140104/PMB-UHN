@@ -16,11 +16,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "validation_status_tracker")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ValidationStatusTracker {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -163,6 +163,7 @@ public class SecurityConfig {
                 .requestMatchers("/admin-*.html").permitAll()
                 .requestMatchers("/form-pendaftaran.html").permitAll()
                 .requestMatchers("/api/files/**").permitAll()
+                .requestMatchers("/error").permitAll()
                 
                 // ========== PAGE CONTROLLER ROUTES (Frontend handles auth) ==========
                 .requestMatchers("/admin/dashboard-*").permitAll()
@@ -176,18 +177,22 @@ public class SecurityConfig {
                 .requestMatchers("/api/files/**").permitAll()
                 .requestMatchers("/jenis-seleksi/**").permitAll()     // ✅ PUBLIC: JENIS_SELEKSI data (needed for formula mapping)
                 
-                // ========== ADMIN ENDPOINTS: EXPLICIT ROLE-BASED AUTHORIZATION ==========
-                // Role-specific rules for /admin/periods/** (ADMIN_PUSAT + ADMIN_VALIDASI can read, only ADMIN_PUSAT can create/update/delete)
-                .requestMatchers(HttpMethod.GET, "/admin/periods/**").hasAnyRole("ADMIN_PUSAT", "ADMIN_VALIDASI")
-                .requestMatchers(HttpMethod.POST, "/admin/periods/**").hasRole("ADMIN_PUSAT")
-                .requestMatchers(HttpMethod.PUT, "/admin/periods/**").hasRole("ADMIN_PUSAT")
-                .requestMatchers(HttpMethod.DELETE, "/admin/periods/**").hasRole("ADMIN_PUSAT")
+                // ========== ADMIN ENDPOINTS: AUTHENTICATION REQUIRED (role checks done via @PreAuthorize) ==========
+                // /admin/periods - requires authentication (role access controlled by @PreAuthorize in controller)
+                .requestMatchers(HttpMethod.GET, "/admin/periods").authenticated()
+                .requestMatchers(HttpMethod.GET, "/admin/periods/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/admin/periods").authenticated()
+                .requestMatchers(HttpMethod.POST, "/admin/periods/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/admin/periods/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/admin/periods/**").authenticated()
                 
-                // Role-specific rules for /admin/jenis-seleksi/** (ADMIN_PUSAT only)
-                .requestMatchers(HttpMethod.GET, "/admin/jenis-seleksi/**").hasRole("ADMIN_PUSAT")
-                .requestMatchers(HttpMethod.POST, "/admin/jenis-seleksi/**").hasRole("ADMIN_PUSAT")
-                .requestMatchers(HttpMethod.PUT, "/admin/jenis-seleksi/**").hasRole("ADMIN_PUSAT")
-                .requestMatchers(HttpMethod.DELETE, "/admin/jenis-seleksi/**").hasRole("ADMIN_PUSAT")
+                // /admin/jenis-seleksi - requires authentication (role access controlled by @PreAuthorize in controller)
+                .requestMatchers(HttpMethod.GET, "/admin/jenis-seleksi").authenticated()
+                .requestMatchers(HttpMethod.GET, "/admin/jenis-seleksi/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/admin/jenis-seleksi").authenticated()
+                .requestMatchers(HttpMethod.POST, "/admin/jenis-seleksi/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/admin/jenis-seleksi/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/admin/jenis-seleksi/**").authenticated()
                 
                 // ========== PROTECTED API: All methods require JWT authentication ==========
                 // /api/validasi/** - ADMIN_VALIDASI endpoints

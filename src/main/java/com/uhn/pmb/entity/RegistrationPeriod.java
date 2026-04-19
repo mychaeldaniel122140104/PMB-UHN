@@ -1,5 +1,6 @@
 package com.uhn.pmb.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -65,6 +66,7 @@ public class RegistrationPeriod {
     private LocalDateTime updatedAt;
 
     // ✅ Many-to-Many relationship with Jenis Seleksi through junction table
+    @JsonIgnore
     @OneToMany(mappedBy = "period", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<PeriodJenisSeleksi> periodJenisSeleksiList = new HashSet<>();
 

@@ -1,5 +1,6 @@
 package com.uhn.pmb.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -55,9 +56,11 @@ public class JenisSeleksi {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "jenisSeleksi", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<SelectionProgramStudi> selectionProgramStudiList = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "jenisSeleksi", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<PeriodJenisSeleksi> periodJenisSeleksiList = new HashSet<>();
 

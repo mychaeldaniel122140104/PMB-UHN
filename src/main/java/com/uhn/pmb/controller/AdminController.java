@@ -2293,7 +2293,7 @@ public class AdminController {
      * Get unread message count
      */
     @GetMapping("/api/messages/unread-count")
-    @PreAuthorize("hasAnyRole('ADMIN_VALIDASI', 'CAMABA')")
+    @PreAuthorize("hasAnyRole('ADMIN_PUSAT', 'ADMIN_VALIDASI', 'CAMABA')")
     public ResponseEntity<?> getUnreadMessageCount() {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();

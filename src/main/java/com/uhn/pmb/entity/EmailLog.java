@@ -38,7 +38,7 @@ public class EmailLog {
     
     private String attachmentUrl;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
     

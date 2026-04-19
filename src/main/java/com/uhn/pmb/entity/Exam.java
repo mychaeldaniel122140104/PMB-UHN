@@ -24,7 +24,7 @@ public class Exam {
     @Column(name = "exam_number", unique = true, nullable = false)
     private String examNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 

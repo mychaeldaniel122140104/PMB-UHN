@@ -22,7 +22,7 @@ public class ExamResult {
     private Exam exam;
 
     // ✅ NEW: Reference to Student who took the exam
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id")
     private Student student;
 

@@ -5416,11 +5416,15 @@
                     const check1 = waveType === 'REGULAR_TEST';
                     // <i class="fas fa-check-circle text-success"></i> FIX: Check BOTH payment & installment status
                     const check2 = paymentStatus === 'PAID' || installmentStatus === 'PAID';
-                    const passes = check1 && check2;
+                    // <i class="fas fa-check-circle text-success"></i> FIX: Exclude APPROVED/REJECTED (they belong in Tables 5 & 6)
+                    const validStatus = item.validationStatus || 'PENDING';
+                    const check3 = !['APPROVED', 'REJECTED'].includes(validStatus);
+                    const passes = check1 && check2 && check3;
                     
                     console.log(`\n📋 [ITER ${allData.length + 3 + idx}] ${item.studentName} - Filter Check:`);
                     console.log(`   ✓ Regular? ${check1} (waveType=${waveType})`);
                     console.log(`   ✓ Payment ada? ${check2} (payment=${paymentStatus}, installment=${installmentStatus})`);
+                    console.log(`   ✓ Belum APPROVED/REJECTED? ${check3} (validationStatus=${validStatus})`);
                     console.log(`   ➜ RESULT: ${passes ? '✅ PASS - AKAN DITAMPILKAN' : '❌ FAIL - SKIP'}`);
                     
                     if (passes) {
@@ -7405,15 +7409,15 @@
                     
                     alert('✅ Formulir berhasil disetujui & dokumen diupload!');
                     
-                    if (formType === 'no-test') {
-                        if (typeof refreshSection2Tables === 'function') refreshSection2Tables();
-                        else {
-                            if (typeof refreshTab1BTable2EarlyNoTest === 'function') refreshTab1BTable2EarlyNoTest();
-                            if (typeof refreshTab1BTable3RankingNoTest === 'function') refreshTab1BTable3RankingNoTest();
-                            if (typeof refreshTab1BTable4Revision === 'function') refreshTab1BTable4Revision();
-                        }
-                    } else if (formType === 'regular') {
+                    if (typeof refreshSection2Tables === 'function') {
+                        refreshSection2Tables();
+                    } else {
                         if (typeof refreshTab1BTable1ExamReminders === 'function') refreshTab1BTable1ExamReminders();
+                        if (typeof refreshTab1BTable2EarlyNoTest === 'function') refreshTab1BTable2EarlyNoTest();
+                        if (typeof refreshTab1BTable3RankingNoTest === 'function') refreshTab1BTable3RankingNoTest();
+                        if (typeof refreshTab1BTable4Revision === 'function') refreshTab1BTable4Revision();
+                        if (typeof refreshValidationResults === 'function') refreshValidationResults();
+                        if (typeof refreshRejectedForms === 'function') refreshRejectedForms();
                     }
                 }, 800);
             } catch (error) {
@@ -9799,6 +9803,21 @@
         // Panggil ini setelah approve/revisi/tolak di tabel Admin
         async function refreshSection2Tables() {
             console.log('🔄 [SECTION-2-REALTIME] Refreshing ALL Section 2 tables for real-time movement...');
+            // Tab 1B Table 1: Ujian/Reguler (REGULAR_TEST)
+            if (typeof refreshTab1BTable1ExamReminders === 'function') {
+                await refreshTab1BTable1ExamReminders();
+                console.log('✅ [SECTION-2-REALTIME] Table 1 Ujian/Reguler updated');
+            }
+            // Tab 1B Table 2: EARLY_NO_TEST
+            if (typeof refreshTab1BTable2EarlyNoTest === 'function') {
+                await refreshTab1BTable2EarlyNoTest();
+                console.log('✅ [SECTION-2-REALTIME] Table 2 Early NoTest updated');
+            }
+            // Tab 1B Table 3: RANKING_NO_TEST
+            if (typeof refreshTab1BTable3RankingNoTest === 'function') {
+                await refreshTab1BTable3RankingNoTest();
+                console.log('✅ [SECTION-2-REALTIME] Table 3 Ranking NoTest updated');
+            }
             // Tab 1B Table 4: Hasil Revisi (MENUNGGU_VALIDASI - forms yang sudah diedit)
             if (typeof refreshTab1BTable4Revision === 'function') {
                 await refreshTab1BTable4Revision();
